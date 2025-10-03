@@ -1,0 +1,7 @@
+torch
+# numpy
+openai
+# requests
+# PIL
+# httpx
+# socksio
