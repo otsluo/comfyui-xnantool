@@ -108,8 +108,8 @@ SUPPORTED_IMAGE_EDIT_MODELS = [
     ("runwayml/stable-diffusion-inpainting", "SD Inpainting"),
 ]
 
-# 修改第111行的类名
-class QwenLoraTextToImageNode:
+# 修改类名
+class modelscopeLoraTextToImageNode:
     """支持多种基础模型的文生图节点，包含LoRA支持"""
     def __init__(self):
         pass
@@ -123,12 +123,15 @@ class QwenLoraTextToImageNode:
                 "prompt": ("STRING", {
                     "multiline": True,
                     "default": config.get("default_prompt", "A beautiful portrait"),
-                    "label": "提示词"
+                    "label": "提示词",
+                    "description": "描述您想要生成的图像内容",
+                    "placeholder": "描述您想要生成的图像内容"
                 }),
                 "api_token": ("STRING", {
                     "default": saved_token,
-                    "placeholder": "请输入您的魔搭API Token",
-                    "label": "API令牌"
+                    "label": "API Token",
+                    "description": "modelscope API 令牌，用于调用服务",
+                    "placeholder": "请输入您的 modelscope API Token"
                 }),
                 "base_model": ("STRING", {
                     "default": SUPPORTED_TEXT_TO_IMAGE_MODELS[0][0],
@@ -145,7 +148,8 @@ class QwenLoraTextToImageNode:
                 "negative_prompt": ("STRING", {
                     "multiline": True,
                     "default": config.get("default_negative_prompt", ""),
-                    "label": "负面提示词"
+                    "label": "负面提示词",
+                    "placeholder": "描述您不想在图像中出现的内容"
                 }),
                 "width": ("INT", {
                     "default": config.get("default_width", 512),
@@ -193,7 +197,7 @@ class QwenLoraTextToImageNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
     FUNCTION = "generate_with_lora"
-    CATEGORY = "modelscope_api"
+    CATEGORY = "XnanTool/魔搭api"
     
     def generate_with_lora(self, prompt, api_token, base_model, lora_model, negative_prompt="", 
                           width=512, height=512, seed=-1, steps=30, guidance=7.5, lora_weight=0.8, generate_control="fixed"):
@@ -342,8 +346,7 @@ class QwenLoraTextToImageNode:
             error_tensor = torch.from_numpy(error_np)[None,]
             return (error_tensor,)
 
-# 修改第343行的类名
-class QwenLoraImageEditNode:
+class modelscopeLoraImageEditNode:
     """支持多种基础模型的图像编辑节点，包含LoRA支持"""
     def __init__(self):
         pass
@@ -358,7 +361,9 @@ class QwenLoraImageEditNode:
                 "prompt": ("STRING", {
                     "multiline": True,
                     "default": config.get("default_edit_prompt", "修改图片中的内容"),
-                    "label": "编辑提示词"
+                    "label": "编辑提示词",
+                    "description": "描述您想要如何编辑图像",
+                    "placeholder": "描述您想要如何编辑图像"
                 }),
                 "api_token": ("STRING", {
                     "default": saved_token,
@@ -379,8 +384,9 @@ class QwenLoraImageEditNode:
             "optional": {
                 "negative_prompt": ("STRING", {
                     "multiline": True,
-                    "default": config.get("default_negative_prompt", ""),
-                    "label": "负面提示词"
+                    "default": "",
+                    "label": "负面提示词",
+                    "placeholder": "描述您不想在编辑后图像中出现的内容"
                 }),
                 "width": ("INT", {
                     "default": 512,
@@ -428,7 +434,7 @@ class QwenLoraImageEditNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("edited_image",)
     FUNCTION = "edit_with_lora"
-    CATEGORY = "modelscope_api"
+    CATEGORY = "XnanTool/魔搭api"
     
     def edit_with_lora(self, image, prompt, api_token, base_model, lora_model, negative_prompt="", 
                        width=512, height=512, seed=-1, steps=30, guidance=3.5, lora_weight=0.8, generate_control="fixed"):
@@ -643,11 +649,13 @@ class QwenLoraImageEditNode:
 
 # 节点映射和显示名称映射
 NODE_CLASS_MAPPINGS = {
-    "modelscopeLoraTextToImageNode": QwenLoraTextToImageNode,
-    "modelscopeLoraImageEditNode": QwenLoraImageEditNode
+    "modelscopeLoraTextToImageNode": modelscopeLoraTextToImageNode,
+    "modelscopeLoraImageEditNode": modelscopeLoraImageEditNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "modelscopeLoraTextToImageNode": "文生图节点",
     "modelscopeLoraImageEditNode": "图像编辑节点"
 }
+
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -1,0 +1,32 @@
+{
+    "节点类名": {
+        "title": "翻译后标题",
+        "description": "节点功能描述",
+        "inputs": {
+            "输入 (Inputs)英文": "输入 (Inputs)中文",
+            "输入 (Inputs)英文2": "输入 (Inputs)中文2"
+        },
+        "widgets": {
+            "控件 (Widgets)英文": "控件 (Widgets)中文",
+            "控件 (Widgets)英文2": "控件 (Widgets)中文2"
+        },
+        "outputs": {
+            "输出 (Outputs)英文": "输出 (Outputs)中文"
+        }
+    },
+    "节点类名2": {
+        "title": "翻译后标题",
+        "description": "节点功能描述",
+        "inputs": {
+            "输入 (Inputs)英文": "输入 (Inputs)中文",
+            "输入 (Inputs)英文2": "输入 (Inputs)中文2"
+        },
+        "widgets": {
+            "控件 (Widgets)英文": "控件 (Widgets)中文",
+            "控件 (Widgets)英文2": "控件 (Widgets)中文2"
+        },
+        "outputs": {
+            "输出 (Outputs)英文": "输出 (Outputs)中文"
+        }
+    }
+}

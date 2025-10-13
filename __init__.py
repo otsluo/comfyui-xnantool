@@ -1,21 +1,50 @@
-"""
-ComfyUI XNAN Tool
-提供各种实用的ComfyUI节点，包括LoRA模型支持等功能。
-"""
+# 导入所有节点文件
+from .nodes.sam_modelloader_nodes import NODE_CLASS_MAPPINGS as SAM_NODE_CLASS_MAPPINGS
+from .nodes.sam_modelloader_nodes import NODE_DISPLAY_NAME_MAPPINGS as SAM_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.tool_size_presets_node import NODE_CLASS_MAPPINGS as TOOL_SIZE_PRESETS_NODE_CLASS_MAPPINGS
+from .nodes.tool_size_presets_node import NODE_DISPLAY_NAME_MAPPINGS as TOOL_SIZE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api_node import NODE_CLASS_MAPPINGS as MODELSCOPE_LORA_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_LORA_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api_model_presets_node import NODE_CLASS_MAPPINGS as MODELSCOPE_PRESETS_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api_model_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.yolo_modelloader_nodes import NODE_CLASS_MAPPINGS as YOLO_MODEL_LOADER_NODE_CLASS_MAPPINGS
+from .nodes.yolo_modelloader_nodes import NODE_DISPLAY_NAME_MAPPINGS as YOLO_MODEL_LOADER_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.yolo_detect_and_crop_node import NODE_CLASS_MAPPINGS as YOLO_DETECT_AND_CROP_NODE_CLASS_MAPPINGS
+from .nodes.yolo_detect_and_crop_node import NODE_DISPLAY_NAME_MAPPINGS as YOLO_DETECT_AND_CROP_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.square_converter_node import NODE_CLASS_MAPPINGS as SQUARE_CONVERTER_NODE_CLASS_MAPPINGS
+from .nodes.square_converter_node import NODE_DISPLAY_NAME_MAPPINGS as SQUARE_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.yolo_sam_background_removal_node import NODE_CLASS_MAPPINGS as YOLO_SAM_BACKGROUND_REMOVAL_NODE_CLASS_MAPPINGS
+from .nodes.yolo_sam_background_removal_node import NODE_DISPLAY_NAME_MAPPINGS as YOLO_SAM_BACKGROUND_REMOVAL_NODE_DISPLAY_NAME_MAPPINGS
 
-# 从节点文件导入节点类和映射字典
-from .modelscope_api_lora_node import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
+# 合并所有节点映射的工具函数
+def merge_node_mappings(*mappings):
+    merged = {}
+    for mapping in mappings:
+        merged.update(mapping)
+    return merged
 
-# 版本信息
-__version__ = "0.0.1"
+# 合并所有节点类映射
+NODE_CLASS_MAPPINGS = merge_node_mappings(
+    SAM_NODE_CLASS_MAPPINGS,
+    TOOL_SIZE_PRESETS_NODE_CLASS_MAPPINGS,
+    MODELSCOPE_LORA_NODE_CLASS_MAPPINGS,
+    MODELSCOPE_PRESETS_NODE_CLASS_MAPPINGS,
+    YOLO_MODEL_LOADER_NODE_CLASS_MAPPINGS,
+    YOLO_DETECT_AND_CROP_NODE_CLASS_MAPPINGS,
+    SQUARE_CONVERTER_NODE_CLASS_MAPPINGS,
+    YOLO_SAM_BACKGROUND_REMOVAL_NODE_CLASS_MAPPINGS,
+)
 
-# 包的描述信息
-__description__ = "ComfyUI XNAN Tool - 提供各种扩展节点功能"
+# 合并所有节点显示名称映射
+NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
+    SAM_NODE_DISPLAY_NAME_MAPPINGS,
+    TOOL_SIZE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
+    MODELSCOPE_LORA_NODE_DISPLAY_NAME_MAPPINGS,
+    MODELSCOPE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
+    YOLO_MODEL_LOADER_NODE_DISPLAY_NAME_MAPPINGS,
+    YOLO_DETECT_AND_CROP_NODE_DISPLAY_NAME_MAPPINGS,
+    SQUARE_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
+    YOLO_SAM_BACKGROUND_REMOVAL_NODE_DISPLAY_NAME_MAPPINGS,
+)
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS",
-    "__version__",
-    "__description__"
-]
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

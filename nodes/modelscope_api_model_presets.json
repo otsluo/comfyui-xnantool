@@ -1,0 +1,71 @@
+{
+  "text_to_image_presets": [
+    {
+      "name": "Qwen-Image默认",
+      "base_model": "Qwen/Qwen-Image",
+      "lora_weight": 0.6,
+      "steps": 20,
+      "cfg_scale": 7.0
+    },
+    {
+      "name": "FLUX.1快速",
+      "base_model": "black-forest-labs/FLUX.1-schnell",
+      "lora_weight": 0.0,
+      "steps": 4,
+      "cfg_scale": 1.0
+    },
+    {
+      "name": "SDXL高质量",
+      "base_model": "stabilityai/stable-diffusion-xl-base-1.0",
+      "lora_weight": 0.0,
+      "steps": 30,
+      "cfg_scale": 8.0
+    }
+  ],
+  "image_edit_presets": [
+    {
+      "name": "Qwen-Image编辑",
+      "base_model": "Qwen/Qwen-Image-Edit",
+      "lora_weight": 0.5
+    },
+    {
+      "name": "SDXL Refiner",
+      "base_model": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "lora_weight": 0.0
+    }
+  ],
+  "models": [
+    [
+      "Qwen/Qwen-Image",
+      "Qwen-Image"
+    ],
+    [
+      "black-forest-labs/FLUX.1-schnell",
+      "FLUX.1-schnell"
+    ],
+    [
+      "black-forest-labs/FLUX.1-Krea-dev",
+      "FLUX.1-Krea-dev"
+    ],
+    [
+      "stabilityai/stable-diffusion-xl-base-1.0",
+      "SDXL 1.0"
+    ],
+    [
+      "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "SDXL Refiner"
+    ],
+    [
+      "segmind/Segmind-Vega",
+      "Segmind-Vega"
+    ],
+    [
+      "runwayml/stable-diffusion-inpainting",
+      "SD Inpainting"
+    ],
+    [
+      "Qwen/Qwen-Image-Edit",
+      "Qwen-Image-Edit"
+    ]
+  ]
+}

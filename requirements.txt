@@ -1,7 +1,36 @@
+# 可以通过运行【install_dependencies.py】文件来安装依赖
+# cd 目录：如下
+# cd e:\git_project\comfyui-xnantool
+# python install_dependencies.py
+# 检测
+# cd e:\git_project\comfyui-xnantool
+# python verify_installation_xnantool.py
+
+# 基础通用依赖
+
 torch
-# numpy
+torchvision  # 添加torchvision，YOLO需要它进行图像处理
+numpy
+
+# YOLO相关依赖
+ultralytics>=8.0.0  # 指定版本要求，确保兼容性
+matplotlib>=3.5.0
+requests>=2.28.0
+pillow>=9.0.0  # pillow是PIL的更新版本，无需重复指定PIL
+opencv-python>=4.5.0  # 添加OpenCV，YOLO检测常用的图像处理库
+
+# SAM相关依赖
+# git+https://github.com/facebookresearch/segment-anything.git  # SAM模型库
+git+https://gitcode.com/GitHub_Trending/se/segment-anything.git # SAM模型库加速镜像
+# 可以通过秋叶命令提示符直接python install git+https://gitcode.com/GitHub_Trending/se/segment-anything.git
+onnxruntime  # ONNX运行时，用于模型导出
+onnx  # ONNX格式支持
+# pycocotools-windows-fix; sys_platform == 'win32'  # Windows系统的pycocotools替代方案
+# pycocotools; sys_platform != 'win32'  # 非Windows系统的pycocotools
+
+# 魔搭api相关依赖
 openai
 # requests
-# PIL
+#PIL # pillow是PIL的更新版本，无需重复指定PIL
 # httpx
 # socksio
