@@ -464,7 +464,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloSamBackgroundRemovalNode": "YOLO+SAM背景去除-【新】"
+    "YoloSamBackgroundRemovalNode": "YOLO+SAM背景去除-【新-dev版】"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

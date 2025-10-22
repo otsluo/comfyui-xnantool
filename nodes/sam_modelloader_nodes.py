@@ -426,9 +426,9 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SamModelLoader": "SAM模型加载器（预设）-【新】",
-    "SamModelLoaderV2": "SAM模型加载器V2 (本地模型)-【新】",
-    "SamModelLoaderCustomPath": "SAM模型加载器(自定义路径)-【新】",
+    "SamModelLoader": "SAM模型加载器（预设）",
+    "SamModelLoaderV2": "SAM模型加载器V2 (本地模型)",
+    "SamModelLoaderCustomPath": "SAM模型加载器(自定义路径)",
 }
 
 # 确保模块被正确导入

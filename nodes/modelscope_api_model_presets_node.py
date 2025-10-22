@@ -68,7 +68,7 @@ class ModelscopeApiSelector:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("model_name",)
     FUNCTION = "get_model_name"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "XnanTool/魔搭api"
     
     def get_model_name(self, model_name):
         """返回选中的魔搭API模型名称"""
@@ -133,7 +133,7 @@ class ModelscopeApiManager:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("status_message",)
     FUNCTION = "manage_models"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "XnanTool/魔搭api"
     
     def manage_models(self, action, model_id="", model_display_name="", model_to_delete=""):
         config = load_model_config()

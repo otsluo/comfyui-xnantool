@@ -186,7 +186,7 @@ class modelscopeLoraTextToImageNode:
                 }),
                 "lora_weight": ("FLOAT", {
                     "default": 0.8,
-                    "min": 0.1,
+                    "min": 0.0,
                     "max": 2.0,
                     "step": 0.1,
                     "label": "LoRA权重"
@@ -244,7 +244,7 @@ class modelscopeLoraTextToImageNode:
                 print(f"🎯 使用指定种子: {seed}")
             else:
                 import random
-                random_seed = random.randint(0, 2147483647)
+                random_seed = random.randint(0, 20251003)
                 payload['seed'] = random_seed
                 print(f"🎲 使用随机种子: {random_seed}")
             
@@ -405,7 +405,7 @@ class modelscopeLoraImageEditNode:
                 "seed": ("INT", {
                     "default": -1,
                     "min": -1,
-                    "max": 2147483647,
+                    "max": 20251003,
                     "label": "随机种子"
                 }),
                 "steps": ("INT", {
@@ -423,7 +423,7 @@ class modelscopeLoraImageEditNode:
                 }),
                 "lora_weight": ("FLOAT", {
                     "default": 0.8,
-                    "min": 0.1,
+                    "min": 0.0,
                     "max": 2.0,
                     "step": 0.1,
                     "label": "LoRA权重"

@@ -2,11 +2,10 @@ import torch
 import numpy as np
 from PIL import Image
 
-class SquareConverter:
+class RectangleConverter:
     """
-    正方形转换器节点
-    输入一个尺寸，例如是200x300，那么会把较短尺寸填充到与较长尺寸相等，
-    图片保持不变，同时可以增加边距，使得最终尺寸的短边加边距等于长边加边距
+    长方形转换器节点
+    将正方形图像转换为长方形图像，支持左右和上下的扩展，可以手动指定最终长度
     """
 
     def __init__(self):
@@ -17,36 +16,67 @@ class SquareConverter:
         return {
             "required": {
                 "image": ("IMAGE",),
+                "direction": (["left_right", "top_bottom"], {
+                    "default": "left_right",
+                    "label": "扩展方向",
+                    "description": "选择扩展方向：左右扩展或上下扩展"
+                }),
+                "target_length": ("INT", {
+                    "default": 1024,
+                    "min": 1,
+                    "max": 8192,
+                    "step": 1,
+                    "display": "number",
+                    "label": "目标长度",
+                    "description": "指定长边的目标长度"
+                }),
                 "margin": ("INT", {
                     "default": 0,
                     "min": 0,
                     "max": 1000,
                     "step": 1,
-                    "display": "number"
+                    "display": "number",
+                    "label": "边距",
+                    "description": "在图像周围添加的额外边距"
                 }),
             },
             "optional": {
                 "pad_color": ("STRING", {
                     "default": "#FFFFFF",
-                    "multiline": False
+                    "multiline": False,
+                    "label": "填充颜色",
+                    "description": "填充区域的颜色，支持十六进制颜色代码或'transparent'"
                 })
             }
         }
 
     RETURN_TYPES = ("IMAGE", "INT", "INT")
     RETURN_NAMES = ("image", "width", "height")
-    FUNCTION = "convert_to_square"
+    FUNCTION = "convert_to_rectangle"
     CATEGORY = "XnanTool/实用工具/Image"
 
-    def convert_to_square(self, image, margin, pad_color="#FFFFFF"):
+    def convert_to_rectangle(self, image, direction, target_length, margin, pad_color="#FFFFFF"):
         # 获取图像尺寸
         batch_size, height, width, channels = image.shape
         
-        # 计算目标尺寸（取较大边）
-        target_size = max(width, height)
+        # 确保目标长度不小于原图的最大边
+        max_dimension = max(width, height)
+        if target_length < max_dimension:
+            target_length = max_dimension
+        
+        # 根据方向确定最终尺寸
+        if direction == "left_right":
+            # 左右扩展：高度保持不变，宽度扩展到目标长度
+            target_width = target_length
+            target_height = height
+        else:  # top_bottom
+            # 上下扩展：宽度保持不变，高度扩展到目标长度
+            target_width = width
+            target_height = target_length
         
         # 添加边距
-        target_size_with_margin = target_size + 2 * margin
+        target_width_with_margin = target_width + 2 * margin
+        target_height_with_margin = target_height + 2 * margin
         
         # 解析颜色值
         if pad_color == "transparent" and channels >= 4:
@@ -78,22 +108,22 @@ class SquareConverter:
                 if channels == 4:
                     pad_value.append(1.0)
         
-        # 如果pad_value是列表，转换为适合填充的值
+        # 创建新的图像张量，并用填充颜色初始化
         if isinstance(pad_value, list):
             # 创建新的图像张量，并用填充颜色初始化
-            new_image = torch.zeros((batch_size, target_size_with_margin, target_size_with_margin, channels), 
+            new_image = torch.zeros((batch_size, target_height_with_margin, target_width_with_margin, channels), 
                                    dtype=image.dtype)
             # 为每个通道分别设置值
             for i in range(channels):
                 new_image[:, :, :, i] = pad_value[i]
         else:
             # 创建新的图像张量，并用填充颜色初始化
-            new_image = torch.full((batch_size, target_size_with_margin, target_size_with_margin, channels), 
+            new_image = torch.full((batch_size, target_height_with_margin, target_width_with_margin, channels), 
                                   pad_value, dtype=image.dtype)
         
         # 计算填充位置，使图像居中
-        pad_height = (target_size_with_margin - height) // 2
-        pad_width = (target_size_with_margin - width) // 2
+        pad_height = (target_height_with_margin - height) // 2
+        pad_width = (target_width_with_margin - width) // 2
         
         # 填充原始图像到中心位置
         new_image[:, pad_height:pad_height+height, pad_width:pad_width+width, :] = image
@@ -106,16 +136,16 @@ class SquareConverter:
             new_image[:, pad_height:pad_height+height, :pad_width, 3] = 0.0  # 左侧填充
             new_image[:, pad_height:pad_height+height, pad_width+width:, 3] = 0.0  # 右侧填充
         
-        return (new_image, target_size_with_margin, target_size_with_margin)
+        return (new_image, target_width_with_margin, target_height_with_margin)
 
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {
-    "SquareConverter": SquareConverter
+    "RectangleConverter": RectangleConverter
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SquareConverter": "正方形转换器-最大尺寸1024"
+    "RectangleConverter": "长方形转换器"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

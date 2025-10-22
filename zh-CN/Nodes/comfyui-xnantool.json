@@ -118,6 +118,32 @@
       "height": "高度"
     }
   },
+  "RectangleConverter": {
+    "title": "长方形转换器-【新】",
+    "description": "将正方形图像转换为长方形图像，支持左右和上下的扩展，可以手动指定最终长度",
+    "inputs": {
+      "image": "输入图像",
+      "direction": "扩展方向",
+      "target_length": "目标长度",
+      "margin": "边距"
+    },
+    "widgets": {
+      "direction": "扩展方向",
+      "target_length": "目标长度",
+      "pad_color": "填充颜色"
+    },
+    "outputs": {
+      "image": "图像",
+      "width": "宽度",
+      "height": "高度"
+    },
+    "widget_values": {
+      "direction": {
+        "left_right": "左右扩展",
+        "top_bottom": "上下扩展"
+      }
+    }
+  },
   "SizeSelector": {
     "title": "尺寸预设-【新】",
     "description": "提供常用图像尺寸的快速选择",
@@ -130,6 +156,132 @@
     "outputs": {
       "width": "宽度",
       "height": "高度"
+    }
+  },
+  "YoloDetectionNode": {
+    "title": "YOLO检测节点-【新】",
+    "description": "执行YOLO目标检测并显示结果",
+    "inputs": {
+      "yolo_model": "YOLO模型",
+      "image": "输入图像",
+      "classes": "检测类别",
+      "confidence_threshold": "置信度阈值",
+      "show_annotations": "显示标注"
+    },
+    "widgets": {
+      "classes": "检测类别",
+      "confidence_threshold": "置信度阈值",
+      "show_annotations": "显示标注"
+    },
+    "outputs": {
+      "annotated_image": "带标注图像",
+      "detection_results": "检测结果",
+      "detected_objects_count": "检测对象数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectionResultsProcessor": {
+    "title": "YOLO检测结果处理器",
+    "description": "处理YOLO检测结果，提供过滤、统计和格式化功能",
+    "inputs": {
+      "detection_results": "检测结果",
+      "min_confidence": "最小置信度",
+      "class_filter": "类别过滤器",
+      "max_objects": "最大对象数"
+    },
+    "widgets": {
+      "min_confidence": "最小置信度",
+      "class_filter": "类别过滤器",
+      "max_objects": "最大对象数"
+    },
+    "outputs": {
+      "filtered_results": "过滤结果",
+      "object_count": "对象数量",
+      "summary": "摘要信息",
+      "class_list": "类别列表"
+    }
+  },
+  "YoloDetectionResultsToBboxes": {
+    "title": "YOLO检测结果转边界框",
+    "description": "将YOLO检测结果转换为边界框坐标列表",
+    "inputs": {
+      "detection_results": "检测结果"
+    },
+    "widgets": {
+    },
+    "outputs": {
+      "bboxes": "边界框列表",
+      "count": "边界框数量"
+    }
+  },
+  "YoloDetectionCropNode": {
+    "title": "YOLO检测裁切节点",
+    "description": "根据YOLO检测结果裁切图像中的每个检测对象",
+    "inputs": {
+      "image": "输入图像",
+      "detection_results": "检测结果",
+      "padding": "裁切边距",
+      "square_crop": "方形裁切",
+      "crop_index": "裁切索引"
+    },
+    "widgets": {
+      "padding": "裁切边距",
+      "square_crop": "方形裁切",
+      "crop_index": "裁切索引"
+    },
+    "outputs": {
+      "cropped_images": "裁切图像",
+      "masks": "裁切遮罩",
+      "crop_count": "裁切数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectionMultiCropNode": {
+    "title": "YOLO检测多裁切节点",
+    "description": "根据YOLO检测结果裁切图像中的每个检测对象，直接输出多个裁剪图片结果",
+    "inputs": {
+      "image": "输入图像",
+      "detection_results": "检测结果",
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "widgets": {
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "outputs": {
+      "cropped_images": "裁切图像",
+      "masks": "裁切遮罩",
+      "crop_count": "裁切数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectionMultiOutputCropNode": {
+    "title": "YOLO检测多输出裁切节点",
+    "description": "根据YOLO检测结果裁切图像中的每个检测对象，通过多个独立输出端口分别输出裁切图像1至裁切图像5",
+    "inputs": {
+      "image": "输入图像",
+      "detection_results": "检测结果",
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "widgets": {
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "outputs": {
+      "cropped_image_1": "裁切图像1",
+      "cropped_image_2": "裁切图像2",
+      "cropped_image_3": "裁切图像3",
+      "cropped_image_4": "裁切图像4",
+      "cropped_image_5": "裁切图像5",
+      "mask_1": "遮罩1",
+      "mask_2": "遮罩2",
+      "mask_3": "遮罩3",
+      "mask_4": "遮罩4",
+      "mask_5": "遮罩5",
+      "crop_count": "裁切数量",
+      "info": "信息"
     }
   },
   "YoloDetectAndCropNode": {
@@ -235,6 +387,40 @@
       }
     }
   },
+  "ModelscopeApiLoraSelector": {
+    "title": "魔搭API-Lora模型选择器",
+    "description": "提供Lora模型名称选择功能",
+    "inputs": {
+    },
+    "widgets": {
+      "lora_model_name": "Lora模型名称"
+    },
+    "outputs": {
+      "lora_model_name": "Lora模型名称"
+    }
+  },
+  "ModelscopeApiLoraManager": {
+    "title": "魔搭API-Lora列表管理",
+    "description": "用于管理可用Lora模型，支持list/add/delete操作",
+    "inputs": {
+    },
+    "widgets": {
+      "action": "操作类型",
+      "lora_model_id": "Lora模型ID",
+      "lora_model_display_name": "显示名称",
+      "lora_model_to_delete": "要删除的Lora模型"
+    },
+    "outputs": {
+      "status_message": "状态信息"
+    },
+    "widget_values": {
+      "action": {
+        "list": "列出",
+        "add": "添加",
+        "delete": "删除"
+      }
+    }
+  },
   "YoloSamBackgroundRemovalNode": {
     "title": "YOLO+SAM背景去除-【新】",
     "description": "使用YOLO目标检测和SAM分割技术进行精确的背景去除和裁剪",
@@ -267,6 +453,60 @@
         "highest_confidence": "最高置信度",
         "manual_index": "手动索引"
       }
+    }
+  },
+  "ImageVideoPromptPresetSelector": {
+    "title": "图片视频提示词预设选择器",
+    "description": "提供预设提示词的快速选择",
+    "inputs": {
+      "prompt_preset": "提示词预设"
+    },
+    "widgets": {
+      "prompt_preset": "提示词预设"
+    },
+    "outputs": {
+      "image_prompt": "图片提示词",
+      "video_prompt": "视频提示词",
+      "image_preview": "预览图像"
+    }
+  },
+  "ImageVideoPromptPresetManager": {
+    "title": "图片视频提示词预设管理器",
+    "description": "用于管理预设提示词，支持list/add/delete操作",
+    "inputs": {
+    },
+    "widgets": {
+      "action": "操作类型",
+      "preset_name": "预设名称",
+      "preset_description": "预设描述",
+      "image_prompt": "图片提示词",
+      "video_prompt": "视频提示词",
+      "preset_to_delete": "要删除的预设"
+    },
+    "outputs": {
+      "status_message": "状态信息"
+    },
+    "widget_values": {
+      "action": {
+        "list": "列出",
+        "add": "添加",
+        "delete": "删除"
+      }
+    }
+  },
+  "ImageUploadNode": {
+    "title": "图像上传节点",
+    "description": "用于为预设添加图像预览",
+    "inputs": {
+      "preset_name": "预设名称",
+      "image": "图像"
+    },
+    "widgets": {
+      "preset_name": "预设名称",
+      "image": "图像"
+    },
+    "outputs": {
+      "status_message": "状态信息"
     }
   }
 }

@@ -1,0 +1,25 @@
+{
+  "presets": [
+    {
+      "name": "当朋友来敲门",
+      "description": "温馨的朋友来访场景",
+      "image_prompt": "A warm scene of friends visiting, cozy living room with sunlight streaming through windows, friends greeting each other with smiles, comfortable sofas, coffee table with snacks, modern home decor, heartwarming atmosphere",
+      "video_prompt": "Friends arriving at a doorstep, knocking on the door, friendly greetings, warm embrace, entering a cozy home together, smiling faces, casual clothing, daytime lighting",
+      "image_path": ""
+    },
+    {
+      "name": "浪漫晚餐",
+      "description": "浪漫的烛光晚餐场景",
+      "image_prompt": "Romantic candlelit dinner for two, elegant table setting with fine china, wine glasses, flickering candles, soft ambient lighting, intimate atmosphere, beautifully plated food, upscale restaurant or home dining room",
+      "video_prompt": "Couple preparing for a romantic dinner, setting the table with candles, cooking together, sharing wine, intimate conversations, candlelight dancing, tender moments, evening ambiance",
+      "image_path": ""
+    },
+    {
+      "name": "户外野餐",
+      "description": "阳光明媚的户外野餐",
+      "image_prompt": "Sunny outdoor picnic scene, checkered blanket under a tree, wicker basket with food, clear blue sky, green grass, family or friends enjoying meal outdoors, park setting, relaxed atmosphere, picnic essentials like plates and drinks",
+      "video_prompt": "Setting up for an outdoor picnic, laying out the blanket, unpacking the picnic basket, people relaxing on the grass, enjoying food and drinks, playing outdoor games, sunny day in the park, cheerful conversations",
+      "image_path": ""
+    }
+  ]
+}

@@ -423,9 +423,9 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloModelLoader": "YOLO模型加载器 (v8预设)-【新】",
-    "YoloModelLoaderV2": "YOLO模型加载器V2(本地模型)-【新】",
-    "YoloModelLoaderCustomPath": "YOLO模型加载器(自定义路径)-【新】",
+    "YoloModelLoader": "YOLO模型加载器 (v8预设)",
+    "YoloModelLoaderV2": "YOLO模型加载器V2(本地模型)",
+    "YoloModelLoaderCustomPath": "YOLO模型加载器(自定义路径)",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -15,6 +15,13 @@
       "cfg_scale": 1.0
     },
     {
+      "name": "FLUX.1-Kontext",
+      "base_model": "black-forest-labs/FLUX.1-Kontext",
+      "lora_weight": 0.0,
+      "steps": 20,
+      "cfg_scale": 3.5
+    },
+    {
       "name": "SDXL高质量",
       "base_model": "stabilityai/stable-diffusion-xl-base-1.0",
       "lora_weight": 0.0,
@@ -24,8 +31,13 @@
   ],
   "image_edit_presets": [
     {
-      "name": "Qwen-Image编辑",
+      "name": "Qwen-Image-Edit",
       "base_model": "Qwen/Qwen-Image-Edit",
+      "lora_weight": 0.5
+    },
+    {
+      "name": "Qwen-Image-Edit-2509",
+      "base_model": "Qwen/Qwen-Image-Edit-2509",
       "lora_weight": 0.5
     },
     {
@@ -48,6 +60,10 @@
       "FLUX.1-Krea-dev"
     ],
     [
+      "black-forest-labs/FLUX.1-Kontext",
+      "FLUX.1-Kontext"
+    ],
+    [
       "stabilityai/stable-diffusion-xl-base-1.0",
       "SDXL 1.0"
     ],
@@ -66,6 +82,10 @@
     [
       "Qwen/Qwen-Image-Edit",
       "Qwen-Image-Edit"
+    ],
+    [
+      "Qwen/Qwen-Image-Edit-2509",
+      "Qwen-Image-Edit-2509"
     ]
   ]
 }

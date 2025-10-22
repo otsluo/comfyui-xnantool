@@ -1,0 +1,16 @@
+{
+  "lora_models": [
+    [
+      "qwenimage_test/qwenimage_lora_test",
+      "千问测试Lora"
+    ],
+    [
+      "flux_test/flux_lora_test",
+      "FLUX测试Lora"
+    ],
+    [
+      "qiyuanai/shouchizipai_v1",
+      "抖音小红书手持手机自拍美女"
+    ]
+  ]
+}
