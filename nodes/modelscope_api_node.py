@@ -654,8 +654,8 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "modelscopeLoraTextToImageNode": "文生图节点",
-    "modelscopeLoraImageEditNode": "图像编辑节点"
+    "modelscopeLoraTextToImageNode": "魔搭API-文生图节点",
+    "modelscopeLoraImageEditNode": "魔搭API-图像编辑节点"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

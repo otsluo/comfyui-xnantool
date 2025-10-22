@@ -34,3 +34,7 @@ openai
 #PIL # pillow是PIL的更新版本，无需重复指定PIL
 # httpx
 # socksio
+
+# 视频处理相关依赖
+imageio>=2.9.0  # 用于读取和写入图像序列，包括GIF
+imageio-ffmpeg>=0.4.2  # imageio的ffmpeg插件，用于视频处理

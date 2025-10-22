@@ -53,7 +53,7 @@ class RectangleConverter:
     RETURN_TYPES = ("IMAGE", "INT", "INT")
     RETURN_NAMES = ("image", "width", "height")
     FUNCTION = "convert_to_rectangle"
-    CATEGORY = "XnanTool/实用工具/Image"
+    CATEGORY = "XnanTool/实用工具/小工具"
 
     def convert_to_rectangle(self, image, direction, target_length, margin, pad_color="#FFFFFF"):
         # 获取图像尺寸
@@ -145,7 +145,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "RectangleConverter": "长方形转换器"
+    "RectangleConverter": "长方形转换器-【新】"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

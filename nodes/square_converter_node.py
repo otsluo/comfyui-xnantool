@@ -36,7 +36,7 @@ class SquareConverter:
     RETURN_TYPES = ("IMAGE", "INT", "INT")
     RETURN_NAMES = ("image", "width", "height")
     FUNCTION = "convert_to_square"
-    CATEGORY = "XnanTool/实用工具/Image"
+    CATEGORY = "XnanTool/实用工具/小工具"
 
     def convert_to_square(self, image, margin, pad_color="#FFFFFF"):
         # 获取图像尺寸

@@ -36,7 +36,7 @@ class CreateImageNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
     FUNCTION = "create_image"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "XnanTool/实用工具/小工具"
     OUTPUT_NODE = False
     
     def create_image(self, width, height, color):
@@ -74,7 +74,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "CreateImageNode": "创建图像节点-【新-dev版】"
+    "CreateImageNode": "创建图像节点-【新】"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -34,6 +34,8 @@ from .nodes.image_video_prompt_presets_node import NODE_CLASS_MAPPINGS as IMAGE_
 from .nodes.image_video_prompt_presets_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_VIDEO_PROMPT_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_upload_node import NODE_CLASS_MAPPINGS as IMAGE_UPLOAD_NODE_CLASS_MAPPINGS
 from .nodes.image_upload_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_UPLOAD_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.video_to_gif_node import NODE_CLASS_MAPPINGS as VIDEO_TO_GIF_NODE_CLASS_MAPPINGS
+from .nodes.video_to_gif_node import NODE_DISPLAY_NAME_MAPPINGS as VIDEO_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS
 
 # 合并所有节点映射的工具函数
 def merge_node_mappings(*mappings):
@@ -62,6 +64,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS,
     IMAGE_UPLOAD_NODE_CLASS_MAPPINGS,
+    VIDEO_TO_GIF_NODE_CLASS_MAPPINGS,
 )
 
 # 合并所有节点显示名称映射
@@ -84,6 +87,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
     IMAGE_UPLOAD_NODE_DISPLAY_NAME_MAPPINGS,
+    VIDEO_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS,
 )
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -254,8 +254,8 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ModelscopeApiSelector": "魔搭API模型选择器",
-    "ModelscopeApiManager": "魔搭API列表管理"
+    "ModelscopeApiSelector": "魔搭API-模型选择器",
+    "ModelscopeApiManager": "魔搭API-列表管理"  
 }
 
 # 确保模块被正确导入

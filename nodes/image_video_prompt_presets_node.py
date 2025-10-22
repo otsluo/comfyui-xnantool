@@ -122,6 +122,74 @@ class ImageVideoPromptPresetSelector:
         blank_img = np.zeros((512, 512, 3), dtype=np.float32)
         return ("", "", blank_img)
 
+class ImageVideoPromptPresetSelectorDev:
+    """图片视频提示词预设选择器节点(dev版) - 提供预设提示词的快速选择，当有图片时自动加载并预览图片"""
+    def __init__(self):
+        pass
+    
+    @classmethod
+    def INPUT_TYPES(cls):
+        config = load_prompt_presets_config()
+        presets = config.get("presets", [])
+        
+        # 提取所有预设名称和描述
+        preset_names = [preset["name"] for preset in presets] if presets else [p[0] for p in DEFAULT_PROMPT_PRESETS]
+        preset_descriptions = {}
+        
+        # 构建预设描述字典
+        if presets:
+            for preset in presets:
+                # 添加图片信息到描述中
+                desc = preset.get("description", "")
+                image_path = preset.get("image_path", "")
+                if image_path:
+                    desc = f"{desc} [有预览图]"
+                preset_descriptions[preset["name"]] = desc
+        else:
+            preset_descriptions = {p[0]: p[1] for p in DEFAULT_PROMPT_PRESETS}
+        
+        # 返回输入类型配置
+        return {
+            "required": {
+                "prompt_preset": (preset_names, {
+                    "default": preset_names[0] if preset_names else "",
+                    "labels": preset_descriptions,
+                    "label": "提示词预设",
+                    "description": "选择预设的图片和视频提示词，有预览图的预设会显示[有预览图]标记"
+                })
+            }
+        }
+    
+    RETURN_TYPES = ("STRING", "STRING", "IMAGE")
+    RETURN_NAMES = ("image_prompt", "video_prompt", "image_preview")
+    FUNCTION = "get_prompts"
+    CATEGORY = "XnanTool/实用工具/预设"
+    
+    def get_prompts(self, prompt_preset):
+        """根据选中的预设返回对应的图片和视频提示词以及预览图像"""
+        config = load_prompt_presets_config()
+        presets = config.get("presets", [])
+        
+        # 查找匹配的预设
+        for preset in presets:
+            if preset["name"] == prompt_preset:
+                image_prompt = preset.get("image_prompt", "")
+                video_prompt = preset.get("video_prompt", "")
+                
+                # 获取图像路径并加载图像
+                image_path = preset.get("image_path", "")
+                # 如果是相对路径，则相对于nodes目录
+                if image_path and not os.path.isabs(image_path):
+                    image_path = os.path.join(os.path.dirname(__file__), image_path)
+                
+                image_preview = load_image_from_path(image_path)
+                
+                return (image_prompt, video_prompt, image_preview)
+        
+        # 如果没有找到匹配的预设，返回空字符串和空白图像
+        blank_img = np.zeros((512, 512, 3), dtype=np.float32)
+        return ("", "", blank_img)
+
 class ImageVideoPromptPresetManager:
     """图片视频提示词预设管理节点 - 用于查看和管理预设提示词"""
     def __init__(self):
@@ -204,6 +272,9 @@ class ImageVideoPromptPresetManager:
                     try:
                         name = preset.get("name", "未知名称")
                         desc = preset.get("description", "无描述")
+                        image_path = preset.get("image_path", "")
+                        if image_path:
+                            desc = f"{desc} [有预览图]"
                         message += f"{i+1}. {name} - {desc}\n"
                     except Exception as e:
                         message += f"{i+1}. 处理预设时出错: {str(e)}\n"
@@ -275,12 +346,14 @@ class ImageVideoPromptPresetManager:
 # 导出节点映射和显示名称映射
 NODE_CLASS_MAPPINGS = {
     "ImageVideoPromptPresetSelector": ImageVideoPromptPresetSelector,
+    "ImageVideoPromptPresetSelectorDev": ImageVideoPromptPresetSelectorDev,
     "ImageVideoPromptPresetManager": ImageVideoPromptPresetManager
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageVideoPromptPresetSelector": "图片视频提示词预设选择器-【新-dev版】",
-    "ImageVideoPromptPresetManager": "图片视频提示词预设管理器-【新-dev版】"
+    "ImageVideoPromptPresetSelector": "图片视频提示词预设选择器",
+    "ImageVideoPromptPresetSelectorDev": "图片视频提示词预设选择器-【新-dev版】",
+    "ImageVideoPromptPresetManager": "图片视频提示词预设管理器"
 }
 
 # 确保模块被正确导入

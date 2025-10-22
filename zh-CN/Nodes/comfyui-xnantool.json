@@ -457,23 +457,42 @@
   },
   "ImageVideoPromptPresetSelector": {
     "title": "图片视频提示词预设选择器",
-    "description": "提供预设提示词的快速选择",
+    "description": "提供预设提示词的快速选择，方便在图像和视频生成中重复使用常用的提示词组合。",
     "inputs": {
       "prompt_preset": "提示词预设"
     },
-    "widgets": {
-      "prompt_preset": "提示词预设"
-    },
+    "widgets": {},
     "outputs": {
       "image_prompt": "图片提示词",
       "video_prompt": "视频提示词",
       "image_preview": "预览图像"
-    }
+    },
+    "widget_values": {}
+  },
+  "ImageVideoPromptPresetSelectorDev": {
+    "title": "图片视频提示词预设选择器-【新-dev版】",
+    "description": "提供预设提示词的快速选择，当预设有图片时会自动加载并预览图片。",
+    "inputs": {
+      "prompt_preset": "提示词预设"
+    },
+    "widgets": {},
+    "outputs": {
+      "image_prompt": "图片提示词",
+      "video_prompt": "视频提示词",
+      "image_preview": "预览图像"
+    },
+    "widget_values": {}
   },
   "ImageVideoPromptPresetManager": {
     "title": "图片视频提示词预设管理器",
-    "description": "用于管理预设提示词，支持list/add/delete操作",
+    "description": "用于查看和管理预设提示词，可以添加、删除和列出所有可用的预设。",
     "inputs": {
+      "action": "操作类型",
+      "preset_name": "预设名称",
+      "preset_description": "预设描述",
+      "image_prompt": "图片提示词",
+      "video_prompt": "视频提示词",
+      "preset_to_delete": "要删除的预设"
     },
     "widgets": {
       "action": "操作类型",
@@ -484,29 +503,50 @@
       "preset_to_delete": "要删除的预设"
     },
     "outputs": {
-      "status_message": "状态信息"
+      "status_message": "状态消息"
     },
     "widget_values": {
-      "action": {
-        "list": "列出",
-        "add": "添加",
-        "delete": "删除"
-      }
+      "action": [
+        "list",
+        "add",
+        "delete"
+      ]
     }
   },
-  "ImageUploadNode": {
-    "title": "图像上传节点",
-    "description": "用于为预设添加图像预览",
+  "VideoToGifNode": {
+    "title": "视频转GIF节点-【新】",
+    "description": "将视频文件转换为GIF动画，支持设置开始时间、持续时间和帧率等参数。",
     "inputs": {
-      "preset_name": "预设名称",
-      "image": "图像"
+      "video_file": "视频文件",
+      "start_time": "开始时间(秒)",
+      "duration": "持续时间(秒)",
+      "fps": "帧率(FPS)",
+      "resize_factor": "缩放因子",
+      "output_filename": "输出文件名",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小"
     },
     "widgets": {
-      "preset_name": "预设名称",
-      "image": "图像"
+      "video_file": "视频文件",
+      "start_time": "开始时间(秒)",
+      "duration": "持续时间(秒)",
+      "fps": "帧率(FPS)",
+      "resize_factor": "缩放因子",
+      "output_filename": "输出文件名",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小"
     },
     "outputs": {
-      "status_message": "状态信息"
+      "gif_file_path": "GIF文件路径"
+    },
+    "widget_values": {
+      "start_time": 0,
+      "duration": 5,
+      "fps": 10,
+      "resize_factor": 1.0,
+      "output_filename": "output.gif",
+      "optimize": true,
+      "palette_size": 256
     }
   }
 }
