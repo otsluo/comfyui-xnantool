@@ -52,7 +52,7 @@ class VideoToAudioNode:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("audio_file_path", "status_message")
     FUNCTION = "extract_audio"
-    CATEGORY = "XnanTool/实用工具/媒体处理"
+    CATEGORY = "XnanTool/媒体处理"
     OUTPUT_NODE = True
     
     @classmethod

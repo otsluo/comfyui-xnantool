@@ -488,48 +488,63 @@
       }
     }
   },
-  "ImageVideoPromptPresetSelector": {
-    "title": "图片视频提示词预设选择器",
-    "description": "提供预设提示词的快速选择，方便在图像和视频生成中重复使用常用的提示词组合。",
+  "ImageVideoPromptSelector": {
+    "title": "图片视频提示词预设-【新】",
+    "description": "提供预设提示词的快速选择，用于图片和视频生成",
     "inputs": {
       "prompt_preset": "提示词预设"
     },
-    "widgets": {},
-    "outputs": {
-      "image_prompt": "图片提示词",
-      "video_prompt": "视频提示词"
+    "widgets": {
+      "prompt_preset": "提示词预设"
     },
-    "widget_values": {}
+    "outputs": {
+      "image_prompt": "请输入图片的中文、英文提示词",
+      "video_prompt": "请输入视频的中文、英文提示词",
+      "preset_image": "预设图片"
+    }
   },
   
-  "ImageVideoPromptPresetManager": {
-    "title": "图片视频提示词预设管理器",
+  "ImageVideoPromptManager": {
+    "title": "图片视频提示词预设管理器-【新】",
     "description": "用于查看和管理预设提示词，可以添加、删除和列出所有可用的预设。",
     "inputs": {
       "action": "操作类型",
       "preset_name": "预设名称",
-      "preset_description": "预设描述",
-      "image_prompt": "图片提示词",
-      "video_prompt": "视频提示词",
+      "image_prompt": "请输入图片的中文、英文提示词",
+      "video_prompt": "请输入视频的中文、英文提示词",
       "preset_to_delete": "要删除的预设"
     },
     "widgets": {
       "action": "操作类型",
       "preset_name": "预设名称",
-      "preset_description": "预设描述",
-      "image_prompt": "图片提示词",
-      "video_prompt": "视频提示词",
+      "image_prompt": "请输入图片的中文、英文提示词",
+      "video_prompt": "请输入视频的中文、英文提示词",
       "preset_to_delete": "要删除的预设"
     },
     "outputs": {
-      "status_message": "状态消息"
+      "status_message": "状态信息"
     },
     "widget_values": {
-      "action": [
-        "list",
-        "add",
-        "delete"
-      ]
+      "action": {
+        "list": "列出",
+        "add": "添加",
+        "delete": "删除"
+      }
+    }
+  },
+  "ImageUploadNode": {
+    "title": "图像上传节点-【新】",
+    "description": "用于为预设添加图像预览",
+    "inputs": {
+      "preset_name": "预设名称",
+      "image": "图像"
+    },
+    "widgets": {
+      "preset_name": "预设名称",
+      "image": "图像"
+    },
+    "outputs": {
+      "status_message": "状态信息"
     }
   },
   "VideoToGifNode": {
@@ -547,7 +562,7 @@
       "output_filename": "输出文件名"
     },
     "widgets": {
-      "video_file": "选择要转换为GIF的视频文件",
+      "video_file": "选择要转换的视频",
       "start_time": "视频开始时间（秒）",
       "duration": "GIF的持续时间（秒）",
       "fps": "GIF的帧率",
@@ -576,6 +591,26 @@
         "2": "中等质量",
         "3": "高质量"
       }
+    }
+  },
+  "ToggleValueNode": {
+    "title": "切换值节点-【新】",
+    "description": "可以在两个值之间切换的节点，支持多种数据类型输入（FLOAT, INT, STRING）",
+    "inputs": {
+      "input_value": "输入布尔值",
+      "value_a": "值A",
+      "value_b": "值B"
+    },
+    "widgets": {
+      "input_value": "假为值A，真为值B",
+      "value_a": "第一个可选值",
+      "value_b": "第二个可选值"
+    },
+    "outputs": {
+      "原始类型输出": "原始类型输出",
+      "字符串输出": "字符串输出",
+      "整数输出": "整数输出",
+      "浮点输出": "浮点输出"
     }
   }
 }

@@ -89,7 +89,7 @@ class VideoToGifNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_path",)
     FUNCTION = "convert_video_to_gif"
-    CATEGORY = "XnanTool/实用工具/媒体处理"
+    CATEGORY = "XnanTool/媒体处理"
     
     @classmethod
     def IS_CHANGED(cls, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="output.gif"):

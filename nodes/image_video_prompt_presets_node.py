@@ -1,341 +1,399 @@
 import json
 import os
+import folder_paths
+from PIL import Image, ImageOps
 import numpy as np
 import torch
-from PIL import Image, ImageOps
 
-# 默认预设列表
-DEFAULT_PROMPT_PRESETS = [
-    ["当朋友来敲门", "温馨的朋友来访场景"],
-    ["浪漫晚餐", "浪漫的烛光晚餐场景"],
-    ["户外野餐", "阳光明媚的户外野餐"]
-]
-
-def load_prompt_presets_config():
-    """加载图片视频提示词预设配置"""
+# 预设配置相关函数
+def load_prompt_config():
+    """加载提示词预设配置"""
     config_path = os.path.join(os.path.dirname(__file__), 'image_video_prompt_presets.json')
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            # 确保presets字段存在
-            if "presets" not in data:
-                data["presets"] = []
-            return data
-    except Exception as e:
-        print(f"加载预设配置失败: {e}")
-        # 默认配置
+            config = json.load(f)
+        
+        # 验证配置结构
+        if not isinstance(config, dict):
+            raise ValueError("配置文件格式错误：根节点应为对象")
+        
+        prompt_presets = config.get("prompt_presets", [])
+        if not isinstance(prompt_presets, list):
+            raise ValueError("配置文件格式错误：prompt_presets应为数组")
+        
+        # 验证每个预设的必需字段
+        for i, preset in enumerate(prompt_presets):
+            if not isinstance(preset, dict):
+                raise ValueError(f"配置文件格式错误：第{i+1}个预设应为对象")
+            
+            if "name" not in preset:
+                raise ValueError(f"配置文件格式错误：第{i+1}个预设缺少'name'字段")
+            
+            # 确保每个预设至少有一个提示词字段
+            if "prompt" not in preset and "image_prompt" not in preset and "video_prompt" not in preset:
+                preset["prompt"] = ""  # 添加空提示词以避免错误
+        
+        return config
+    except FileNotFoundError:
+        print(f"提示词预设配置文件未找到: {config_path}")
+        # 返回默认配置
         return {
-            "presets": []
+            "prompt_presets": [
+                {
+                    "name": "默认提示词",
+                    "prompt": "high quality image",
+                    "negative_prompt": "low quality, blurry"
+                }
+            ]
+        }
+    except json.JSONDecodeError as e:
+        print(f"提示词预设配置文件JSON格式错误: {e}")
+        # 返回默认配置
+        return {
+            "prompt_presets": [
+                {
+                    "name": "默认提示词",
+                    "prompt": "high quality image",
+                    "negative_prompt": "low quality, blurry"
+                }
+            ]
+        }
+    except Exception as e:
+        print(f"加载提示词预设配置失败: {e}")
+        # 返回默认配置
+        return {
+            "prompt_presets": [
+                {
+                    "name": "默认提示词",
+                    "prompt": "high quality image",
+                    "negative_prompt": "low quality, blurry"
+                }
+            ]
         }
 
-def save_prompt_presets_config(config: dict) -> bool:
-    """保存图片视频提示词预设配置"""
+def save_prompt_config(config: dict) -> bool:
+    """保存提示词预设配置"""
     config_path = os.path.join(os.path.dirname(__file__), 'image_video_prompt_presets.json')
     try:
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(config, f, ensure_ascii=False, indent=2)
         return True
     except Exception as e:
-        print(f"保存预设配置失败: {e}")
+        print(f"保存提示词预设配置失败: {e}")
         return False
 
-def save_image_to_file(image_array, file_path):
-    """将numpy数组保存为图像文件"""
+def load_preset_image(preset_name: str):
+    """加载预设对应的图片"""
     try:
-        # 确保目录存在
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        # 构建图片路径
+        image_dir = os.path.join(os.path.dirname(__file__), 'image_video_prompt_presets_node')
+        image_path = os.path.join(image_dir, f'{preset_name}.png')
         
-        # 将0-1范围的浮点数转换为0-255的整数
-        if image_array.dtype == np.float32 or image_array.dtype == np.float64:
-            image_array = (image_array * 255).astype(np.uint8)
-        
-        # 创建PIL图像
-        image = Image.fromarray(image_array)
-        
-        # 保存图像
-        image.save(file_path, format="PNG")
-        return True
+        # 检查图片是否存在
+        if os.path.exists(image_path):
+            # 加载图片
+            img = Image.open(image_path)
+            img = ImageOps.exif_transpose(img)
+            img = img.convert("RGB")
+            img = np.array(img).astype(np.float32) / 255.0
+            img = torch.from_numpy(img)[None,]
+            return img
+        else:
+            # 如果图片不存在，返回None
+            print(f"预设图片未找到: {image_path}")
+            return None
     except Exception as e:
-        print(f"保存图像失败: {e}")
-        return False
+        print(f"加载预设图片失败: {e}")
+        return None
 
-def load_image_from_path(image_path):
-    """从路径加载图像并转换为ComfyUI格式，参考ComfyUI标准实现"""
-    try:
-        if not image_path or not os.path.exists(image_path):
-            # 返回一个空白图像
-            blank_img = np.zeros((512, 512, 3), dtype=np.float32)
-            # 转换为tensor格式 (H, W, C) -> (1, H, W, C)
-            blank_tensor = torch.from_numpy(blank_img)[None,]
-            return blank_tensor
-        
-        # 加载图像
-        img = Image.open(image_path)
-        
-        # 处理EXIF方向信息
-        img = ImageOps.exif_transpose(img)
-        
-        # 处理特殊的图像模式
-        if img.mode == 'I':
-            img = img.point(lambda i: i * (1 / 255))
-        
-        # 转换为RGB模式
-        img = img.convert("RGB")
-        
-        # 转换为numpy数组并归一化到0-1范围
-        img_array = np.array(img).astype(np.float32) / 255.0
-        
-        # 转换为tensor格式 (H, W, C) -> (1, H, W, C)
-        img_tensor = torch.from_numpy(img_array)[None,]
-        
-        return img_tensor
-    except Exception as e:
-        print(f"加载图像失败: {e}")
-        # 出错时返回空白图像
-        blank_img = np.zeros((512, 512, 3), dtype=np.float32)
-        # 转换为tensor格式 (H, W, C) -> (1, H, W, C)
-        blank_tensor = torch.from_numpy(blank_img)[None,]
-        return blank_tensor
-
-class ImageVideoPromptPresetSelector:
-    """图片视频提示词预设选择器节点 - 提供预设提示词的快速选择"""
+class ImageVideoPromptSelector:
+    """图片视频提示词选预设节点 - 提供图片和视频提示词预设选择功能"""
+    
     def __init__(self):
         pass
     
     @classmethod
     def INPUT_TYPES(cls):
-        config = load_prompt_presets_config()
-        presets = config.get("presets", [])
-        
-        # 提取所有预设名称
-        preset_names = [preset["name"] for preset in presets] if presets else [p[0] for p in DEFAULT_PROMPT_PRESETS]
-        
-        # 构建预设标签字典（名称+描述）
-        preset_labels = {}
-        if presets:
-            for preset in presets:
-                name = preset["name"]
-                description = preset.get("description", "")
-                # 将名称和描述组合成标签
-                preset_labels[name] = f"{name} - {description}" if description else name
-        else:
-            preset_labels = {p[0]: f"{p[0]} - {p[1]}" for p in DEFAULT_PROMPT_PRESETS}
-        
-        # 返回输入类型配置
-        return {
-            "required": {
-                "prompt_preset": (preset_names, {
-                    "default": preset_names[0] if preset_names else "",
-                    "labels": preset_labels,
-                    "label": "提示词预设",
-                    "description": "选择预设的图片和视频提示词"
-                })
+        try:
+            config = load_prompt_config()
+            prompt_presets = config.get("prompt_presets", [])
+            
+            # 提取所有预设名称
+            preset_names = [preset["name"] for preset in prompt_presets]
+            
+            # 确保至少有一个预设
+            if not preset_names:
+                preset_names = ["默认提示词"]
+            
+            # 创建名称到预设的映射，用于显示详细信息
+            preset_details = {}
+            for preset in prompt_presets:
+                # 兼容不同版本的配置格式
+                if "prompt" in preset:
+                    preset_details[preset["name"]] = preset["prompt"]
+                elif "image_prompt" in preset:
+                    preset_details[preset["name"]] = preset["image_prompt"]
+                else:
+                    preset_details[preset["name"]] = ""
+            
+            return {
+                "required": {
+                    "prompt_preset": (preset_names, {
+                        "default": preset_names[0],
+                        "label": "提示词预设",
+                        "description": "选择预设的图片或视频提示词"
+                    })
+                }
             }
-        }
+        except Exception as e:
+            print(f"ImageVideoPromptSelector.INPUT_TYPES 错误: {e}")
+            # 出现错误时返回默认配置
+            return {
+                "required": {
+                    "prompt_preset": (["默认提示词"], {
+                        "default": "默认提示词",
+                        "label": "提示词预设",
+                        "description": "选择预设的图片或视频提示词"
+                    })
+                }
+            }
     
-    RETURN_TYPES = ("STRING", "STRING")
-    RETURN_NAMES = ("image_prompt", "video_prompt")
+    RETURN_TYPES = ("STRING", "STRING", "IMAGE")
+    RETURN_NAMES = ("image_prompt", "video_prompt", "preset_image")
     FUNCTION = "get_prompts"
     CATEGORY = "XnanTool/实用工具/预设"
-    OUTPUT_NODE = True  # 标记为输出节点，可以在UI中显示图像
     
     def get_prompts(self, prompt_preset):
-        """根据选中的预设返回对应的图片和视频提示词，并在节点UI中显示预览图像"""
-        config = load_prompt_presets_config()
-        presets = config.get("presets", [])
-        
-        # 查找匹配的预设
-        for preset in presets:
-            if preset["name"] == prompt_preset:
-                image_prompt = preset.get("image_prompt", "")
-                video_prompt = preset.get("video_prompt", "")
+        """根据选择的预设返回图片提示词、视频提示词和预设图片"""
+        try:
+            config = load_prompt_config()
+            prompt_presets = config.get("prompt_presets", [])
+            
+            # 查找匹配的预设
+            selected_preset = None
+            for preset in prompt_presets:
+                if preset["name"] == prompt_preset:
+                    selected_preset = preset
+                    break
+            
+            # 加载预设图片
+            preset_image = load_preset_image(prompt_preset)
+            
+            # 如果找到了预设，返回对应的提示词
+            if selected_preset:
+                # 处理图片提示词
+                if "image_prompt" in selected_preset:
+                    image_prompt = selected_preset["image_prompt"]
+                elif "prompt" in selected_preset:
+                    # 向后兼容旧格式
+                    image_prompt = selected_preset["prompt"]
+                else:
+                    image_prompt = ""
                 
-                # 获取图像路径并加载图像
-                image_path = preset.get("image_path", "")
-                # 如果是相对路径，则相对于nodes目录
-                if image_path and not os.path.isabs(image_path):
-                    image_path = os.path.join(os.path.dirname(__file__), image_path)
-                
-                # 获取文件名用于UI显示
-                filename = os.path.basename(image_path) if image_path else "preview.png"
-                
-                # 返回提示词和预览图像（用于节点UI显示）
-                # 注意：这里我们只返回文件信息，ComfyUI会自动从文件系统加载图像
-                return {"ui": {"images": [{"filename": filename, "type": "input", "subfolder": "image_video_prompt_presets_node"}]}, 
-                        "result": (image_prompt, video_prompt)}
-        
-        # 如果没有找到匹配的预设，返回空字符串
-        return {"ui": {}, "result": ("", "")}
+                # 处理视频提示词
+                if "video_prompt" in selected_preset:
+                    video_prompt = selected_preset["video_prompt"]
+                elif "prompt" in selected_preset:
+                    # 向后兼容旧格式
+                    video_prompt = selected_preset["prompt"]
+                else:
+                    video_prompt = ""
+                    
+                return (image_prompt, video_prompt, preset_image)
+            else:
+                # 如果没有找到，返回默认值
+                print(f"警告: 未找到预设 '{prompt_preset}'，使用默认值")
+                return ("", "", preset_image)
+        except Exception as e:
+            print(f"ImageVideoPromptSelector.get_prompts 错误: {e}")
+            # 出现错误时返回默认值
+            return ("", "", None)
 
-class ImageVideoPromptPresetManager:
-    """图片视频提示词预设管理节点 - 用于查看和管理预设提示词"""
+class ImageVideoPromptManager:
+    """图片视频提示词选预设管理器节点 - 用于管理图片和视频提示词预设"""
+    
     def __init__(self):
         pass
     
     @classmethod
     def INPUT_TYPES(cls):
-        config = load_prompt_presets_config()
-        presets = config.get("presets", [])
-        
-        # 提取所有预设名称，用于delete操作的下拉选择
-        preset_names = [preset["name"] for preset in presets] if presets else [p[0] for p in DEFAULT_PROMPT_PRESETS]
+        # 获取现有预设名称用于删除操作
+        config = load_prompt_config()
+        prompt_presets = config.get("prompt_presets", [])
+        preset_names = [preset["name"] for preset in prompt_presets]
         
         return {
             "required": {
                 "action": (["list", "add", "delete"], {
                     "default": "list",
                     "label": "操作类型",
-                    "description": "选择要执行的操作：list(查看预设列表)、add(添加新预设)或delete(删除预设)"
-                })
+                    "description": "选择要执行的操作：列出、添加或删除预设"
+                }),
             },
             "optional": {
                 "preset_name": ("STRING", {
                     "default": "",
-                    "placeholder": "例如: 我的新预设",
                     "label": "预设名称",
-                    "description": "预设的名称，用于在选择器中识别，仅在add操作时需要填写"
-                }),
-                "preset_description": ("STRING", {
-                    "default": "",
-                    "placeholder": "例如: 这是一个新预设的描述",
-                    "label": "预设描述",
-                    "description": "预设的描述信息，仅在add操作时需要填写"
+                    "description": "要添加的预设名称（仅在添加操作时使用）"
                 }),
                 "image_prompt": ("STRING", {
                     "default": "",
                     "multiline": True,
-                    "placeholder": "例如: 描述图片内容的中文、英文提示词...",
                     "label": "图片提示词",
-                    "description": "用于生成图片的中文、英文提示词，仅在add操作时需要填写"
+                    "description": "用于生成图片的中文、英文提示词（仅在添加操作时使用）"
                 }),
                 "video_prompt": ("STRING", {
                     "default": "",
                     "multiline": True,
-                    "placeholder": "例如: 描述视频内容的中文、英文提示词...",
                     "label": "视频提示词",
-                    "description": "用于生成视频的中文、英文提示词，仅在add操作时需要填写"
+                    "description": "用于生成视频的中文、英文提示词（仅在添加操作时使用）"
                 }),
                 "preset_to_delete": (preset_names, {
                     "default": preset_names[0] if preset_names else "",
                     "label": "要删除的预设",
-                    "description": "选择要删除的预设，仅在delete操作时有效"
+                    "description": "选择要删除的预设（仅在删除操作时使用）"
                 })
             }
         }
     
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("status_message",)
-    FUNCTION = "manage_presets"
+    FUNCTION = "manage_prompts"
     CATEGORY = "XnanTool/实用工具/预设"
     
-    def manage_presets(self, action, preset_name="", preset_description="", image_prompt="", video_prompt="", preset_to_delete=""):
-        config = load_prompt_presets_config()
-        presets = config.get("presets", [])
+    def manage_prompts(self, action, preset_name="", image_prompt="", video_prompt="", preset_to_delete=""):
+        """管理图片视频提示词预设"""
+        config = load_prompt_config()
+        prompt_presets = config.get("prompt_presets", [])
         
         if action == "list":
-            # 列出所有可用预设
+            # 列出所有预设
             message = "图片视频提示词预设列表:\n"
-            message += "========================\n"
+            message += "=" * 40 + "\n"
             message += "使用说明:\n"
-            message += "1. 选择预设名称可直接用于提示词预设选择器节点\n"
-            message += "2. 通过add操作可添加新的预设\n"
-            message += "3. 通过delete操作可删除现有预设（直接下拉选择）\n"
+            message += "1. 通过ImageVideoPromptSelector节点选择预设\n"
+            message += "2. 通过add操作可添加新的提示词预设\n"
+            message += "3. 通过delete操作可删除现有预设\n"
             message += "4. 添加或删除后需重启ComfyUI才能在选择器中看到变化\n"
-            message += "========================\n"
-            message += "预设列表:\n"
+            message += "=" * 40 + "\n"
             
-            if presets:
-                for i, preset in enumerate(presets):
-                    try:
-                        name = preset.get("name", "未知名称")
-                        desc = preset.get("description", "无描述")
-                        image_path = preset.get("image_path", "")
-                        if image_path:
-                            desc = f"{desc} [有预览图]"
-                        message += f"{i+1}. {name} - {desc}\n"
-                    except Exception as e:
-                        message += f"{i+1}. 处理预设时出错: {str(e)}\n"
-            else:
-                message += "暂无自定义预设，使用默认预设\n"
-                for i, preset in enumerate(DEFAULT_PROMPT_PRESETS):
-                    message += f"{i+1}. {preset[0]} - {preset[1]}\n"
+            # 显示预设
+            message += "\n预设列表:\n"
+            for i, preset in enumerate(prompt_presets):
+                message += f"  {i+1}. {preset['name']}\n"
+                image_prompt_text = preset.get('image_prompt', preset.get('prompt', ''))[:50]
+                video_prompt_text = preset.get('video_prompt', preset.get('prompt', ''))[:50]
+                message += f"     图片提示词: {image_prompt_text}...\n"
+                message += f"     视频提示词: {video_prompt_text}...\n"
             
-            return (message,)
+            # 对于list操作，不返回图片
+            return (message, None)
         
         elif action == "add":
             # 添加新预设
             if not preset_name:
-                return ("添加失败: 预设名称不能为空",)
+                return ("添加失败: 请输入预设名称", None)
             
-            if not image_prompt and not video_prompt:
-                return ("添加失败: 图片提示词和视频提示词至少需要填写一个",)
-            
-            # 检查是否已存在
-            for preset in presets:
-                if preset.get("name") == preset_name:
-                    return ("添加失败: 该预设名称已存在，请使用不同的名称",)
+            # 检查是否已存在同名预设
+            for preset in prompt_presets:
+                if preset["name"] == preset_name:
+                    return (f"添加失败: 已存在名为'{preset_name}'的预设", None)
             
             # 添加新预设
             new_preset = {
-                "name": preset_name,
-                "description": preset_description or preset_name,
-                "image_prompt": image_prompt,
-                "video_prompt": video_prompt,
-                "image_path": ""
+                "name": preset_name
             }
             
-            presets.append(new_preset)
-            config["presets"] = presets
-            success = save_prompt_presets_config(config)
+            # 如果提供了图片提示词，则添加
+            if image_prompt:
+                new_preset["image_prompt"] = image_prompt
             
-            if success:
-                return (f"成功添加预设: {preset_name}\n提示：请重启ComfyUI以在提示词预设选择器中看到新添加的预设",)
+            # 如果提供了视频提示词，则添加
+            if video_prompt:
+                new_preset["video_prompt"] = video_prompt
+            
+            # 如果都没有提供，则添加通用提示词字段（为了向后兼容）
+            if not image_prompt and not video_prompt:
+                new_preset["prompt"] = ""
+            
+            prompt_presets.append(new_preset)
+            config["prompt_presets"] = prompt_presets
+            
+            # 保存配置
+            if save_prompt_config(config):
+                # 添加成功后，返回新添加预设的图片
+                preset_image = load_preset_image(preset_name)
+                return (f"成功添加提示词预设: {preset_name}", preset_image)
             else:
-                return ("添加预设失败，请检查日志",)
+                return ("添加失败: 无法保存配置文件", None)
         
         elif action == "delete":
             # 删除预设
             if not preset_to_delete:
-                return ("删除失败: 请从下拉列表中选择要删除的预设",)
+                return ("删除失败: 请选择要删除的预设",)
             
             # 查找并删除预设
-            preset_index = -1
-            for i, preset in enumerate(presets):
-                if preset.get("name") == preset_to_delete:
-                    preset_index = i
+            deleted = False
+            for i, preset in enumerate(prompt_presets):
+                if preset["name"] == preset_to_delete:
+                    # 保留至少一个预设
+                    if len(prompt_presets) <= 1:
+                        return ("删除失败: 至少需要保留一个预设",)
+                    
+                    del prompt_presets[i]
+                    deleted = True
                     break
             
-            if preset_index == -1:
-                return ("删除失败: 未找到指定的预设",)
+            if not deleted:
+                return (f"删除失败: 未找到名为'{preset_to_delete}'的预设",)
             
-            # 删除预设
-            preset_removed = presets.pop(preset_index)
-            config["presets"] = presets
-            success = save_prompt_presets_config(config)
-            
-            if success:
-                return (f"成功删除预设: {preset_removed.get('name', '未知名称')}\n提示：请重启ComfyUI以在提示词预设选择器中看到更新",)
+            # 保存配置
+            config["prompt_presets"] = prompt_presets
+            if save_prompt_config(config):
+                return (f"成功删除提示词预设: {preset_to_delete}",)
             else:
-                return ("删除预设失败，请检查日志",)
-        
-        return ("未知操作，请选择有效的操作类型（list、add或delete）",)
+                return ("删除失败: 无法保存配置文件",)
 
 class ImageUploadNode:
     """图像上传节点 - 用于为预设添加图像预览"""
+    
     def __init__(self):
-        pass
+        # 获取预设配置文件路径
+        self.config_path = os.path.join(
+            os.path.dirname(__file__), 
+            "image_video_prompt_presets.json"
+        )
+        
+        # 获取预设图片存储目录
+        self.images_dir = os.path.join(
+            os.path.dirname(__file__), 
+            "image_video_prompt_presets_node"
+        )
+        
+        # 确保图片目录存在
+        os.makedirs(self.images_dir, exist_ok=True)
     
     @classmethod
     def INPUT_TYPES(cls):
-        config = load_prompt_presets_config()
-        presets = config.get("presets", [])
+        # 获取现有预设名称
+        config_path = os.path.join(
+            os.path.dirname(__file__), 
+            "image_video_prompt_presets.json"
+        )
         
-        # 提取所有预设名称
-        preset_names = [preset["name"] for preset in presets] if presets else []
+        preset_names = []
+        try:
+            if os.path.exists(config_path):
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+                preset_names = [preset["name"] for preset in config.get("prompt_presets", [])]
+        except Exception as e:
+            print(f"读取预设配置时出错: {e}")
         
         return {
             "required": {
                 "preset_name": (preset_names, {
+                    "default": preset_names[0] if preset_names else "",
                     "label": "预设名称",
                     "description": "选择要添加图像预览的预设"
                 }),
@@ -348,73 +406,51 @@ class ImageUploadNode:
     
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("status_message",)
-    FUNCTION = "upload_image"
+    FUNCTION = "save_preset_image"
     CATEGORY = "XnanTool/实用工具/预设"
     
-    def upload_image(self, preset_name, image):
-        """上传并保存图像到指定预设"""
+    def save_preset_image(self, preset_name, image):
+        """保存预设图像"""
         try:
-            # 将图像张量转换为numpy数组
-            image_array = image.cpu().numpy()
+            # 将tensor转换为PIL图像
+            # 输入图像格式为 [B, H, W, C]，值范围为 0-1
+            image_tensor = image[0]  # 取第一张图像
+            image_array = (image_tensor.cpu().numpy() * 255).astype(np.uint8)
+            pil_image = Image.fromarray(image_array, 'RGB')
             
-            # 如果是四维张量（批次），取第一张图像
-            if len(image_array.shape) == 4:
-                image_array = image_array[0]
+            # 保持原始宽高比，设置最大尺寸限制为1024x1024
+            max_size = 1024
+            width, height = pil_image.size
             
-            # 转换为HWC格式（如果需要）
-            if image_array.shape[0] < image_array.shape[2]:  # CHW格式
-                image_array = np.transpose(image_array, (1, 2, 0))
-            
-            # 加载配置
-            config = load_prompt_presets_config()
-            presets = config.get("presets", [])
-            
-            # 查找匹配的预设
-            preset_found = False
-            for preset in presets:
-                if preset["name"] == preset_name:
-                    preset_found = True
-                    # 生成图像文件名（使用预设名称作为文件名）
-                    # 清理文件名中的非法字符
-                    safe_name = "".join(c for c in preset_name if c.isalnum() or c in (' ', '-', '_')).rstrip()
-                    safe_name = safe_name.replace(" ", "_")
-                    
-                    # 创建图像文件路径（相对于nodes目录）
-                    image_filename = f"{safe_name}.png"
-                    image_dir = os.path.join(os.path.dirname(__file__), "image_video_prompt_presets_node")
-                    os.makedirs(image_dir, exist_ok=True)
-                    image_path = os.path.join(image_dir, image_filename)
-                    
-                    # 保存图像
-                    if save_image_to_file(image_array, image_path):
-                        # 更新配置中的图像路径（使用相对路径）
-                        preset["image_path"] = os.path.join("image_video_prompt_presets_node", image_filename)
-                        
-                        # 保存更新后的配置
-                        if save_prompt_presets_config(config):
-                            return (f"成功为预设'{preset_name}'添加图像预览\n文件: {image_filename}",)
-                        else:
-                            return ("保存配置失败",)
-                    else:
-                        return ("保存图像文件失败",)
-            
-            if not preset_found:
-                return (f"未找到预设: {preset_name}",)
+            # 如果图像任一边超过最大尺寸，则按比例缩放
+            if width > max_size or height > max_size:
+                # 计算缩放比例
+                ratio = min(max_size / width, max_size / height)
+                new_width = int(width * ratio)
+                new_height = int(height * ratio)
                 
+                # 按比例调整图像大小
+                pil_image = pil_image.resize((new_width, new_height), Image.Resampling.LANCZOS)
+            
+            # 保存图像
+            image_path = os.path.join(self.images_dir, f"{preset_name}.png")
+            pil_image.save(image_path, "PNG")
+            
+            return (f"成功为预设 '{preset_name}' 保存图像预览",)
         except Exception as e:
-            return (f"处理图像时出错: {str(e)}",)
+            return (f"保存图像时出错: {str(e)}",)
 
-# 导出节点映射和显示名称映射
+# 节点映射和显示名称映射
 NODE_CLASS_MAPPINGS = {
-    "ImageVideoPromptPresetSelector": ImageVideoPromptPresetSelector,
-    "ImageVideoPromptPresetManager": ImageVideoPromptPresetManager,
+    "ImageVideoPromptSelector": ImageVideoPromptSelector,
+    "ImageVideoPromptManager": ImageVideoPromptManager,
     "ImageUploadNode": ImageUploadNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageVideoPromptPresetSelector": "图片视频提示词预设选择器",
-    "ImageVideoPromptPresetManager": "图片视频提示词预设管理器",
-    "ImageUploadNode": "图像上传节点"
+    "ImageVideoPromptSelector": "图片视频提示词预设-【新】",
+    "ImageVideoPromptManager": "图片视频提示词预设管理器-【新】",
+    "ImageUploadNode": "图像上传节点-【新】"
 }
 
 # 确保模块被正确导入
