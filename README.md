@@ -427,9 +427,16 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 ## 📞 联系方式
 如有任何问题或建议，欢迎联系我们！
 
-- up主：1527004566 ![up主](./src/up主-裁切.png)
-- 交流：1046591978![comfyui-xnantool](./src/comfyui-xnantool-裁切.png)
 
+
+<p align="center">
+<p>up主：1527004566</p>
+
+<img width="220px" src="./src/up主-裁切.png" align="center" alt="logo，注意这个路gitcomde显示，github显示，小图，预览不显示" />
+<p>交流：1046591978</p>
+
+<img width="220px" src="./src/comfyui-xnantool-裁切.png" align="center" alt="logo，注意这个路gitcomde显示，github显示，小图，预览不显示" />
+</p>
 ---
 
 <div align="center">
