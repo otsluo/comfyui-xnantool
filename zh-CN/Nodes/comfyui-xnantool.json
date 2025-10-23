@@ -1,4 +1,37 @@
 {
+  "VideoToAudioNode": {
+    "title": "视频转音频节点-【新】",
+    "description": "从视频文件中提取音频轨道并保存为音频文件",
+    "inputs": {
+      "video_file": "视频文件",
+      "output_format": "输出格式",
+      "audio_quality": "音频质量",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "video_file": "选择要提取音频的视频文件",
+      "output_format": "音频文件的格式",
+      "audio_quality": "音频的质量",
+      "output_filename": "可选：自定义输出文件名（不含扩展名）"
+    },
+    "outputs": {
+      "audio_file_path": "音频文件路径",
+      "status_message": "状态信息"
+    },
+    "widget_values": {
+      "output_format": {
+        "mp3": "MP3格式",
+        "wav": "WAV格式",
+        "aac": "AAC格式",
+        "flac": "FLAC格式"
+      },
+      "audio_quality": {
+        "high": "高质量",
+        "medium": "中等质量",
+        "low": "低质量"
+      }
+    }
+  },
   "YoloModelLoader": {
     "title": "YOLO模型加载器 (v8预设)-【新】",
     "description": "加载YOLO模型进行目标检测",
@@ -464,25 +497,11 @@
     "widgets": {},
     "outputs": {
       "image_prompt": "图片提示词",
-      "video_prompt": "视频提示词",
-      "image_preview": "预览图像"
+      "video_prompt": "视频提示词"
     },
     "widget_values": {}
   },
-  "ImageVideoPromptPresetSelectorDev": {
-    "title": "图片视频提示词预设选择器-【新-dev版】",
-    "description": "提供预设提示词的快速选择，当预设有图片时会自动加载并预览图片。",
-    "inputs": {
-      "prompt_preset": "提示词预设"
-    },
-    "widgets": {},
-    "outputs": {
-      "image_prompt": "图片提示词",
-      "video_prompt": "视频提示词",
-      "image_preview": "预览图像"
-    },
-    "widget_values": {}
-  },
+  
   "ImageVideoPromptPresetManager": {
     "title": "图片视频提示词预设管理器",
     "description": "用于查看和管理预设提示词，可以添加、删除和列出所有可用的预设。",
