@@ -38,3 +38,6 @@ openai
 # 视频处理相关依赖
 imageio>=2.9.0  # 用于读取和写入图像序列，包括GIF
 imageio-ffmpeg>=0.4.2  # imageio的ffmpeg插件，用于视频处理
+# 注意：本插件的视频转音频功能需要系统安装ffmpeg命令行工具
+# Windows用户可以从 https://ffmpeg.org/download.html 下载并安装
+# 确保ffmpeg命令在系统PATH环境变量中可用

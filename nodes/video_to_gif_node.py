@@ -33,15 +33,6 @@ class VideoToGifNode:
                     "description": "选择要转换为GIF的视频文件",
                     "video_upload": True  # 添加视频上传支持
                 }),
-                "start_time": ("FLOAT", {
-                    "default": 0.0,
-                    "min": 0.0,
-                    "max": 3600.0,
-                    "step": 0.1,
-                    "display": "number",
-                    "label": "开始时间",
-                    "description": "视频开始时间（秒）"
-                }),
                 "duration": ("FLOAT", {
                     "default": 5.0,
                     "min": 0.1,
@@ -67,7 +58,7 @@ class VideoToGifNode:
                     "step": 0.1,
                     "display": "slider",
                     "label": "缩放因子",
-                    "description": "图像缩放因子（0.1-1.0）"
+                    "description": "图像缩放比例（0.1-1.0）"
                 }),
                 "optimize": ("BOOLEAN", {
                     "default": True,
@@ -77,7 +68,12 @@ class VideoToGifNode:
                 "palette_size": (["2", "4", "8", "16", "32", "64", "128", "256"], {
                     "default": "256",
                     "label": "调色板大小",
-                    "description": "GIF使用的颜色数量"
+                    "description": "GIF的颜色数量"
+                }),
+                "quality": (["1", "2", "3"], {
+                    "default": "2",
+                    "label": "质量等级",
+                    "description": "GIF质量等级（1=低，2=中，3=高）"
                 }),
             },
             "optional": {
@@ -93,21 +89,34 @@ class VideoToGifNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_path",)
     FUNCTION = "convert_video_to_gif"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "XnanTool/实用工具/媒体处理"
     
-    def convert_video_to_gif(self, video_file, start_time, duration, fps, resize_factor, optimize, palette_size, output_filename="output.gif"):
+    @classmethod
+    def IS_CHANGED(cls, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="output.gif"):
+        # 如果视频文件存在，返回其修改时间，否则返回0
+        if os.path.exists(video_file):
+            return os.path.getmtime(video_file)
+        return 0
+    
+    @classmethod
+    def VALIDATE_INPUTS(cls, video_file):
+        if not folder_paths.exists_annotated_filepath(video_file):
+            return "Invalid video file: {}".format(video_file)
+        return True
+
+    def convert_video_to_gif(self, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="output.gif"):
         """
         将视频文件转换为GIF动画
         
         Args:
-            video_file: 视频文件名
-            start_time: 开始时间（秒）
-            duration: 持续时间（秒）
-            fps: 帧率
-            resize_factor: 缩放因子
-            optimize: 是否优化GIF
-            palette_size: 调色板大小（字符串类型，可选值："2", "4", "8", "16", "32", "64", "128", "256"）
-            output_filename: 输出文件名
+            video_file (str): 视频文件路径
+            duration (float): GIF的持续时间（秒）
+            fps (int): GIF的帧率
+            resize_factor (float): 图像缩放比例（0.1-1.0）
+            optimize (bool): 是否优化GIF文件大小
+            palette_size (str): GIF使用的颜色数量（"2"-"256"）
+            quality (str): GIF质量等级（"1"=低，"2"=中，"3"=高）
+            output_filename (str): GIF文件的输出名称
             
         Returns:
             tuple: 包含输出文件路径的元组
@@ -123,10 +132,23 @@ class VideoToGifNode:
             # 获取输出目录
             output_dir = folder_paths.get_output_directory()
             
-            # 构建输出文件路径
+            # 构建输出文件路径并处理文件名冲突
             if not output_filename.lower().endswith('.gif'):
                 output_filename += '.gif'
+            
+            # 处理文件名冲突，自动添加序号
+            base_name, ext = os.path.splitext(output_filename)
             output_path = os.path.join(output_dir, output_filename)
+            counter = 1
+            original_output_path = output_path
+            while os.path.exists(output_path):
+                new_filename = f"{base_name}_{counter}{ext}"
+                output_path = os.path.join(output_dir, new_filename)
+                counter += 1
+            
+            # 如果文件被重命名，记录日志
+            if original_output_path != output_path:
+                logger.info(f"检测到同名文件，已自动重命名为: {os.path.basename(output_path)}")
             
             # 使用imageio读取视频
             reader = imageio.get_reader(video_path, 'ffmpeg')
@@ -135,24 +157,16 @@ class VideoToGifNode:
             video_fps = reader.get_meta_data()['fps']
             logger.info(f"视频帧率: {video_fps}")
             
-            # 计算开始和结束帧
-            start_frame = int(start_time * video_fps)
-            end_frame = int((start_time + duration) * video_fps)
-            
             # 收集帧数据
             frames = []
             frame_count = 0
             for i, frame in enumerate(reader):
-                # 跳过开始帧之前的帧
-                if i < start_frame:
-                    continue
-                
-                # 停止在结束帧之后
-                if i > end_frame:
+                # 停止在结束帧之后（基于持续时间）
+                if i >= int(duration * video_fps):
                     break
                 
                 # 按指定帧率采样
-                if (i - start_frame) % int(video_fps / fps) == 0:
+                if i % int(video_fps / fps) == 0:
                     # 调整图像大小
                     if resize_factor != 1.0:
                         height, width = frame.shape[:2]
@@ -169,25 +183,38 @@ class VideoToGifNode:
             
             # 创建GIF
             if frames:
+                # 将所有numpy数组帧转换为PIL图像对象
+                pil_frames = [Image.fromarray(frame) for frame in frames]
+                
                 # 将palette_size从字符串转换为整数
                 palette_size_int = int(palette_size)
                 
-                # 设置GIF参数
+                # 准备GIF保存参数
                 gif_kwargs = {
                     'format': 'GIF',
-                    'fps': fps,
+                    'save_all': True,
+                    'append_images': pil_frames[1:],
+                    'duration': int(1000 / fps),  # 每帧持续时间（毫秒）
                     'loop': 0,
-                    'palettesize': palette_size_int,
+                    'optimize': optimize,
+                    'palettesize': palette_size_int
                 }
                 
-                # 如果启用优化，添加优化参数
-                if optimize:
-                    gif_kwargs['optimize'] = True
+                # 添加质量参数映射
+                quality_map = {
+                    "1": False,  # 不使用子矩形
+                    "2": True,   # 使用子矩形
+                    "3": True    # 使用子矩形
+                }
+                
+                # 根据质量等级设置子矩形参数
+                if quality_map.get(quality, True):
                     gif_kwargs['subrectangles'] = True
                 
-                # 写入GIF
-                imageio.mimsave(output_path, frames, **gif_kwargs)
+                # 写入GIF文件
+                pil_frames[0].save(output_path, **gif_kwargs)
             
+            # 记录最终保存的文件路径
             logger.info(f"GIF已保存到: {output_path}")
             logger.info(f"总帧数: {frame_count}")
             logger.info(f"调色板大小: {palette_size}")
@@ -198,19 +225,6 @@ class VideoToGifNode:
         except Exception as e:
             logger.error(f"视频转GIF过程中发生错误: {str(e)}")
             raise e
-    
-    @classmethod
-    def IS_CHANGED(cls, video_file, start_time, duration, fps, resize_factor, optimize, palette_size, output_filename="output.gif"):
-        video_path = folder_paths.get_annotated_filepath(video_file)
-        if os.path.exists(video_path):
-            return os.path.getmtime(video_path)
-        return 0
-    
-    @classmethod
-    def VALIDATE_INPUTS(cls, video_file):
-        if not folder_paths.exists_annotated_filepath(video_file):
-            return "Invalid video file: {}".format(video_file)
-        return True
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {

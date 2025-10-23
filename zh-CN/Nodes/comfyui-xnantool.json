@@ -521,9 +521,10 @@
       "start_time": "开始时间",
       "duration": "持续时间",
       "fps": "帧率",
-      "resize_factor": "缩放因子",
+      "resize_factor": "图像缩放比例",
       "optimize": "优化GIF",
       "palette_size": "调色板大小",
+      "quality": "质量等级",
       "output_filename": "输出文件名"
     },
     "widgets": {
@@ -531,22 +532,31 @@
       "start_time": "视频开始时间（秒）",
       "duration": "GIF的持续时间（秒）",
       "fps": "GIF的帧率",
-      "resize_factor": "图像缩放因子（0.1-1.0）",
+      "resize_factor": "图像缩放比例百分比",
       "optimize": "是否优化GIF文件大小",
-      "palette_size": "GIF使用的颜色数量（2=最低质量，256=最高质量）",
+      "palette_size": "GIF颜色数量（2=最低质量，256=最高质量）",
+      "quality": "GIF质量等级（1=低，2=中，3=高）",
       "output_filename": "GIF文件的输出名称"
     },
     "outputs": {
       "output_path": "GIF文件路径"
     },
     "widget_values": {
-      "start_time": 0,
-      "duration": 5,
-      "fps": 10,
-      "resize_factor": 1.0,
-      "output_filename": "output.gif",
-      "optimize": true,
-      "palette_size": 256
+      "palette_size": {
+        "2": "2色（最小文件）",
+        "4": "4色",
+        "8": "8色",
+        "16": "16色",
+        "32": "32色",
+        "64": "64色",
+        "128": "128色",
+        "256": "256色（最佳质量）"
+      },
+      "quality": {
+        "1": "低质量",
+        "2": "中等质量",
+        "3": "高质量"
+      }
     }
   }
 }

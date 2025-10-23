@@ -197,7 +197,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloDetectionCropNode": "YOLO检测裁切节点-【新-dev版】"
+    "YoloDetectionCropNode": "YOLO检测裁切节点-【新】"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
