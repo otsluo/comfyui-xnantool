@@ -515,29 +515,29 @@
   },
   "VideoToGifNode": {
     "title": "视频转GIF节点-【新】",
-    "description": "将视频文件转换为GIF动画，支持设置开始时间、持续时间和帧率等参数。",
+    "description": "将视频文件转换为GIF动画，支持优化和调色板大小设置",
     "inputs": {
       "video_file": "视频文件",
-      "start_time": "开始时间(秒)",
-      "duration": "持续时间(秒)",
-      "fps": "帧率(FPS)",
+      "start_time": "开始时间",
+      "duration": "持续时间",
+      "fps": "帧率",
       "resize_factor": "缩放因子",
-      "output_filename": "输出文件名",
       "optimize": "优化GIF",
-      "palette_size": "调色板大小"
+      "palette_size": "调色板大小",
+      "output_filename": "输出文件名"
     },
     "widgets": {
-      "video_file": "视频文件",
-      "start_time": "开始时间(秒)",
-      "duration": "持续时间(秒)",
-      "fps": "帧率(FPS)",
-      "resize_factor": "缩放因子",
-      "output_filename": "输出文件名",
-      "optimize": "优化GIF",
-      "palette_size": "调色板大小"
+      "video_file": "选择要转换为GIF的视频文件",
+      "start_time": "视频开始时间（秒）",
+      "duration": "GIF的持续时间（秒）",
+      "fps": "GIF的帧率",
+      "resize_factor": "图像缩放因子（0.1-1.0）",
+      "optimize": "是否优化GIF文件大小",
+      "palette_size": "GIF使用的颜色数量（2=最低质量，256=最高质量）",
+      "output_filename": "GIF文件的输出名称"
     },
     "outputs": {
-      "gif_file_path": "GIF文件路径"
+      "output_path": "GIF文件路径"
     },
     "widget_values": {
       "start_time": 0,
