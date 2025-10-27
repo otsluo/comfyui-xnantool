@@ -357,7 +357,9 @@
       "seed": "随机种子",
       "text_seed": "文本种子",
       "steps": "采样步数",
-      "guidance": "引导系数"
+      "guidance": "引导系数",
+      "lora_weight": "LoRA权重",
+      "batch_size": "批次大小"
     },
     "outputs": {
       "image": "生成图像"
@@ -375,12 +377,14 @@
       "base_model": "基础模型",
       "lora_model": "LoRA模型",
       "negative_prompt": "负面提示词",
+      "use_custom_size": "使用自定义尺寸",
       "width": "宽度",
       "height": "高度",
       "seed": "随机种子",
       "vision_seed": "视觉种子",
       "steps": "采样步数",
-      "guidance": "引导系数"
+      "guidance": "引导系数",
+      "lora_weight": "LoRA权重"
     },
     "outputs": {
       "edited_image": "编辑图像"

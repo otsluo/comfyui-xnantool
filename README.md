@@ -11,9 +11,11 @@
 
 ## 📝 简介
 
-**XnanTool**是一个为 ComfyUI 打造的市面上插件因原作者不更，或者更新慢，导致功能不足的问题，这里提供了拓展方案。
+**XnanTool**初心是一个为 ComfyUI 打造的市面上插件因原作者不更，或者更新慢，导致功能不足的问题，这里提供了拓展方案。
 
 ## ✨ 功能特性
+
+### ✨ 中文翻译优化
 
 ### 🤖 modelscope-魔搭社区api在comfyui调用
 - 📚 内置多种常用大模型支持
@@ -30,7 +32,7 @@
 ### 📏 尺寸预设功能
 - 🖼️ 提供 AI 生图常用尺寸的快速选择
 - 📐 支持多种模型的推荐尺寸（SD 1.5、SDXL、Qwen-Image、Flux等）
-- 📊 每个尺寸都标注了精确的比例信息
+- � 每个尺寸都标注了精确的比例信息
 - ⚡ 一键应用，省去手动计算烦恼
 
 ### 🎯 YOLO目标检测与分割
@@ -99,7 +101,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 <details>
 <summary>点击展开/收起节点列表</summary>
 
-### 📏 尺寸预设-【新】 (SizeSelector)
+### 📏 尺寸预设(SizeSelector)
 - **位置**: `XnanTool/预设`
 - **功能**: 从预设列表中选择图像尺寸
 - **输入**: 预设名称
@@ -120,28 +122,28 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: 编辑后的图像(image)
 - **适用场景**: 对现有图像进行LoRA风格编辑
 
-### 🚀 YOLO模型加载器 (v8预设)-【新】 (YoloModelLoader)
+### 🚀 YOLO模型加载器 (v8预设)(YoloModelLoader)
 - **位置**: `XnanTool/YOLO`
 - **功能**: 加载和配置YOLO目标检测模型
 - **输入**: 模型名称、置信度阈值、IOU阈值、使用缓存选项等
 - **输出**: YOLO模型(YOLO_MODEL)、模型信息(model_info)
 - **适用场景**: 为检测任务准备YOLO模型
 
-### 🚀 YOLO模型加载器V2(本地模型)-【新】 (YoloModelLoaderV2)
+### 🚀 YOLO模型加载器V2(本地模型) (YoloModelLoaderV2)
 - **位置**: `XnanTool/YOLO`
 - **功能**: 加载本地YOLO模型文件
 - **输入**: 本地模型、置信度阈值、IOU阈值、使用缓存选项等
 - **输出**: YOLO模型(YOLO_MODEL)、模型信息(model_info)
 - **适用场景**: 使用本地存储的YOLO模型文件
 
-### 🚀 YOLO模型加载器(自定义路径)-【新】 (YoloModelLoaderCustomPath)
+### 🚀 YOLO模型加载器(自定义路径) (YoloModelLoaderCustomPath)
 - **位置**: `XnanTool/YOLO`
 - **功能**: 从自定义路径加载YOLO模型
 - **输入**: 模型完整路径、置信度阈值、IOU阈值、使用缓存选项等
 - **输出**: YOLO模型(YOLO_MODEL)、模型信息(model_info)
 - **适用场景**: 使用指定路径的YOLO模型文件
 
-### 🎯 YOLO检测与裁剪一体化-【新】 (YoloDetectAndCropNode)
+### 🎯 YOLO检测与裁剪一体化 (YoloDetectAndCropNode)
 - **位置**: `XnanTool/YOLO`
 - **功能**: 执行YOLO检测并裁剪图像
 - **输入**: YOLO模型、图像、类别、置信度阈值、边界填充
@@ -155,21 +157,21 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: 正方形图像(image)、宽度(width)、高度(height)
 - **适用场景**: 需要将非正方形图像转换为正方形，同时保持图像内容完整
 
-### 🧠 SAM模型加载器（预设）-【新】 (SamModelLoader)
+### 🧠 SAM模型加载器（预设） (SamModelLoader)
 - **位置**: `XnanTool/SAM`
 - **功能**: 加载预设的SAM模型
 - **输入**: 模型类型、自动下载、使用缓存选项等
 - **输出**: SAM模型(SAM_MODEL)、模型信息(model_info)
 - **适用场景**: 使用预设的SAM模型进行图像分割
 
-### 🧠 SAM模型加载器V2 (本地模型) -【新】(SamModelLoaderV2)
+### 🧠 SAM模型加载器V2 (本地模型) (SamModelLoaderV2)
 - **位置**: `XnanTool/SAM`
 - **功能**: 加载本地SAM模型文件
 - **输入**: 模型文件、使用缓存选项等
 - **输出**: SAM模型(SAM_MODEL)、模型信息(model_info)
 - **适用场景**: 使用本地存储的SAM模型文件
 
-### 🧠 SAM模型加载器(自定义路径)-【新】 (SamModelLoaderCustomPath)
+### 🧠 SAM模型加载器(自定义路径) (SamModelLoaderCustomPath)
 - **位置**: `XnanTool/SAM`
 - **功能**: 从自定义路径加载SAM模型
 - **输入**: 模型完整路径、使用缓存选项等
@@ -190,7 +192,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: 状态信息(status_message)
 - **适用场景**: 添加、删除或查看魔搭API模型列表
 
-### 🧠 YOLO+SAM背景去除-【新】 (YoloSamBackgroundRemovalNode)
+### 🧠 YOLO+SAM背景去除 (YoloSamBackgroundRemovalNode)
 - **位置**: `XnanTool/SAM`
 - **功能**: 使用YOLO目标检测和SAM分割技术进行精确的背景去除和裁剪
 - **输入**: YOLO模型、SAM模型、图像、检测类别、选择模式等
@@ -232,108 +234,44 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: 创建的图像
 - **适用场景**: 需要创建指定尺寸和颜色图像的测试场景
 
+### 🖼️ 图片视频提示词预设-【新】 (ImageVideoPromptSelector)
+- **位置**: `XnanTool/实用工具/预设`
+- **功能**: 从预设列表中选择图片和视频提示词
+- **输入**: 预设名称
+- **输出**: 图片提示词(image_prompt)、视频提示词(video_prompt)、预设图像(preset_image)
+- **适用场景**: 快速选择常用的图片和视频提示词预设
+
+### 🛠️ 图片视频提示词预设管理器-【新】 (ImageVideoPromptManager)
+- **位置**: `XnanTool/实用工具/预设`
+- **功能**: 管理图片和视频提示词预设列表
+- **输入**: 操作类型、预设名称、图片提示词、视频提示词、要删除的预设
+- **输出**: 状态信息(status_message)
+- **适用场景**: 添加、删除或查看图片视频提示词预设列表
+
+### 📤 图像上传节点-【新】 (ImageUploadNode)
+- **位置**: `XnanTool/实用工具/预设`
+- **功能**: 为提示词预设添加图像预览
+- **输入**: 预设名称、图像
+- **输出**: 状态信息(status_message)
+- **适用场景**: 为提示词预设添加可视化图像预览
+
 </details>
 
 ## 📖 使用指南
 
+<details>
+<summary>点击展开/收起使用指南</summary>
+
+<details>
+<summary>📏 尺寸选择器使用</summary>
+
 ### 📏 尺寸选择器使用
-1. 在节点菜单中找到 `XnanTool/预设` -> `尺寸预设-【新】`
+1. 在节点菜单中找到 `XnanTool/预设` -> `尺寸预设`
 2. 选择需要的尺寸预设（如 SDXL 正方形、横屏等）
 3. 将输出的宽度和高度连接到其他需要尺寸参数的节点
 4. 完成！🎉
 
-### 🎨 魔搭API文生图使用
-1. 🔑 获取魔搭 API Token
-2. 📝 在节点中输入提示词、API Token、选择基础模型和 LoRA 模型
-3. ⚙️ 调整其他可选参数（负面提示词、尺寸、种子、步数、引导系数、LoRA 权重等）
-4. ▶️ 执行节点生成图像
-5. 🎉 欣赏你的创作！
-
-### 🚀 YOLO目标检测使用
-1. 在节点菜单中找到 `XnanTool/YOLO` 目录
-2. 根据需要选择合适的模型加载器：
-   - `YOLO模型加载器 (v8预设)-【新】`：使用预设的YOLOv8模型
-   - `YOLO模型加载器V2(本地模型)-【新】`：使用本地存储的YOLO模型文件
-   - `YOLO模型加载器(自定义路径)-【新】`：使用指定路径的YOLO模型文件
-3. 配置模型参数（置信度阈值、IOU阈值等）
-4. 将加载的模型连接到 `YOLO检测与裁剪一体化-【新】` 节点
-5. 连接输入图像并配置检测参数
-6. 执行节点进行目标检测和图像裁剪
-
-### 🧠 SAM模型使用
-1. 在节点菜单中找到 `XnanTool/SAM` 目录
-2. 根据需要选择合适的模型加载器：
-   - `SAM模型加载器（预设）`：使用预设的SAM模型
-   - `SAM模型加载器V2 (本地模型)`：使用本地存储的SAM模型文件
-   - `SAM模型加载器(自定义路径)`：使用指定路径的SAM模型文件
-3. 配置模型参数（自动下载、使用缓存等）
-4. 加载模型后可用于图像分割任务
-
-### 🤖 魔搭API模型管理使用
-1. 在节点菜单中找到 `XnanTool/预设` -> `魔搭API列表管理`
-2. 选择操作类型：
-   - `list`：查看当前所有可用模型
-   - `add`：添加新的魔搭API模型到预设列表中
-   - `delete`：删除已有的魔搭API模型
-3. 根据操作类型填写相应的参数
-4. 执行节点查看操作结果
-5. 注意：添加或删除模型后需重启ComfyUI才能在选择器中看到变化
-
-### 🎥 视频转GIF使用
-1. 在节点菜单中找到 `XnanTool/媒体处理/视频处理`
-2. 连接输入视频文件到节点
-3. 设置输出文件名（可选）、帧率、持续时间、开始时间和缩放比例等参数
-4. 执行节点生成GIF文件
-5. 查看输出路径获取生成的GIF文件
-
-### 🎵 视频转音频使用
-1. 在节点菜单中找到 `XnanTool/媒体处理/视频处理`
-2. 连接输入视频文件到节点
-3. 设置输出格式（mp3/wav/flac等）、音频质量（比特率）和输出文件名（可选）
-4. 执行节点提取音频
-5. 查看输出路径获取生成的音频文件
-
-### 🟦 长方形转换器使用
-1. 在节点菜单中找到 `XnanTool/实用工具/小工具`
-2. 连接输入的正方形图像到节点
-3. 选择扩展方向（左/右/上/下）
-4. 设置目标长度和边距
-5. 可选设置填充颜色
-6. 执行节点完成图像转换
-
-### 🔀 切换值节点使用
-1. 在节点菜单中找到 `XnanTool/实用工具/小工具`
-2. 设置值A和值B（可以是数字、文本或其他类型）
-3. 通过输入接口传入触发信号来切换输出值
-4. 节点会根据输入信号在值A和值B之间切换输出
-
-### 🖼️ 创建图像节点使用
-1. 在节点菜单中找到 `XnanTool/实用工具/小工具`
-2. 设置图像的宽度、高度和颜色
-3. 执行节点创建指定尺寸和颜色的图像
-4. 输出创建的图像用于后续处理
-
-### 🧰 魔搭api支持的模型
-
-#### 内置支持的基础模型
-- 🔮 **Qwen-Image**
-- ⚡ **FLUX.1-schnell**
-- 🚀 **FLUX.1-Krea-dev**
-- 🎨 **SDXL 1.0**
-- 🌟 **Segmind-Vega**
-- 🖌️ **Qwen-Image-Edit**
-- ✨ **SDXL Refiner**
-- 🔧 **SD Inpainting**
-
-### 支持的YOLO模型
-- **YOLOv8n** (轻量型)
-- **YOLOv8s** (小型)
-- **YOLOv8m** (中型)
-- **YOLOv8l** (大型)
-- **YOLOv8x** (超大型)
-- 支持自定义YOLO模型添加
-
-### 尺寸预设列表
+#### 尺寸预设列表
 #### 🎯 SD 1.5 推荐尺寸
 - `512x512` (1:1) - 基础正方形
 - `512x768` (2:3) - 竖屏比例
@@ -357,6 +295,182 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 #### ⚡ Flux 推荐尺寸
 - `2048x2048` (1:1) - 超高清正方形
 
+</details>
+
+<details>
+<summary>🎨 魔搭API文生图使用</summary>
+
+### 🎨 魔搭API文生图使用
+1. 🔑 获取魔搭 API Token
+2. 📝 在节点中输入提示词、API Token、选择基础模型和 LoRA 模型
+3. ⚙️ 调整其他可选参数（负面提示词、尺寸、种子、步数、引导系数、LoRA 权重等）
+4. ▶️ 执行节点生成图像
+5. 🎉 欣赏你的创作！
+
+</details>
+
+<details>
+<summary>🚀 YOLO目标检测使用</summary>
+
+### 🚀 YOLO目标检测使用
+1. 在节点菜单中找到 `XnanTool/YOLO` 目录
+2. 根据需要选择合适的模型加载器：
+   - `YOLO模型加载器 (v8预设)`：使用预设的YOLOv8模型
+   - `YOLO模型加载器V2(本地模型)`：使用本地存储的YOLO模型文件
+   - `YOLO模型加载器(自定义路径)`：使用指定路径的YOLO模型文件
+3. 配置模型参数（置信度阈值、IOU阈值等）
+4. 将加载的模型连接到 `YOLO检测与裁剪一体化` 节点
+5. 连接输入图像并配置检测参数
+6. 执行节点进行目标检测和图像裁剪
+
+</details>
+
+<details>
+<summary>🧠 SAM模型使用</summary>
+
+### 🧠 SAM模型使用
+1. 在节点菜单中找到 `XnanTool/SAM` 目录
+2. 根据需要选择合适的模型加载器：
+   - `SAM模型加载器（预设）`：使用预设的SAM模型
+   - `SAM模型加载器V2 (本地模型)`：使用本地存储的SAM模型文件
+   - `SAM模型加载器(自定义路径)`：使用指定路径的SAM模型文件
+3. 配置模型参数（自动下载、使用缓存等）
+4. 加载模型后可用于图像分割任务
+
+#### 支持的YOLO模型
+- **YOLOv8n** (轻量型)
+- **YOLOv8s** (小型)
+- **YOLOv8m** (中型)
+- **YOLOv8l** (大型)
+- **YOLOv8x** (超大型)
+- 支持自定义YOLO模型添加
+
+</details>
+
+<details>
+<summary>🤖 魔搭API模型管理使用</summary>
+
+### 🤖 魔搭API模型管理使用
+1. 在节点菜单中找到 `XnanTool/预设` -> `魔搭API列表管理`
+2. 选择操作类型：
+   - `list`：查看当前所有可用模型
+   - `add`：添加新的魔搭API模型到预设列表中
+   - `delete`：删除已有的魔搭API模型
+3. 根据操作类型填写相应的参数
+4. 执行节点查看操作结果
+5. 注意：添加或删除模型后需重启ComfyUI才能在选择器中看到变化
+
+#### 🧰 魔搭api支持的模型
+
+##### 内置支持的基础模型
+- 🔮 **Qwen-Image**
+- ⚡ **FLUX.1-schnell**
+- 🚀 **FLUX.1-Krea-dev**
+- 🎨 **SDXL 1.0**
+- 🌟 **Segmind-Vega**
+- 🖌️ **Qwen-Image-Edit**
+- ✨ **SDXL Refiner**
+- 🔧 **SD Inpainting**
+
+</details>
+
+<details>
+<summary>🎥 视频转GIF使用</summary>
+
+### 🎥 视频转GIF使用
+1. 在节点菜单中找到 `XnanTool/媒体处理/视频处理`
+2. 连接输入视频文件到节点
+3. 设置输出文件名（可选）、帧率、持续时间、开始时间和缩放比例等参数
+4. 执行节点生成GIF文件
+5. 查看输出路径获取生成的GIF文件
+
+</details>
+
+<details>
+<summary>🎵 视频转音频使用</summary>
+
+### 🎵 视频转音频使用
+1. 在节点菜单中找到 `XnanTool/媒体处理/视频处理`
+2. 连接输入视频文件到节点
+3. 设置输出格式（mp3/wav/flac等）、音频质量（比特率）和输出文件名（可选）
+4. 执行节点提取音频
+5. 查看输出路径获取生成的音频文件
+
+</details>
+
+<details>
+<summary>🟦 长方形转换器使用</summary>
+
+### 🟦 长方形转换器使用
+1. 在节点菜单中找到 `XnanTool/实用工具/小工具`
+2. 连接输入的正方形图像到节点
+3. 选择扩展方向（左/右/上/下）
+4. 设置目标长度和边距
+5. 可选设置填充颜色
+6. 执行节点完成图像转换
+
+</details>
+
+<details>
+<summary>🔀 切换值节点使用</summary>
+
+### 🔀 切换值节点使用
+1. 在节点菜单中找到 `XnanTool/实用工具/小工具`
+2. 设置值A和值B（可以是数字、文本或其他类型）
+3. 通过输入接口传入触发信号来切换输出值
+4. 节点会根据输入信号在值A和值B之间切换输出
+
+</details>
+
+<details>
+<summary>🖼️ 创建图像节点使用</summary>
+
+### 🖼️ 创建图像节点使用
+1. 在节点菜单中找到 `XnanTool/实用工具/小工具`
+2. 设置图像的宽度、高度和颜色
+3. 执行节点创建指定尺寸和颜色的图像
+4. 输出创建的图像用于后续处理
+
+</details>
+
+<details>
+<summary>📋 图片视频提示词预设使用</summary>
+
+### 📋 图片视频提示词预设使用
+1. 在节点菜单中找到 `XnanTool/实用工具/预设`
+2. 首先使用`图片视频提示词预设管理器`添加预设：
+   - 选择操作类型为`add`
+   - 输入预设名称
+   - 输入图片提示词和视频提示词
+   - 执行节点添加预设
+3. 使用`图像上传节点`为预设添加图像预览（可选）：
+   - 选择预设名称
+   - 上传图像文件
+   - 执行节点保存图像预览
+4. 使用`图片视频提示词预设选择器`选择预设：
+   - 从下拉列表中选择预设名称
+   - 获取对应的图片提示词、视频提示词和预设图像
+5. 将输出连接到相应的生成节点使用提示词
+
+#### 📝 预设管理
+- 预设数据存储在插件目录下的`nodes/image_video_prompt_presets.json`文件中
+- 可以直接编辑该文件来批量管理预设（需要重启ComfyUI）
+- 添加或删除预设后需要重启ComfyUI才能在选择器中看到变化
+
+#### 🎨 预设图像
+- 预设图像存储在`nodes/image_video_prompt_presets_node`文件夹中
+- 图像上传节点会自动将图像缩放到最大1024x1024尺寸以节省存储空间
+- 支持常见的图像格式（PNG、JPG、JPEG等）
+
+</details>
+
+</details>
+
+
+
+
+
+
 ## ⚙️ 配置文件
 - `config.json` - 存储默认参数配置
 - `model_presets.json` - 存储模型预设列表
@@ -373,13 +487,35 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 
 
 ## 📝 版本信息
-- **当前版本**: v0.0.3
-- **更新日期**: 2025年10月23日
+- **当前版本**: v0.1.0
+- **更新日期**: 2025年10月27日
 
 ## 🚀 更新日志
 
 <details>
 <summary>点击展开/收起更新日志</summary>
+
+
+
+<details>
+<summary>v0.1.0 - 综合功能优化与稳定性提升版</summary>
+
+- ✅ 全面优化插件性能，提升运行效率
+- ✅ 重构节点内部逻辑，增强稳定性
+- ✅ 改进错误处理机制，提供更清晰的错误提示
+- ✅ 优化内存管理，减少资源占用
+- ✅ 完善文档说明，补充使用示例和最佳实践
+- ✅ 修复多个已知问题，提升用户体验
+- ✅ api文生图新增生图批次，编辑模型支持自动尺寸获取和自定义尺寸。
+- ✅ 增强YOLO目标检测节点功能，支持更多自定义参数
+- ✅ 优化SAM分割节点性能，提高处理速度
+- ✅ 改进魔搭API节点的错误处理机制
+- ✅ 新增图像处理实用工具节点
+- ✅ 优化节点间数据传递效率
+- ✅ 完善各节点的参数说明和使用文档
+- ✅ 修复部分节点在特定条件下的异常问题
+
+</details>
 
 <details>
 <summary>v0.0.3 - 媒体处理与实用工具增强版</summary>
@@ -387,11 +523,18 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - ✅ 新增视频转GIF节点，支持多种参数调节
 - ✅ 新增视频转音频节点，支持多种音频格式输出
 - ✅ 新增长方形转换器节点，支持自定义方向和长度扩展
-- ✅ 新增切换值节点，可在两个值之间动态切换
-- ✅ 新增创建图像节点，可创建指定尺寸和颜色的图像
+- ✅ 新增切换值节点(ToggleValueNode)，可在两个值之间动态切换
+- ✅ 新增创建图像节点(CreateImageNode)，可创建指定尺寸和颜色的图像
+- ✅ 新增长方形转换器节点(RectangleConverter)
+- ✅ 新增YOLO检测裁切节点(YoloDetectionCropNode)
+- ✅ 新增YOLO检测多输出裁切节点(YoloDetectionMultiOutputCropNode)
+- ✅ 新增图片视频提示词预设选择器节点(ImageVideoPromptSelector)，支持从预设列表中快速选择常用的图片和视频提示词
+- ✅ 新增图片视频提示词预设管理器节点(ImageVideoPromptManager)，支持添加、删除和查看提示词预设
+- ✅ 新增图像上传节点(ImageUploadNode)，支持为提示词预设添加图像预览，使预设更直观易用
+- ✅ 更新魔搭API相关节点：魔搭API-Lora模型选择器、魔搭API-Lora列表管理，支持更多模型和配置
+- ✅ 添加图片视频提示词预设功能
 - ✅ 优化部分节点的用户界面和参数描述
 - ✅ 修复已知问题，提升插件稳定性
-
 </details>
 
 <details>
@@ -437,6 +580,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 
 <img width="220px" src="./src/comfyui-xnantool-裁切.png" align="center" alt="logo，注意这个路gitcomde显示，github显示，小图，预览不显示" />
 </p>
+
 ---
 
 <div align="center">

@@ -80,5 +80,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ToggleValueNode": "切换值节点-【新】"
+    "ToggleValueNode": "切换值节点"
 }

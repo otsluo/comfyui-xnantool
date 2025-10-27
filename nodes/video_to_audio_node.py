@@ -197,7 +197,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "VideoToAudioNode": "视频转音频节点-【新】"
+    "VideoToAudioNode": "视频转音频节点"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

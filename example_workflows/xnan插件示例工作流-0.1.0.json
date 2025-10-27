@@ -1,0 +1,5839 @@
+{
+  "id": "8c80c21b-eff9-40c9-8843-2c9368586d33",
+  "revision": 0,
+  "last_node_id": 735,
+  "last_link_id": 625,
+  "nodes": [
+    {
+      "id": 358,
+      "type": "SamModelLoader",
+      "pos": [
+        -3465.10009765625,
+        -523.9766845703125
+      ],
+      "size": [
+        302.8999938964844,
+        126
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "SAM模型",
+          "name": "model",
+          "type": "SAM_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamModelLoader"
+      },
+      "widgets_values": [
+        "vit_b",
+        true,
+        true
+      ]
+    },
+    {
+      "id": 359,
+      "type": "SamModelLoaderV2",
+      "pos": [
+        -3463.5478515625,
+        -331.242919921875
+      ],
+      "size": [
+        333.2378845214844,
+        102
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "SAM模型",
+          "name": "model",
+          "type": "SAM_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamModelLoaderV2"
+      },
+      "widgets_values": [
+        "sam_vit_b_01ec64.pth",
+        true
+      ]
+    },
+    {
+      "id": 360,
+      "type": "SamModelLoaderCustomPath",
+      "pos": [
+        -3456.6435546875,
+        -166.295166015625
+      ],
+      "size": [
+        326.2242126464844,
+        102
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "SAM模型",
+          "name": "model",
+          "type": "SAM_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamModelLoaderCustomPath"
+      },
+      "widgets_values": [
+        "",
+        true
+      ]
+    },
+    {
+      "id": 367,
+      "type": "modelscopeLoraImageEditNode",
+      "pos": [
+        -3100.31640625,
+        892.8643188476562
+      ],
+      "size": [
+        400,
+        406
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "编辑图像",
+          "name": "edited_image",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "modelscopeLoraImageEditNode"
+      },
+      "widgets_values": [
+        "修改图片中的内容",
+        "",
+        "Qwen/Qwen-Image-Edit",
+        "qiyuanai/TikTok_Xiaohongshu_career_line_beauty_v1",
+        "",
+        512,
+        512,
+        2567530,
+        "randomize",
+        30,
+        3.5,
+        0.8,
+        0.8
+      ]
+    },
+    {
+      "id": 364,
+      "type": "ModelscopeApiSelector",
+      "pos": [
+        -4225.79541015625,
+        883.1751098632812
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型名称",
+          "name": "model_name",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiSelector"
+      },
+      "widgets_values": [
+        "Qwen/Qwen-Image"
+      ]
+    },
+    {
+      "id": 368,
+      "type": "YoloModelLoader",
+      "pos": [
+        -4226.2470703125,
+        -527.2916259765625
+      ],
+      "size": [
+        311.4654235839844,
+        174
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoader"
+      },
+      "widgets_values": [
+        "yolov8m.pt",
+        0.5,
+        0.45,
+        true,
+        false
+      ]
+    },
+    {
+      "id": 369,
+      "type": "YoloModelLoaderV2",
+      "pos": [
+        -3877.9208984375,
+        -522.6500244140625
+      ],
+      "size": [
+        337.9136657714844,
+        150
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoaderV2"
+      },
+      "widgets_values": [
+        "yolo12m.pt",
+        0.5,
+        0.45,
+        true
+      ]
+    },
+    {
+      "id": 370,
+      "type": "YoloModelLoaderCustomPath",
+      "pos": [
+        -4212.130859375,
+        -283.5531005859375
+      ],
+      "size": [
+        334.7896423339844,
+        150
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoaderCustomPath"
+      },
+      "widgets_values": [
+        "",
+        0.5,
+        0.45,
+        true
+      ]
+    },
+    {
+      "id": 385,
+      "type": "Note",
+      "pos": [
+        -3843.60009765625,
+        -300.4102783203125
+      ],
+      "size": [
+        306.2032470703125,
+        144.3884735107422
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "YOLO模型加载器 (v8预设)：使用预设的模型，如果没有则自动下载。\nYOLO模型加载器V2(本地模型)，读取【models\\yolo】并自动加载。\nYOLO模型加载器(自定义路径)：使用自定义路径，"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 361,
+      "type": "Note",
+      "pos": [
+        -3092.53955078125,
+        -433.4620361328125
+      ],
+      "size": [
+        306.2032470703125,
+        144.3884735107422
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "SAM模型加载器（预设）：使用预设的模型，如果没有则自动下载。\nSAM模型加载器V2 (本地模型)，读取【models\\sam】并自动加载。\nSAM模型加载器(自定义路径)：使用自定义路径，"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 365,
+      "type": "ModelscopeApiManager",
+      "pos": [
+        -4218.75634765625,
+        997.6298828125
+      ],
+      "size": [
+        277.40234375,
+        130
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiManager"
+      },
+      "widgets_values": [
+        "list",
+        "",
+        "",
+        "Qwen/Qwen-Image"
+      ]
+    },
+    {
+      "id": 366,
+      "type": "modelscopeLoraTextToImageNode",
+      "pos": [
+        -3529.3955078125,
+        897.8267211914062
+      ],
+      "size": [
+        400,
+        406
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "生成图像",
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "modelscopeLoraTextToImageNode"
+      },
+      "widgets_values": [
+        "A golden cat",
+        "",
+        "Qwen/Qwen-Image",
+        "qiyuanai/TikTok_Xiaohongshu_career_line_beauty_v1",
+        "",
+        512,
+        512,
+        1350582647,
+        "randomize",
+        30,
+        7.5,
+        0.8,
+        1
+      ]
+    },
+    {
+      "id": 411,
+      "type": "PreviewImage",
+      "pos": [
+        -231.1571502685547,
+        -601.0450439453125
+      ],
+      "size": [
+        140,
+        246.00003051757812
+      ],
+      "flags": {},
+      "order": 94,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 406
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 415,
+      "type": "MaskToImage",
+      "pos": [
+        -70.60160064697266,
+        -598.0687866210938
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 95,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 407
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            408
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 416,
+      "type": "PreviewImage",
+      "pos": [
+        95.02674102783203,
+        -605.9148559570312
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 112,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 408
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 406,
+      "type": "PreviewAny",
+      "pos": [
+        263.8269348144531,
+        -600.5372314453125
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 97,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 410
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 404,
+      "type": "PreviewAny",
+      "pos": [
+        609.7745971679688,
+        -604.32470703125
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 96,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 409
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 420,
+      "type": "PreviewImage",
+      "pos": [
+        -182.66587829589844,
+        -227.5816192626953
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 98,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 418
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 421,
+      "type": "PreviewImage",
+      "pos": [
+        -2.6545543670654297,
+        -228.85919189453125
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 99,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 419
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 423,
+      "type": "PreviewImage",
+      "pos": [
+        164.11407470703125,
+        -228.08026123046875
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 100,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 420
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 422,
+      "type": "PreviewImage",
+      "pos": [
+        325.625,
+        -230.83792114257812
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 101,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 421
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 425,
+      "type": "PreviewImage",
+      "pos": [
+        494.0677795410156,
+        -233.5955810546875
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 102,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 422
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 397,
+      "type": "YoloDetectionNode",
+      "pos": [
+        -894.3765869140625,
+        -588.160888671875
+      ],
+      "size": [
+        293.1328125,
+        166
+      ],
+      "flags": {},
+      "order": 63,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "YOLO模型",
+          "name": "yolo_model",
+          "type": "YOLO_MODEL",
+          "link": 381
+        },
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 441
+        }
+      ],
+      "outputs": [
+        {
+          "label": "带标注图像",
+          "name": "annotated_image",
+          "type": "IMAGE",
+          "links": [
+            404,
+            416
+          ]
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "links": [
+            405,
+            417
+          ]
+        },
+        {
+          "label": "检测对象数量",
+          "name": "detected_objects_count",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectionNode"
+      },
+      "widgets_values": [
+        "",
+        0.5,
+        false
+      ]
+    },
+    {
+      "id": 398,
+      "type": "YoloModelLoaderV2",
+      "pos": [
+        -1279.6375732421875,
+        -579.8355712890625
+      ],
+      "size": [
+        337.9136657714844,
+        150
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": [
+            381
+          ]
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoaderV2"
+      },
+      "widgets_values": [
+        "yolo12m.pt",
+        0.5,
+        0.45,
+        true
+      ]
+    },
+    {
+      "id": 448,
+      "type": "LoadImage",
+      "pos": [
+        -1265.1854248046875,
+        -346.0316467285156
+      ],
+      "size": [
+        270,
+        314.00006103515625
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            441
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image_21c6ea4cc4e44e0b9252da8d2541160d.jpeg",
+        "image"
+      ]
+    },
+    {
+      "id": 438,
+      "type": "MaskToImage",
+      "pos": [
+        -172.07162475585938,
+        76.52942657470703
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 103,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 442
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            436
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 439,
+      "type": "PreviewImage",
+      "pos": [
+        -166.7252960205078,
+        82.11483764648438
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 113,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 436
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 440,
+      "type": "MaskToImage",
+      "pos": [
+        8.21609878540039,
+        87.26826477050781
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 104,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 443
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            437
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 441,
+      "type": "PreviewImage",
+      "pos": [
+        16.24897575378418,
+        96.43538665771484
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 114,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 437
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 442,
+      "type": "MaskToImage",
+      "pos": [
+        172.6700897216797,
+        98.61247253417969
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 105,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 444
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            438
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 443,
+      "type": "PreviewImage",
+      "pos": [
+        180.70286560058594,
+        103.30243682861328
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 115,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 438
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 444,
+      "type": "MaskToImage",
+      "pos": [
+        346.6898193359375,
+        106.97404479980469
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 106,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 445
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            439
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 445,
+      "type": "PreviewImage",
+      "pos": [
+        352.03631591796875,
+        112.55940246582031
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 116,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 439
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 446,
+      "type": "MaskToImage",
+      "pos": [
+        518.8993530273438,
+        116.86768341064453
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 107,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 446
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            440
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 447,
+      "type": "PreviewImage",
+      "pos": [
+        520.6640014648438,
+        120.66217041015625
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 117,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 440
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 405,
+      "type": "PreviewAny",
+      "pos": [
+        674.5257568359375,
+        -234.12608337402344
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 108,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 447
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 419,
+      "type": "YoloDetectionMultiOutputCropNode",
+      "pos": [
+        -510.3768310546875,
+        -225.92129516601562
+      ],
+      "size": [
+        292.6997985839844,
+        302
+      ],
+      "flags": {},
+      "order": 81,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 416
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "link": 417
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁切图像1",
+          "name": "cropped_image_1",
+          "type": "IMAGE",
+          "links": [
+            418
+          ]
+        },
+        {
+          "label": "裁切图像2",
+          "name": "cropped_image_2",
+          "type": "IMAGE",
+          "links": [
+            419
+          ]
+        },
+        {
+          "label": "裁切图像3",
+          "name": "cropped_image_3",
+          "type": "IMAGE",
+          "links": [
+            420
+          ]
+        },
+        {
+          "label": "裁切图像4",
+          "name": "cropped_image_4",
+          "type": "IMAGE",
+          "links": [
+            421
+          ]
+        },
+        {
+          "label": "裁切图像5",
+          "name": "cropped_image_5",
+          "type": "IMAGE",
+          "links": [
+            422
+          ]
+        },
+        {
+          "label": "遮罩1",
+          "name": "mask_1",
+          "type": "MASK",
+          "links": [
+            442
+          ]
+        },
+        {
+          "label": "遮罩2",
+          "name": "mask_2",
+          "type": "MASK",
+          "links": [
+            443
+          ]
+        },
+        {
+          "label": "遮罩3",
+          "name": "mask_3",
+          "type": "MASK",
+          "links": [
+            444
+          ]
+        },
+        {
+          "label": "遮罩4",
+          "name": "mask_4",
+          "type": "MASK",
+          "links": [
+            445
+          ]
+        },
+        {
+          "label": "遮罩5",
+          "name": "mask_5",
+          "type": "MASK",
+          "links": [
+            446
+          ]
+        },
+        {
+          "label": "裁切数量",
+          "name": "crop_count",
+          "type": "INT",
+          "links": [
+            447
+          ]
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": [
+            448
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectionMultiOutputCropNode"
+      },
+      "widgets_values": [
+        0,
+        false
+      ]
+    },
+    {
+      "id": 407,
+      "type": "PreviewAny",
+      "pos": [
+        702.696044921875,
+        118.00188446044922
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 109,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 448
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 414,
+      "type": "YoloDetectionCropNode",
+      "pos": [
+        -551.0424194335938,
+        -613.6251220703125
+      ],
+      "size": [
+        284.443359375,
+        190
+      ],
+      "flags": {},
+      "order": 80,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 404
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "link": 405
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁切图像",
+          "name": "cropped_images",
+          "type": "IMAGE",
+          "links": [
+            406
+          ]
+        },
+        {
+          "label": "裁切遮罩",
+          "name": "masks",
+          "type": "MASK",
+          "links": [
+            407
+          ]
+        },
+        {
+          "label": "裁切数量",
+          "name": "crop_count",
+          "type": "INT",
+          "links": [
+            409
+          ]
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": [
+            410
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectionCropNode"
+      },
+      "widgets_values": [
+        0,
+        false,
+        0
+      ]
+    },
+    {
+      "id": 454,
+      "type": "SamModelLoaderV2",
+      "pos": [
+        -570.8623046875,
+        695.4816284179688
+      ],
+      "size": [
+        333.2378845214844,
+        102
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "SAM模型",
+          "name": "model",
+          "type": "SAM_MODEL",
+          "links": [
+            451
+          ]
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamModelLoaderV2"
+      },
+      "widgets_values": [
+        "sam_vit_b_01ec64.pth",
+        true
+      ]
+    },
+    {
+      "id": 453,
+      "type": "YoloModelLoaderV2",
+      "pos": [
+        -558.6307983398438,
+        485.70623779296875
+      ],
+      "size": [
+        337.9136657714844,
+        150
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": [
+            450,
+            452
+          ]
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoaderV2"
+      },
+      "widgets_values": [
+        "yolo12m.pt",
+        0.5,
+        0.45,
+        true
+      ]
+    },
+    {
+      "id": 456,
+      "type": "PreviewImage",
+      "pos": [
+        175.94065856933594,
+        488.66748046875
+      ],
+      "size": [
+        140,
+        246.00003051757812
+      ],
+      "flags": {},
+      "order": 118,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 454
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 458,
+      "type": "MaskToImage",
+      "pos": [
+        343.6727294921875,
+        492.8447570800781
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 119,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 460
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            459
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 459,
+      "type": "PreviewImage",
+      "pos": [
+        343.646728515625,
+        494.8484191894531
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 128,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 459
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 399,
+      "type": "PreviewAny",
+      "pos": [
+        370.1307067871094,
+        804.8516235351562
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 123,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 463
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 460,
+      "type": "PreviewAny",
+      "pos": [
+        707.21728515625,
+        797.1118774414062
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 124,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 462
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 462,
+      "type": "PreviewAny",
+      "pos": [
+        382.695556640625,
+        1025.5750732421875
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 125,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 464
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 461,
+      "type": "PreviewAny",
+      "pos": [
+        719.7820434570312,
+        1017.83544921875
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 126,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 466
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 418,
+      "type": "PreviewImage",
+      "pos": [
+        174.8048553466797,
+        796.7425537109375
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 122,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 455
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 466,
+      "type": "PreviewAny",
+      "pos": [
+        506.1346435546875,
+        500.3779602050781
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 120,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 469
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 463,
+      "type": "PreviewAny",
+      "pos": [
+        1077.477783203125,
+        1027.0673828125
+      ],
+      "size": [
+        303.4782409667969,
+        152.020751953125
+      ],
+      "flags": {},
+      "order": 127,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 465
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 467,
+      "type": "Reroute",
+      "pos": [
+        -265.906982421875,
+        821.8231201171875
+      ],
+      "size": [
+        75,
+        26
+      ],
+      "flags": {},
+      "order": 83,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "",
+          "type": "*",
+          "link": 483
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "IMAGE",
+          "links": [
+            471,
+            472
+          ]
+        }
+      ],
+      "properties": {
+        "showOutputText": false,
+        "horizontal": false
+      }
+    },
+    {
+      "id": 474,
+      "type": "YoloModelLoaderCustomPath",
+      "pos": [
+        -933.5961303710938,
+        492.9994812011719
+      ],
+      "size": [
+        334.7896423339844,
+        150
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoaderCustomPath"
+      },
+      "widgets_values": [
+        "",
+        0.5,
+        0.45,
+        true
+      ]
+    },
+    {
+      "id": 472,
+      "type": "YoloModelLoader",
+      "pos": [
+        -1271.85693359375,
+        499.9811096191406
+      ],
+      "size": [
+        311.4654235839844,
+        174
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "YOLO模型",
+          "name": "model",
+          "type": "YOLO_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloModelLoader"
+      },
+      "widgets_values": [
+        "yolov8m.pt",
+        0.5,
+        0.45,
+        true,
+        false
+      ]
+    },
+    {
+      "id": 469,
+      "type": "SamModelLoader",
+      "pos": [
+        -1269.1397705078125,
+        735.2124633789062
+      ],
+      "size": [
+        302.8999938964844,
+        126
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "SAM模型",
+          "name": "model",
+          "type": "SAM_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamModelLoader"
+      },
+      "widgets_values": [
+        "vit_b",
+        true,
+        true
+      ]
+    },
+    {
+      "id": 471,
+      "type": "SamModelLoaderCustomPath",
+      "pos": [
+        -937.4337768554688,
+        722.18603515625
+      ],
+      "size": [
+        326.2242126464844,
+        102
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "SAM模型",
+          "name": "model",
+          "type": "SAM_MODEL",
+          "links": null
+        },
+        {
+          "label": "模型信息",
+          "name": "model_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamModelLoaderCustomPath"
+      },
+      "widgets_values": [
+        "",
+        true
+      ]
+    },
+    {
+      "id": 457,
+      "type": "Note",
+      "pos": [
+        1168.091796875,
+        496.6606140136719
+      ],
+      "size": [
+        264.54620361328125,
+        164.19552612304688
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "输出白底图\n\n\n现在有个问题（对于检测模型不是问题）。\n例如图片是一个女人，手拿鲜花，拿鲜花会被扣掉。\n\n\n白底图有时不支持。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 477,
+      "type": "ModelscopeApiSelector",
+      "pos": [
+        1172.856689453125,
+        -591.57275390625
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型名称",
+          "name": "model_name",
+          "type": "STRING",
+          "links": [
+            477
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiSelector"
+      },
+      "widgets_values": [
+        "Qwen/Qwen-Image"
+      ]
+    },
+    {
+      "id": 481,
+      "type": "PreviewImage",
+      "pos": [
+        1909.7379150390625,
+        -589.29931640625
+      ],
+      "size": [
+        374.42364501953125,
+        362.8608703613281
+      ],
+      "flags": {},
+      "order": 92,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 479
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 465,
+      "type": "PreviewImage",
+      "pos": [
+        -158.93824768066406,
+        1065.7386474609375
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 82,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 475
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 468,
+      "type": "LayerUtility: ImageScaleByAspectRatio V2",
+      "pos": [
+        -561.5157470703125,
+        860.9652099609375
+      ],
+      "size": [
+        274.9136657714844,
+        330
+      ],
+      "flags": {},
+      "order": 64,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 484
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            475,
+            483
+          ]
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "original_size",
+          "type": "BOX",
+          "links": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LayerUtility: ImageScaleByAspectRatio V2"
+      },
+      "widgets_values": [
+        "original",
+        1,
+        1,
+        "letterbox",
+        "lanczos",
+        "8",
+        "longest",
+        768,
+        "#000000"
+      ],
+      "color": "rgba(38, 73, 116, 0.7)"
+    },
+    {
+      "id": 452,
+      "type": "YoloDetectAndCropNode",
+      "pos": [
+        -158.18653869628906,
+        800.9337768554688
+      ],
+      "size": [
+        297.4654235839844,
+        206
+      ],
+      "flags": {},
+      "order": 111,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "YOLO模型",
+          "name": "yolo_model",
+          "type": "YOLO_MODEL",
+          "link": 452
+        },
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 472
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            455
+          ]
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "links": [
+            463
+          ]
+        },
+        {
+          "label": "检测对象数量",
+          "name": "detected_objects_count",
+          "type": "INT",
+          "links": [
+            462
+          ]
+        },
+        {
+          "label": "裁剪信息",
+          "name": "crop_info",
+          "type": "JSON",
+          "links": [
+            464
+          ]
+        },
+        {
+          "label": "裁剪区域数量",
+          "name": "crop_regions_count",
+          "type": "INT",
+          "links": [
+            466
+          ]
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": [
+            465
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectAndCropNode"
+      },
+      "widgets_values": [
+        "",
+        0.5,
+        20
+      ]
+    },
+    {
+      "id": 400,
+      "type": "PreviewAny",
+      "pos": [
+        837.15966796875,
+        494.3601989746094
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 121,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 458
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 451,
+      "type": "YoloSamBackgroundRemovalNode",
+      "pos": [
+        -141.0559844970703,
+        487.3563232421875
+      ],
+      "size": [
+        279.9790954589844,
+        242
+      ],
+      "flags": {},
+      "order": 110,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "YOLO模型",
+          "name": "yolo_model",
+          "type": "YOLO_MODEL",
+          "link": 450
+        },
+        {
+          "label": "SAM模型",
+          "name": "sam_model",
+          "type": "SAM_MODEL",
+          "link": 451
+        },
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 471
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": [
+            454
+          ]
+        },
+        {
+          "label": "前景遮罩",
+          "name": "foreground_mask",
+          "type": "MASK",
+          "links": [
+            460,
+            469
+          ]
+        },
+        {
+          "label": "处理信息",
+          "name": "info",
+          "type": "STRING",
+          "links": [
+            458
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloSamBackgroundRemovalNode"
+      },
+      "widgets_values": [
+        "person,potted plant",
+        "最高置信度",
+        0,
+        0.5,
+        50,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 485,
+      "type": "LoadImage",
+      "pos": [
+        -887.5297241210938,
+        881.8167114257812
+      ],
+      "size": [
+        270,
+        314.0001220703125
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            484
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1756102884788.png",
+        "image"
+      ]
+    },
+    {
+      "id": 490,
+      "type": "PreviewAny",
+      "pos": [
+        1813.34912109375,
+        543.85791015625
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 65,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 487
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 491,
+      "type": "PreviewAny",
+      "pos": [
+        1813.85400390625,
+        716.8473510742188
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 66,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 488
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 492,
+      "type": "PreviewImage",
+      "pos": [
+        2134.3916015625,
+        966.7359619140625
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 84,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 489
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 494,
+      "type": "PreviewAny",
+      "pos": [
+        2305.1025390625,
+        1132.3251953125
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 86,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 491
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 493,
+      "type": "PreviewAny",
+      "pos": [
+        2304.59765625,
+        959.3356323242188
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 85,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 490
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 486,
+      "type": "SizeSelector",
+      "pos": [
+        1512.155517578125,
+        555.08154296875
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            487
+          ]
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": [
+            488
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SizeSelector"
+      },
+      "widgets_values": [
+        "512x512"
+      ]
+    },
+    {
+      "id": 487,
+      "type": "SquareConverter",
+      "pos": [
+        1822.058349609375,
+        948.5869750976562
+      ],
+      "size": [
+        270,
+        122
+      ],
+      "flags": {},
+      "order": 69,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 485
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            489
+          ]
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            490
+          ]
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": [
+            491
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SquareConverter"
+      },
+      "widgets_values": [
+        0,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 371,
+      "type": "YoloDetectAndCropNode",
+      "pos": [
+        -4200.5693359375,
+        66.86126708984375
+      ],
+      "size": [
+        297.4654235839844,
+        206
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "YOLO模型",
+          "name": "yolo_model",
+          "type": "YOLO_MODEL",
+          "link": null
+        },
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "links": null
+        },
+        {
+          "label": "检测对象数量",
+          "name": "detected_objects_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "裁剪信息",
+          "name": "crop_info",
+          "type": "JSON",
+          "links": null
+        },
+        {
+          "label": "裁剪区域数量",
+          "name": "crop_regions_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectAndCropNode"
+      },
+      "widgets_values": [
+        "",
+        0.5,
+        20
+      ]
+    },
+    {
+      "id": 437,
+      "type": "Note",
+      "pos": [
+        -3866.64404296875,
+        72.98724365234375
+      ],
+      "size": [
+        414.1180725097656,
+        165.09664916992188
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "YOLO检测与裁剪一体化：集成yolo检测和裁剪，输出结果裁剪结果（提示词填写结果，无提示词时，输出最大置信度）。\n\nYOLO检测节点：yolo检测。\n\nYOLO检测裁切节点：结合YOLO检测节点一起使用\n\nYOLO检测多输出裁切节点：YOLO检测裁切节点的多直出结果版本。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 363,
+      "type": "SizeSelector",
+      "pos": [
+        -4195.8369140625,
+        1524.951904296875
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SizeSelector"
+      },
+      "widgets_values": [
+        "512x512"
+      ]
+    },
+    {
+      "id": 560,
+      "type": "Note",
+      "pos": [
+        -3164.7001953125,
+        419.55438232421875
+      ],
+      "size": [
+        414.1180725097656,
+        165.09664916992188
+      ],
+      "flags": {},
+      "order": 27,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "YOLO+SAM背景去除：通过yolo和sam进行识别和裁剪。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 372,
+      "type": "SquareConverter",
+      "pos": [
+        -4170.6484375,
+        1925.066162109375
+      ],
+      "size": [
+        270,
+        122
+      ],
+      "flags": {},
+      "order": 28,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SquareConverter"
+      },
+      "widgets_values": [
+        0,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 565,
+      "type": "ToggleValueNode",
+      "pos": [
+        -4180.564453125,
+        1748.334716796875
+      ],
+      "size": [
+        270,
+        118
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "值A",
+          "name": "value_a",
+          "type": "*",
+          "link": null
+        },
+        {
+          "label": "值B",
+          "name": "value_b",
+          "type": "*",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "原始类型输出",
+          "type": "*",
+          "links": null
+        },
+        {
+          "name": "字符串输出",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "整数输出",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "浮点输出",
+          "type": "FLOAT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ToggleValueNode"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 436,
+      "type": "YoloDetectionNode",
+      "pos": [
+        -4208.912109375,
+        367.22601318359375
+      ],
+      "size": [
+        293.1328125,
+        166
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "YOLO模型",
+          "name": "yolo_model",
+          "type": "YOLO_MODEL",
+          "link": null
+        },
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "带标注图像",
+          "name": "annotated_image",
+          "type": "IMAGE",
+          "links": [
+            432,
+            434
+          ]
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "links": [
+            433,
+            435
+          ]
+        },
+        {
+          "label": "检测对象数量",
+          "name": "detected_objects_count",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectionNode"
+      },
+      "widgets_values": [
+        "",
+        0.5,
+        false
+      ]
+    },
+    {
+      "id": 435,
+      "type": "YoloDetectionCropNode",
+      "pos": [
+        -3883.46630859375,
+        368.46771240234375
+      ],
+      "size": [
+        284.443359375,
+        190
+      ],
+      "flags": {},
+      "order": 68,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 434
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "link": 435
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁切图像",
+          "name": "cropped_images",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "裁切遮罩",
+          "name": "masks",
+          "type": "MASK",
+          "links": []
+        },
+        {
+          "label": "裁切数量",
+          "name": "crop_count",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectionCropNode"
+      },
+      "widgets_values": [
+        0,
+        false,
+        2
+      ]
+    },
+    {
+      "id": 434,
+      "type": "YoloDetectionMultiOutputCropNode",
+      "pos": [
+        -3571.962890625,
+        373.01702880859375
+      ],
+      "size": [
+        292.6997985839844,
+        302
+      ],
+      "flags": {},
+      "order": 67,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 432
+        },
+        {
+          "label": "检测结果",
+          "name": "detection_results",
+          "type": "JSON",
+          "link": 433
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁切图像1",
+          "name": "cropped_image_1",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "裁切图像2",
+          "name": "cropped_image_2",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "裁切图像3",
+          "name": "cropped_image_3",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "裁切图像4",
+          "name": "cropped_image_4",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "裁切图像5",
+          "name": "cropped_image_5",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "遮罩1",
+          "name": "mask_1",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "遮罩2",
+          "name": "mask_2",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "遮罩3",
+          "name": "mask_3",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "遮罩4",
+          "name": "mask_4",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "遮罩5",
+          "name": "mask_5",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "裁切数量",
+          "name": "crop_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "信息",
+          "name": "info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloDetectionMultiOutputCropNode"
+      },
+      "widgets_values": [
+        0,
+        false
+      ]
+    },
+    {
+      "id": 570,
+      "type": "RectangleConverter",
+      "pos": [
+        -3861.109619140625,
+        1917.686767578125
+      ],
+      "size": [
+        270,
+        170
+      ],
+      "flags": {},
+      "order": 31,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RectangleConverter"
+      },
+      "widgets_values": [
+        "left_right",
+        1024,
+        0,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 566,
+      "type": "CreateImageNode",
+      "pos": [
+        -3875.218505859375,
+        1745.378662109375
+      ],
+      "size": [
+        271.7964782714844,
+        106
+      ],
+      "flags": {},
+      "order": 32,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateImageNode"
+      },
+      "widgets_values": [
+        512,
+        512,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 569,
+      "type": "Note",
+      "pos": [
+        -3561.408447265625,
+        1752.203369140625
+      ],
+      "size": [
+        414.1180725097656,
+        165.09664916992188
+      ],
+      "flags": {},
+      "order": 33,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "切换值节点：补充其他节点的多类型输出。\n创建图像节点：快速生成纯色画布。\n正方形转换器：输入图片，自动识别最短边的尺寸，填充到早最长边的尺寸。支持填充的颜色。支持设置外边距\n长方形转换器：给图片增加上下或左右尺寸。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 630,
+      "type": "VideoToGifNode",
+      "pos": [
+        -4168.4072265625,
+        2237.1748046875
+      ],
+      "size": [
+        270,
+        710
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 34,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "GIF文件路径",
+          "name": "output_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VideoToGifNode"
+      },
+      "widgets_values": [
+        "jiebujie_00001_p87-audio_kzbsm_1761144656.mp4",
+        5,
+        10,
+        1,
+        true,
+        "256",
+        "2",
+        "output.gif",
+        "image"
+      ]
+    },
+    {
+      "id": 631,
+      "type": "VideoToAudioNode",
+      "pos": [
+        -3866.088623046875,
+        2240.7373046875
+      ],
+      "size": [
+        270,
+        634
+      ],
+      "flags": {},
+      "order": 35,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "音频文件路径",
+          "name": "audio_file_path",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VideoToAudioNode"
+      },
+      "widgets_values": [
+        "jiebujie_00001_p87-audio_kzbsm_1761144656.mp4",
+        "mp3",
+        "medium",
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 683,
+      "type": "VideoToGifNode",
+      "pos": [
+        1535.144287109375,
+        1822.16796875
+      ],
+      "size": [
+        270,
+        710
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 36,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "GIF文件路径",
+          "name": "output_path",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VideoToGifNode"
+      },
+      "widgets_values": [
+        "jiebujie_00001_p87-audio_kzbsm_1761144656.mp4",
+        5,
+        10,
+        1,
+        true,
+        "256",
+        "2",
+        "output.gif",
+        "image"
+      ]
+    },
+    {
+      "id": 684,
+      "type": "VideoToAudioNode",
+      "pos": [
+        1837.4625244140625,
+        1825.730712890625
+      ],
+      "size": [
+        270,
+        634
+      ],
+      "flags": {},
+      "order": 37,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "音频文件路径",
+          "name": "audio_file_path",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VideoToAudioNode"
+      },
+      "widgets_values": [
+        "jiebujie_00001_p87-audio_kzbsm_1761144656.mp4",
+        "mp3",
+        "medium",
+        "",
+        "image"
+      ]
+    },
+    {
+      "id": 488,
+      "type": "LoadImage",
+      "pos": [
+        1513.47802734375,
+        949.6719360351562
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 38,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            485
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1756102884788.png",
+        "image"
+      ]
+    },
+    {
+      "id": 688,
+      "type": "PreviewAny",
+      "pos": [
+        2289.937255859375,
+        1561.955078125
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 89,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 600
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 686,
+      "type": "LoadImage",
+      "pos": [
+        1506.7784423828125,
+        1376.698974609375
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 39,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            597
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1756102884788.png",
+        "image"
+      ]
+    },
+    {
+      "id": 687,
+      "type": "PreviewImage",
+      "pos": [
+        2114.417724609375,
+        1371.3837890625
+      ],
+      "size": [
+        140,
+        246
+      ],
+      "flags": {},
+      "order": 87,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 598
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 690,
+      "type": "Note",
+      "pos": [
+        1822.98193359375,
+        1601.8328857421875
+      ],
+      "size": [
+        243.60345458984375,
+        88
+      ],
+      "flags": {},
+      "order": 40,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "如果填写的目标长度低于图片最大边，则自动按图片最大边添加"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 689,
+      "type": "PreviewAny",
+      "pos": [
+        2289.432373046875,
+        1388.965576171875
+      ],
+      "size": [
+        302.13275146484375,
+        116.36499786376953
+      ],
+      "flags": {},
+      "order": 88,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 599
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 680,
+      "type": "RectangleConverter",
+      "pos": [
+        1806.266845703125,
+        1379.719482421875
+      ],
+      "size": [
+        270,
+        170
+      ],
+      "flags": {},
+      "order": 70,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 597
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            598
+          ]
+        },
+        {
+          "label": "宽度",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            599
+          ]
+        },
+        {
+          "label": "高度",
+          "name": "height",
+          "type": "INT",
+          "links": [
+            600
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "RectangleConverter"
+      },
+      "widgets_values": [
+        "left_right",
+        1000,
+        0,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 692,
+      "type": "PreviewImage",
+      "pos": [
+        2963.642822265625,
+        965.5418701171875
+      ],
+      "size": [
+        140,
+        26
+      ],
+      "flags": {},
+      "order": 71,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 601
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 681,
+      "type": "CreateImageNode",
+      "pos": [
+        2661.784423828125,
+        951.80712890625
+      ],
+      "size": [
+        271.7964782714844,
+        106
+      ],
+      "flags": {},
+      "order": 41,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            601
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateImageNode"
+      },
+      "widgets_values": [
+        512,
+        512,
+        "#FFFFFF"
+      ]
+    },
+    {
+      "id": 696,
+      "type": "PrimitiveString",
+      "pos": [
+        2190.711181640625,
+        676.760009765625
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 42,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            603
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveString"
+      },
+      "widgets_values": [
+        "B"
+      ]
+    },
+    {
+      "id": 695,
+      "type": "PrimitiveString",
+      "pos": [
+        2187.96533203125,
+        568.8053588867188
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 43,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            602
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveString"
+      },
+      "widgets_values": [
+        "A"
+      ]
+    },
+    {
+      "id": 679,
+      "type": "ToggleValueNode",
+      "pos": [
+        2477.990234375,
+        573.0880737304688
+      ],
+      "size": [
+        270,
+        118
+      ],
+      "flags": {},
+      "order": 72,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "值A",
+          "name": "value_a",
+          "type": "*",
+          "link": 602
+        },
+        {
+          "label": "值B",
+          "name": "value_b",
+          "type": "*",
+          "link": 603
+        }
+      ],
+      "outputs": [
+        {
+          "name": "原始类型输出",
+          "type": "*",
+          "links": [
+            604
+          ]
+        },
+        {
+          "name": "字符串输出",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "整数输出",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "浮点输出",
+          "type": "FLOAT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ToggleValueNode"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 697,
+      "type": "PreviewAny",
+      "pos": [
+        2772.0732421875,
+        572.3873901367188
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 90,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "source",
+          "type": "*",
+          "link": 604
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewAny"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 632,
+      "type": "Note",
+      "pos": [
+        -3530.470458984375,
+        2229.52392578125
+      ],
+      "size": [
+        414.1180725097656,
+        165.09664916992188
+      ],
+      "flags": {},
+      "order": 44,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "视频转GIF节点：把视频转为gif\n视频转音频节点：提取视频的音频"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 722,
+      "type": "ImageVideoPromptSelector",
+      "pos": [
+        -4190.330078125,
+        3098.27392578125
+      ],
+      "size": [
+        272.5621032714844,
+        98
+      ],
+      "flags": {},
+      "order": 45,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "请输入图片的中文、英文提示词",
+          "name": "image_prompt",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "label": "请输入视频的中文、英文提示词",
+          "name": "video_prompt",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "label": "预设图片",
+          "name": "preset_image",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageVideoPromptSelector"
+      },
+      "widgets_values": [
+        "预设名称1"
+      ]
+    },
+    {
+      "id": 724,
+      "type": "ImageUploadNode",
+      "pos": [
+        -3872.286376953125,
+        3097.68505859375
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 46,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageUploadNode"
+      },
+      "widgets_values": [
+        "预设名称1"
+      ]
+    },
+    {
+      "id": 723,
+      "type": "ImageVideoPromptManager",
+      "pos": [
+        -4183.654296875,
+        3271.7001953125
+      ],
+      "size": [
+        400,
+        214
+      ],
+      "flags": {},
+      "order": 47,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageVideoPromptManager"
+      },
+      "widgets_values": [
+        "list",
+        "",
+        "",
+        "",
+        "预设名称1"
+      ]
+    },
+    {
+      "id": 727,
+      "type": "Note",
+      "pos": [
+        -3570.675048828125,
+        3102.71142578125
+      ],
+      "size": [
+        414.1180725097656,
+        165.09664916992188
+      ],
+      "flags": {},
+      "order": 48,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "图片视频提示词预设：作者预设一些一些热门的效果，支持从图片生成到图片生成视频的提示词预设，【注意这是一个dev版，在未来的某一天可能会不见】\n图像上传节点：给预设增加图片预览、\n图片视频提示词预设管理器：预设词管理。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 721,
+      "type": "LoadImage",
+      "pos": [
+        2258.8544921875,
+        2422.515625
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 49,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            620
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1.png",
+        "image"
+      ]
+    },
+    {
+      "id": 714,
+      "type": "PreviewImage",
+      "pos": [
+        2884.89892578125,
+        1806.2913818359375
+      ],
+      "size": [
+        216.44288635253906,
+        258
+      ],
+      "flags": {},
+      "order": 77,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 616
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 718,
+      "type": "ShowText|pysssss",
+      "pos": [
+        2542.98291015625,
+        1822.3453369140625
+      ],
+      "size": [
+        311.18841552734375,
+        88
+      ],
+      "flags": {},
+      "order": 75,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 614
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "图片提示词1"
+      ]
+    },
+    {
+      "id": 719,
+      "type": "ShowText|pysssss",
+      "pos": [
+        2548.73193359375,
+        1976.2508544921875
+      ],
+      "size": [
+        297.1031494140625,
+        89.00164031982422
+      ],
+      "flags": {},
+      "order": 76,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 615
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "动画视频提示词1"
+      ]
+    },
+    {
+      "id": 716,
+      "type": "ImageVideoPromptManager",
+      "pos": [
+        2240.110595703125,
+        2124.42431640625
+      ],
+      "size": [
+        305.4852600097656,
+        214
+      ],
+      "flags": {},
+      "order": 50,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": [
+            617
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageVideoPromptManager"
+      },
+      "widgets_values": [
+        "list",
+        "",
+        "",
+        "",
+        "预设名称1"
+      ]
+    },
+    {
+      "id": 715,
+      "type": "ImageVideoPromptSelector",
+      "pos": [
+        2243.936279296875,
+        1835.9541015625
+      ],
+      "size": [
+        272.5621032714844,
+        98
+      ],
+      "flags": {},
+      "order": 51,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "图片提示词",
+          "name": "image_prompt",
+          "type": "STRING",
+          "links": [
+            614
+          ]
+        },
+        {
+          "label": "视频提示词",
+          "name": "video_prompt",
+          "type": "STRING",
+          "links": [
+            615
+          ]
+        },
+        {
+          "label": "预设图片",
+          "name": "preset_image",
+          "type": "IMAGE",
+          "links": [
+            616
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageVideoPromptSelector"
+      },
+      "widgets_values": [
+        "预设名称1"
+      ]
+    },
+    {
+      "id": 707,
+      "type": "ShowText|pysssss",
+      "pos": [
+        2576.616943359375,
+        2548.932861328125
+      ],
+      "size": [
+        140,
+        76
+      ],
+      "flags": {},
+      "order": 91,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 613
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "成功为预设 '预设名称1' 保存图像预览"
+      ]
+    },
+    {
+      "id": 708,
+      "type": "ShowText|pysssss",
+      "pos": [
+        2584.470458984375,
+        2124.835205078125
+      ],
+      "size": [
+        409.8950500488281,
+        217.70559692382812
+      ],
+      "flags": {},
+      "order": 74,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 617
+        }
+      ],
+      "outputs": [
+        {
+          "label": "字符串",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        "图片视频提示词预设列表:\n========================================\n使用说明:\n1. 通过ImageVideoPromptSelector节点选择预设\n2. 通过add操作可添加新的提示词预设\n3. 通过delete操作可删除现有预设\n4. 添加或删除后需重启ComfyUI才能在选择器中看到变化\n========================================\n\n预设列表:\n  1. 预设名称1\n     图片提示词: 图片提示词1...\n     视频提示词: 动画视频提示词1...\n"
+      ]
+    },
+    {
+      "id": 717,
+      "type": "ImageUploadNode",
+      "pos": [
+        2563.22900390625,
+        2419.900634765625
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 73,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 620
+        }
+      ],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": [
+            613
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageUploadNode"
+      },
+      "widgets_values": [
+        "预设名称1"
+      ]
+    },
+    {
+      "id": 728,
+      "type": "MarkdownNote",
+      "pos": [
+        -1257.4217529296875,
+        957.8359375
+      ],
+      "size": [
+        348.97723388671875,
+        311.06170654296875
+      ],
+      "flags": {},
+      "order": 52,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "\n# yolo\n## yolo模型加载器\n## 一些使用说明\n### yolo-classes:\n- person,car,dog - 只检测人、汽车和狗\n- person - 只检测人\n- 留空 - 检测所有类别\n\nperson, bicycle, car, motorcycle, airplane, bus, train, truck, boat,\ntraffic light, fire hydrant, stop sign, parking meter, bench, bird, cat,\ndog, horse, sheep, cow, elephant, bear, zebra, giraffe, backpack, umbrella,\nhandbag, tie, suitcase, frisbee, skis, snowboard, sports ball, kite,\nbaseball bat, baseball glove, skateboard, surfboard, tennis racket, bottle,\nwine glass, cup, fork, knife, spoon, bowl, banana, apple, sandwich, orange,\nbroccoli, carrot, hot dog, pizza, donut, cake, chair, couch, potted plant,\nbed, dining table, toilet, tv, laptop, mouse, remote, keyboard, cell phone,\nmicrowave, oven, toaster, sink, refrigerator, book, clock, vase, scissors,\nteddy bear, hair drier, toothbrush"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 362,
+      "type": "YoloSamBackgroundRemovalNode",
+      "pos": [
+        -3072.94384765625,
+        92.02557373046875
+      ],
+      "size": [
+        279.9790954589844,
+        242
+      ],
+      "flags": {},
+      "order": 53,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "YOLO模型",
+          "name": "yolo_model",
+          "type": "YOLO_MODEL",
+          "link": null
+        },
+        {
+          "label": "SAM模型",
+          "name": "sam_model",
+          "type": "SAM_MODEL",
+          "link": null
+        },
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "裁剪图像",
+          "name": "cropped_image",
+          "type": "IMAGE",
+          "links": []
+        },
+        {
+          "label": "前景遮罩",
+          "name": "foreground_mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "label": "处理信息",
+          "name": "info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "YoloSamBackgroundRemovalNode"
+      },
+      "widgets_values": [
+        "",
+        "最高置信度",
+        0,
+        0.5,
+        50,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 71,
+      "type": "MarkdownNote",
+      "pos": [
+        -2107.68505859375,
+        96.73370361328125
+      ],
+      "size": [
+        337.88861083984375,
+        165.5205078125
+      ],
+      "flags": {},
+      "order": 54,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "# xnan工具使用说明（调试中）\n## 左边是节点列表，右边是一些连接使用。"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 479,
+      "type": "modelscopeLoraTextToImageNode",
+      "pos": [
+        1478.1719970703125,
+        -597.665771484375
+      ],
+      "size": [
+        400,
+        406
+      ],
+      "flags": {},
+      "order": 78,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "api_token",
+          "type": "STRING",
+          "widget": {
+            "name": "api_token"
+          },
+          "link": 563
+        },
+        {
+          "name": "base_model",
+          "type": "STRING",
+          "widget": {
+            "name": "base_model"
+          },
+          "link": 477
+        }
+      ],
+      "outputs": [
+        {
+          "label": "生成图像",
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            479
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "modelscopeLoraTextToImageNode"
+      },
+      "widgets_values": [
+        "农村场景,清晨,一个00后农村山区女大学生,气质清秀甜美,有一点俏皮,baby face,朴实无华,上围饱满,她身穿T恤上衣,denim_shorts,额前碎发凌乱,手拿草帽,春风拂面,伪素颜,超写实风格,低噪点,120帧超清画质,手机前置摄像头自拍记录生活,微微侧身,生活类治愈系,细节真实感,",
+        "",
+        "Qwen/Qwen-Image",
+        "qiyuanai/TikTok_Xiaohongshu_career_line_beauty_v1",
+        "",
+        960,
+        1664,
+        1846314435,
+        "randomize",
+        30,
+        7.5,
+        0.8,
+        4
+      ]
+    },
+    {
+      "id": 729,
+      "type": "modelscopeLoraImageEditNode",
+      "pos": [
+        1480.1571044921875,
+        -117.17837524414062
+      ],
+      "size": [
+        400,
+        406
+      ],
+      "flags": {},
+      "order": 79,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "输入图像",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 621
+        },
+        {
+          "name": "api_token",
+          "type": "STRING",
+          "widget": {
+            "name": "api_token"
+          },
+          "link": 622
+        },
+        {
+          "name": "base_model",
+          "type": "STRING",
+          "widget": {
+            "name": "base_model"
+          },
+          "link": 623
+        }
+      ],
+      "outputs": [
+        {
+          "label": "编辑图像",
+          "name": "edited_image",
+          "type": "IMAGE",
+          "links": [
+            625
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "modelscopeLoraImageEditNode"
+      },
+      "widgets_values": [
+        "修改图片中的内容",
+        "ms-bd25d277-4076-4cba-9e6a-5e0a676c2478",
+        "Qwen/Qwen-Image-Edit",
+        "qiyuanai/TikTok_Xiaohongshu_career_line_beauty_v1",
+        "",
+        false,
+        512,
+        512,
+        -1,
+        "randomize",
+        30,
+        3.5,
+        0.8
+      ]
+    },
+    {
+      "id": 483,
+      "type": "LoadImage",
+      "pos": [
+        1169.03759765625,
+        2.669644594192505
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 55,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            621
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1756102884788.png",
+        "image"
+      ]
+    },
+    {
+      "id": 480,
+      "type": "ModelscopeApiSelector",
+      "pos": [
+        1182.8516845703125,
+        -117.47088623046875
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 56,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "模型名称",
+          "name": "model_name",
+          "type": "STRING",
+          "links": [
+            623
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiSelector"
+      },
+      "widgets_values": [
+        "Qwen/Qwen-Image-Edit"
+      ]
+    },
+    {
+      "id": 730,
+      "type": "ModelscopeApiLoraSelector",
+      "pos": [
+        -3898.946533203125,
+        887.5592651367188
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 57,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "Lora模型名称",
+          "name": "lora_model_name",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiLoraSelector"
+      },
+      "widgets_values": [
+        "qwenimage_test/qwenimage_lora_test"
+      ]
+    },
+    {
+      "id": 731,
+      "type": "ModelscopeApiLoraManager",
+      "pos": [
+        -3892.598876953125,
+        1004.6903076171875
+      ],
+      "size": [
+        304.0859375,
+        130
+      ],
+      "flags": {},
+      "order": 58,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiLoraManager"
+      },
+      "widgets_values": [
+        "list",
+        "",
+        "",
+        "qwenimage_test/qwenimage_lora_test"
+      ]
+    },
+    {
+      "id": 478,
+      "type": "ModelscopeApiManager",
+      "pos": [
+        1202.24755859375,
+        -301.9249267578125
+      ],
+      "size": [
+        277.40234375,
+        130
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 59,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiManager"
+      },
+      "widgets_values": [
+        "list",
+        "",
+        "",
+        "runwayml/stable-diffusion-inpainting"
+      ]
+    },
+    {
+      "id": 735,
+      "type": "ModelscopeApiLoraSelector",
+      "pos": [
+        1184.12646484375,
+        -476.6922607421875
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 60,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "Lora模型名称",
+          "name": "lora_model_name",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiLoraSelector"
+      },
+      "widgets_values": [
+        "qwenimage_test/qwenimage_lora_test"
+      ]
+    },
+    {
+      "id": 555,
+      "type": "CR Text",
+      "pos": [
+        1193.8927001953125,
+        -415.7628173828125
+      ],
+      "size": [
+        231.95370483398438,
+        108
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 61,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "文本",
+          "name": "text",
+          "type": "*",
+          "links": [
+            563
+          ]
+        },
+        {
+          "label": "显示帮助",
+          "name": "show_help",
+          "type": "STRING",
+          "links": [
+            622
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CR Text"
+      },
+      "widgets_values": [
+        "ms-bd25d277-4076-4cba-9e6a-5e0a676c2478"
+      ]
+    },
+    {
+      "id": 734,
+      "type": "ModelscopeApiLoraManager",
+      "pos": [
+        1196.5152587890625,
+        -353.4561767578125
+      ],
+      "size": [
+        304.0859375,
+        130
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 62,
+      "mode": 4,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "状态信息",
+          "name": "status_message",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelscopeApiLoraManager"
+      },
+      "widgets_values": [
+        "list",
+        "",
+        "",
+        "qwenimage_test/qwenimage_lora_test"
+      ]
+    },
+    {
+      "id": 482,
+      "type": "PreviewImage",
+      "pos": [
+        1911.2073974609375,
+        -106.08700561523438
+      ],
+      "size": [
+        374.42364501953125,
+        362.8608703613281
+      ],
+      "flags": {},
+      "order": 93,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 625
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      381,
+      398,
+      0,
+      397,
+      0,
+      "YOLO_MODEL"
+    ],
+    [
+      404,
+      397,
+      0,
+      414,
+      0,
+      "IMAGE"
+    ],
+    [
+      405,
+      397,
+      1,
+      414,
+      1,
+      "JSON"
+    ],
+    [
+      406,
+      414,
+      0,
+      411,
+      0,
+      "IMAGE"
+    ],
+    [
+      407,
+      414,
+      1,
+      415,
+      0,
+      "MASK"
+    ],
+    [
+      408,
+      415,
+      0,
+      416,
+      0,
+      "IMAGE"
+    ],
+    [
+      409,
+      414,
+      2,
+      404,
+      0,
+      "*"
+    ],
+    [
+      410,
+      414,
+      3,
+      406,
+      0,
+      "*"
+    ],
+    [
+      416,
+      397,
+      0,
+      419,
+      0,
+      "IMAGE"
+    ],
+    [
+      417,
+      397,
+      1,
+      419,
+      1,
+      "JSON"
+    ],
+    [
+      418,
+      419,
+      0,
+      420,
+      0,
+      "IMAGE"
+    ],
+    [
+      419,
+      419,
+      1,
+      421,
+      0,
+      "IMAGE"
+    ],
+    [
+      420,
+      419,
+      2,
+      423,
+      0,
+      "IMAGE"
+    ],
+    [
+      421,
+      419,
+      3,
+      422,
+      0,
+      "IMAGE"
+    ],
+    [
+      422,
+      419,
+      4,
+      425,
+      0,
+      "IMAGE"
+    ],
+    [
+      432,
+      436,
+      0,
+      434,
+      0,
+      "IMAGE"
+    ],
+    [
+      433,
+      436,
+      1,
+      434,
+      1,
+      "JSON"
+    ],
+    [
+      434,
+      436,
+      0,
+      435,
+      0,
+      "IMAGE"
+    ],
+    [
+      435,
+      436,
+      1,
+      435,
+      1,
+      "JSON"
+    ],
+    [
+      436,
+      438,
+      0,
+      439,
+      0,
+      "IMAGE"
+    ],
+    [
+      437,
+      440,
+      0,
+      441,
+      0,
+      "IMAGE"
+    ],
+    [
+      438,
+      442,
+      0,
+      443,
+      0,
+      "IMAGE"
+    ],
+    [
+      439,
+      444,
+      0,
+      445,
+      0,
+      "IMAGE"
+    ],
+    [
+      440,
+      446,
+      0,
+      447,
+      0,
+      "IMAGE"
+    ],
+    [
+      441,
+      448,
+      0,
+      397,
+      1,
+      "IMAGE"
+    ],
+    [
+      442,
+      419,
+      5,
+      438,
+      0,
+      "MASK"
+    ],
+    [
+      443,
+      419,
+      6,
+      440,
+      0,
+      "MASK"
+    ],
+    [
+      444,
+      419,
+      7,
+      442,
+      0,
+      "MASK"
+    ],
+    [
+      445,
+      419,
+      8,
+      444,
+      0,
+      "MASK"
+    ],
+    [
+      446,
+      419,
+      9,
+      446,
+      0,
+      "MASK"
+    ],
+    [
+      447,
+      419,
+      10,
+      405,
+      0,
+      "*"
+    ],
+    [
+      448,
+      419,
+      11,
+      407,
+      0,
+      "*"
+    ],
+    [
+      450,
+      453,
+      0,
+      451,
+      0,
+      "YOLO_MODEL"
+    ],
+    [
+      451,
+      454,
+      0,
+      451,
+      1,
+      "SAM_MODEL"
+    ],
+    [
+      452,
+      453,
+      0,
+      452,
+      0,
+      "YOLO_MODEL"
+    ],
+    [
+      454,
+      451,
+      0,
+      456,
+      0,
+      "IMAGE"
+    ],
+    [
+      455,
+      452,
+      0,
+      418,
+      0,
+      "IMAGE"
+    ],
+    [
+      458,
+      451,
+      2,
+      400,
+      0,
+      "*"
+    ],
+    [
+      459,
+      458,
+      0,
+      459,
+      0,
+      "IMAGE"
+    ],
+    [
+      460,
+      451,
+      1,
+      458,
+      0,
+      "MASK"
+    ],
+    [
+      462,
+      452,
+      2,
+      460,
+      0,
+      "*"
+    ],
+    [
+      463,
+      452,
+      1,
+      399,
+      0,
+      "*"
+    ],
+    [
+      464,
+      452,
+      3,
+      462,
+      0,
+      "*"
+    ],
+    [
+      465,
+      452,
+      5,
+      463,
+      0,
+      "*"
+    ],
+    [
+      466,
+      452,
+      4,
+      461,
+      0,
+      "*"
+    ],
+    [
+      469,
+      451,
+      1,
+      466,
+      0,
+      "*"
+    ],
+    [
+      471,
+      467,
+      0,
+      451,
+      2,
+      "IMAGE"
+    ],
+    [
+      472,
+      467,
+      0,
+      452,
+      1,
+      "IMAGE"
+    ],
+    [
+      475,
+      468,
+      0,
+      465,
+      0,
+      "IMAGE"
+    ],
+    [
+      477,
+      477,
+      0,
+      479,
+      1,
+      "STRING"
+    ],
+    [
+      479,
+      479,
+      0,
+      481,
+      0,
+      "IMAGE"
+    ],
+    [
+      483,
+      468,
+      0,
+      467,
+      0,
+      "*"
+    ],
+    [
+      484,
+      485,
+      0,
+      468,
+      0,
+      "IMAGE"
+    ],
+    [
+      485,
+      488,
+      0,
+      487,
+      0,
+      "IMAGE"
+    ],
+    [
+      487,
+      486,
+      0,
+      490,
+      0,
+      "*"
+    ],
+    [
+      488,
+      486,
+      1,
+      491,
+      0,
+      "*"
+    ],
+    [
+      489,
+      487,
+      0,
+      492,
+      0,
+      "IMAGE"
+    ],
+    [
+      490,
+      487,
+      1,
+      493,
+      0,
+      "*"
+    ],
+    [
+      491,
+      487,
+      2,
+      494,
+      0,
+      "*"
+    ],
+    [
+      563,
+      555,
+      0,
+      479,
+      0,
+      "STRING"
+    ],
+    [
+      597,
+      686,
+      0,
+      680,
+      0,
+      "IMAGE"
+    ],
+    [
+      598,
+      680,
+      0,
+      687,
+      0,
+      "IMAGE"
+    ],
+    [
+      599,
+      680,
+      1,
+      689,
+      0,
+      "*"
+    ],
+    [
+      600,
+      680,
+      2,
+      688,
+      0,
+      "*"
+    ],
+    [
+      601,
+      681,
+      0,
+      692,
+      0,
+      "IMAGE"
+    ],
+    [
+      602,
+      695,
+      0,
+      679,
+      0,
+      "*"
+    ],
+    [
+      603,
+      696,
+      0,
+      679,
+      1,
+      "*"
+    ],
+    [
+      604,
+      679,
+      0,
+      697,
+      0,
+      "*"
+    ],
+    [
+      613,
+      717,
+      0,
+      707,
+      0,
+      "STRING"
+    ],
+    [
+      614,
+      715,
+      0,
+      718,
+      0,
+      "STRING"
+    ],
+    [
+      615,
+      715,
+      1,
+      719,
+      0,
+      "STRING"
+    ],
+    [
+      616,
+      715,
+      2,
+      714,
+      0,
+      "IMAGE"
+    ],
+    [
+      617,
+      716,
+      0,
+      708,
+      0,
+      "STRING"
+    ],
+    [
+      620,
+      721,
+      0,
+      717,
+      0,
+      "IMAGE"
+    ],
+    [
+      621,
+      483,
+      0,
+      729,
+      0,
+      "IMAGE"
+    ],
+    [
+      622,
+      555,
+      1,
+      729,
+      1,
+      "STRING"
+    ],
+    [
+      623,
+      480,
+      0,
+      729,
+      2,
+      "STRING"
+    ],
+    [
+      625,
+      729,
+      0,
+      482,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 7,
+      "title": "sam模型加载器",
+      "bounding": [
+        -3475.10009765625,
+        -597.57666015625,
+        801.8213500976562,
+        550.3436279296875
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 13,
+      "title": "魔搭api  【6个】",
+      "bounding": [
+        -4245.79541015625,
+        762.1517944335938,
+        1611.9765625,
+        598.78369140625
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "魔搭api调用",
+      "bounding": [
+        -3550.23095703125,
+        819.2649536132812,
+        859.913818359375,
+        467.6053771972656
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "魔搭api-大模型管理",
+      "bounding": [
+        -4235.79541015625,
+        809.5751342773438,
+        297.54638671875,
+        344.7987365722656
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 10,
+      "title": "预设-常见尺寸预设",
+      "bounding": [
+        -4205.8369140625,
+        1451.351806640625,
+        290,
+        161.60000610351562
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 14,
+      "title": "yolo与sam  【11个】",
+      "bounding": [
+        -4246.2470703125,
+        -644.4920654296875,
+        1665.167724609375,
+        1385.99267578125
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 11,
+      "title": "yolo模型加载器",
+      "bounding": [
+        -4236.2470703125,
+        -600.89208984375,
+        736.7703857421875,
+        547.1361083984375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 15,
+      "title": "yolo功能",
+      "bounding": [
+        -4222.2373046875,
+        -20.63671875,
+        987.374755859375,
+        714.8245849609375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 16,
+      "title": "yolo检测裁切节点示例工作流",
+      "bounding": [
+        -1289.6375732421875,
+        -687.22509765625,
+        2305.81201171875,
+        1063.8873291015625
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 17,
+      "title": "魔搭api生图",
+      "bounding": [
+        1098.835205078125,
+        -692.2987060546875,
+        1305.77880859375,
+        1027.0391845703125
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 18,
+      "title": "yolo检测裁切一体化节点示例工作流",
+      "bounding": [
+        -1281.85693359375,
+        412.106201171875,
+        2724.49462890625,
+        909.63232421875
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 19,
+      "title": "尺寸预设",
+      "bounding": [
+        1502.155517578125,
+        470.25787353515625,
+        623.831298828125,
+        372.9544982910156
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 20,
+      "title": "正方形转换器",
+      "bounding": [
+        1503.47802734375,
+        874.9869995117188,
+        1113.753662109375,
+        398.6849670410156
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 21,
+      "title": "yolo+sam搭配",
+      "bounding": [
+        -3217.29345703125,
+        -15.162109375,
+        566.4487915039062,
+        725.0841064453125
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 22,
+      "title": "实用工具-后续再分类-如果节点足够多，那就另起一个分类",
+      "bounding": [
+        -4240.525390625,
+        1396.726318359375,
+        1200.9468994140625,
+        2152.707763671875
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 24,
+      "title": "小工具",
+      "bounding": [
+        -4208.29296875,
+        1660.945556640625,
+        1090.681884765625,
+        462.0638732910156
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 25,
+      "title": "媒体处理",
+      "bounding": [
+        -4202.6796875,
+        2153.7890625,
+        1130.61669921875,
+        825.779052734375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 30,
+      "title": "实用工具-后续再分类",
+      "bounding": [
+        1477.8472900390625,
+        424.4255065917969,
+        1704.2386474609375,
+        2390.91455078125
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 32,
+      "title": "媒体处理",
+      "bounding": [
+        1500.8724365234375,
+        1738.7822265625,
+        667.4144287109375,
+        843.2284545898438
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 33,
+      "title": "长方形转换器",
+      "bounding": [
+        1496.7784423828125,
+        1297.7838134765625,
+        1105.2908935546875,
+        402.9151916503906
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 34,
+      "title": "创建图像",
+      "bounding": [
+        2651.784423828125,
+        878.2070922851562,
+        461.8583984375,
+        189.5999755859375
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 35,
+      "title": "切换值节点",
+      "bounding": [
+        2153.6962890625,
+        480.6841735839844,
+        880.1958618164062,
+        293.6323547363281
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 36,
+      "title": "图片视频提示词预设",
+      "bounding": [
+        -4200.330078125,
+        3024.08544921875,
+        1104.111083984375,
+        488.62744140625
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 37,
+      "title": "图片视频提示词预设",
+      "bounding": [
+        2230.110595703125,
+        1732.69140625,
+        881.231201171875,
+        1013.82421875
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 38,
+      "title": "魔搭api-lora管理",
+      "bounding": [
+        -3908.946533203125,
+        813.9592895507812,
+        330.43359375,
+        330.7311096191406
+      ],
+      "color": "#3f789e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.14641000000000118,
+      "offset": [
+        4901.812167609752,
+        149.26524758602727
+      ]
+    },
+    "frontendVersion": "1.27.10"
+  },
+  "version": 0.4
+}

@@ -342,7 +342,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloDetectionNode": "YOLO检测节点-【新】"
+    "YoloDetectionNode": "YOLO检测节点"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
