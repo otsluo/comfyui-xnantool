@@ -48,44 +48,34 @@
   ],
   "models": [
     [
-      "Qwen/Qwen-Image",
-      "Qwen-Image"
+      "Qwen/Qwen-Image"
     ],
     [
-      "black-forest-labs/FLUX.1-schnell",
-      "FLUX.1-schnell"
+      "black-forest-labs/FLUX.1-schnell"
     ],
     [
-      "black-forest-labs/FLUX.1-Krea-dev",
-      "FLUX.1-Krea-dev"
+      "black-forest-labs/FLUX.1-Krea-dev"
     ],
     [
-      "black-forest-labs/FLUX.1-Kontext",
-      "FLUX.1-Kontext"
+      "black-forest-labs/FLUX.1-Kontext"
     ],
     [
-      "stabilityai/stable-diffusion-xl-base-1.0",
-      "SDXL 1.0"
+      "stabilityai/stable-diffusion-xl-base-1.0"
     ],
     [
-      "stabilityai/stable-diffusion-xl-refiner-1.0",
-      "SDXL Refiner"
+      "stabilityai/stable-diffusion-xl-refiner-1.0"
     ],
     [
-      "segmind/Segmind-Vega",
-      "Segmind-Vega"
+      "segmind/Segmind-Vega"
     ],
     [
-      "runwayml/stable-diffusion-inpainting",
-      "SD Inpainting"
+      "runwayml/stable-diffusion-inpainting"
     ],
     [
-      "Qwen/Qwen-Image-Edit",
-      "Qwen-Image-Edit"
+      "Qwen/Qwen-Image-Edit"
     ],
     [
-      "Qwen/Qwen-Image-Edit-2509",
-      "Qwen-Image-Edit-2509"
+      "Qwen/Qwen-Image-Edit-2509"
     ]
   ]
 }

@@ -40,6 +40,8 @@ from .nodes.toggle_value_node import NODE_CLASS_MAPPINGS as TOGGLE_VALUE_NODE_CL
 from .nodes.toggle_value_node import NODE_DISPLAY_NAME_MAPPINGS as TOGGLE_VALUE_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.create_image_node import NODE_CLASS_MAPPINGS as CREATE_IMAGE_NODE_CLASS_MAPPINGS
 from .nodes.create_image_node import NODE_DISPLAY_NAME_MAPPINGS as CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.Image_encoding_generation_node import NODE_CLASS_MAPPINGS as IMAGE_UUID_NODE_CLASS_MAPPINGS
+from .nodes.Image_encoding_generation_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_UUID_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 提示词预设节点 ====================
 from .nodes.image_video_prompt_presets_node import NODE_CLASS_MAPPINGS as IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS
@@ -86,6 +88,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     # 实用工具节点
     TOGGLE_VALUE_NODE_CLASS_MAPPINGS,
     CREATE_IMAGE_NODE_CLASS_MAPPINGS,
+    IMAGE_UUID_NODE_CLASS_MAPPINGS,
     
     # 提示词预设节点
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS,
@@ -123,6 +126,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     # 实用工具节点
     TOGGLE_VALUE_NODE_DISPLAY_NAME_MAPPINGS,
     CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
+    IMAGE_UUID_NODE_DISPLAY_NAME_MAPPINGS,
     
     # 提示词预设节点
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
