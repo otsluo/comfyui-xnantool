@@ -1,6 +1,58 @@
 {
+  "ImagesToGifNode": {
+    "title": "图片转GIF节点",
+    "description": "将多张图片合并为GIF动画，支持10个独立输入端口",
+    "inputs": {
+      "image_1": "图片1",
+      "image_2": "图片2",
+      "image_3": "图片3",
+      "image_4": "图片4",
+      "image_5": "图片5",
+      "image_6": "图片6",
+      "image_7": "图片7",
+      "image_8": "图片8",
+      "image_9": "图片9",
+      "image_10": "图片10",
+      "frame_duration": "帧间隔",
+      "loop_count": "循环次数",
+      "resize_factor": "缩放因子",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小",
+      "quality": "质量等级",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "frame_duration": "每帧图片的显示时间（秒）",
+      "loop_count": "GIF循环播放次数（0表示无限循环）",
+      "resize_factor": "图像缩放比例百分比",
+      "optimize": "是否优化GIF文件大小",
+      "palette_size": "GIF的颜色数量",
+      "quality": "GIF质量等级（1=低，2=中，3=高）",
+      "output_filename": "GIF文件的输出名称"
+    },
+    "outputs": {
+      "output_path": "GIF文件路径"
+    },
+    "widget_values": {
+      "palette_size": {
+        "2": "2色（最小文件）",
+        "4": "4色",
+        "8": "8色",
+        "16": "16色",
+        "32": "32色",
+        "64": "64色",
+        "128": "128色",
+        "256": "256色（最佳质量）"
+      },
+      "quality": {
+        "1": "低质量",
+        "2": "中等质量",
+        "3": "高质量"
+      }
+    }
+  },
   "VideoToAudioNode": {
-    "title": "视频转音频节点-【新】",
+    "title": "视频转音频节点",
     "description": "从视频文件中提取音频轨道并保存为音频文件",
     "inputs": {
       "video_file": "视频文件",
@@ -33,7 +85,7 @@
     }
   },
   "YoloModelLoader": {
-    "title": "YOLO模型加载器 (v8预设)-【新】",
+    "title": "YOLO模型加载器 (v8预设)",
     "description": "加载YOLO模型进行目标检测",
     "inputs": {
       "model_name": "模型名称",
@@ -51,7 +103,7 @@
     }
   },
   "YoloModelLoaderV2": {
-    "title": "YOLO模型加载器V2(本地模型)-【新】",
+    "title": "YOLO模型加载器V2(本地模型)",
     "description": "加载本地YOLO模型进行目标检测",
     "inputs": {
       "local_model": "本地模型",
@@ -69,7 +121,7 @@
     }
   },
   "YoloModelLoaderCustomPath": {
-    "title": "YOLO模型加载器(自定义路径)-【新】",
+    "title": "YOLO模型加载器(自定义路径)",
     "description": "从自定义路径加载YOLO模型进行目标检测",
     "inputs": {
       "custom_model_path": "自定义模型路径",
@@ -136,7 +188,7 @@
     }
   },
   "SquareConverter": {
-    "title": "正方形转换器-【新】",
+    "title": "正方形转换器",
     "description": "输入一个尺寸，例如是200x300，那么会把较短尺寸填充到与较长尺寸相等，图片保持不变，同时可以增加边距，使得最终尺寸的短边加边距等于长边加边距",
     "inputs": {
       "image": "输入图像",
@@ -152,7 +204,7 @@
     }
   },
   "RectangleConverter": {
-    "title": "长方形转换器-【新】",
+    "title": "长方形转换器",
     "description": "将正方形图像转换为长方形图像，支持左右和上下的扩展，可以手动指定最终长度",
     "inputs": {
       "image": "输入图像",
@@ -178,7 +230,7 @@
     }
   },
   "SizeSelector": {
-    "title": "尺寸预设-【新】",
+    "title": "尺寸预设",
     "description": "提供常用图像尺寸的快速选择",
     "inputs": {
       "size_preset": "尺寸预设"
@@ -192,7 +244,7 @@
     }
   },
   "YoloDetectionNode": {
-    "title": "YOLO检测节点-【新】",
+    "title": "YOLO检测节点",
     "description": "执行YOLO目标检测并显示结果",
     "inputs": {
       "yolo_model": "YOLO模型",
@@ -318,7 +370,7 @@
     }
   },
   "YoloDetectAndCropNode": {
-    "title": "YOLO检测与裁剪一体化-【新】",
+    "title": "YOLO检测与裁剪一体化",
     "description": "YOLO检测与裁剪一体化节点，直接输入图片，执行YOLO检测并输出裁剪结果，支持自动切换CUDA/CPU设备",
     "inputs": {
       "yolo_model": "YOLO模型",
@@ -459,7 +511,7 @@
     }
   },
   "YoloSamBackgroundRemovalNode": {
-    "title": "YOLO+SAM背景去除-【新】",
+    "title": "YOLO+SAM背景去除",
     "description": "使用YOLO目标检测和SAM分割技术进行精确的背景去除和裁剪",
     "inputs": {
       "yolo_model": "YOLO模型",
@@ -493,7 +545,7 @@
     }
   },
   "ImageVideoPromptSelector": {
-    "title": "图片视频提示词预设-【新】",
+    "title": "图片视频提示词预设",
     "description": "提供预设提示词的快速选择，用于图片和视频生成",
     "inputs": {
       "prompt_preset": "提示词预设"
@@ -509,7 +561,7 @@
   },
   
   "ImageVideoPromptManager": {
-    "title": "图片视频提示词预设管理器-【新】",
+    "title": "图片视频提示词预设管理器",
     "description": "用于查看和管理预设提示词，可以添加、删除和列出所有可用的预设。",
     "inputs": {
       "action": "操作类型",
@@ -537,7 +589,7 @@
     }
   },
   "ImageUploadNode": {
-    "title": "图像上传节点-【新】",
+    "title": "图像上传节点",
     "description": "用于为预设添加图像预览",
     "inputs": {
       "preset_name": "预设名称",
@@ -552,7 +604,7 @@
     }
   },
   "VideoToGifNode": {
-    "title": "视频转GIF节点-【新】",
+    "title": "视频转GIF节点",
     "description": "将视频文件转换为GIF动画，支持优化和调色板大小设置",
     "inputs": {
       "video_file": "视频文件",
@@ -598,7 +650,7 @@
     }
   },
   "ToggleValueNode": {
-    "title": "切换值节点-【新】",
+    "title": "切换值节点",
     "description": "可以在两个值之间切换的节点，支持多种数据类型输入（FLOAT, INT, STRING）",
     "inputs": {
       "input_value": "输入布尔值",
@@ -615,6 +667,42 @@
       "字符串输出": "字符串输出",
       "整数输出": "整数输出",
       "浮点输出": "浮点输出"
+    }
+  },
+  "CreateImageNode": {
+    "title": "创建图像节点",
+    "description": "创建指定尺寸和颜色的图片节点",
+    "inputs": {
+      "width": "图像宽度",
+      "height": "图像高度",
+      "color": "图像颜色"
+    },
+    "widgets": {
+      "width": "图像宽度（像素）",
+      "height": "图像高度（像素）",
+      "color": "图像颜色（十六进制）"
+    },
+    "outputs": {
+      "image": "生成的图像"
+    }
+  },
+  "Imageencodinggeneration": {
+    "title": "图片编码生成节点",
+    "description": "读取图片并生成唯一的UUID值和多种哈希值(MD5, SHA1, SHA256, SHA512)",
+    "inputs": {
+      "image": "输入图像",
+      "image_path": "图像路径"
+    },
+    "widgets": {
+      "image_path": "图像文件路径"
+    },
+    "outputs": {
+      "uuid": "生成的UUID",
+      "md5": "MD5哈希值",
+      "sha1": "SHA1哈希值",
+      "sha256": "SHA256哈希值",
+      "sha512": "SHA512哈希值",
+      "image_info": "图像信息"
     }
   }
 }

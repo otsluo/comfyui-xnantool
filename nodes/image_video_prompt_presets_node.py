@@ -448,9 +448,9 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageVideoPromptSelector": "图片视频提示词预设-【新】",
-    "ImageVideoPromptManager": "图片视频提示词预设管理器-【新】",
-    "ImageUploadNode": "图像上传节点-【新】"
+    "ImageVideoPromptSelector": "图片视频提示词预设",
+    "ImageVideoPromptManager": "图片视频提示词预设管理器",
+    "ImageUploadNode": "图像上传节点"
 }
 
 # 确保模块被正确导入

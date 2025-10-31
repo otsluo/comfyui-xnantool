@@ -78,7 +78,7 @@ class VideoToGifNode:
             },
             "optional": {
                 "output_filename": ("STRING", {
-                    "default": "output.gif",
+                    "default": "视频转gif.gif",
                     "multiline": False,
                     "label": "输出文件名",
                     "description": "GIF文件的输出名称"
@@ -92,7 +92,7 @@ class VideoToGifNode:
     CATEGORY = "XnanTool/媒体处理"
     
     @classmethod
-    def IS_CHANGED(cls, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="output.gif"):
+    def IS_CHANGED(cls, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="视频转gif.gif"):
         # 如果视频文件存在，返回其修改时间，否则返回0
         if os.path.exists(video_file):
             return os.path.getmtime(video_file)
@@ -104,7 +104,7 @@ class VideoToGifNode:
             return "Invalid video file: {}".format(video_file)
         return True
 
-    def convert_video_to_gif(self, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="output.gif"):
+    def convert_video_to_gif(self, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="视频转gif.gif"):
         """
         将视频文件转换为GIF动画
         

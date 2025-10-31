@@ -50,6 +50,9 @@ from .nodes.image_video_prompt_presets_node import NODE_DISPLAY_NAME_MAPPINGS as
 # ==================== 视频处理节点 ====================
 from .nodes.video_to_gif_node import NODE_CLASS_MAPPINGS as VIDEO_TO_GIF_NODE_CLASS_MAPPINGS
 from .nodes.video_to_gif_node import NODE_DISPLAY_NAME_MAPPINGS as VIDEO_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS
+
+# ==================== 图片转GIF节点 ====================
+from .nodes.images_to_gif_node import NODE_CLASS_MAPPINGS as images_to_gif_NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as images_to_gif_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.video_to_audio_node import NODE_CLASS_MAPPINGS as VIDEO_TO_AUDIO_NODE_CLASS_MAPPINGS
 from .nodes.video_to_audio_node import NODE_DISPLAY_NAME_MAPPINGS as VIDEO_TO_AUDIO_NODE_DISPLAY_NAME_MAPPINGS
 
@@ -96,6 +99,9 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     # 视频处理节点
     VIDEO_TO_GIF_NODE_CLASS_MAPPINGS,
     VIDEO_TO_AUDIO_NODE_CLASS_MAPPINGS,
+    
+    # 图片转GIF节点
+    images_to_gif_NODE_CLASS_MAPPINGS,
 )
 
 # 合并所有节点显示名称映射
@@ -134,6 +140,9 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     # 视频处理节点
     VIDEO_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS,
     VIDEO_TO_AUDIO_NODE_DISPLAY_NAME_MAPPINGS,
+    
+    # 图片转GIF节点
+    images_to_gif_NODE_DISPLAY_NAME_MAPPINGS,
 )
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

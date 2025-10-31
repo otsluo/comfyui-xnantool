@@ -189,7 +189,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloDetectionMultiOutputCropNode": "YOLO检测多输出裁切节点-【新】"
+    "YoloDetectionMultiOutputCropNode": "YOLO检测多输出裁切节点"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
