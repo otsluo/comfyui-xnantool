@@ -12,7 +12,9 @@ import requests
 
 # 配置相关函数
 def load_config():
-    config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+    # 获取当前文件所在目录的父目录路径
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    config_path = os.path.join(parent_dir, 'modelscope_api', 'modelscope_api_node.json')
     try:
         with open(config_path, 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -26,7 +28,9 @@ def load_config():
         }
 
 def save_config(config: dict) -> bool:
-    config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+    # 获取当前文件所在目录的父目录路径
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    config_path = os.path.join(parent_dir, 'modelscope_api', 'modelscope_api_node.json')
     try:
         with open(config_path, 'w', encoding='utf-8') as f:
             json.dump(config, f, ensure_ascii=False, indent=2)
@@ -43,7 +47,7 @@ def load_api_token():
         if token_from_cfg:
             return token_from_cfg
     except Exception as e:
-        print(f"读取config.json中的token失败: {e}")
+        print(f"读取modelscope_api_node.json中的token失败: {e}")
     try:
         if os.path.exists(token_path):
             with open(token_path, 'r', encoding='utf-8') as f:
@@ -55,7 +59,9 @@ def load_api_token():
         return ""
 
 def save_api_token(token):
-    token_path = os.path.join(os.path.dirname(__file__), '.modelscope_api_token')
+    # 获取父目录路径
+    parent_dir = os.path.dirname(os.path.dirname(__file__))
+    token_path = os.path.join(parent_dir, 'modelscope_api', '.modelscope_api_token')
     try:
         with open(token_path, 'w', encoding='utf-8') as f:
             f.write(token)
@@ -68,7 +74,7 @@ def save_api_token(token):
             return True
         return False
     except Exception as e:
-        print(f"保存token失败(config.json): {e}")
+        print(f"保存token失败(modelscope_api_node.json): {e}")
         return False
 
 def tensor_to_base64_url(image_tensor):
@@ -474,69 +480,19 @@ class modelscopeLoraImageEditNode:
                 print("⚠️ API Token保存失败，但不影响当前使用")
         
         try:
-            # 将图像转换为临时文件并上传获取URL
-            temp_img_path = None
-            image_url = None
-            try:
-                # 保存图像到临时文件
-                temp_img_path = os.path.join(tempfile.gettempdir(), f"qwen_edit_temp_{int(time.time())}.jpg")
-                if len(image.shape) == 4:
-                    img = image[0]
-                else:
-                    img = image
-                
-                i = 255. * img.cpu().numpy()
-                img_pil = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
-                img_pil.save(temp_img_path)
-                print(f"✅ 图像已保存到临时文件: {temp_img_path}")
-                
-                # 上传图像到kefan.cn获取URL
-                upload_url = 'https://ai.kefan.cn/api/upload/local'
-                with open(temp_img_path, 'rb') as img_file:
-                    files = {'file': img_file}
-                    upload_response = requests.post(
-                        upload_url,
-                        files=files,
-                        timeout=30
-                    )
-                    if upload_response.status_code == 200:
-                        upload_data = upload_response.json()
-                        # 检查上传是否成功
-                        if upload_data.get('success') == True and 'data' in upload_data:
-                            image_url = upload_data['data']
-                            print(f"✅ 图像已上传成功，获取URL: {image_url}")
-                        else:
-                            print(f"⚠️ 图像上传返回错误: {upload_response.text}")
-                    else:
-                        print(f"⚠️ 图像上传失败: {upload_response.status_code}, {upload_response.text}")
-            except Exception as e:
-                print(f"⚠️ 图像上传异常: {str(e)}")
-            
-            # 如果上传失败，回退到base64
-            if not image_url:
-                print("⚠️ 图像URL获取失败，回退到使用base64")
-                image_data = tensor_to_base64_url(image)
-                payload = {
-                    'model': base_model,  # 使用用户选择的基础模型
-                    'prompt': prompt,
-                    'image': image_data,
-                    'loras': [{
-                        'name': lora_model,
-                        'weight': lora_weight
-                    }],
-                    'generate_control': generate_control  # 添加生成控制参数
-                }
-            else:
-                payload = {
-                    'model': base_model,  # 使用用户选择的基础模型
-                    'prompt': prompt,
-                    'image_url': image_url,
-                    'loras': [{
-                        'name': lora_model,
-                        'weight': lora_weight
-                    }],
-                    'generate_control': generate_control  # 添加生成控制参数
-                }
+            # 直接使用base64编码方式，避免依赖第三方服务
+            print("📤 使用base64编码方式上传图像...")
+            image_data = tensor_to_base64_url(image)
+            payload = {
+                'model': base_model,  # 使用用户选择的基础模型
+                'prompt': prompt,
+                'image': image_data,
+                'loras': [{
+                    'name': lora_model,
+                    'weight': lora_weight
+                }],
+                'generate_control': generate_control   # 添加生成控制参数
+            }
             
             # 添加可选参数
             if negative_prompt.strip():
@@ -549,7 +505,7 @@ class modelscopeLoraImageEditNode:
                 if width != 512 or height != 512:
                     size = f"{width}x{height}"
                     payload['size'] = size
-                    print(f"📏 使用自定义图像尺寸: {size}")
+                    print(f"� 使用自定义图像尺寸: {size}")
             else:
                 # 自动获取输入图像尺寸
                 if len(image.shape) == 4:
@@ -669,13 +625,6 @@ class modelscopeLoraImageEditNode:
             # 转换为ComfyUI需要的格式
             image_np = np.array(pil_image).astype(np.float32) / 255.0
             image_tensor = torch.from_numpy(image_np)[None,]
-            
-            # 清理临时文件
-            if temp_img_path and os.path.exists(temp_img_path):
-                try:
-                    os.remove(temp_img_path)
-                except:
-                    pass
             
             print("🎉 图片编辑完成！")
             return (image_tensor,)

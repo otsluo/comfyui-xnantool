@@ -1,7 +1,7 @@
 {
-  "ImagesToGifNode": {
-    "title": "图片转GIF节点",
-    "description": "将多张图片合并为GIF动画，支持10个独立输入端口",
+  "ImagesToGifNodeV1": {
+    "title": "图片转GIF节点 V1",
+    "description": "将多张图片合并为GIF动画（无过渡效果）",
     "inputs": {
       "image_1": "图片1",
       "image_2": "图片2",
@@ -24,10 +24,10 @@
     "widgets": {
       "frame_duration": "每帧图片的显示时间（秒）",
       "loop_count": "GIF循环播放次数（0表示无限循环）",
-      "resize_factor": "图像缩放比例百分比",
+      "resize_factor": "图像缩放比例（0.1-1.0）",
       "optimize": "是否优化GIF文件大小",
       "palette_size": "GIF的颜色数量",
-      "quality": "GIF质量等级（1=低，2=中，3=高）",
+      "quality": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）",
       "output_filename": "GIF文件的输出名称"
     },
     "outputs": {
@@ -45,9 +45,81 @@
         "256": "256色（最佳质量）"
       },
       "quality": {
-        "1": "低质量",
-        "2": "中等质量",
-        "3": "高质量"
+        "1": "最低质量",
+        "2": "低质量",
+        "3": "中等质量",
+        "4": "高质量",
+        "5": "最高质量"
+      }
+    }
+  },
+  "ImagesToGifNodeV2": {
+    "title": "图片转GIF节点 V2",
+    "description": "将多张图片合并为GIF动画（带过渡效果）",
+    "inputs": {
+      "image_1": "图片1",
+      "image_2": "图片2",
+      "image_3": "图片3",
+      "image_4": "图片4",
+      "image_5": "图片5",
+      "image_6": "图片6",
+      "image_7": "图片7",
+      "image_8": "图片8",
+      "image_9": "图片9",
+      "image_10": "图片10",
+      "frame_duration": "帧间隔",
+      "loop_count": "循环次数",
+      "resize_factor": "缩放因子",
+      "transition_effect": "过渡效果",
+      "transition_frames": "过渡帧数",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小",
+      "quality": "质量等级",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "frame_duration": "每帧图片的显示时间（秒）",
+      "loop_count": "GIF循环播放次数（0表示无限循环）",
+      "resize_factor": "图像缩放比例（0.1-1.0）",
+      "transition_effect": "帧之间的过渡效果类型",
+      "transition_frames": "过渡效果的帧数（0表示无过渡）",
+      "optimize": "是否优化GIF文件大小",
+      "palette_size": "GIF的颜色数量",
+      "quality": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）",
+      "output_filename": "GIF文件的输出名称"
+    },
+    "outputs": {
+      "output_path": "GIF文件路径"
+    },
+    "widget_values": {
+      "palette_size": {
+        "2": "2色（最小文件）",
+        "4": "4色",
+        "8": "8色",
+        "16": "16色",
+        "32": "32色",
+        "64": "64色",
+        "128": "128色",
+        "256": "256色（最佳质量）"
+      },
+      "quality": {
+        "1": "最低质量",
+        "2": "低质量",
+        "3": "中等质量",
+        "4": "高质量",
+        "5": "最高质量"
+      },
+      "transition_effect": {
+        "none": "无效果",
+        "crossfade": "淡入淡出",
+        "slide_left": "向左滑动",
+        "slide_right": "向右滑动",
+        "slide_up": "向上滑动",
+        "slide_down": "向下滑动",
+        "wipe_left": "向左擦除",
+        "wipe_right": "向右擦除",
+        "wipe_up": "向上擦除",
+        "wipe_down": "向下擦除"
       }
     }
   },

@@ -216,7 +216,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: GIF文件路径
 - **适用场景**: 需要将视频转换为GIF动画的场景
 
-### 🎵 视频转音频节点 (VideoToAudioNode)
+### � 视频转音频节点 (VideoToAudioNode)
 - **位置**: `XnanTool/媒体处理`
 - **功能**: 从视频文件中提取音频轨道并保存为音频文件
 - **输入**: 视频文件、输出格式、音频质量、输出文件名（可选）

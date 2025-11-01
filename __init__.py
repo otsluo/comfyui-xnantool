@@ -8,12 +8,12 @@ from .nodes.size_presets_node import NODE_CLASS_MAPPINGS as TOOL_SIZE_PRESETS_NO
 from .nodes.size_presets_node import NODE_DISPLAY_NAME_MAPPINGS as TOOL_SIZE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== ModelScope API相关节点 ====================
-from .nodes.modelscope_api_node import NODE_CLASS_MAPPINGS as MODELSCOPE_LORA_NODE_CLASS_MAPPINGS
-from .nodes.modelscope_api_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_LORA_NODE_DISPLAY_NAME_MAPPINGS
-from .nodes.modelscope_api_model_presets_node import NODE_CLASS_MAPPINGS as MODELSCOPE_PRESETS_NODE_CLASS_MAPPINGS
-from .nodes.modelscope_api_model_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
-from .nodes.modelscope_api_lora_presets_node import NODE_CLASS_MAPPINGS as MODELSCOPE_LORA_PRESETS_NODE_CLASS_MAPPINGS
-from .nodes.modelscope_api_lora_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_LORA_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_node import NODE_CLASS_MAPPINGS as MODELSCOPE_LORA_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_LORA_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_model_presets_node import NODE_CLASS_MAPPINGS as MODELSCOPE_PRESETS_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_model_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_lora_presets_node import NODE_CLASS_MAPPINGS as MODELSCOPE_LORA_PRESETS_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_lora_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_LORA_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== YOLO相关节点 ====================
 from .nodes.yolo_modelloader_nodes import NODE_CLASS_MAPPINGS as YOLO_MODEL_LOADER_NODE_CLASS_MAPPINGS
