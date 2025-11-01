@@ -1,3 +1,6 @@
+# comfyui-xnantool 插件版本信息
+__version__ = "0.3.0"
+
 # 导入所有节点文件
 # ==================== SAM相关节点 ====================
 from .nodes.sam_modelloader_nodes import NODE_CLASS_MAPPINGS as SAM_NODE_CLASS_MAPPINGS
