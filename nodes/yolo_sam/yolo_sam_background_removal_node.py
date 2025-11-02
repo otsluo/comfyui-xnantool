@@ -92,7 +92,7 @@ class YoloSamBackgroundRemovalNode:
     RETURN_TYPES = ("IMAGE", "MASK", "STRING")
     RETURN_NAMES = ("cropped_image", "foreground_mask", "info")
     FUNCTION = "remove_background_with_yolo_sam"
-    CATEGORY = "XnanTool/SAM"
+    CATEGORY = "XnanTool/yolo和sam/yolo+sam"
     
     def remove_background_with_yolo_sam(self, yolo_model, sam_model, image, classes, selection_mode, object_index, confidence_threshold, padding, mask_dilation=0, mask_blur=0):
         """

@@ -1,9 +1,0 @@
-{
-  "prompt_presets": [
-    {
-      "name": "预设名称1",
-      "image_prompt": "图片提示词1",
-      "video_prompt": "动画视频提示词1"
-    }
-  ]
-}

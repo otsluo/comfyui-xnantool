@@ -134,7 +134,7 @@ class YoloModelLoader:
     RETURN_TYPES = ("YOLO_MODEL", "STRING")
     RETURN_NAMES = ("model", "model_info")
     FUNCTION = "load_model"
-    CATEGORY = "XnanTool/YOLO"
+    CATEGORY = "XnanTool/yolo和sam/yolo"
     
     def load_model(self, model_name, confidence_threshold, iou_threshold, use_cache=True, force_reload=False):
         """加载YOLO模型"""
@@ -275,7 +275,7 @@ class YoloModelLoaderV2:
     RETURN_TYPES = ("YOLO_MODEL", "STRING")
     RETURN_NAMES = ("model", "model_info")
     FUNCTION = "load_local_model"
-    CATEGORY = "XnanTool/YOLO"
+    CATEGORY = "XnanTool/yolo和sam/yolo"
     
     def load_local_model(self, model_name, confidence_threshold, iou_threshold, use_cache=True):
         """加载本地YOLO模型"""
@@ -369,7 +369,7 @@ class YoloModelLoaderCustomPath:
     RETURN_TYPES = ("YOLO_MODEL", "STRING")
     RETURN_NAMES = ("model", "model_info")
     FUNCTION = "load_custom_path_model"
-    CATEGORY = "XnanTool/YOLO"
+    CATEGORY = "XnanTool/yolo和sam/yolo"
     
     def load_custom_path_model(self, custom_model_path, confidence_threshold, iou_threshold, use_cache=True):
         """从自定义路径加载YOLO模型"""

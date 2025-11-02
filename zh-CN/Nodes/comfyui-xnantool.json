@@ -192,6 +192,20 @@
       "model_info": "模型信息"
     }
   },
+  "LoadImageNode": {
+    "title": "加载图像节点",
+    "description": "加载图像文件并转换为ComfyUI可用的格式",
+    "inputs": {
+      "image_file": "图像文件"
+    },
+    "widgets": {
+      "image_file": "图像文件（来自image_video_prompt_presets_node文件夹）"
+    },
+    "outputs": {
+      "image": "图像",
+      "image_path": "图像路径"
+    }
+  },
   "YoloModelLoaderCustomPath": {
     "title": "YOLO模型加载器(自定义路径)",
     "description": "从自定义路径加载YOLO模型进行目标检测",
@@ -660,8 +674,8 @@
       }
     }
   },
-  "ImageUploadNode": {
-    "title": "图像上传节点",
+  "PresetImageUploadNode": {
+    "title": "预设图像上传节点",
     "description": "用于为预设添加图像预览",
     "inputs": {
       "preset_name": "预设名称",
@@ -673,6 +687,33 @@
     },
     "outputs": {
       "status_message": "状态信息"
+    }
+  },
+  "BatchLoadImagesNode": {
+    "title": "批量加载图片",
+    "description": "批量加载图片节点，支持加载目录中的所有图片或按索引加载单张图片，自动处理不同尺寸的图片",
+    "inputs": {
+      "mode": "加载模式",
+      "image_path": "图片路径",
+      "index": "图片索引",
+      "max_images": "最大图片数量"
+    },
+    "widgets": {
+      "mode": "选择加载模式：加载全部图片或按索引加载单张图片",
+      "image_path": "图片目录路径或单张图片路径",
+      "index": "当模式为'加载单张'时，指定要加载的图片索引",
+      "max_images": "当模式为'加载全部'时，限制最多加载的图片数量，设置为0表示加载全部图片"
+    },
+    "outputs": {
+      "images": "图片张量",
+      "filenames": "文件名列表",
+      "count": "图片数量"
+    },
+    "widget_values": {
+      "mode": {
+        "加载全部": "加载全部",
+        "加载单张": "加载单张"
+      }
     }
   },
   "VideoToGifNode": {

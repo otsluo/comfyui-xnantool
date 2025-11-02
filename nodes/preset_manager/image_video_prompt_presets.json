@@ -1,0 +1,58 @@
+{
+  "prompt_presets": [
+    {
+      "name": "预设名称1",
+      "image_prompt": "图片提示词1",
+      "video_prompt": "动画视频提示词1",
+      "image_path": "image_video_prompt_presets_node/预设名称1.png"
+    },
+    {
+      "name": "编辑-人物提取衣服",
+      "image_prompt": "仅在白色背景上提取上衣、裙子。产品摄影风格，把提取出的产品分开展示。",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-生成角色三视图",
+      "image_prompt": "Three views，三视图，分别是正面，侧面，背面，白色背景，一个小女孩，3d，写实风格",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-一键转宫崎骏风",
+      "image_prompt": "把图片转换为宫崎骏风格，其他保持不变",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-一键转宫崎骏风",
+      "image_prompt": "将人像改成卡通风格的9种不同表情的连续动态表情包，九宫格布局。\n每个格子都是不同的表情（开心大笑、调皮眨眼、愤怒头部冒火、委屈哭泣、惊讶张嘴、爱心眼、困倦打哈欠、得意坏笑、脸红害羞）和动作。",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-毛绒绒饮料（冬季限定）",
+      "image_prompt": "把手中的物品的材质改为毛绒材质，手保持不变，瓶盖衔接处保持塑料质感，物品的原始形状、标签细节（文字、图案）和色彩基调和颜色，保持有精致的刺绣文字与图案，物品的细节，物品呈现出柔软的毛绒材质效果，其他保持不变。",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-指尖触摸虚拟角色",
+      "image_prompt": "以俯拍镜头呈现，缩小人物大小，Q版形象站在地上，不改变图中人物造型风格形象，微微抬头，伸出手用一根食指与镜头外女性的手指相碰，背景替换为雨后带水光的灰色颗粒感路面，散落若干黄色银杏叶，整体画面调为暗调高级感氛围，突出温馨互动感",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-海的那边是什么",
+      "image_prompt": "以图片人物为基础，采用三宫格构图方式生成一张艺术感写真图，海边写真图，场景为海边沙滩，天空呈淡紫与灰色渐变，海面平静。画面中有人物和参考图一致，第一层为近景，站在沙滩上的背影，头发被风吹起，添加中英字幕“海的那边是什么  What's beyond the sea?”，第二层是手持橙色花束，侧身站立于海边，添加中英字幕“你不用告诉我  you don't have to tell me”;第三层是面部特写，头发随风飘动，添加中英字幕“我自己会去看  l will go and see it myself”。整体色调清冷，营造出文艺且充满自我探索情绪的氛围。",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    },
+    {
+      "name": "编辑-科幻星空眼睛",
+      "image_prompt": "科幻风格人物眼睛特写，保留原有眼球完整结构，眼睛下方添加流动的星河光带效果，眼球内部融入细碎星空纹理；整体以蓝紫色调为主，背景深邃黑暗，点缀散落的宇宙星光，搭配纤细发光线条与轻盈粒子效果，营造兼具未来感与梦幻感的星空氛围。",
+      "video_prompt": "",
+      "image_path": "image_video_prompt_presets_node/新预设.png"
+    }
+  ]
+}

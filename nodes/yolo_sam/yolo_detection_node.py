@@ -1,6 +1,6 @@
 import torch
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import cv2
 from ultralytics import YOLO
 import json
@@ -10,10 +10,10 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class YoloDetectAndCropNode:
+class YoloDetectionNode:
     """
-    YOLO检测与裁剪一体化节点
-    直接输入图片，执行YOLO检测并输出裁剪结果
+    YOLO检测节点
+    直接输入图片，执行YOLO检测并输出检测结果和带标注的图像
     支持自动切换CUDA/CPU设备
     """
     
@@ -38,46 +38,47 @@ class YoloDetectAndCropNode:
                     "step": 0.01,
                     "display": "number"
                 }),
-                "padding": ("INT", {
-                    "default": 20,
-                    "min": 0,
-                    "max": 100,
-                    "step": 1,
-                    "display": "number"
+                "show_annotations": ("BOOLEAN", {
+                    "default": True,
+                    "label": "显示标注",
+                    "description": "是否在输出图像上显示检测框和标签"
                 }),
             }
         }
     
-    RETURN_TYPES = ("IMAGE", "JSON", "INT", "JSON", "INT", "STRING")
-    RETURN_NAMES = ("cropped_image", "detection_results", "detected_objects_count", "crop_info", "crop_regions_count", "info")
-    FUNCTION = "detect_and_crop"
-    CATEGORY = "XnanTool/YOLO"
+    RETURN_TYPES = ("IMAGE", "JSON", "INT", "STRING")
+    RETURN_NAMES = ("annotated_image", "detection_results", "detected_objects_count", "info")
+    FUNCTION = "detect"
+    CATEGORY = "XnanTool/yolo和sam/yolo"
     
-    def detect_and_crop(self, yolo_model, image, classes, confidence_threshold, padding):
+    def detect(self, yolo_model, image, classes, confidence_threshold, show_annotations):
         """
-        执行YOLO检测并裁剪图像
+        执行YOLO检测
         
         Args:
             yolo_model: YOLO模型对象
             image: 输入图像 (tensor格式)
             classes: 要检测的类别列表
             confidence_threshold: 置信度阈值
-            padding: 裁剪边界填充像素数
+            show_annotations: 是否显示标注
             
         Returns:
-            cropped_image: 裁剪后的图像
+            annotated_image: 带标注的图像
             detection_results: 检测结果JSON
             detected_objects_count: 检测到的对象数量
-            crop_info: 裁剪信息
-            crop_regions_count: 裁剪区域数量
+            info: 处理信息
         """
         try:
-            # 设置模型参数
+            # 保存原始置信度阈值
             original_conf = yolo_model.conf
             yolo_model.conf = confidence_threshold
             
             # 转换图像格式
             image_np = self.tensor_to_numpy(image)
+            
+            # 保存原始图像用于可能的标注绘制
+            if show_annotations:
+                annotated_image_np = image_np.copy()
             
             # 确定最佳设备运行模型
             device = self._get_optimal_device(yolo_model)
@@ -85,12 +86,6 @@ class YoloDetectAndCropNode:
             
             # 将模型移动到最佳设备
             yolo_model.to(device)
-            
-            # 将图像也移动到相同设备（如果需要）
-            if device.type == 'cuda':
-                # 对于YOLO推理，我们实际上使用numpy图像，所以不需要移动tensor
-                # 但我们需要确保模型在正确的设备上
-                pass
             
             # 执行YOLO检测
             results = yolo_model(image_np, verbose=False)
@@ -101,50 +96,32 @@ class YoloDetectAndCropNode:
             # 解析检测结果
             detections = self.parse_detections(results, classes)
             
-            # 如果没有检测到对象，返回原始图像
-            if len(detections) == 0:
-                logger.warning("未检测到任何对象，返回原始图像")
-                empty_info = {
-                    "message": "未检测到任何对象",
-                    "crop_regions": 0,
-                    "padding": padding
-                }
-                info = f"检测完成，未发现任何对象。置信度阈值: {confidence_threshold}，填充: {padding}px"
-                return (
-                    image, 
-                    json.dumps([]), 
-                    0, 
-                    json.dumps(empty_info), 
-                    0,
-                    info
-                )
-            
-            # 执行裁剪
-            cropped_image, crop_info = self.crop_image_by_detections(image_np, detections, padding)
+            # 在图像上绘制标注（如果启用）
+            if show_annotations and len(detections) > 0:
+                annotated_image_np = self.draw_annotations(annotated_image_np, detections)
             
             # 转换回tensor格式
-            cropped_tensor = self.numpy_to_tensor(cropped_image)
-            
-            # 构建返回信息
-            crop_info["padding"] = padding
-            crop_info["detected_objects"] = len(detections)
-            crop_info["device_used"] = str(device)
+            if show_annotations:
+                annotated_tensor = self.numpy_to_tensor(annotated_image_np)
+            else:
+                annotated_tensor = image  # 如果不显示标注，返回原始图像
             
             # 构建info字符串
-            detected_classes = list(set([det["class_name"] for det in detections]))
-            info = f"检测完成，发现{len(detections)}个对象: {', '.join(detected_classes)}。置信度阈值: {confidence_threshold}，填充: {padding}px，设备: {device}"
+            if len(detections) == 0:
+                info = f"检测完成，未发现任何对象。置信度阈值: {confidence_threshold}，设备: {device}"
+            else:
+                detected_classes = list(set([det["class_name"] for det in detections]))
+                info = f"检测完成，发现{len(detections)}个对象: {', '.join(detected_classes)}。置信度阈值: {confidence_threshold}，设备: {device}"
             
             return (
-                cropped_tensor,
+                annotated_tensor,
                 json.dumps(detections),
-                len(detections),
-                json.dumps(crop_info),
                 len(detections),
                 info
             )
             
         except Exception as e:
-            logger.error(f"检测和裁剪过程中出错: {str(e)}")
+            logger.error(f"检测过程中出错: {str(e)}")
             # 尝试使用CPU作为后备方案
             try:
                 logger.info("尝试使用CPU作为后备方案...")
@@ -154,56 +131,42 @@ class YoloDetectAndCropNode:
                 # 转换图像格式
                 image_np = self.tensor_to_numpy(image)
                 
+                # 保存原始图像用于可能的标注绘制
+                if show_annotations:
+                    annotated_image_np = image_np.copy()
+                
                 # 执行YOLO检测
                 results = yolo_model(image_np, verbose=False)
                 
                 # 解析检测结果
                 detections = self.parse_detections(results, classes)
                 
-                # 如果没有检测到对象，返回原始图像
-                if len(detections) == 0:
-                    logger.warning("未检测到任何对象，返回原始图像")
-                    empty_info = {
-                        "message": "未检测到任何对象",
-                        "crop_regions": 0,
-                        "padding": padding
-                    }
-                    info = f"检测完成，未发现任何对象。置信度阈值: {confidence_threshold}，填充: {padding}px，设备: CPU(后备)"
-                    return (
-                        image, 
-                        json.dumps([]), 
-                        0, 
-                        json.dumps(empty_info), 
-                        0,
-                        info
-                    )
-                
-                # 执行裁剪
-                cropped_image, crop_info = self.crop_image_by_detections(image_np, detections, padding)
+                # 在图像上绘制标注（如果启用）
+                if show_annotations and len(detections) > 0:
+                    annotated_image_np = self.draw_annotations(annotated_image_np, detections)
                 
                 # 转换回tensor格式
-                cropped_tensor = self.numpy_to_tensor(cropped_image)
-                
-                # 构建返回信息
-                crop_info["padding"] = padding
-                crop_info["detected_objects"] = len(detections)
-                crop_info["device_used"] = "cpu (后备)"
+                if show_annotations:
+                    annotated_tensor = self.numpy_to_tensor(annotated_image_np)
+                else:
+                    annotated_tensor = image  # 如果不显示标注，返回原始图像
                 
                 # 构建info字符串
-                detected_classes = list(set([det["class_name"] for det in detections]))
-                info = f"检测完成，发现{len(detections)}个对象: {', '.join(detected_classes)}。置信度阈值: {confidence_threshold}，填充: {padding}px，设备: CPU(后备)"
+                if len(detections) == 0:
+                    info = f"检测完成，未发现任何对象。置信度阈值: {confidence_threshold}，设备: CPU(后备)"
+                else:
+                    detected_classes = list(set([det["class_name"] for det in detections]))
+                    info = f"检测完成，发现{len(detections)}个对象: {', '.join(detected_classes)}。置信度阈值: {confidence_threshold}，设备: CPU(后备)"
                 
                 return (
-                    cropped_tensor,
+                    annotated_tensor,
                     json.dumps(detections),
-                    len(detections),
-                    json.dumps(crop_info),
                     len(detections),
                     info
                 )
             except Exception as fallback_error:
                 logger.error(f"后备方案也失败了: {str(fallback_error)}")
-                raise Exception(f"检测和裁剪失败: {str(e)}")
+                raise Exception(f"检测失败: {str(e)}")
     
     def _get_optimal_device(self, yolo_model):
         """
@@ -308,51 +271,78 @@ class YoloDetectAndCropNode:
         
         return detections
     
-    def crop_image_by_detections(self, image, detections, padding):
-        """根据检测结果裁剪图像"""
-        if len(detections) == 0:
-            return image, {"message": "无检测结果"}
+    def draw_annotations(self, image, detections):
+        """在图像上绘制检测框和标签"""
+        # 创建PIL图像用于绘制文本
+        pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        draw = ImageDraw.Draw(pil_image)
         
-        # 计算包含所有检测对象的边界框
-        x1_min = min([det["bbox"]["x1"] for det in detections])
-        y1_min = min([det["bbox"]["y1"] for det in detections])
-        x2_max = max([det["bbox"]["x2"] for det in detections])
-        y2_max = max([det["bbox"]["y2"] for det in detections])
+        # 尝试加载中文字体，如果失败则使用默认字体
+        try:
+            font = ImageFont.truetype("arial.ttf", 16)
+        except:
+            try:
+                font = ImageFont.truetype("simhei.ttf", 16)  # 中文字体
+            except:
+                font = ImageFont.load_default()
         
-        # 添加边界填充
-        h, w = image.shape[:2]
-        x1_min = max(0, x1_min - padding)
-        y1_min = max(0, y1_min - padding)
-        x2_max = min(w, x2_max + padding)
-        y2_max = min(h, y2_max + padding)
+        # 定义多种颜色用于不同的检测对象
+        colors = [
+            (0, 255, 0),    # 绿色
+            (255, 0, 0),    # 红色
+            (0, 0, 255),    # 蓝色
+            (255, 255, 0),  # 青色
+            (255, 0, 255),  # 紫色
+            (0, 255, 255),  # 黄色
+            (128, 0, 128),  # 深紫色
+            (255, 165, 0),  # 橙色
+            (128, 128, 0),  # 橄榄绿
+            (0, 128, 128),  # 深青色
+        ]
         
-        # 裁剪图像
-        cropped_image = image[y1_min:y2_max, x1_min:x2_max]
+        # 为每个检测对象绘制边界框和标签
+        for i, detection in enumerate(detections):
+            bbox = detection["bbox"]
+            class_name = detection["class_name"]
+            confidence = detection["confidence"]
+            
+            # 选择颜色（循环使用颜色列表）
+            color = colors[i % len(colors)]
+            
+            # 绘制边界框
+            x1, y1, x2, y2 = bbox["x1"], bbox["y1"], bbox["x2"], bbox["y2"]
+            cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+            
+            # 准备标签文本
+            label = f"{class_name}: {confidence:.2f}"
+            
+            # 计算文本尺寸
+            try:
+                left, top, right, bottom = font.getbbox(label)
+                text_width = right - left
+                text_height = bottom - top
+            except:
+                # 兼容旧版本PIL
+                text_width, text_height = draw.textsize(label, font=font)
+            
+            # 绘制标签背景
+            cv2.rectangle(image, (x1, y1 - text_height - 4), (x1 + text_width, y1), color, -1)
+            
+            # 绘制标签文本
+            pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+            draw = ImageDraw.Draw(pil_image)
+            draw.text((x1, y1 - text_height - 2), label, fill=(0, 0, 0), font=font)
+            image = cv2.cvtColor(np.array(pil_image), cv2.COLOR_RGB2BGR)
         
-        # 构建裁剪信息
-        crop_info = {
-            "original_size": {"width": w, "height": h},
-            "crop_box": {
-                "x1": x1_min,
-                "y1": y1_min,
-                "x2": x2_max,
-                "y2": y2_max,
-                "width": x2_max - x1_min,
-                "height": y2_max - y1_min
-            },
-            "padding": padding,
-            "detected_objects": len(detections)
-        }
-        
-        return cropped_image, crop_info
+        return image
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {
-    "YoloDetectAndCropNode": YoloDetectAndCropNode
+    "YoloDetectionNode": YoloDetectionNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloDetectAndCropNode": "YOLO检测与裁剪一体化"
+    "YoloDetectionNode": "YOLO检测节点"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -21,7 +21,7 @@ class Imageencodinggeneration:
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("uuid", "md5", "sha1", "sha256", "sha512", "image_info")
     FUNCTION = "generate_uuid"
-    CATEGORY = "XnanTool/实用工具/小工具"
+    CATEGORY = "XnanTool/图像处理/工具"
 
     def generate_uuid(self, image):
         """

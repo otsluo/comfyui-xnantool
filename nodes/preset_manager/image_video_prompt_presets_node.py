@@ -32,6 +32,10 @@ def load_prompt_config():
             # 确保每个预设至少有一个提示词字段
             if "prompt" not in preset and "image_prompt" not in preset and "video_prompt" not in preset:
                 preset["prompt"] = ""  # 添加空提示词以避免错误
+            
+            # 为每个预设添加默认图片路径
+            if "image_path" not in preset:
+                preset["image_path"] = f"image_video_prompt_presets_node/{preset['name']}.png"
         
         return config
     except FileNotFoundError:
@@ -177,7 +181,17 @@ class ImageVideoPromptSelector:
                     break
             
             # 加载预设图片
-            preset_image = load_preset_image(prompt_preset)
+            if selected_preset and "image_path" in selected_preset:
+                # 从配置中获取图片路径
+                image_path = selected_preset["image_path"]
+                # 提取文件名（去掉路径部分）
+                image_filename = os.path.basename(image_path)
+                # 去掉扩展名获取预设名称
+                preset_name = os.path.splitext(image_filename)[0]
+                preset_image = load_preset_image(preset_name)
+            else:
+                # 默认方式加载图片
+                preset_image = load_preset_image(prompt_preset)
             
             # 如果找到了预设，返回对应的提示词
             if selected_preset:
@@ -301,7 +315,8 @@ class ImageVideoPromptManager:
             
             # 添加新预设
             new_preset = {
-                "name": preset_name
+                "name": preset_name,
+                "image_path": f"image_video_prompt_presets_node/{preset_name}.png"
             }
             
             # 如果提供了图片提示词，则添加
@@ -354,8 +369,8 @@ class ImageVideoPromptManager:
             else:
                 return ("删除失败: 无法保存配置文件",)
 
-class ImageUploadNode:
-    """图像上传节点 - 用于为预设添加图像预览"""
+class PresetImageUploadNode:
+    """预设图像上传节点 - 用于为预设添加图像预览"""
     
     def __init__(self):
         # 获取预设配置文件路径
@@ -444,13 +459,13 @@ class ImageUploadNode:
 NODE_CLASS_MAPPINGS = {
     "ImageVideoPromptSelector": ImageVideoPromptSelector,
     "ImageVideoPromptManager": ImageVideoPromptManager,
-    "ImageUploadNode": ImageUploadNode
+    "PresetImageUploadNode": PresetImageUploadNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageVideoPromptSelector": "图片视频提示词预设",
     "ImageVideoPromptManager": "图片视频提示词预设管理器",
-    "ImageUploadNode": "图像上传节点"
+    "PresetImageUploadNode": "预设图像上传节点"
 }
 
 # 确保模块被正确导入

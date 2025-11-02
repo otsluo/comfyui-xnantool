@@ -36,7 +36,7 @@ class CreateImageNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
     FUNCTION = "create_image"
-    CATEGORY = "XnanTool/实用工具/小工具"
+    CATEGORY = "XnanTool/图像处理/工具"
     OUTPUT_NODE = False
     
     def create_image(self, width, height, color):

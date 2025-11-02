@@ -9,11 +9,10 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class YoloDetectionMultiOutputCropNode:
+class YoloDetectionCropNode:
     """
-    YOLO检测多输出裁切节点
-    根据YOLO检测节点的检测结果，对图像中的每个检测对象进行裁切，
-    并通过多个独立输出端口分别输出裁切图像1至裁切图像5
+    YOLO检测结果裁切节点
+    根据YOLO检测节点的检测结果，对图像中的每个检测对象进行裁切
     """
     
     def __init__(self):
@@ -38,29 +37,38 @@ class YoloDetectionMultiOutputCropNode:
                     "label": "方形裁切",
                     "description": "是否将裁切区域调整为正方形"
                 }),
+            },
+            "optional": {
+                "crop_index": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 100,
+                    "step": 1,
+                    "display": "number",
+                    "description": "裁切结果索引（0表示第一个检测对象）"
+                }),
             }
         }
-
-    # 定义5个独立的图像输出端口和1个掩码输出端口
-    RETURN_TYPES = ("IMAGE", "IMAGE", "IMAGE", "IMAGE", "IMAGE", "MASK", "MASK", "MASK", "MASK", "MASK", "INT", "STRING")
-    RETURN_NAMES = ("cropped_image_1", "cropped_image_2", "cropped_image_3", "cropped_image_4", "cropped_image_5", 
-                   "mask_1", "mask_2", "mask_3", "mask_4", "mask_5", "crop_count", "info")
-    FUNCTION = "crop_detections"
-    CATEGORY = "XnanTool/YOLO"
     
-    def crop_detections(self, image, detection_results, padding, square_crop):
+    RETURN_TYPES = ("IMAGE", "MASK", "INT", "STRING")
+    RETURN_NAMES = ("cropped_images", "masks", "crop_count", "info")
+    FUNCTION = "crop_detections"
+    CATEGORY = "XnanTool/yolo和sam/yolo"
+    
+    def crop_detections(self, image, detection_results, padding, square_crop, crop_index=0):
         """
-        根据检测结果裁切图像，通过多个独立输出端口分别输出裁切图像1至裁切图像5
+        根据检测结果裁切图像
         
         Args:
             image: 输入图像 (tensor格式)
             detection_results: YOLO检测结果JSON字符串
             padding: 裁切边距（像素）
             square_crop: 是否将裁切区域调整为正方形
+            crop_index: 裁切结果索引（0表示第一个检测对象）
             
         Returns:
-            cropped_image_1-5: 前5个裁切后的图像（每个都是独立输出）
-            mask_1-5: 前5个裁切区域的掩码（每个都是独立输出）
+            cropped_images: 裁切后的图像列表
+            masks: 裁切区域的掩码列表
             crop_count: 裁切图像的数量
             info: 处理信息
         """
@@ -75,8 +83,8 @@ class YoloDetectionMultiOutputCropNode:
             cropped_images_list = []
             masks_list = []
             
-            # 为每个检测对象创建裁切图像（最多处理5个）
-            for i, detection in enumerate(detections[:5]):  # 限制最多处理5个检测对象
+            # 为每个检测对象创建裁切图像
+            for detection in detections:
                 bbox = detection["bbox"]
                 x1, y1, x2, y2 = bbox["x1"], bbox["y1"], bbox["x2"], bbox["y2"]
                 
@@ -115,31 +123,31 @@ class YoloDetectionMultiOutputCropNode:
                 cropped_images_list.append(cropped_tensor)
                 masks_list.append(mask_tensor)
             
-            # 确保始终返回5个图像和掩码输出
-            # 如果检测到的对象少于5个，用原始图像和空掩码填充
-            while len(cropped_images_list) < 5:
-                cropped_images_list.append(image)  # 使用原始图像填充
-                empty_mask = torch.zeros((1, h, w), dtype=torch.float32)
-                masks_list.append(empty_mask)  # 使用空掩码填充
-            
-            # 构建信息字符串
-            info = f"成功裁切{len(detections)}个检测对象，返回前5个裁切结果"
-            if len(detections) > 5:
-                info += f"（共检测到{len(detections)}个对象，仅返回前5个）"
+            # 合并结果
+            if cropped_images_list:
+                if len(cropped_images_list) > 1:
+                    # 根据索引返回特定的裁切结果
+                    # 确保索引在有效范围内
+                    valid_index = max(0, min(crop_index, len(cropped_images_list) - 1))
+                    cropped_batch = cropped_images_list[valid_index]
+                    mask_batch = masks_list[valid_index]
+                    info = f"成功裁切{len(detections)}个检测对象，返回第{valid_index}个裁切结果"
+                else:
+                    # 只有一个裁切结果，直接返回
+                    cropped_batch = cropped_images_list[0]
+                    mask_batch = masks_list[0]
+                    info = f"成功裁切{len(detections)}个检测对象，返回唯一裁切结果"
+            else:
+                # 如果没有检测到对象，返回原始图像和全零掩码
+                cropped_batch = image
+                mask_batch = torch.zeros((1, h, w), dtype=torch.float32)
+                info = "未检测到任何对象，返回原始图像"
             
             return (
-                cropped_images_list[0],  # cropped_image_1
-                cropped_images_list[1],  # cropped_image_2
-                cropped_images_list[2],  # cropped_image_3
-                cropped_images_list[3],  # cropped_image_4
-                cropped_images_list[4],  # cropped_image_5
-                masks_list[0],           # mask_1
-                masks_list[1],           # mask_2
-                masks_list[2],           # mask_3
-                masks_list[3],           # mask_4
-                masks_list[4],           # mask_5
-                min(len(detections), 5), # crop_count (最多5个)
-                info                     # info
+                cropped_batch,
+                mask_batch,
+                len(detections),
+                info
             )
             
         except Exception as e:
@@ -157,7 +165,7 @@ class YoloDetectionMultiOutputCropNode:
         numpy_image = tensor.numpy()
         # 转换范围从[0,1]到[0,255]
         numpy_image = (numpy_image * 255).astype(np.uint8)
-        # 转换颜色空间从RGB到BGR（因为YOLO通常使用BGR）
+        # 转换颜色空间从RGB到BGR（OpenCV使用BGR）
         numpy_image = cv2.cvtColor(numpy_image, cv2.COLOR_RGB2BGR)
         return numpy_image
     
@@ -185,11 +193,11 @@ class YoloDetectionMultiOutputCropNode:
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {
-    "YoloDetectionMultiOutputCropNode": YoloDetectionMultiOutputCropNode
+    "YoloDetectionCropNode": YoloDetectionCropNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloDetectionMultiOutputCropNode": "YOLO检测多输出裁切节点"
+    "YoloDetectionCropNode": "YOLO检测裁切节点"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

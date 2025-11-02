@@ -1,0 +1,3 @@
+@echo off
+python image_video_prompt_presets_node_gui.py
+pause

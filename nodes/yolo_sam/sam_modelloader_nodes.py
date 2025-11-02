@@ -154,7 +154,7 @@ class SamModelLoader:
     RETURN_TYPES = ("SAM_MODEL", "STRING")
     RETURN_NAMES = ("model", "model_info")
     FUNCTION = "load_model"
-    CATEGORY = "XnanTool/SAM"
+    CATEGORY = "XnanTool/yolo和sam/sam"
     
     def load_model(self, model_type, auto_download=True, use_cache=True):
         """加载SAM模型"""
@@ -257,7 +257,7 @@ class SamModelLoaderV2:
     RETURN_TYPES = ("SAM_MODEL", "STRING")
     RETURN_NAMES = ("model", "model_info")
     FUNCTION = "load_local_model"
-    CATEGORY = "XnanTool/SAM"
+    CATEGORY = "XnanTool/yolo和sam/sam"
     
     def load_local_model(self, model_file, use_cache=True):
         """加载本地SAM模型文件"""
@@ -352,7 +352,7 @@ class SamModelLoaderCustomPath:
     RETURN_TYPES = ("SAM_MODEL", "STRING")
     RETURN_NAMES = ("model", "model_info")
     FUNCTION = "load_custom_path_model"
-    CATEGORY = "XnanTool/SAM"
+    CATEGORY = "XnanTool/yolo和sam/sam"
     
     def load_custom_path_model(self, custom_model_path, use_cache=True):
         """从自定义路径加载SAM模型"""
