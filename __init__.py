@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.3.0"
+__version__ = "0.3.4"
 
 # 导入所有节点文件
 # ==================== SAM相关节点 ====================
@@ -43,6 +43,12 @@ from .nodes.image_processing.Image_encoding_generation_node import NODE_CLASS_MA
 from .nodes.image_processing.Image_encoding_generation_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_ENCODING_GENERATION_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.create_image_node import NODE_CLASS_MAPPINGS as CREATE_IMAGE_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.create_image_node import NODE_DISPLAY_NAME_MAPPINGS as CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.image_format_converter_node import NODE_CLASS_MAPPINGS as IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.image_format_converter_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.batch_folder_image_format_converter_node import NODE_CLASS_MAPPINGS as BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.batch_folder_image_format_converter_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.batch_image_resizer_with_conversion_node import NODE_CLASS_MAPPINGS as BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.batch_image_resizer_with_conversion_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 实用工具节点 ====================
 from .nodes.toggle_value_node import NODE_CLASS_MAPPINGS as TOGGLE_VALUE_NODE_CLASS_MAPPINGS
@@ -61,10 +67,10 @@ from .nodes.media_processing.video_to_audio_node import NODE_CLASS_MAPPINGS as V
 from .nodes.media_processing.video_to_audio_node import NODE_DISPLAY_NAME_MAPPINGS as VIDEO_TO_AUDIO_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 图像加载节点 ====================
-from .nodes.load_image_node import NODE_CLASS_MAPPINGS as LOAD_IMAGE_NODE_CLASS_MAPPINGS
-from .nodes.load_image_node import NODE_DISPLAY_NAME_MAPPINGS as LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
-from .nodes.batch_load_images_node import NODE_CLASS_MAPPINGS as BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS
-from .nodes.batch_load_images_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.load_image_node import NODE_CLASS_MAPPINGS as LOAD_IMAGE_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.load_image_node import NODE_DISPLAY_NAME_MAPPINGS as LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.batch_load_images_node import NODE_CLASS_MAPPINGS as BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.batch_load_images_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS
 
 # 合并所有节点映射的工具函数
 def merge_node_mappings(*mappings):
@@ -101,6 +107,9 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     # 图像处理节点
     IMAGE_ENCODING_GENERATION_NODE_CLASS_MAPPINGS,
     CREATE_IMAGE_NODE_CLASS_MAPPINGS,
+    IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
+    BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
+    BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_CLASS_MAPPINGS,
     
     # 实用工具节点
     TOGGLE_VALUE_NODE_CLASS_MAPPINGS,
@@ -146,6 +155,9 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     # 图像处理节点
     IMAGE_ENCODING_GENERATION_NODE_DISPLAY_NAME_MAPPINGS,
     CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
+    IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
+    BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
+    BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_DISPLAY_NAME_MAPPINGS,
     
     # 实用工具节点
     TOGGLE_VALUE_NODE_DISPLAY_NAME_MAPPINGS,

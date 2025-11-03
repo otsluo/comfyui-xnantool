@@ -165,7 +165,7 @@ class ImageVideoPromptSelector:
     RETURN_TYPES = ("STRING", "STRING", "IMAGE")
     RETURN_NAMES = ("image_prompt", "video_prompt", "preset_image")
     FUNCTION = "get_prompts"
-    CATEGORY = "XnanTool/实用工具/预设"
+    CATEGORY = "XnanTool/预设"
     
     def get_prompts(self, prompt_preset):
         """根据选择的预设返回图片提示词、视频提示词和预设图片"""
@@ -273,7 +273,7 @@ class ImageVideoPromptManager:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("status_message",)
     FUNCTION = "manage_prompts"
-    CATEGORY = "XnanTool/实用工具/预设"
+    CATEGORY = "XnanTool/预设"
     
     def manage_prompts(self, action, preset_name="", image_prompt="", video_prompt="", preset_to_delete=""):
         """管理图片视频提示词预设"""
@@ -422,7 +422,7 @@ class PresetImageUploadNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("status_message",)
     FUNCTION = "save_preset_image"
-    CATEGORY = "XnanTool/实用工具/预设"
+    CATEGORY = "XnanTool/预设"
     
     def save_preset_image(self, preset_name, image):
         """保存预设图像"""

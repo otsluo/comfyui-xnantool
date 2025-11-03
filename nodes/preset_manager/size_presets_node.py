@@ -77,7 +77,7 @@ class SizeSelector:
     RETURN_TYPES = ("INT", "INT")
     RETURN_NAMES = ("width", "height")
     FUNCTION = "get_size"
-    CATEGORY = "XnanTool/实用工具/预设"
+    CATEGORY = "XnanTool/预设"
     
     def get_size(self, size_preset):
         """解析选中的尺寸预设，返回宽度和高度"""

@@ -20,7 +20,7 @@ class ToggleValueNode:
     RETURN_TYPES = ("*", "STRING", "INT", "FLOAT")
     RETURN_NAMES = ("原始类型输出", "字符串输出", "整数输出", "浮点输出")
     FUNCTION = "toggle_value"
-    CATEGORY = "XnanTool/实用工具/小工具"
+    CATEGORY = "XnanTool/实用工具"
 
     def toggle_value(self, input_value, value_a, value_b):
         """

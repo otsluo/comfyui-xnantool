@@ -36,7 +36,7 @@ class SquareConverter:
     RETURN_TYPES = ("IMAGE", "INT", "INT")
     RETURN_NAMES = ("image", "width", "height")
     FUNCTION = "convert_to_square"
-    CATEGORY = "XnanTool/实用工具/小工具"
+    CATEGORY = "XnanTool/图像处理"
 
     def convert_to_square(self, image, margin, pad_color="#FFFFFF"):
         # 获取图像尺寸
@@ -115,7 +115,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SquareConverter": "正方形转换器-最大尺寸1024"
+    "SquareConverter": "正方形转换器"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

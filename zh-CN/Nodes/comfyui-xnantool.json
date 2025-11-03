@@ -645,7 +645,6 @@
       "preset_image": "预设图片"
     }
   },
-  
   "ImageVideoPromptManager": {
     "title": "图片视频提示词预设管理器",
     "description": "用于查看和管理预设提示词，可以添加、删除和列出所有可用的预设。",
@@ -816,6 +815,152 @@
       "sha256": "SHA256哈希值",
       "sha512": "SHA512哈希值",
       "image_info": "图像信息"
+    }
+  },
+  "BatchResizeCropNode": {
+    "title": "批量图像缩放裁切",
+    "description": "批量图像缩放和裁切节点，支持按宽度或高度缩放，以及按常见比例缩放后裁切",
+    "inputs": {
+      "images": "输入图像",
+      "resize_mode": "缩放模式",
+      "target_width": "目标宽度",
+      "target_height": "目标高度",
+      "aspect_ratio": "宽高比",
+      "crop_if_needed": "需要时裁切",
+      "crop_method": "裁切方式",
+      "batch_size": "批次大小"
+    },
+    "widgets": {
+      "resize_mode": "选择缩放模式：按宽度、按高度或按比例",
+      "target_width": "当按宽度缩放时的目标宽度",
+      "target_height": "当按高度缩放时的目标高度",
+      "aspect_ratio": "按比例缩放时的目标宽高比",
+      "crop_if_needed": "是否在缩放后按需裁切以匹配目标尺寸",
+      "crop_method": "选择裁切方式：中心、左、右、上、下",
+      "batch_size": "处理的图像数量"
+    },
+    "outputs": {
+      "resized_images": "缩放裁切后的图像",
+      "width": "图像宽度",
+      "height": "图像高度"
+    },
+    "widget_values": {
+      "resize_mode": {
+        "by_width": "按宽度缩放",
+        "by_height": "按高度缩放",
+        "by_ratio": "按比例缩放"
+      },
+      "aspect_ratio": {
+        "3:4": "3:4",
+        "4:3": "4:3",
+        "9:16": "9:16",
+        "16:9": "16:9",
+        "1:1": "1:1",
+        "2:3": "2:3",
+        "3:2": "3:2"
+      },
+      "crop_method": {
+        "center": "中心裁切",
+        "left": "左裁切",
+        "right": "右裁切",
+        "top": "上裁切",
+        "bottom": "下裁切"
+      }
+    }
+  },
+  "ImageFormatConverterNode": {
+    "title": "图像格式转换",
+    "description": "图像格式转换节点，支持将图像转换为JPEG、PNG、WEBP或BMP格式",
+    "inputs": {
+      "images": "输入图像",
+      "format": "目标格式",
+      "quality": "JPEG/WebP质量",
+      "optimize": "优化PNG"
+    },
+    "widgets": {
+      "format": "选择输出图像格式",
+      "quality": "JPEG或WebP格式的质量（1-100）",
+      "optimize": "是否优化PNG文件大小"
+    },
+    "outputs": {
+      "converted_images": "转换后的图像",
+      "file_paths": "文件路径列表"
+    },
+    "widget_values": {
+      "format": {
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WEBP": "WebP格式",
+        "BMP": "BMP格式"
+      },
+      "optimize": {
+        "false": "不优化",
+        "true": "优化文件大小"
+      }
+    }
+  },
+  "BatchFolderImageFormatConverterNode": {
+    "title": "批量图像格式转换器",
+    "description": "批量图像格式转换器节点，支持将指定文件夹中的图像转换为JPEG、PNG、WEBP或BMP格式",
+    "inputs": {
+      "input_folder": "输入文件夹",
+      "output_format": "输出格式",
+      "quality": "JPEG/WebP质量",
+      "output_folder": "输出文件夹"
+    },
+    "widgets": {
+      "input_folder": "选择包含待转换图像的文件夹",
+      "output_format": "选择输出图像格式",
+      "quality": "JPEG或WebP格式的质量（1-100）",
+      "output_folder": "图像保存的文件夹路径（留空则保存到输入文件夹）"
+    },
+    "outputs": {
+      "converted_images": "转换后的图像",
+      "file_paths": "文件路径列表"
+    },
+    "widget_values": {
+      "output_format": {
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WEBP": "WebP格式",
+        "BMP": "BMP格式"
+      }
+    }
+  },
+  "BatchImageResizerWithConversionNode": {
+    "title": "批量图像缩放（带格式转换）",
+    "description": "批量图像缩放（带格式转换）节点，支持将指定文件夹中的图像按宽度或高度进行批量缩放，并可转换图像格式",
+    "inputs": {
+      "input_folder": "输入文件夹",
+      "resize_mode": "缩放模式",
+      "size": "目标尺寸",
+      "output_folder": "输出文件夹",
+      "output_format": "输出格式",
+      "quality": "图像质量"
+    },
+    "widgets": {
+      "input_folder": "包含需要缩放的图片的文件夹路径",
+      "resize_mode": "选择以宽度还是高度为基准进行缩放",
+      "size": "目标宽度或高度的像素值",
+      "output_folder": "图像保存的文件夹路径（留空则保存到输入文件夹）",
+      "output_format": "选择输出图像的格式",
+      "quality": "JPEG或WebP格式的质量（1-100）"
+    },
+    "outputs": {
+      "output_paths": "输出文件路径列表"
+    },
+    "widget_values": {
+      "resize_mode": {
+        "WIDTH": "按宽度缩放",
+        "HEIGHT": "按高度缩放"
+      },
+      "output_format": {
+        "保持原格式": "保持原格式",
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WEBP": "WebP格式",
+        "BMP": "BMP格式"
+      }
     }
   }
 }
