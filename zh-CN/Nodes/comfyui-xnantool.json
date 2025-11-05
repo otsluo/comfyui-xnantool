@@ -596,6 +596,54 @@
       }
     }
   },
+  "ModelscopeApiImageCaptionNode": {
+    "title": "魔搭API图片反推节点",
+    "description": "使用魔搭API对图片进行反推描述",
+    "inputs": {
+      "image": "输入图像"
+    },
+    "widgets": {
+      "api_token": "API令牌",
+      "base_model": "基础模型",
+      "timeout": "超时时间(秒)"
+    },
+    "outputs": {
+      "caption": "图片描述"
+    }
+  },
+  "ModelscopeApiVideoCaptionNode": {
+    "title": "魔搭API视频反推节点",
+    "description": "使用魔搭API对视频进行反推描述",
+    "inputs": {
+      "video": "输入视频"
+    },
+    "widgets": {
+      "api_token": "API令牌",
+      "base_model": "基础模型",
+      "timeout": "超时时间(秒)"
+    },
+    "outputs": {
+      "caption": "视频描述"
+    }
+  },
+  "ModelscopeApiTextGenerationNode": {
+    "title": "魔搭API文本生成节点",
+    "description": "使用魔搭API生成文本内容",
+    "inputs": {
+      "prompt": "提示词",
+      "system_prompt": "系统提示词"
+    },
+    "widgets": {
+      "api_token": "API令牌",
+      "model_name": "模型名称",
+      "max_tokens": "最大令牌数",
+      "temperature": "温度系数",
+      "top_p": "Top P"
+    },
+    "outputs": {
+      "生成文本": "生成文本"
+    }
+  },
   "YoloSamBackgroundRemovalNode": {
     "title": "YOLO+SAM背景去除",
     "description": "使用YOLO目标检测和SAM分割技术进行精确的背景去除和裁剪",
@@ -698,10 +746,10 @@
       "max_images": "最大图片数量"
     },
     "widgets": {
-      "mode": "选择加载模式：加载全部图片或按索引加载单张图片",
+      "mode": "加载模式",
       "image_path": "图片目录路径或单张图片路径",
       "index": "当模式为'加载单张'时，指定要加载的图片索引",
-      "max_images": "当模式为'加载全部'时，限制最多加载的图片数量，设置为0表示加载全部图片"
+      "max_images": "当模式为'加载全部'时，请设置加载的图片数量，0表示加载全部图片"
     },
     "outputs": {
       "images": "图片张量",
@@ -869,7 +917,7 @@
     }
   },
   "ImageFormatConverterNode": {
-    "title": "图像格式转换",
+    "title": "图像格式转换器",
     "description": "图像格式转换节点，支持将图像转换为JPEG、PNG、WEBP或BMP格式",
     "inputs": {
       "images": "输入图像",
@@ -883,8 +931,7 @@
       "optimize": "是否优化PNG文件大小"
     },
     "outputs": {
-      "converted_images": "转换后的图像",
-      "file_paths": "文件路径列表"
+      "output_paths": "输出文件路径列表"
     },
     "widget_values": {
       "format": {
@@ -899,7 +946,7 @@
       }
     }
   },
-  "BatchFolderImageFormatConverterNode": {
+  "BatchImageFormatConverterNode": {
     "title": "批量图像格式转换器",
     "description": "批量图像格式转换器节点，支持将指定文件夹中的图像转换为JPEG、PNG、WEBP或BMP格式",
     "inputs": {
@@ -909,14 +956,13 @@
       "output_folder": "输出文件夹"
     },
     "widgets": {
-      "input_folder": "选择包含待转换图像的文件夹",
-      "output_format": "选择输出图像格式",
+      "input_folder": "输入文件夹",
+      "output_format": "输出图像格式",
       "quality": "JPEG或WebP格式的质量（1-100）",
-      "output_folder": "图像保存的文件夹路径（留空则保存到输入文件夹）"
+      "output_folder": "输出件夹路径（留空则保存到输入文件夹）"
     },
     "outputs": {
-      "converted_images": "转换后的图像",
-      "file_paths": "文件路径列表"
+      "output_paths": "输出文件路径列表"
     },
     "widget_values": {
       "output_format": {
@@ -939,10 +985,10 @@
       "quality": "图像质量"
     },
     "widgets": {
-      "input_folder": "包含需要缩放的图片的文件夹路径",
-      "resize_mode": "选择以宽度还是高度为基准进行缩放",
+      "input_folder": "输入文件夹路径",
+      "resize_mode": "选择宽度或高度进行缩放",
       "size": "目标宽度或高度的像素值",
-      "output_folder": "图像保存的文件夹路径（留空则保存到输入文件夹）",
+      "output_folder": "保存的文件夹路径（留空则保存到输入文件夹）",
       "output_format": "选择输出图像的格式",
       "quality": "JPEG或WebP格式的质量（1-100）"
     },
@@ -961,6 +1007,16 @@
         "WEBP": "WebP格式",
         "BMP": "BMP格式"
       }
+    }
+  },
+  "VersionInfoNode": {
+    "title": "应用查看版本",
+    "description": "显示当前插件的版本信息",
+    "inputs": {
+      "dummy_input": "虚拟输入"
+    },
+    "outputs": {
+      "version_info": "版本信息"
     }
   }
 }

@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.3.4"
+__version__ = "0.4.1"
 
 # 导入所有节点文件
 # ==================== SAM相关节点 ====================
@@ -17,6 +17,12 @@ from .nodes.modelscope_api.modelscope_api_model_presets_node import NODE_CLASS_M
 from .nodes.modelscope_api.modelscope_api_model_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.modelscope_api.modelscope_api_lora_presets_node import NODE_CLASS_MAPPINGS as MODELSCOPE_LORA_PRESETS_NODE_CLASS_MAPPINGS
 from .nodes.modelscope_api.modelscope_api_lora_presets_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_LORA_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_image_caption_node import NODE_CLASS_MAPPINGS as MODELSCOPE_CAPTION_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_image_caption_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_CAPTION_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_video_caption_node import NODE_CLASS_MAPPINGS as MODELSCOPE_VIDEO_CAPTION_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_video_caption_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_VIDEO_CAPTION_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_text_generation_node import NODE_CLASS_MAPPINGS as MODELSCOPE_TEXT_GENERATION_NODE_CLASS_MAPPINGS
+from .nodes.modelscope_api.modelscope_api_text_generation_node import NODE_DISPLAY_NAME_MAPPINGS as MODELSCOPE_TEXT_GENERATION_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== YOLO相关节点 ====================
 from .nodes.yolo_sam.yolo_modelloader_nodes import NODE_CLASS_MAPPINGS as YOLO_MODEL_LOADER_NODE_CLASS_MAPPINGS
@@ -45,14 +51,16 @@ from .nodes.image_processing.create_image_node import NODE_CLASS_MAPPINGS as CRE
 from .nodes.image_processing.create_image_node import NODE_DISPLAY_NAME_MAPPINGS as CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.image_format_converter_node import NODE_CLASS_MAPPINGS as IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.image_format_converter_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS
-from .nodes.image_processing.batch_folder_image_format_converter_node import NODE_CLASS_MAPPINGS as BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS
-from .nodes.image_processing.batch_folder_image_format_converter_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.batch_image_format_converter_node import NODE_CLASS_MAPPINGS as BATCH_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.batch_image_format_converter_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.batch_image_resizer_with_conversion_node import NODE_CLASS_MAPPINGS as BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.batch_image_resizer_with_conversion_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 实用工具节点 ====================
 from .nodes.toggle_value_node import NODE_CLASS_MAPPINGS as TOGGLE_VALUE_NODE_CLASS_MAPPINGS
 from .nodes.toggle_value_node import NODE_DISPLAY_NAME_MAPPINGS as TOGGLE_VALUE_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.version_info_node import NODE_CLASS_MAPPINGS as VERSION_INFO_NODE_CLASS_MAPPINGS
+from .nodes.version_info_node import NODE_DISPLAY_NAME_MAPPINGS as VERSION_INFO_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 提示词预设节点 ====================
 from .nodes.preset_manager.image_video_prompt_presets_node import NODE_CLASS_MAPPINGS as IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS
@@ -91,6 +99,9 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     MODELSCOPE_LORA_NODE_CLASS_MAPPINGS,
     MODELSCOPE_PRESETS_NODE_CLASS_MAPPINGS,
     MODELSCOPE_LORA_PRESETS_NODE_CLASS_MAPPINGS,
+    MODELSCOPE_CAPTION_NODE_CLASS_MAPPINGS,
+    MODELSCOPE_VIDEO_CAPTION_NODE_CLASS_MAPPINGS,
+    MODELSCOPE_TEXT_GENERATION_NODE_CLASS_MAPPINGS,
     
     # YOLO相关节点
     YOLO_MODEL_LOADER_NODE_CLASS_MAPPINGS,
@@ -108,11 +119,12 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     IMAGE_ENCODING_GENERATION_NODE_CLASS_MAPPINGS,
     CREATE_IMAGE_NODE_CLASS_MAPPINGS,
     IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
-    BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
+    BATCH_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
     BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_CLASS_MAPPINGS,
     
     # 实用工具节点
     TOGGLE_VALUE_NODE_CLASS_MAPPINGS,
+    VERSION_INFO_NODE_CLASS_MAPPINGS,
     
     # 提示词预设节点
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS,
@@ -139,6 +151,9 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     MODELSCOPE_LORA_NODE_DISPLAY_NAME_MAPPINGS,
     MODELSCOPE_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
     MODELSCOPE_LORA_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
+    MODELSCOPE_CAPTION_NODE_DISPLAY_NAME_MAPPINGS,
+    MODELSCOPE_VIDEO_CAPTION_NODE_DISPLAY_NAME_MAPPINGS,
+    MODELSCOPE_TEXT_GENERATION_NODE_DISPLAY_NAME_MAPPINGS,
     
     # YOLO相关节点
     YOLO_MODEL_LOADER_NODE_DISPLAY_NAME_MAPPINGS,
@@ -156,11 +171,12 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     IMAGE_ENCODING_GENERATION_NODE_DISPLAY_NAME_MAPPINGS,
     CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
     IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
-    BATCH_FOLDER_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
+    BATCH_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
     BATCH_IMAGE_RESIZER_WITH_CONVERSION_NODE_DISPLAY_NAME_MAPPINGS,
     
     # 实用工具节点
     TOGGLE_VALUE_NODE_DISPLAY_NAME_MAPPINGS,
+    VERSION_INFO_NODE_DISPLAY_NAME_MAPPINGS,
     
     # 提示词预设节点
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,

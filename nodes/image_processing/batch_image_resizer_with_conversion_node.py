@@ -42,7 +42,7 @@ class BatchImageResizerWithConversionNode:
                 }),
                 "output_folder": ("STRING", {
                     "label": "输出文件夹",
-                    "description": "图像保存的文件夹路径（留空则保存到输入文件夹）",
+                    "description": "保存的文件夹路径（留空则保存到输入文件夹）",
                     "default": "",
                     "multiline": False
                 }),

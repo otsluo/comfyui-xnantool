@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class ImageFormatConverterNode:
     """
-    图像格式转换节点
+    图像格式转换器节点
     支持将图像转换为JPEG、PNG、WEBP或BMP格式
     """
     
@@ -139,7 +139,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageFormatConverterNode": "图像格式转换"
+    "ImageFormatConverterNode": "图像格式转换器"
 }
 
 # 确保模块被正确导入

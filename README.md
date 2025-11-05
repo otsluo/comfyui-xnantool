@@ -1,7 +1,4 @@
 
-
-
-          
 # 🌟 ComfyUI XnanTool 🌟
 
 <div align="center">
@@ -186,6 +183,48 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输入**: 操作类型、LoRA模型ID、要删除的LoRA模型等
 - **输出**: 状态信息(status_message)
 - **适用场景**: 添加、删除或查看魔搭API LoRA模型列表
+
+#### 📝 魔搭API-文本生成节点 (ModelscopeApiTextGenerationNode)
+- **位置**: `XnanTool/魔搭api`
+- **功能**: 使用魔搭API的Qwen3-VL系列模型进行文本生成，支持对话、创作、翻译等多种文本生成任务
+- **输入**: 
+  - API Token(api_token)：魔搭API令牌，用于身份验证
+  - 模型名称(model_name)：选择要使用的Qwen3-VL系列模型
+  - 提示词(prompt)：输入的文本提示词
+  - 最大令牌数(max_tokens)：生成文本的最大长度(100-4000)
+  - 温度系数(temperature)：控制生成文本的随机性(0.1-2.0)
+- **输出**: 生成的文本(generated_text)
+- **适用场景**: 文本创作、对话生成、翻译、摘要等各类文本生成任务
+
+#### 🎬 魔搭API-视频反推节点 (ModelscopeApiVideoCaptionNode)
+- **位置**: `XnanTool/魔搭api`
+- **功能**: 使用魔搭API的Qwen3-VL系列模型对视频进行反推描述，生成视频内容的文字描述
+- **输入**: 
+  - 视频帧(video_frames)：输入的视频帧张量
+  - API Token(api_token)：魔搭API令牌，用于身份验证
+  - 模型名称(model_name)：选择要使用的Qwen3-VL系列模型
+  - 提示词(prompt)：用于视频描述的提示词
+  - 最大令牌数(max_tokens)：生成描述文本的最大长度(100-4000)
+  - 温度系数(temperature)：控制生成文本的随机性(0.1-2.0)
+- **输出**: 视频描述(video_description)
+- **适用场景**: 对视频内容进行自动描述，用于视频理解、标签生成等任务
+
+#### 🖼️ 魔搭API-图片反推节点 (ModelscopeApiImageCaptionNode)
+- **位置**: `XnanTool/魔搭api`
+- **功能**: 使用魔搭API的Qwen3-VL系列模型对图片进行反推描述，生成图片内容的文字描述
+- **输入**: 
+  - 图像(image)：输入的图像张量
+  - API Token(api_token)：魔搭API令牌，用于身份验证
+  - 模型名称(model_name)：选择要使用的Qwen3-VL系列模型
+  - 提示词(prompt)：用于图片描述的提示词
+  - 最大令牌数(max_tokens)：生成描述文本的最大长度(100-4000)
+  - 温度系数(temperature)：控制生成文本的随机性(0.1-2.0)
+- **输出**: 图片描述(image_description)
+- **适用场景**: 对图像内容进行自动描述，用于图像理解、标签生成等任务
+
+
+
+
 
 
 ### 🎯 YOLO类节点
@@ -414,7 +453,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: 转换后的图像(converted_images)
 - **适用场景**: 需要将图像转换为指定格式的场景
 
-#### 🖼️ 批量图像格式转换器 (BatchFolderImageFormatConverterNode)
+#### 🖼️ 批量图像格式转换器 (BatchImageFormatConverterNode)
 - **位置**: `XnanTool/图像处理`
 - **功能**: 批量将指定文件夹中的图像转换为JPEG、PNG、WEBP或BMP格式
 - **输入**: 输入文件夹(input_folder)、输出格式(output_format)、图像质量(quality)、输出文件夹(output_folder)
@@ -446,12 +485,19 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 
 ### 🛠️ 实用工具类节点
 
-#### 🔀 切换值节点 (ToggleValueNode)
+#### 🛠️ 切换值节点 (ToggleValueNode)
 - **位置**: `XnanTool/实用工具/小工具`
-- **功能**: 可以在两个值之间切换的节点，支持多种数据类型输入
-- **输入**: 输入值、值A、值B
+- **功能**: 可以在两个值之间切换的节点，支持多种数据类型输入（FLOAT, INT, STRING）
+- **输入**: 布尔值开关(input_value)、值A(value_a)、值B(value_b)
 - **输出**: 原始类型输出、字符串输出、整数输出、浮点输出
-- **适用场景**: 需要在两个值之间动态切换的场景
+- **适用场景**: 在工作流中根据条件切换不同的值
+
+#### 📋 查看版本节点 (VersionInfoNode)
+- **位置**: `XnanTool/实用工具`
+- **功能**: 显示当前插件的版本信息
+- **输入**: 虚拟输入(dummy_input)
+- **输出**: 版本信息(version_info)
+- **适用场景**: 检查当前安装的插件版本
 
 
 ## ⚠️ 注意事项
@@ -459,9 +505,9 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 ## 🛠️ 常见问题解决
 
 ## 📝 版本信息
-- **当前版本**: v0.4.0
-- **更新日期**: 2025年11月3日
-- **更新日志**:嘿嘿，日志被我删了，太多了，写不来根本写不来 
+- **当前版本**: v0.4.1
+- **更新日期**: 2025年11月6日
+- **更新日志**: 添加魔搭API文本生成节点，支持Qwen3-VL系列模型；新增中文翻译支持，提升中文用户的使用体验 
 
 ## 📞 联系方式
 如有任何问题或建议，欢迎联系我们！

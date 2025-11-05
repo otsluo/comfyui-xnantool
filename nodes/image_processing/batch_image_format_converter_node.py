@@ -9,7 +9,7 @@ import folder_paths
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class BatchFolderImageFormatConverterNode:
+class BatchImageFormatConverterNode:
     """
     批量图像格式转换器节点
     支持将指定文件夹中的图像转换为JPEG、PNG、WEBP或BMP格式
@@ -186,11 +186,11 @@ class BatchFolderImageFormatConverterNode:
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {
-    "BatchFolderImageFormatConverterNode": BatchFolderImageFormatConverterNode
+    "BatchImageFormatConverterNode": BatchImageFormatConverterNode
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BatchFolderImageFormatConverterNode": "批量图像格式转换器"
+    "BatchImageFormatConverterNode": "批量图像格式转换器"
 }
 
 # 确保模块被正确导入

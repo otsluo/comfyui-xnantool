@@ -13,7 +13,7 @@ class PresetManagerGUI:
         self.root.geometry("900x700")
         
         # 设置JSON文件路径
-        self.json_file_path = os.path.join(os.path.dirname(__file__), 'nodes', 'image_video_prompt_presets.json')
+        self.json_file_path = os.path.join(os.path.dirname(__file__), 'nodes', 'preset_manager', 'image_video_prompt_presets.json')
         self.presets = []
         
         # 拖拽相关变量
@@ -247,7 +247,7 @@ class PresetManagerGUI:
             'name': '新预设',
             'image_prompt': '',
             'video_prompt': '',
-            'image_path': 'image_video_prompt_presets_node/新预设.png'
+            'image_path': 'preset_manager/image_video_prompt_presets_node/新预设.png'
         }
         self.presets.append(new_preset)
         self.refresh_preset_list()
