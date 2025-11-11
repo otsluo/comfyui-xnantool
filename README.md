@@ -68,6 +68,7 @@
 - 🎨 **创建图像节点**：
 - 🔢 **图片编码生成**：
 - 🖼️ **图像加载节点**：
+- 🖼️ **路径图片加载节点**：
 
 ### 🛠️ 实用工具扩展
 - 🔀 **切换值节点**：
@@ -257,6 +258,18 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
   - YOLO模型(YOLO_MODEL)：用于物体检测的YOLO模型
   - 图像(IMAGE)：需要处理的输入图像
   - 类别(classes)：指定要检测的类别，如 'person,dog,cat'，留空则检测所有类别
+
+### 🖼️ 图像处理类节点
+
+#### 🖼️ 路径图片加载节点 (LoadImagePathNode)
+- **位置**: `XnanTool/图像处理`
+- **功能**: 从指定的文件路径加载图像，支持多种图像格式（jpg, jpeg, png, bmp, webp, tiff）
+- **输入**: 
+  - 图片路径(image_path)：图像文件的完整路径
+- **输出**: 
+  - 图像(image)：加载的图像张量
+  - 图片路径(image_path)：图像文件的完整路径
+- **适用场景**: 需要从特定文件路径加载图像的场景，适用于自动化处理或批量处理任务
   - 置信度阈值(confidence_threshold)：YOLO检测的置信度阈值(0.0-1.0)
   - 边界填充(padding)：裁剪边界填充像素数(0-100)
 - **输出**: 
@@ -437,6 +450,13 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输入**: 图像(image)
 - **输出**: UUID字符串(uuid)、MD5哈希值(md5)、SHA1哈希值(sha1)、SHA256哈希值(sha256)、SHA512哈希值(sha512)、图片信息(image_info)
 - **适用场景**: 需要为图像生成唯一标识符和多种哈希值的场景，可用于图像标识、校验和去重
+
+#### 🔢 图片编码生成节点-不转化 (ImageEncodingGenerationNoConvertNode)
+- **位置**: `XnanTool/图像处理`
+- **功能**: 直接从文件路径读取图片并生成唯一的UUID值和多种哈希值(MD5, SHA1, SHA256, SHA512)，不进行图像格式转换，确保哈希值与原始文件一致
+- **输入**: 图片路径(image_path)
+- **输出**: UUID字符串(uuid)、MD5哈希值(md5)、SHA1哈希值(sha1)、SHA256哈希值(sha256)、SHA512哈希值(sha512)、图片信息(image_info)
+- **适用场景**: 需要为图像文件生成与原始文件完全一致的哈希值的场景，可用于精确的文件校验和去重
 
 #### 🖼️ 创建图像节点 (CreateImageNode)
 - **位置**: `XnanTool/实用工具/小工具`

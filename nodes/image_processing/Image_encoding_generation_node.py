@@ -85,11 +85,19 @@ class Imageencodinggeneration:
             # 将图片张量转换为字节数据
             if isinstance(image, torch.Tensor):
                 # 确保数据在CPU上并转换为numpy数组
-                image_data = image.cpu().numpy()
+                # 使用contiguous()确保内存布局一致
+                # 使用copy()创建数据副本以确保一致性
+                image_data = image.cpu().contiguous().numpy().copy()
+                # 标准化数据以确保一致性
+                image_data = np.ascontiguousarray(image_data)
             else:
                 image_data = image
+                # 确保numpy数组内存布局一致
+                if isinstance(image_data, np.ndarray):
+                    image_data = np.ascontiguousarray(image_data)
             
             # 将数据展平并转换为字节
+            # 这样可以确保相同内容的图片总是产生相同的哈希值
             image_bytes = image_data.tobytes()
             
             # 计算哈希值

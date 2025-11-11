@@ -27,12 +27,12 @@ class ImageFormatConverterNode:
                 "format": (["JPEG", "PNG", "WEBP", "BMP"], {
                     "label": "目标格式",
                     "description": "选择输出图像格式",
-                    "default": "JPEG"
+                    "default": "PNG"
                 }),
                 "quality": ("INT", {
                     "label": "JPEG/WebP质量",
                     "description": "JPEG或WebP格式的质量（1-100）",
-                    "default": 95,
+                    "default": 100,
                     "min": 1,
                     "max": 100,
                     "step": 1

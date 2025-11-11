@@ -206,6 +206,20 @@
       "image_path": "图像路径"
     }
   },
+  "LoadImagePathNode": {
+    "title": "路径图片加载节点",
+    "description": "从指定的文件路径加载图像，支持多种图像格式（jpg, jpeg, png, bmp, webp, tiff）",
+    "inputs": {
+      "image_path": "图片路径"
+    },
+    "widgets": {
+      "image_path": "图片路径"
+    },
+    "outputs": {
+      "image": "图像",
+      "image_path": "图片路径"
+    }
+  },
   "YoloModelLoaderCustomPath": {
     "title": "YOLO模型加载器(自定义路径)",
     "description": "从自定义路径加载YOLO模型进行目标检测",
@@ -865,6 +879,24 @@
       "image_info": "图像信息"
     }
   },
+  "ImageEncodingGenerationNoConvertNode": {
+    "title": "图片编码生成节点-不转化",
+    "description": "直接从文件路径读取图片并生成唯一的UUID值和多种哈希值(MD5, SHA1, SHA256, SHA512)，不进行图像格式转换，确保哈希值与原始文件一致",
+    "inputs": {
+      "image_path": "图片路径"
+    },
+    "widgets": {
+      "image_path": "图片文件的完整路径"
+    },
+    "outputs": {
+      "uuid": "生成的UUID",
+      "md5": "MD5哈希值",
+      "sha1": "SHA1哈希值",
+      "sha256": "SHA256哈希值",
+      "sha512": "SHA512哈希值",
+      "image_info": "图片信息"
+    }
+  },
   "BatchResizeCropNode": {
     "title": "批量图像缩放裁切",
     "description": "批量图像缩放和裁切节点，支持按宽度或高度缩放，以及按常见比例缩放后裁切",
@@ -1017,6 +1049,64 @@
     },
     "outputs": {
       "version_info": "版本信息"
+    }
+  },
+  "RandomPromptGeneratorGroupNode": {
+    "title": "随机提示词生成器组",
+    "description": "支持多个分类的预设提示词，可随机选择指定数量的提示词",
+    "inputs": {
+      "manual_prompt": "手动输入提示词",
+      "enable_person": "启用人物分类",
+      "person_count": "人物提示词数量",
+      "enable_scene": "启用场景分类",
+      "scene_count": "场景提示词数量",
+      "enable_style": "启用风格分类",
+      "style_count": "风格提示词数量",
+      "enable_lighting": "启用光影分类",
+      "lighting_count": "光影提示词数量",
+      "enable_color": "启用色彩分类",
+      "color_count": "色彩提示词数量",
+      "enable_detail": "启用细节分类",
+      "detail_count": "细节提示词数量",
+      "seed": "随机种子"
+    },
+    "widgets": {
+      "manual_prompt": "手动输入的提示词，将添加到生成的随机提示词前面",
+      "enable_person": "物分类",
+      "person_count": "输出数量",
+      "enable_scene": "场景分类",
+      "scene_count": "输出数量",
+      "enable_style": "风格分类",
+      "style_count": "输出数量",
+      "enable_lighting": "光影分类",
+      "lighting_count": "输出数量",
+      "enable_color": "色彩分类",
+      "color_count": "输出数量",
+      "enable_detail": "细节分类",
+      "detail_count": "输出数量",
+      "seed": "随机种子果"
+    },
+    "outputs": {
+      "prompt": "生成的提示词"
+    }
+  },
+  "RandomPromptGeneratorNode": {
+    "title": "随机提示词生成器",
+    "description": "在手动输入的提示词中随机输出指定个数的提示词",
+    "inputs": {
+      "input_prompts": "输入提示词",
+      "output_count": "输出个数",
+      "separator": "分隔符",
+      "seed": "随机种子"
+    },
+    "widgets": {
+      "input_prompts": "手动输入的提示词，用逗号分隔",
+      "output_count": "输出数量",
+      "separator": "分隔符",
+      "seed": "随机种子"
+    },
+    "outputs": {
+      "prompt": "生成的提示词"
     }
   }
 }

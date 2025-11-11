@@ -49,7 +49,7 @@ class BatchImageResizerWithConversionNode:
                 "output_format": (["保持原格式", "JPEG", "PNG", "WEBP", "BMP"], {
                     "label": "输出格式",
                     "description": "选择输出图像的格式，保持原格式或转换为指定格式",
-                    "default": "保持原格式"
+                    "default": "PNG"
                 }),
                 "quality": ("INT", {
                     "label": "图像质量",
@@ -75,7 +75,7 @@ class BatchImageResizerWithConversionNode:
         """检查文件是否为支持的图片格式"""
         return filename.lower().endswith(self.get_supported_formats())
 
-    def resize_images(self, input_folder, resize_mode, size, output_folder, output_format="保持原格式", quality=95):
+    def resize_images(self, input_folder, resize_mode, size, output_folder, output_format="保持原格式", quality=100):
         """
         批量缩放文件夹中的图像
         

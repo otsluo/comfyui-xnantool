@@ -31,7 +31,7 @@ class BatchImageFormatConverterNode:
                 "output_format": (["JPEG", "PNG", "WEBP", "BMP"], {
                     "label": "输出格式",
                     "description": "选择输出格式",
-                    "default": "JPEG"
+                    "default": "PNG"
                 }),
                 "quality": ("INT", {
                     "label": "图像质量",

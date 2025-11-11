@@ -47,6 +47,8 @@ from .nodes.image_processing.rectangle_converter_node import NODE_DISPLAY_NAME_M
 # ==================== 图像处理节点 ====================
 from .nodes.image_processing.Image_encoding_generation_node import NODE_CLASS_MAPPINGS as IMAGE_ENCODING_GENERATION_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.Image_encoding_generation_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_ENCODING_GENERATION_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.image_encoding_generation_no_convert_node import NODE_CLASS_MAPPINGS as IMAGE_ENCODING_GENERATION_NO_CONVERT_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.image_encoding_generation_no_convert_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_ENCODING_GENERATION_NO_CONVERT_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.create_image_node import NODE_CLASS_MAPPINGS as CREATE_IMAGE_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.create_image_node import NODE_DISPLAY_NAME_MAPPINGS as CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.image_format_converter_node import NODE_CLASS_MAPPINGS as IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS
@@ -65,6 +67,8 @@ from .nodes.version_info_node import NODE_DISPLAY_NAME_MAPPINGS as VERSION_INFO_
 # ==================== 提示词预设节点 ====================
 from .nodes.preset_manager.image_video_prompt_presets_node import NODE_CLASS_MAPPINGS as IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS
 from .nodes.preset_manager.image_video_prompt_presets_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGE_VIDEO_PROMPT_PRESETS_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.preset_manager.random_prompt_generator_group_node import NODE_CLASS_MAPPINGS as RANDOM_PROMPT_GENERATOR_NODE_CLASS_MAPPINGS
+from .nodes.preset_manager.random_prompt_generator_group_node import NODE_DISPLAY_NAME_MAPPINGS as RANDOM_PROMPT_GENERATOR_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 媒体处理节点 ====================
 from .nodes.media_processing.video_to_gif_node import NODE_CLASS_MAPPINGS as VIDEO_TO_GIF_NODE_CLASS_MAPPINGS
@@ -77,6 +81,8 @@ from .nodes.media_processing.video_to_audio_node import NODE_DISPLAY_NAME_MAPPIN
 # ==================== 图像加载节点 ====================
 from .nodes.image_processing.load_image_node import NODE_CLASS_MAPPINGS as LOAD_IMAGE_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.load_image_node import NODE_DISPLAY_NAME_MAPPINGS as LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.load_image_path_node import NODE_CLASS_MAPPINGS as LOAD_IMAGE_PATH_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.load_image_path_node import NODE_DISPLAY_NAME_MAPPINGS as LOAD_IMAGE_PATH_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.batch_load_images_node import NODE_CLASS_MAPPINGS as BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.batch_load_images_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS
 
@@ -117,6 +123,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     
     # 图像处理节点
     IMAGE_ENCODING_GENERATION_NODE_CLASS_MAPPINGS,
+    IMAGE_ENCODING_GENERATION_NO_CONVERT_NODE_CLASS_MAPPINGS,
     CREATE_IMAGE_NODE_CLASS_MAPPINGS,
     IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
     BATCH_IMAGE_FORMAT_CONVERTER_NODE_CLASS_MAPPINGS,
@@ -128,6 +135,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     
     # 提示词预设节点
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_CLASS_MAPPINGS,
+    RANDOM_PROMPT_GENERATOR_NODE_CLASS_MAPPINGS,
     
     # 媒体处理节点
     VIDEO_TO_GIF_NODE_CLASS_MAPPINGS,
@@ -136,6 +144,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     
     # 图像加载节点
     LOAD_IMAGE_NODE_CLASS_MAPPINGS,
+    LOAD_IMAGE_PATH_NODE_CLASS_MAPPINGS,
     BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS,
 )
 
@@ -169,6 +178,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     
     # 图像处理节点
     IMAGE_ENCODING_GENERATION_NODE_DISPLAY_NAME_MAPPINGS,
+    IMAGE_ENCODING_GENERATION_NO_CONVERT_NODE_DISPLAY_NAME_MAPPINGS,
     CREATE_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
     IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
     BATCH_IMAGE_FORMAT_CONVERTER_NODE_DISPLAY_NAME_MAPPINGS,
@@ -180,6 +190,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     
     # 提示词预设节点
     IMAGE_VIDEO_PROMPT_PRESETS_NODE_DISPLAY_NAME_MAPPINGS,
+    RANDOM_PROMPT_GENERATOR_NODE_DISPLAY_NAME_MAPPINGS,
     
     # 媒体处理节点
     VIDEO_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS,
@@ -188,6 +199,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     
     # 图像加载节点
     LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
+    LOAD_IMAGE_PATH_NODE_DISPLAY_NAME_MAPPINGS,
     BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS,
 )
 
