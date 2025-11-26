@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.4.1"
+__version__ = "0.5.1"
 
 # 导入所有节点文件
 # ==================== SAM相关节点 ====================
@@ -77,6 +77,10 @@ from .nodes.media_processing.images_to_gif_node import NODE_CLASS_MAPPINGS as IM
 from .nodes.media_processing.images_to_gif_node import NODE_DISPLAY_NAME_MAPPINGS as IMAGES_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.media_processing.video_to_audio_node import NODE_CLASS_MAPPINGS as VIDEO_TO_AUDIO_NODE_CLASS_MAPPINGS
 from .nodes.media_processing.video_to_audio_node import NODE_DISPLAY_NAME_MAPPINGS as VIDEO_TO_AUDIO_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.media_processing.extract_frame_from_video_node import NODE_CLASS_MAPPINGS as EXTRACT_FRAME_FROM_VIDEO_NODE_CLASS_MAPPINGS
+from .nodes.media_processing.extract_frame_from_video_node import NODE_DISPLAY_NAME_MAPPINGS as EXTRACT_FRAME_FROM_VIDEO_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.media_processing.batch_extract_frame_from_video_node import NODE_CLASS_MAPPINGS as BATCH_EXTRACT_FRAME_FROM_VIDEO_NODE_CLASS_MAPPINGS
+from .nodes.media_processing.batch_extract_frame_from_video_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_EXTRACT_FRAME_FROM_VIDEO_NODE_DISPLAY_NAME_MAPPINGS
 
 # ==================== 图像加载节点 ====================
 from .nodes.image_processing.load_image_node import NODE_CLASS_MAPPINGS as LOAD_IMAGE_NODE_CLASS_MAPPINGS
@@ -141,6 +145,8 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     VIDEO_TO_GIF_NODE_CLASS_MAPPINGS,
     IMAGES_TO_GIF_NODE_CLASS_MAPPINGS,
     VIDEO_TO_AUDIO_NODE_CLASS_MAPPINGS,
+    EXTRACT_FRAME_FROM_VIDEO_NODE_CLASS_MAPPINGS,
+    BATCH_EXTRACT_FRAME_FROM_VIDEO_NODE_CLASS_MAPPINGS,
     
     # 图像加载节点
     LOAD_IMAGE_NODE_CLASS_MAPPINGS,
@@ -196,6 +202,8 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     VIDEO_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS,
     IMAGES_TO_GIF_NODE_DISPLAY_NAME_MAPPINGS,
     VIDEO_TO_AUDIO_NODE_DISPLAY_NAME_MAPPINGS,
+    EXTRACT_FRAME_FROM_VIDEO_NODE_DISPLAY_NAME_MAPPINGS,
+    BATCH_EXTRACT_FRAME_FROM_VIDEO_NODE_DISPLAY_NAME_MAPPINGS,
     
     # 图像加载节点
     LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
