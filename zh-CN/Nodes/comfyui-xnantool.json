@@ -1195,5 +1195,351 @@
         "bmp": "BMP格式"
       }
     }
+  },
+  "OllamaOptionsV2": {
+    "title": "Ollama选项V2",
+    "description": "配置Ollama模型的高级推理参数",
+    "inputs": {
+      "mirostat": "Mirostat采样",
+      "mirostat_eta": "Mirostat ETA",
+      "mirostat_tau": "Mirostat TAU",
+      "num_ctx": "上下文长度",
+      "repeat_last_n": "重复惩罚回溯长度",
+      "repeat_penalty": "重复惩罚因子",
+      "temperature": "温度系数",
+      "seed": "随机种子",
+      "stop": "停止词",
+      "tfs_z": "TFS-Z",
+      "num_predict": "预测词数",
+      "top_k": "Top-K",
+      "top_p": "Top-P"
+    },
+    "widgets": {
+      "mirostat": "启用Mirostat采样以控制生成多样性（0=禁用，1=启用）",
+      "mirostat_eta": "Mirostat算法的学习率",
+      "mirostat_tau": "Mirostat算法的控制平衡参数",
+      "num_ctx": "模型上下文窗口的大小",
+      "repeat_last_n": "考虑重复惩罚的标记数量",
+      "repeat_penalty": "重复标记的惩罚因子",
+      "temperature": "控制生成随机性的温度参数",
+      "seed": "随机数生成器种子（-1表示随机）",
+      "stop": "定义生成何时停止的标记序列",
+      "tfs_z": "Tail Free Sampling参数",
+      "num_predict": "模型将生成的最大标记数",
+      "top_k": "保留用于采样的最高概率标记数",
+      "top_p": "累积概率阈值，用于核采样"
+    },
+    "outputs": {
+      "options": "Ollama选项"
+    }
+  },
+  "OllamaOptionsRefactored": {
+    "title": "Ollama选项(重构版)",
+    "description": "重构版的 Ollama 推理配置选项。提供更多高级参数控制模型生成行为。",
+    "inputs": {
+      "enable_mirostat": "启用 Mirostat 采样",
+      "mirostat": "Mirostat 采样",
+      "enable_mirostat_eta": "启用 Mirostat ETA",
+      "mirostat_eta": "Mirostat ETA",
+      "enable_mirostat_tau": "启用 Mirostat TAU",
+      "mirostat_tau": "Mirostat TAU",
+      "enable_num_ctx": "启用上下文长度",
+      "num_ctx": "上下文长度",
+      "enable_repeat_last_n": "启用重复惩罚回溯长度",
+      "repeat_last_n": "重复惩罚回溯长度",
+      "enable_repeat_penalty": "启用重复惩罚因子",
+      "repeat_penalty": "重复惩罚因子",
+      "enable_temperature": "启用温度系数",
+      "temperature": "温度系数",
+      "enable_seed": "启用随机种子",
+      "seed": "随机种子",
+      "enable_stop": "启用停止词",
+      "stop": "停止词",
+      "enable_tfs_z": "启用 TFS-Z",
+      "tfs_z": "TFS-Z",
+      "enable_num_predict": "启用最大预测词数",
+      "num_predict": "预测词数",
+      "enable_top_k": "启用 Top-K",
+      "top_k": "Top-K",
+      "enable_top_p": "启用 Top-P",
+      "top_p": "Top-P",
+      "enable_min_p": "启用 Min-P",
+      "min_p": "Min-P",
+      "debug": "调试模式"
+    },
+    "widgets": {
+      "enable_mirostat": "是否启用 Mirostat 采样",
+      "mirostat": "Mirostat 采样模式 (0 = 禁用, 1 = Mirostat 1, 2 = Mirostat 2.0)",
+      "enable_mirostat_eta": "是否启用 Mirostat ETA 参数",
+      "mirostat_eta": "Mirostat 的学习率参数",
+      "enable_mirostat_tau": "是否启用 Mirostat TAU 参数",
+      "mirostat_tau": "Mirostat 的目标熵参数",
+      "enable_num_ctx": "是否启用上下文长度设置",
+      "num_ctx": "设置用于生成下一个标记的上下文窗口大小",
+      "enable_repeat_last_n": "是否启用重复惩罚回溯长度设置",
+      "repeat_last_n": "考虑应用重复惩罚的最后 n 个标记数量",
+      "enable_repeat_penalty": "是否启用重复惩罚因子设置",
+      "repeat_penalty": "重复标记的惩罚因子",
+      "enable_temperature": "是否启用温度系数设置",
+      "temperature": "控制生成随机性的温度参数",
+      "enable_seed": "是否启用随机种子设置",
+      "seed": "随机数生成器种子 (-1 表示随机)",
+      "enable_stop": "是否启用停止词设置",
+      "stop": "定义生成何时停止的标记序列",
+      "enable_tfs_z": "是否启用 Tail Free Sampling 参数",
+      "tfs_z": "Tail Free Sampling 参数",
+      "enable_num_predict": "是否启用最大预测词数设置",
+      "num_predict": "模型将生成的最大标记数",
+      "enable_top_k": "是否启用 Top-K 采样设置",
+      "top_k": "保留用于采样的最高概率标记数",
+      "enable_top_p": "是否启用 Top-P 采样设置",
+      "top_p": "累积概率阈值，用于核采样",
+      "enable_min_p": "是否启用 Min-P 采样设置",
+      "min_p": "最小概率阈值，用于减少极端低概率标记的影响",
+      "debug": "是否打印选项配置到控制台用于调试"
+    },
+    "outputs": {
+      "options": "Ollama选项"
+    }
+  },
+  "OllamaConnectivityV2": {
+    "title": "Ollama连接V2",
+    "description": "配置Ollama服务器连接参数",
+    "inputs": {
+      "url": "服务器地址",
+      "model": "模型名称",
+      "timeout": "超时时间",
+      "keep_alive": "保持活跃",
+      "keep_alive_unit": "保持活跃单位",
+      "seed": "随机种子"
+    },
+    "widgets": {
+      "url": "Ollama服务器的URL地址",
+      "model": "要在Ollama服务器上使用的模型名称",
+      "timeout": "请求超时时间（秒）",
+      "keep_alive": "保持模型加载的持续时间",
+      "keep_alive_unit": "保持活跃时间单位",
+      "seed": "随机数生成器种子（-1表示随机）"
+    },
+    "outputs": {
+      "connectivity": "Ollama连接配置"
+    },
+    "widget_values": {
+      "keep_alive_unit": {
+        "seconds": "秒",
+        "minutes": "分钟",
+        "hours": "小时"
+      }
+    }
+  },
+  "OllamaGenerateV2": {
+    "title": "Ollama生成V2",
+    "description": "使用Ollama模型生成文本响应",
+    "inputs": {
+      "system": "系统提示词",
+      "prompt": "用户提示词",
+      "think": "思考模式",
+      "keep_context": "保持上下文",
+      "format": "输出格式",
+      "connectivity": "连接配置",
+      "options": "选项配置",
+      "images": "输入图像"
+    },
+    "widgets": {
+      "system": "系统角色指令，用于指导模型行为",
+      "prompt": "用户的输入提示词",
+      "think": "启用思维链模式以获得更深入的推理",
+      "keep_context": "保留对话历史以上下文形式",
+      "format": "期望的响应格式（json或其他）"
+    },
+    "outputs": {
+      "response": "模型响应",
+      "formatted_response": "格式化响应",
+      "context": "对话上下文",
+      "meta": "元数据"
+    }
+  },
+  "OllamaSaveContext": {
+    "title": "Ollama保存上下文",
+    "description": "将Ollama对话上下文保存到文件",
+    "inputs": {
+      "context": "对话上下文",
+      "filename_prefix": "文件名前缀"
+    },
+    "widgets": {
+      "filename_prefix": "保存的上下文文件名前缀"
+    },
+    "outputs": {
+      "context_file_path": "上下文文件路径"
+    }
+  },
+  "OllamaLoadContext": {
+    "title": "Ollama加载上下文",
+    "description": "从文件加载Ollama对话上下文",
+    "inputs": {
+      "context_file": "上下文文件"
+    },
+    "widgets": {
+      "context_file": "要加载的上下文文件"
+    },
+    "outputs": {
+      "context": "对话上下文"
+    }
+  },
+  "OllamaChat": {
+    "title": "Ollama聊天",
+    "description": "与Ollama模型进行交互式对话",
+    "inputs": {
+      "system": "系统提示词",
+      "prompt": "用户提示词",
+      "think": "思考模式",
+      "format": "输出格式",
+      "connectivity": "连接配置",
+      "options": "选项配置",
+      "images": "输入图像"
+    },
+    "widgets": {
+      "system": "系统角色指令，用于指导模型行为",
+      "prompt": "用户的输入提示词",
+      "think": "启用思维链模式以获得更深入的推理",
+      "format": "期望的响应格式（json或其他）"
+    },
+    "outputs": {
+      "response": "模型响应",
+      "formatted_response": "格式化响应"
+    }
+  },
+  "OllamaConnectivityRefactored": {
+    "title": "Ollama重构连接",
+    "description": "Ollama服务器连接配置",
+    "inputs": {
+      "url": "服务器地址",
+      "model": "模型名称",
+      "timeout": "超时时间",
+      "keep_alive": "保持活跃",
+      "keep_alive_unit": "保持活跃单位",
+      "seed": "随机种子"
+    },
+    "widgets": {
+      "url": "Ollama服务器的URL地址",
+      "model": "模型名称",
+      "timeout": "请求超时时间（秒）",
+      "keep_alive": "保持模型加载的持续时间",
+      "keep_alive_unit": "保持活跃时间单位",
+      "seed": "随机数生成器种子（-1表示随机）"
+    },
+    "outputs": {
+      "connectivity": "Ollama连接配置"
+    },
+    "widget_values": {
+      "keep_alive_unit": {
+        "seconds": "秒",
+        "minutes": "分钟",
+        "hours": "小时"
+      }
+    }
+  },
+  "OllamaGenerateRefactored": {
+    "title": "Ollama重构生成",
+    "description": "重构版Ollama文本生成节点",
+    "inputs": {
+      "system": "系统提示词",
+      "prompt": "用户提示词",
+      "think": "思考模式",
+      "format": "输出格式",
+      "validate_connection": "验证连接",
+      "reconnect": "重新连接",
+      "connectivity": "连接配置",
+      "options": "选项配置",
+      "images": "输入图像",
+      "meta": "元数据",
+      "history": "历史记录",
+      "reset_session": "重置会话",
+      "timeout": "超时时间"
+    },
+    "widgets": {
+      "system": "系统角色指令，用于指导模型行为",
+      "prompt": "用户的输入提示词",
+      "think": "启用思考模式",
+      "format": "期望的响应格式（json或其他）",
+      "validate_connection": "在生成前验证服务器连接",
+      "reconnect": "如果连接失败则尝试重新连接",
+      "reset_session": "重置对话历史",
+      "timeout": "请求超时时间（秒）"
+    },
+    "outputs": {
+      "response": "模型响应",
+      "formatted_response": "格式化响应",
+      "context": "对话上下文",
+      "meta": "元数据"
+    }
+  },
+  "OllamaVision": {
+    "title": "Ollama视觉（已弃用）",
+    "description": "使用Ollama模型分析图像（已弃用）",
+    "inputs": {
+      "images": "输入图像",
+      "query": "查询文本",
+      "seed": "随机种子",
+      "debug": "调试模式"
+    },
+    "widgets": {
+      "query": "关于图像的查询问题",
+      "seed": "随机数生成器种子（-1表示随机）",
+      "debug": "启用调试输出"
+    },
+    "outputs": {
+      "response": "模型响应"
+    }
+  },
+  "OllamaGenerate": {
+    "title": "Ollama生成（已弃用）",
+    "description": "使用Ollama模型生成文本（已弃用）",
+    "inputs": {
+      "prompt": "用户提示词",
+      "debug": "调试模式",
+      "url": "服务器地址",
+      "model": "模型名称",
+      "context": "对话上下文"
+    },
+    "widgets": {
+      "prompt": "用户的输入提示词",
+      "debug": "启用调试输出",
+      "url": "Ollama服务器的URL地址",
+      "model": "要在Ollama服务器上使用的模型名称"
+    },
+    "outputs": {
+      "response": "模型响应"
+    }
+  },
+  "OllamaGenerateAdvance": {
+    "title": "Ollama高级生成（已弃用）",
+    "description": "使用Ollama模型的高级参数生成文本（已弃用）",
+    "inputs": {
+      "system": "系统提示词",
+      "prompt": "用户提示词",
+      "top_k": "Top-K",
+      "top_p": "Top-P",
+      "temperature": "温度系数",
+      "seed": "随机种子",
+      "debug": "调试模式",
+      "url": "服务器地址",
+      "model": "模型名称",
+      "context": "对话上下文"
+    },
+    "widgets": {
+      "system": "系统角色指令，用于指导模型行为",
+      "prompt": "用户的输入提示词",
+      "top_k": "保留用于采样的最高概率标记数",
+      "top_p": "累积概率阈值，用于核采样",
+      "temperature": "控制生成随机性的温度参数",
+      "seed": "随机数生成器种子（-1表示随机）",
+      "debug": "启用调试输出",
+      "url": "Ollama服务器的URL地址",
+      "model": "要在Ollama服务器上使用的模型名称"
+    },
+    "outputs": {
+      "response": "模型响应"
+    }
   }
 }

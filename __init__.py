@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.5.1"
+__version__ = "0.6.0"
 
 # 导入所有节点文件
 # ==================== SAM相关节点 ====================
@@ -90,6 +90,17 @@ from .nodes.image_processing.load_image_path_node import NODE_DISPLAY_NAME_MAPPI
 from .nodes.image_processing.batch_load_images_node import NODE_CLASS_MAPPINGS as BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.batch_load_images_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS
 
+
+# ==================== ollama加载节点 ====================
+from .nodes.ollama.OllamaChatRefactored import NODE_CLASS_MAPPINGS as OLLAMA_CHAT_NODE_CLASS_MAPPINGS
+from .nodes.ollama.OllamaChatRefactored import NODE_DISPLAY_NAME_MAPPINGS as OLLAMA_CHAT_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.ollama.OllamaConnectivityRefactored import NODE_CLASS_MAPPINGS as OLLAMA_CONNECTIVITY_NODE_CLASS_MAPPINGS
+from .nodes.ollama.OllamaConnectivityRefactored import NODE_DISPLAY_NAME_MAPPINGS as OLLAMA_CONNECTIVITY_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.ollama.OllamaGenerateRefactored import NODE_CLASS_MAPPINGS as OLLAMA_GENERATE_NODE_CLASS_MAPPINGS
+from .nodes.ollama.OllamaGenerateRefactored import NODE_DISPLAY_NAME_MAPPINGS as OLLAMA_GENERATE_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.ollama.OllamaOptionsRefactored import NODE_CLASS_MAPPINGS as OLLAMA_OPTIONS_NODE_CLASS_MAPPINGS
+from .nodes.ollama.OllamaOptionsRefactored import NODE_DISPLAY_NAME_MAPPINGS as OLLAMA_OPTIONS_NODE_DISPLAY_NAME_MAPPINGS
+
 # 合并所有节点映射的工具函数
 def merge_node_mappings(*mappings):
     merged = {}
@@ -152,6 +163,12 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     LOAD_IMAGE_NODE_CLASS_MAPPINGS,
     LOAD_IMAGE_PATH_NODE_CLASS_MAPPINGS,
     BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS,
+    
+    # ollama加载节点
+    OLLAMA_CHAT_NODE_CLASS_MAPPINGS,
+    OLLAMA_CONNECTIVITY_NODE_CLASS_MAPPINGS,
+    OLLAMA_GENERATE_NODE_CLASS_MAPPINGS,
+    OLLAMA_OPTIONS_NODE_CLASS_MAPPINGS,
 )
 
 # 合并所有节点显示名称映射
@@ -209,6 +226,12 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
     LOAD_IMAGE_PATH_NODE_DISPLAY_NAME_MAPPINGS,
     BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS,
+    
+    # ollama加载节点
+    OLLAMA_CHAT_NODE_DISPLAY_NAME_MAPPINGS,
+    OLLAMA_CONNECTIVITY_NODE_DISPLAY_NAME_MAPPINGS,
+    OLLAMA_GENERATE_NODE_DISPLAY_NAME_MAPPINGS,
+    OLLAMA_OPTIONS_NODE_DISPLAY_NAME_MAPPINGS,
 )
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

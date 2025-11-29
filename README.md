@@ -573,6 +573,71 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输出**: 图片(images)、文件名列表(filenames)、图片数量(count)
 - **适用场景**: 需要批量加载图片进行处理的场景
 
+### 🦙 Ollama类节点
+
+#### 🦙 Ollama连接配置节点 (OllamaConnectivityRefactored)
+- **位置**: `XnanTool/Ollama`
+- **功能**: 测试与Ollama服务的连接状态并获取可用模型列表
+- **输入**: 
+  - Ollama服务地址(url)：Ollama服务的URL地址，例如 http://localhost:11434
+  - 刷新(refresh)：刷新按钮，点击后重新获取模型列表
+- **输出**: 
+  - 连接状态(connection_status)：连接成功或失败的状态信息
+  - 模型列表(models)：从Ollama服务获取的可用模型列表
+- **适用场景**: 配置Ollama服务连接，验证服务状态并选择要使用的模型
+
+#### 🦙 Ollama选项配置节点 (OllamaOptionsRefactored)
+- **位置**: `XnanTool/Ollama`
+- **功能**: 配置Ollama模型推理的各种参数选项
+- **输入**: 
+  - 启用上下文参数(enable_context_params)：是否启用上下文相关参数
+  - 上下文窗口大小(num_ctx)：模型上下文窗口大小
+  - 重复惩罚回溯长度(repeat_last_n)：用于重复惩罚的回溯token数量
+  - 重复惩罚系数(repeat_penalty)：重复token的惩罚系数
+  - 启用温度参数(enable_temperature_params)：是否启用温度相关参数
+  - 温度(temperature)：控制生成文本随机性的温度参数
+  - 随机种子(seed)：随机数种子，相同种子产生相同结果
+  - 启用停止参数(enable_stop_params)：是否启用停止相关参数
+  - 停止标记(stop)：指定生成停止的标记序列
+  - 启用采样参数(enable_sampling_params)：是否启用采样相关参数
+  - TFS-Z采样(tfs_z)：TFS-Z采样参数
+  - 预测令牌数(num_predict)：预测生成的令牌数量
+  - 启用Top-K参数(enable_top_k_params)：是否启用Top-K采样参数
+  - Top-K(top_k)：Top-K采样参数
+  - 启用Top-P参数(enable_top_p_params)：是否启用Top-P采样参数
+  - Top-P(top_p)：Top-P采样参数
+  - 启用Min-P参数(enable_min_p_params)：是否启用Min-P采样参数
+  - Min-P(min_p)：Min-P采样参数
+- **输出**: 
+  - OLLAMA_OPTIONS：包含所有配置选项的对象
+- **适用场景**: 精细调节Ollama模型推理参数，控制生成文本的质量和多样性
+
+#### 🦙 Ollama文本生成节点 (OllamaGenerateRefactored)
+- **位置**: `XnanTool/Ollama`
+- **功能**: 使用Ollama模型根据提示词生成文本内容
+- **输入**: 
+  - Ollama服务地址(url)：Ollama服务的URL地址
+  - 模型名称(model)：要使用的Ollama模型名称
+  - 提示词(prompt)：输入的文本提示词
+  - OLLAMA_OPTIONS：来自Ollama选项配置节点的参数选项
+- **输出**: 
+  - 生成的文本(response)：模型生成的文本内容
+  - 完成原因(done_reason)：文本生成完成的原因
+- **适用场景**: 使用Ollama模型进行文本生成任务，如文章创作、故事续写、问答等
+
+#### 🦙 Ollama聊天节点 (OllamaChatRefactored)
+- **位置**: `XnanTool/Ollama`
+- **功能**: 与Ollama模型进行对话式交互
+- **输入**: 
+  - Ollama服务地址(url)：Ollama服务的URL地址
+  - 模型名称(model)：要使用的Ollama模型名称
+  - 聊天消息(messages)：对话历史消息列表
+  - OLLAMA_OPTIONS：来自Ollama选项配置节点的参数选项
+- **输出**: 
+  - 回复消息(response)：模型回复的消息内容
+  - 完成原因(done_reason)：对话完成的原因
+- **适用场景**: 与Ollama模型进行多轮对话交互，构建聊天机器人等应用
+
 ### 🛠️ 实用工具类节点
 
 #### 🛠️ 切换值节点 (ToggleValueNode)
@@ -595,9 +660,9 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 ## 🛠️ 常见问题解决
 
 ## 📝 版本信息
-- **当前版本**: v0.5.2
-- **更新日期**: 2025年11月26日
-- **更新日志**: 添加随机提示词生成器节点，支持多种预设提示词分类；添加随机提示词生成器组节点，可按分类生成随机提示词组合；为所有节点新增中文翻译支持，提升中文用户使用体验；添加视频帧提取节点，支持从视频中提取指定帧并导出为图片；添加批量视频帧提取节点，支持从文件夹中所有视频批量提取指定帧并导出为图片；批量视频帧提取节点支持自定义路径功能，可访问任意位置的视频文件夹；批量视频帧提取节点支持自定义输出文件夹功能，可将提取的图片导出到指定文件夹，如未指定则使用默认输出目录；修复批量视频帧提取节点处理不同尺寸图像时的张量尺寸不匹配错误；将视频帧提取节点和批量视频帧提取节点的图片质量默认值从95调整为100，提供更高的图像质量；移除批量视频帧提取节点的图像张量输出端口，只保留图像路径、帧索引和状态信息输出，简化节点输出结构 
+- **当前版本**: v0.6.0
+- **更新日期**: 2025年11月29日
+- **更新日志**: 集成Ollama大语言模型支持，新增多个Ollama相关节点，包括Ollama选项配置、连接配置、文本生成、聊天对话等功能；重构Ollama节点架构，提供更灵活的配置选项和更好的用户体验；完善插件中文翻译，为Ollama相关节点提供全面的中文本地化支持；优化节点间的数据传递和错误处理机制；修复已知问题，提升插件稳定性和性能 
 
 ## 📞 联系方式
 如有任何问题或建议，欢迎联系我们！
@@ -608,10 +673,10 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 <p align="center">
 <p>up主：1527004566</p>
 
-<img width="220px" src="./src/up主-裁切.png" align="center" alt="logo，注意这个路gitcomde显示，github显示，小图，预览不显示" />
+<img width="220px" src="./src/up主-裁切.png" align="center" alt="logo，注意这个路gitcode显示，github显示，小图，预览不显示" />
 <p>交流：1046591978</p>
 
-<img width="220px" src="./src/comfyui-xnantool-裁切.png" align="center" alt="logo，注意这个路gitcomde显示，github显示，小图，预览不显示" />
+<img width="220px" src="./src/comfyui-xnantool-裁切.png" align="center" alt="logo，注意这个路gitcode显示，github显示，小图，预览不显示" />
 </p>
 
 -->
@@ -623,4 +688,4 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 </div>
 
 ### 标签
-#ComfyUI #AI绘画 #图像生成 #SDXL #Qwen #LoRA #工具插件 #AI创作 #目标检测 #图像分割 #YOLO #SAM #视频处理 #图片处理
+#ComfyUI #AI绘画 #图像生成 #SDXL #Qwen #LoRA #工具插件 #AI创作 #目标检测 #图像分割 #YOLO #SAM #视频处理 #图片处理 #Ollama #大语言模型 #LLM
