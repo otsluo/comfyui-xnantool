@@ -2,8 +2,15 @@ import { app } from "/scripts/app.js";
 
 app.registerExtension({
   name: "Comfy.OllamaNode",
+  aboutPageBadges: [
+    {
+      label: "ComfyUI-Ollama",
+      url: "https://github.com/stavsap/comfyui-ollama",
+      icon: "pi pi-github",
+    },
+  ],
   async beforeRegisterNodeDef(nodeType, nodeData, app) {
-    if (["OllamaGenerateRefactored", "OllamaChatRefactored", "OllamaConnectivityRefactored", "OllamaOptionsRefactored"].includes(nodeData.name)) {
+    if (["OllamaGenerate", "OllamaGenerateAdvance", "OllamaVision", "OllamaConnectivityV2", "OllamaConnectivityRefactored", "OllamaConnectivityAsync"].includes(nodeData.name)) {
       const originalNodeCreated = nodeType.prototype.onNodeCreated;
       nodeType.prototype.onNodeCreated = async function () {
         if (originalNodeCreated) {
@@ -13,7 +20,7 @@ app.registerExtension({
         const urlWidget = this.widgets.find((w) => w.name === "url");
         const modelWidget = this.widgets.find((w) => w.name === "model");
         let refreshButtonWidget = {};
-        if (["OllamaConnectivityRefactored"].includes(nodeData.name)) {
+        if (["OllamaConnectivityV2", "OllamaConnectivityRefactored", "OllamaConnectivityAsync"].includes(nodeData.name)) {
           refreshButtonWidget = this.addWidget("button", "🔄 Reconnect");
         }
 
@@ -23,11 +30,15 @@ app.registerExtension({
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ url }),
+            body: JSON.stringify({
+              url,
+            }),
           });
 
           if (response.ok) {
-            return await response.json();
+            const models = await response.json();
+            console.debug("Fetched models:", models);
+            return models;
           } else {
             throw new Error(response);
           }
@@ -57,6 +68,7 @@ app.registerExtension({
 
           // Update modelWidget options and value
           modelWidget.options.values = models;
+          console.debug("Updated modelWidget.options.values:", modelWidget.options.values);
 
           if (models.includes(prevValue)) {
             modelWidget.value = prevValue; // stay on current.
@@ -66,12 +78,18 @@ app.registerExtension({
 
           refreshButtonWidget.name = "🔄 Reconnect";
           this.setDirtyCanvas(true);
+          console.debug("Updated modelWidget.value:", modelWidget.value);
         };
 
         urlWidget.callback = updateModels;
         refreshButtonWidget.callback = updateModels;
 
+        const dummy = async () => {
+          // calling async method will update the widgets with actual value from the browser and not the default from Node definition.
+        };
+
         // Initial update
+        await dummy(); // this will cause the widgets to obtain the actual value from web page.
         await updateModels();
       };
     }

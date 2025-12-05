@@ -96,19 +96,19 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 3. 💻 安装依赖: `pip install -r requirements.txt`
 4. 🔄 重启 ComfyUI 后即可在节点菜单中找到相关功能
 
-### 方法三：使用安装脚本 (Windows推荐)
+### 方法三：使用安装脚本
 1. 🚀 打开命令提示符 (CMD) 或 PowerShell
-2. 📁 切换到插件目录: `cd e:\git_project\comfyui-xnantool`
+2. 📁 切换到插件目录: `例如：cd e:\git_project\comfyui-xnantool`
 3. ▶️ 运行安装脚本: `python install_dependencies.py`
 4. ✅ 验证安装: `python verify_installation_xnantool.py`
 5. 🔄 重启 ComfyUI
-
+<!--
 ### 方法四：通过 ComfyUI Manager 安装 (推荐)
 1. 🧩 在 ComfyUI Manager 中搜索 `XnanTool`
 2. 📦 点击安装并等待完成
 3. 🔄 重启 ComfyUI
 4. ✅ 安装完成后即可在节点菜单中找到相关功能
-
+-->
 ## 📋 节点列表
 
 ### 📏 预设类节点
@@ -572,6 +572,21 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - **输入**: 图片路径、加载模式、索引、最大图片数量
 - **输出**: 图片(images)、文件名列表(filenames)、图片数量(count)
 - **适用场景**: 需要批量加载图片进行处理的场景
+
+#### 🖼️ 批量重命名图片(MD5) (BatchRenameImagesByMD5Node)
+- **位置**: `XnanTool/图像处理`
+- **功能**: 批量重命名图片文件，使用图片内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复
+- **输入**: 
+  - 输入目录(input_directory)：包含需要重命名图片的目录路径
+  - 输出目录(output_directory)：重命名后图片保存的目录路径（留空则在原目录处理）
+  - 覆盖已存在文件(overwrite_existing)：是否覆盖输出目录中已存在的同名文件
+  - 文件扩展名(file_extensions)：需要处理的图片文件扩展名，用逗号分隔
+- **输出**: 
+  - 处理信息(output_info)：处理结果信息
+  - 处理文件数(processed_count)：已处理的文件数量
+  - 重命名文件数(renamed_count)：已重命名的文件数量
+  - 错误信息(error_info)：处理过程中出现的错误信息
+- **适用场景**: 需要根据图片内容唯一性对图片文件进行重命名的场景，可有效避免重复文件并保持文件唯一性
 
 ### 🦙 Ollama类节点
 

@@ -89,6 +89,8 @@ from .nodes.image_processing.load_image_path_node import NODE_CLASS_MAPPINGS as 
 from .nodes.image_processing.load_image_path_node import NODE_DISPLAY_NAME_MAPPINGS as LOAD_IMAGE_PATH_NODE_DISPLAY_NAME_MAPPINGS
 from .nodes.image_processing.batch_load_images_node import NODE_CLASS_MAPPINGS as BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS
 from .nodes.image_processing.batch_load_images_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS
+from .nodes.image_processing.batch_rename_images_by_md5_node import NODE_CLASS_MAPPINGS as BATCH_RENAME_IMAGES_BY_MD5_NODE_CLASS_MAPPINGS
+from .nodes.image_processing.batch_rename_images_by_md5_node import NODE_DISPLAY_NAME_MAPPINGS as BATCH_RENAME_IMAGES_BY_MD5_NODE_DISPLAY_NAME_MAPPINGS
 
 
 # ==================== ollama加载节点 ====================
@@ -163,6 +165,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     LOAD_IMAGE_NODE_CLASS_MAPPINGS,
     LOAD_IMAGE_PATH_NODE_CLASS_MAPPINGS,
     BATCH_LOAD_IMAGES_NODE_CLASS_MAPPINGS,
+    BATCH_RENAME_IMAGES_BY_MD5_NODE_CLASS_MAPPINGS,
     
     # ollama加载节点
     OLLAMA_CHAT_NODE_CLASS_MAPPINGS,
@@ -226,6 +229,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     LOAD_IMAGE_NODE_DISPLAY_NAME_MAPPINGS,
     LOAD_IMAGE_PATH_NODE_DISPLAY_NAME_MAPPINGS,
     BATCH_LOAD_IMAGES_NODE_DISPLAY_NAME_MAPPINGS,
+    BATCH_RENAME_IMAGES_BY_MD5_NODE_DISPLAY_NAME_MAPPINGS,
     
     # ollama加载节点
     OLLAMA_CHAT_NODE_DISPLAY_NAME_MAPPINGS,
