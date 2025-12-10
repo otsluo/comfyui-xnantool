@@ -11,7 +11,7 @@ except ImportError:
     OPENAI_AVAILABLE = False
 
 # 导入必要的函数
-from .modelscope_api_node import load_config, load_api_token, save_api_token
+from .modelscope_api_node import load_api_token, save_api_token
 
 # 支持的文本生成模型列表
 SUPPORTED_TEXT_GENERATION_MODELS = [
@@ -46,7 +46,6 @@ class ModelscopeApiTextGenerationNode:
                     }),
                 }
             }
-        config = load_config()
         saved_token = load_api_token()
         return {
             "required": {
@@ -185,7 +184,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ModelscopeApiTextGenerationNode": "魔搭API-文本生成节点",
+    "ModelscopeApiTextGenerationNode": "魔搭API-文本生成",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

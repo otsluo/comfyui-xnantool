@@ -702,8 +702,8 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImagesToGifNodeV2": "图片转GIF节点 V2",
-    "ImagesToGifNodeV1": "图片转GIF节点 V1"
+    "ImagesToGifNodeV2": "图片转GIF-V2",
+    "ImagesToGifNodeV1": "图片转GIF-V1"
 }
 
 # 确保模块被正确导入

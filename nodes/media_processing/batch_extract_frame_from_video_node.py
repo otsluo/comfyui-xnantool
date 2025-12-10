@@ -351,7 +351,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BatchExtractFrameFromVideoNode": "批量视频帧提取节点"
+    "BatchExtractFrameFromVideoNode": "批量视频帧提取"
 }
 
 # 确保模块被正确导入

@@ -249,7 +249,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "VideoToGifNode": "视频转GIF节点"
+    "VideoToGifNode": "视频转GIF"
 }
 
 # 确保模块被正确导入

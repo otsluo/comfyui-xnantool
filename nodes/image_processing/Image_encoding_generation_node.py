@@ -124,7 +124,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Imageencodinggeneration": "图片编码生成节点"
+    "Imageencodinggeneration": "图片编码生成"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

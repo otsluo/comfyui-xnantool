@@ -16,7 +16,7 @@ except ImportError:
     OPENAI_AVAILABLE = False
 
 # 导入必要的函数
-from .modelscope_api_node import load_config, load_api_token, save_api_token, tensor_to_base64_url
+from .modelscope_api_node import load_api_token, save_api_token, tensor_to_base64_url
 
 # 支持的图片反推模型列表
 SUPPORTED_CAPTION_MODELS = [
@@ -53,7 +53,6 @@ class ModelscopeApiImageCaptionNode:
                     }),
                 }
             }
-        config = load_config()
         saved_token = load_api_token()
         return {
             "required": {
@@ -183,7 +182,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ModelscopeApiImageCaptionNode": "魔搭API-图片反推节点",
+    "ModelscopeApiImageCaptionNode": "魔搭API-图片反推",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

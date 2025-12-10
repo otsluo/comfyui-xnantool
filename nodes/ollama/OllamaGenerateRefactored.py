@@ -72,7 +72,7 @@ class OllamaGenerateRefactored:
                     "STRING",
                     {
                         "multiline": True,
-                        "default": "You are a helpful AI assistant.",
+                        "default": "你是一个有用的AI助手。",
                         "tooltip": "系统提示词 - 用于设置模型的角色和一般行为。",
                     },
                 ),

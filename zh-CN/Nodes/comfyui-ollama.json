@@ -212,6 +212,41 @@
       "formatted_response": "格式化响应"
     }
   },
+  "OllamaChatRefactored": {
+    "title": "Ollama聊天(重构版)",
+    "description": "重构版的Ollama聊天节点。支持视觉任务、多轮对话和高级推理选项。具有连接验证、重连功能和异步处理支持。",
+    "inputs": {
+      "system": "系统提示词",
+      "prompt": "用户提示词",
+      "think": "思考模式",
+      "format": "输出格式",
+      "validate_connection": "验证连接",
+      "reconnect": "重新连接",
+      "connectivity": "连接配置",
+      "options": "选项配置",
+      "images": "输入图像",
+      "meta": "元数据",
+      "history": "历史记录",
+      "reset_session": "重置会话",
+      "timeout": "超时时间"
+    },
+    "widgets": {
+      "system": "系统角色指令，用于指导模型行为",
+      "prompt": "用户的输入提示词",
+      "think": "启用思考模式",
+      "format": "期望的响应格式（json或其他）",
+      "validate_connection": "在生成前验证服务器连接",
+      "reconnect": "如果连接失败则尝试重新连接",
+      "reset_session": "重置对话历史",
+      "timeout": "请求超时时间（秒）"
+    },
+    "outputs": {
+      "result": "模型响应结果",
+      "thinking": "思考过程",
+      "meta": "元数据",
+      "history": "对话历史"
+    }
+  },
   "OllamaConnectivityRefactored": {
     "title": "Ollama重构连接",
     "description": "Ollama服务器连接配置",

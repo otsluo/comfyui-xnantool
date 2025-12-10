@@ -20,6 +20,7 @@ class ImageEncodingGenerationNoConvertNode:
                     "description": "图片文件的完整路径",
                     "default": "",
                     "multiline": True,
+                    "placeholder": "请输入图片路径",
                     "dynamicPrompts": False
                 }),
             }
@@ -129,7 +130,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ImageEncodingGenerationNoConvertNode": "图片编码生成节点-不转化"
+    "ImageEncodingGenerationNoConvertNode": "图片编码生成-不转化"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

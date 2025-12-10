@@ -74,7 +74,7 @@ class OllamaChatRefactored:
                     "STRING",
                     {
                         "multiline": True,
-                        "default": "You are a helpful AI assistant.",
+                        "default": "你是一个有用的AI助手。",
                         "tooltip": "系统提示词 - 用于设置模型的角色和一般行为。",
                     },
                 ),
@@ -82,7 +82,7 @@ class OllamaChatRefactored:
                     "STRING",
                     {
                         "multiline": True,
-                        "default": "Hello, how can you help me today?",
+                        "default": "你好，今天我能帮上你什么忙吗？",
                         "tooltip": "用户提示词 - 您想要模型回答或执行的问题或任务。对于视觉任务，您可以将输入图像称为'this image'、'photo'等，例如'Describe this image in detail'",
                     },
                 ),

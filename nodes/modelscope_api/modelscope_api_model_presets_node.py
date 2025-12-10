@@ -11,6 +11,7 @@ SUPPORTED_MODELS = [
     ["Qwen/Qwen-Image-Edit", "Qwen-Image-Edit"],
     ["stabilityai/stable-diffusion-xl-refiner-1.0", "SDXL Refiner"],
     ["runwayml/stable-diffusion-inpainting", "SD Inpainting"],
+    ["Tongyi-MAI/Z-Image-Turbo", "Z-Image-Turbo"],
 ]
 
 # 预设配置相关函数

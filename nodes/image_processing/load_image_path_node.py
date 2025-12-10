@@ -104,7 +104,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LoadImagePathNode": "路径图片加载节点"
+    "LoadImagePathNode": "路径图片加载"
 }
 
 # 确保模块被正确导入

@@ -116,7 +116,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LoadImageNode": "加载图像节点-【Beta】"
+    "LoadImageNode": "加载图像-【Beta】"
 }
 
 # 确保模块被正确导入

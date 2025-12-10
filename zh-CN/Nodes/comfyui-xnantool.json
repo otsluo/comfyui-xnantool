@@ -1158,9 +1158,9 @@
       "file_extensions": "文件扩展名"
     },
     "widgets": {
-      "input_directory": "包含需要重命名图片的目录路径",
-      "output_directory": "重命名后图片保存的目录路径（留空则在原目录处理）",
-      "overwrite_existing": "是否覆盖输出目录中已存在的同名文件",
+      "input_directory": "需要重命名图片的路径",
+      "output_directory": "重命名后保存的路径（留空则在原目录处理）",
+      "overwrite_existing": "是否覆盖同名文件",
       "file_extensions": "需要处理的图片文件扩展名，用逗号分隔"
     },
     "outputs": {
@@ -1168,6 +1168,45 @@
       "processed_count": "处理文件数",
       "renamed_count": "重命名文件数",
       "error_info": "错误信息"
+    }
+  },
+  "BatchImageScalerNode": {
+    "title": "批量图像缩放节点",
+    "description": "批量调整图像尺寸，支持多种缩放模式和参数配置",
+    "inputs": {
+      "image_directory": "图像目录",
+      "save_directory": "保存目录",
+      "scale_factor": "缩放因子",
+      "resize_mode": "缩放模式",
+      "target_width": "目标宽度",
+      "target_height": "目标高度",
+      "resampling_filter": "重采样过滤器"
+    },
+    "widgets": {
+      "image_directory": "包含需要缩放的图像文件的目录路径",
+      "scale_factor": "图像缩放比例（0.1-5.0）",
+      "resize_mode": "缩放模式：按比例缩放、固定宽度、固定高度或固定尺寸",
+      "target_width": "目标宽度（像素）",
+      "target_height": "目标高度（像素）",
+      "resampling_filter": "重采样过滤器类型",
+      "save_directory": "缩放后图像保存的目录路径（留空则保存到输入目录）"
+    },
+    "outputs": {
+      "result_info": "处理结果信息"
+    },
+    "widget_values": {
+      "resize_mode": {
+        "按比例缩放": "按比例缩放",
+        "固定宽度": "固定宽度",
+        "固定高度": "固定高度",
+        "固定尺寸": "固定尺寸（同时设置目标宽度和高度）"
+      },
+      "resampling_filter": {
+        "LANCZOS": "LANCZOS",
+        "BICUBIC": "BICUBIC",
+        "BILINEAR": "BILINEAR",
+        "NEAREST": "NEAREST"
+      }
     }
   },
   "BatchExtractFrameFromVideoNode": {
