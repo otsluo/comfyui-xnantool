@@ -28,18 +28,23 @@ class BatchRenameImagesByMD5Node:
                     "label": "输入目录",
                     "description": "包含需要重命名图片的目录路径"
                 }),
+            },
+            "optional": {
                 "output_directory": ("STRING", {
                     "default": "",
                     "multiline": False,
                     "label": "输出目录",
                     "description": "重命名后图片保存的目录路径（留空则在原目录处理）"
                 }),
-            },
-            "optional": {
                 "overwrite_existing": ("BOOLEAN", {
                     "default": False,
                     "label": "覆盖已存在文件",
                     "description": "是否覆盖输出目录中已存在的同名文件"
+                }),
+                "delete_original_files": ("BOOLEAN", {
+                    "default": False,
+                    "label": "删除原始文件",
+                    "description": "当输出目录留空或与输入目录相同时，是否删除重命名前的原始文件"
                 }),
                 "file_extensions": ("STRING", {
                     "default": "jpg,jpeg,png,bmp,gif,tiff,webp",
@@ -50,8 +55,8 @@ class BatchRenameImagesByMD5Node:
             }
         }
 
-    RETURN_TYPES = ("STRING", "INT", "INT", "STRING")
-    RETURN_NAMES = ("output_info", "processed_count", "renamed_count", "error_info")
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("result_info",)
     FUNCTION = "rename_images_by_md5"
     CATEGORY = "XnanTool/图像处理"
     DESCRIPTION = "批量重命名图片文件，使用图片内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复"
@@ -90,7 +95,7 @@ class BatchRenameImagesByMD5Node:
         _, ext = os.path.splitext(filename.lower())
         return ext.lstrip('.') in [ext.strip().lower() for ext in extensions]
 
-    def rename_images_by_md5(self, input_directory, output_directory="", overwrite_existing=False, file_extensions="jpg,jpeg,png,bmp,gif,tiff,webp"):
+    def rename_images_by_md5(self, input_directory, output_directory="", overwrite_existing=False, delete_original_files=False, file_extensions="jpg,jpeg,png,bmp,gif,tiff,webp"):
         """
         批量重命名图片文件为MD5哈希值
         
@@ -98,6 +103,7 @@ class BatchRenameImagesByMD5Node:
             input_directory (str): 输入目录路径
             output_directory (str): 输出目录路径（可选）
             overwrite_existing (bool): 是否覆盖已存在文件
+            delete_original_files (bool): 当输出目录留空或与输入目录相同时，是否删除重命名前的原始文件
             file_extensions (str): 支持的文件扩展名，逗号分隔
             
         Returns:
@@ -166,11 +172,19 @@ class BatchRenameImagesByMD5Node:
                         logger.warning(f"文件 {new_filename} 已存在且未启用覆盖选项，跳过 {filename}")
                         continue
                     
-                    # 复制文件到新名称（保留原文件）
+                    # 复制文件到新名称
                     import shutil
                     shutil.copy2(input_path, output_path)
                     renamed_count += 1
                     logger.info(f"重命名文件: {filename} -> {new_filename}")
+                    
+                    # 如果需要删除原始文件，且输出目录与输入目录相同，则删除原始文件
+                    if delete_original_files and input_directory == output_directory:
+                        try:
+                            os.remove(input_path)
+                            logger.info(f"已删除原始文件: {filename}")
+                        except Exception as e:
+                            logger.warning(f"删除原始文件 {filename} 时出错: {str(e)}")
                 else:
                     # 文件名已经是MD5值，无需重命名
                     if input_directory != output_directory:
@@ -193,10 +207,24 @@ class BatchRenameImagesByMD5Node:
         else:
             error_info = ""
         
-        success_msg = f"处理完成: 共处理 {processed_count} 个文件，重命名 {renamed_count} 个文件"
-        logger.info(success_msg)
+        # 计算删除的文件数量
+        deleted_count = 0
+        if delete_original_files:
+            # 如果删除原始文件，计算删除的数量（应该等于重命名的数量，因为只有重命名的文件才会被删除）
+            deleted_count = renamed_count
         
-        return (success_msg, processed_count, renamed_count, error_info)
+        # 生成结构化的处理结果信息
+        result_lines = []
+        result_lines.append(f"处理完成: 共处理 {processed_count} 个文件，重命名 {renamed_count} 个文件")
+        if delete_original_files and input_directory == output_directory:
+            result_lines.append(f"删除 {deleted_count} 个原始文件")
+        if error_info:
+            result_lines.append(f"错误信息:\n{error_info}")
+        
+        result_info = "\n".join(result_lines)
+        logger.info(result_info)
+        
+        return (result_info,)
 
 
 # 节点映射和显示名称映射

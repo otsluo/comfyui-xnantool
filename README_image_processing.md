@@ -42,8 +42,8 @@
 #### 批量重命名图片(MD5)节点 (BatchRenameImagesByMD5Node)
 - **位置**: `XnanTool/图像处理`
 - **功能**: 根据图像内容的MD5哈希值批量重命名图片文件
-- **输入**: 输入目录(input_directory)、输出目录(output_directory)、覆盖已存在的文件(overwrite_existing)、文件扩展名列表(file_extensions)
-- **输出**: 输出信息(output_info)、处理数量(processed_count)、重命名数量(renamed_count)、错误信息(error_messages)
+- **输入**: 输入目录(input_directory)、输出目录(output_directory)（可选）、覆盖已存在的文件(overwrite_existing)（可选）、文件扩展名列表(file_extensions)（可选）、删除原始文件(delete_original_files)（可选）
+- **输出**: 处理结果信息(result_info)
 - **适用场景**: 整理大量图像文件，避免重复文件名冲突
 
 #### 创建图像节点 (CreateImageNode)
@@ -67,7 +67,7 @@
 - **输出**: UUID(uuid)、MD5(md5)、SHA1(sha1)、SHA256(sha256)、SHA512(sha512)、图片信息(image_info)
 - **适用场景**: 工作流中图像内容验证和缓存键生成
 
-#### 加载图像节点 (LoadImageNode)
+#### 加载图像节点节点 (LoadImageNode)
 - **位置**: `XnanTool/图像处理`
 - **功能**: 加载图像文件并转换为ComfyUI可用的格式
 - **输入**: 图像文件(image_file)

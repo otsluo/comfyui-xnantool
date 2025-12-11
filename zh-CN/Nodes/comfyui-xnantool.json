@@ -1155,19 +1155,18 @@
       "input_directory": "输入目录",
       "output_directory": "输出目录",
       "overwrite_existing": "覆盖已存在文件",
-      "file_extensions": "文件扩展名"
+      "file_extensions": "文件扩展名",
+      "delete_original_files": "删除原始文件"
     },
     "widgets": {
       "input_directory": "需要重命名图片的路径",
       "output_directory": "重命名后保存的路径（留空则在原目录处理）",
       "overwrite_existing": "是否覆盖同名文件",
-      "file_extensions": "需要处理的图片文件扩展名，用逗号分隔"
+      "file_extensions": "需要处理的图片文件扩展名，用逗号分隔",
+      "delete_original_files": "当输出目录留空或与输入目录相同时，是否删除重命名前的原始文件"
     },
     "outputs": {
-      "output_info": "处理信息",
-      "processed_count": "处理文件数",
-      "renamed_count": "重命名文件数",
-      "error_info": "错误信息"
+      "result_info": "处理结果信息"
     }
   },
   "BatchImageScalerNode": {
@@ -1288,6 +1287,71 @@
         "fixed": "固定",
         "sequential": "顺序循环"
       }
+    }
+  },
+  "BatchCopyFilesNode": {
+    "title": "批量复制文件",
+    "description": "支持将指定目录中的文件批量复制到目标目录，支持文件过滤、覆盖选项和目录结构保留",
+    "inputs": {
+      "source_directory": "源目录路径",
+      "destination_directory": "目标目录路径",
+      "file_extensions": "文件扩展名过滤",
+      "overwrite_existing": "覆盖已有文件",
+      "preserve_structure": "保留目录结构"
+    },
+    "widgets": {
+      "source_directory": "要复制文件的源目录路径",
+      "destination_directory": "文件复制到的目标目录路径",
+      "file_extensions": "要复制的文件扩展名，用逗号分隔（如：.jpg,.png,.txt），*表示所有文件",
+      "overwrite_existing": "是否覆盖目标目录中已存在的同名文件",
+      "preserve_structure": "是否保留源目录的子目录结构"
+    },
+    "outputs": {
+      "result_info": "处理结果信息"
+    },
+    "widget_values": {
+      "overwrite_existing": {
+        "true": "是",
+        "false": "否"
+      },
+      "preserve_structure": {
+        "true": "是",
+        "false": "否"
+      }
+    }
+  },
+  "StringMergeNode": {
+    "title": "字符串合并节点",
+    "description": "将多个字符串合并为一个字符串的节点，支持自定义分隔符",
+    "inputs": {
+      "string1": "字符串1",
+      "string2": "字符串2",
+      "string3": "字符串3",
+      "string4": "字符串4",
+      "string5": "字符串5",
+      "separator": "分隔符"
+    },
+    "widgets": {
+      "string1": "第一个字符串",
+      "string2": "第二个字符串",
+      "string3": "第三个字符串",
+      "string4": "第四个字符串",
+      "string5": "第五个字符串",
+      "separator": "分隔符（用于连接各个字符串，默认为空）"
+    },
+    "outputs": {
+      "merged_string": "合并后的字符串"
+    }
+  },
+  "TextInputNode": {
+    "title": "文本输入",
+    "description": "允许用户输入多行文本的节点",
+    "inputs": {},
+    "widgets": {
+      "text_content": "文本内容（支持多行输入）"
+    },
+    "outputs": {
+      "STRING": "输出文本"
     }
   }
 }
