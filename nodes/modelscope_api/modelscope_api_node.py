@@ -10,26 +10,7 @@ import base64
 import tempfile
 import random
 
-# 配置相关函数
-def load_config():
-    # 使用默认配置
-    return {
-        "default_lora_model": "qiyuanai/TikTok_Xiaohongshu_career_line_beauty_v1",
-        "timeout": 720,
-        "image_download_timeout": 30,
-        "default_prompt": "Career line,with prominent breasts,A very realistic style,high definition photography style,a young woman,long black hair,holding a badminton shuttlecock,standing,outdoors.",
-        "default_edit_prompt": "修改图片中的内容",
-        "default_negative_prompt": "",
-        "default_width": 512,
-        "default_height": 512,
-        "default_seed": -1,
-        "default_steps": 30,
-        "default_guidance": 7.5
-    }
 
-def save_config(config: dict) -> bool:
-    print("配置保存功能已禁用，不再使用modelscope_api_node.json文件")
-    return True
 
 def load_api_token():
     return ""
@@ -87,7 +68,7 @@ class modelscopeLoraTextToImageNode:
             "required": {
                 "prompt": ("STRING", {
                     "multiline": True,
-                    "default": "A beautiful portrait",
+                    "default": "Career line,with prominent breasts,A very realistic style,high definition photography style,a young woman,long black hair,holding a badminton shuttlecock,standing,outdoors.",
                     "label": "提示词",
                     "description": "描述您想要生成的图像内容",
                     "placeholder": "描述您想要生成的图像内容"
@@ -117,14 +98,14 @@ class modelscopeLoraTextToImageNode:
                     "placeholder": "描述您不想在图像中出现的内容"
                 }),
                 "width": ("INT", {
-                    "default": 512,
+                    "default": 928,
                     "min": 64,
                     "max": 2048,
                     "step": 64,
                     "label": "宽度"
                 }),
                 "height": ("INT", {
-                    "default": 512,
+                    "default": 1664,
                     "min": 64,
                     "max": 2048,
                     "step": 64,
@@ -382,16 +363,16 @@ class modelscopeLoraImageEditNode:
                     "description": "开启时使用自定义宽度和高度，关闭时自动获取输入图像尺寸"
                 }),
                 "width": ("INT", {
-                    "default": 512,
+                    "default": 928,
                     "min": 64,
-                    "max": 1664,
+                    "max": 2048,
                     "step": 8,
                     "label": "宽度"
                 }),
                 "height": ("INT", {
-                    "default": 512,
+                    "default": 1664,
                     "min": 64,
-                    "max": 1664,
+                    "max": 2048,
                     "step": 8,
                     "label": "高度"
                 }),
