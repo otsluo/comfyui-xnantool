@@ -1353,5 +1353,33 @@
     "outputs": {
       "STRING": "输出文本"
     }
+  },
+  "StringToAnyNode": {
+    "title": "字符串到任意类型",
+    "description": "将字符串转换为任意类型的节点",
+    "inputs": {
+      "input_string": "输入字符串"
+    },
+    "widgets": {
+      "input_string": "要转换的字符串内容"
+    },
+    "outputs": {
+      "any_output": "任意类型输出"
+    }
+  },
+  "ToggleAnyNode": {
+    "title": "切换任意值",
+    "description": "可以在两个任意类型的值之间切换的节点",
+    "inputs": {
+      "input_value": "输入值（布尔值）",
+      "value_a": "值A",
+      "value_b": "值B"
+    },
+    "widgets": {
+      "input_value": "假为值A，真为值B"
+    },
+    "outputs": {
+      "any_output": "任意类型输出"
+    }
   }
 }
