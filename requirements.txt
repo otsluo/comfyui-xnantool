@@ -41,3 +41,8 @@ imageio-ffmpeg>=0.4.2  # imageio的ffmpeg插件，用于视频处理
 # 注意：本插件的视频转音频功能需要系统安装ffmpeg命令行工具
 # Windows用户可以从 https://ffmpeg.org/download.html 下载并安装
 # 确保ffmpeg命令在系统PATH环境变量中可用
+
+# Markdown转Excel功能依赖
+pandas>=1.5.0
+openpyxl>=3.0.0
+markdown>=3.3.0

@@ -122,6 +122,21 @@
   - 作为数据类型转换的中间节点
   - 连接不同类型节点的桥梁
 
+### 📝 MD转Excel节点 (MarkdownToExcelNode)
+- **位置**: `XnanTool/实用工具`
+- **功能**: 将Markdown文件转换为Excel文件，支持表格解析和自定义工作表名称
+- **输入**:
+  - `md_file_path`: Markdown文件路径
+  - `output_excel_path`: 输出Excel文件路径
+  - `sheet_name`: 工作表名称，默认为"Sheet1"
+- **输出**:
+  - `status`: 转换状态信息
+  - `excel_file_path`: 输出Excel文件路径
+- **适用场景**: 
+  - 将Markdown格式的文档转换为Excel格式
+  - 保留Markdown中的表格结构到Excel中
+  - 需要自定义Excel工作表名称的场景
+
 ## 使用指南
 
 1. 根据需要将实用工具节点添加到您的工作流中。

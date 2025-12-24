@@ -827,7 +827,7 @@
     "title": "切换值节点",
     "description": "可以在两个值之间切换的节点，支持多种数据类型输入（FLOAT, INT, STRING）",
     "inputs": {
-      "input_value": "输入布尔值",
+      "input_value": "假为值A，真为值B",
       "value_a": "值A",
       "value_b": "值B"
     },
@@ -841,6 +841,24 @@
       "字符串输出": "字符串输出",
       "整数输出": "整数输出",
       "浮点输出": "浮点输出"
+    }
+  },
+  "MarkdownToExcelNode": {
+    "title": "MD转Excel",
+    "description": "将Markdown文件转换为Excel文件，支持表格解析和自定义工作表",
+    "inputs": {
+      "md_file_path": "Markdown文件路径",
+      "output_excel_path": "输出Excel文件路径",
+      "sheet_name": "工作表名称"
+    },
+    "widgets": {
+      "md_file_path": "输入Markdown文件的完整路径",
+      "output_excel_path": "输出Excel文件的完整路径",
+      "sheet_name": "Excel工作表名称，默认为Sheet1"
+    },
+    "outputs": {
+      "status": "转换状态信息",
+      "excel_file_path": "输出Excel文件路径"
     }
   },
   "CreateImageNode": {
@@ -1371,7 +1389,7 @@
     "title": "切换任意值",
     "description": "可以在两个任意类型的值之间切换的节点",
     "inputs": {
-      "input_value": "输入值（布尔值）",
+      "input_value": "假为值A，真为值B",
       "value_a": "值A",
       "value_b": "值B"
     },

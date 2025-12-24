@@ -16,10 +16,27 @@ class ToggleAnyNode:
             }
         }
 
-    RETURN_TYPES = ("*",)  # 只保留原始类型输出
+    RETURN_TYPES = ("*",)  # 动态类型输出
     RETURN_NAMES = ("any_output",)
     FUNCTION = "toggle_any"
     CATEGORY = "XnanTool/实用工具"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, input_types):
+        # 获取输入类型
+        type_a = input_types["value_a"]
+        type_b = input_types["value_b"]
+        
+        # 验证两个输入类型是否相同
+        if type_a != type_b:
+            return f"输入类型不匹配: value_a 是 {type_a}, value_b 是 {type_b}"
+            
+        return True
+
+    @classmethod
+    def IS_CHANGED(cls, input_value, value_a, value_b):
+        # 返回输入值的哈希，用于检测变化
+        return hash((input_value, value_a, value_b))
 
     def toggle_any(self, input_value, value_a, value_b):
         """
