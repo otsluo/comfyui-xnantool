@@ -843,6 +843,36 @@
       "浮点输出": "浮点输出"
     }
   },
+  "ToggleAnyOutputNode": {
+    "title": "切换任意值（输出）",
+    "description": "根据布尔值将单个输入值路由到两个输出端口中的一个，实现单输入双输出的切换功能",
+    "inputs": {
+      "toggle": "切换",
+      "input_value": "输入值"
+    },
+    "widgets": {
+      "toggle": "假为值A，真为值B"
+    },
+    "outputs": {
+      "output_a": "输出A（假）",
+      "output_b": "输出B（真）"
+    }
+  },
+  "ToggleStringOutputNode": {
+    "title": "切换字符串（输出）",
+    "description": "根据布尔值将字符串输入路由到两个输出端口中的一个，实现字符串单输入双输出的切换功能",
+    "inputs": {
+      "toggle": "切换",
+      "input_string": "输入字符串"
+    },
+    "widgets": {
+      "toggle": "假为值A，真为值B"
+    },
+    "outputs": {
+      "output_a": "输出A（假）",
+      "output_b": "输出B（真）"
+    }
+  },
   "MarkdownToExcelNode": {
     "title": "MD转Excel",
     "description": "将Markdown文件转换为Excel文件，支持表格解析和自定义工作表",
@@ -1390,8 +1420,8 @@
     "description": "可以在两个任意类型的值之间切换的节点",
     "inputs": {
       "input_value": "假为值A，真为值B",
-      "value_a": "值A",
-      "value_b": "值B"
+      "value_a": "值A（假）",
+      "value_b": "值B（真）"
     },
     "widgets": {
       "input_value": "假为值A，真为值B"
@@ -1399,5 +1429,41 @@
     "outputs": {
       "any_output": "任意类型输出"
     }
+  },
+  "SaveImageNode": {
+    "title": "保存图片节点",
+    "description": "将图像保存到指定路径，支持多种格式和质量设置",
+    "inputs": {
+      "images": "图像",
+      "file_path": "文件路径",
+      "filename_prefix": "文件名前缀",
+      "folder_separator": "文件夹分隔符",
+      "num_padding_digits": "文件名数值填充位数",
+      "extension": "图片格式",
+      "quality": "图片质量",
+      "save_workflow": "保存工作流"
+    },
+    "widgets": {
+      "file_path": "保存图片的子文件夹路径",
+      "extension": "选择输出图片格式",
+      "quality": "图片质量（1-100）",
+      "filename_prefix": "文件名前缀",
+      "folder_separator": "文件名与索引之间的分隔符",
+      "num_padding_digits": "文件名中数值的填充位数（1-9）",
+      "save_workflow": "是否将工作流信息保存到图片中"
+    },
+    "outputs": {
+      "save_result": "保存结果"
+    },
+    "widget_values": {
+      "extension": {
+        "png": "PNG格式",
+        "jpeg": "JPEG格式",
+        "jpg": "JPG格式",
+        "webp": "WEBP格式",
+        "bmp": "BMP格式"
+      }
+    }
   }
+
 }

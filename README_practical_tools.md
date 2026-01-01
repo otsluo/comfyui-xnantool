@@ -122,6 +122,36 @@
   - 作为数据类型转换的中间节点
   - 连接不同类型节点的桥梁
 
+### 🔄 切换任意值（输出）节点 (ToggleAnyOutputNode)
+- **位置**: `XnanTool/实用工具`
+- **功能**: 根据布尔值将单个输入值路由到两个输出端口中的一个，实现单输入双输出的切换功能
+- **输入**:
+  - `toggle`: 布尔值输入，决定输出到哪个端口
+  - `input_value`: 输入值（任意类型，可选）
+- **输出**:
+  - `output_a`: 当toggle为False时输出input_value，否则输出为空
+  - `output_b`: 当toggle为True时输出input_value，否则输出为空
+- **适用场景**: 
+  - 将单个值路由到两个不同的处理路径
+  - 根据条件将数据发送到不同的节点
+  - 控制流程中需要根据不同条件选择输出路径的场景
+  - 需要根据布尔值决定数据流向的场景
+
+### 🔄 切换字符串（输出）节点 (ToggleStringOutputNode)
+- **位置**: `XnanTool/实用工具`
+- **功能**: 根据布尔值将字符串输入路由到两个输出端口中的一个，实现字符串单输入双输出的切换功能
+- **输入**:
+  - `toggle`: 布尔值输入，决定输出到哪个端口
+  - `input_string`: 输入字符串
+- **输出**:
+  - `output_a`: 当toggle为False时输出input_string，否则输出为空
+  - `output_b`: 当toggle为True时输出input_string，否则输出为空
+- **适用场景**: 
+  - 将单个字符串路由到两个不同的处理路径
+  - 根据条件将字符串发送到不同的节点
+  - 控制流程中需要根据不同条件选择字符串输出路径的场景
+  - 需要根据布尔值决定字符串流向的场景
+
 ### 📝 MD转Excel节点 (MarkdownToExcelNode)
 - **位置**: `XnanTool/实用工具`
 - **功能**: 将Markdown文件转换为Excel文件，支持表格解析和自定义工作表名称
@@ -136,6 +166,33 @@
   - 将Markdown格式的文档转换为Excel格式
   - 保留Markdown中的表格结构到Excel中
   - 需要自定义Excel工作表名称的场景
+
+### 💾 保存图片节点 (SaveImageNode)
+- **位置**: `XnanTool/实用工具`
+- **功能**: 将图像保存到指定路径，支持多种格式和质量设置，以及自定义文件名、数值填充位数和工作流保存选项
+- **输入**:
+  - `images`: 要保存的图像
+  - `file_path`: 保存图像的文件夹路径
+  - `filename_prefix`: 文件名前缀
+  - `folder_separator`: 文件夹分隔符
+  - `num_padding_digits`: 文件名数值填充位数（1-9）
+  - `extension`: 输出图片格式（PNG/JPEG/WEBP/BMP）
+  - `quality`: 图片质量（1-100）
+  - `save_workflow`: 保存工作流开关
+- **控件**:
+  - `filename_prefix`: 文件名前缀
+  - `folder_separator`: 文件名与索引之间的分隔符
+  - `num_padding_digits`: 文件名中数值的填充位数（1-9）
+  - `extension`: 选择输出图片格式
+  - `quality`: 图片质量（1-100）
+  - `save_workflow`: 是否将工作流信息保存到图片中
+- **输出**:
+  - `save_result`: 保存操作的结果信息
+- **适用场景**: 
+  - 需要将ComfyUI生成的图像保存到指定路径
+  - 需要自定义输出文件名和格式
+  - 需要控制图片质量和文件名格式
+
 
 ## 使用指南
 
