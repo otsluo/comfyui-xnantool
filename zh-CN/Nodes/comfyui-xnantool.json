@@ -1,4 +1,44 @@
 {
+  "WriteWorkflowToImageNode": {
+    "title": "写入工作流到图片节点",
+    "description": "将指定JSON文件中的工作流信息写入到指定图片中",
+    "inputs": {
+      "input_image_path": "输入图片文件路径",
+      "output_image_path": "输出图片文件名",
+      "extension": "图片格式",
+      "quality": "图片质量",
+      "prompt_file_path": "工作流信息文件路径",
+      "extra_pnginfo_file_path": "额外信息文件路径"
+    },
+    "widgets": {
+      "input_image_path": "输入图片文件的完整路径",
+      "output_image_path": "输出图片文件名（不含扩展名）",
+      "extension": "图片格式（PNG、JPG、WebP）",
+      "quality": "图片质量（1-100）",
+      "prompt_file_path": "工作流prompt文件路径（JSON格式）",
+      "extra_pnginfo_file_path": "额外信息文件路径（JSON格式）"
+    },
+    "outputs": {
+      "result": "结果信息"
+    }
+  },
+  "ReadWorkflowFromImageNode": {
+    "title": "从图片读取工作流节点",
+    "description": "从已保存的图片中读取嵌入的工作流信息",
+    "inputs": {
+      "image_file": "图片文件",
+      "extract_mode": "提取模式"
+    },
+    "widgets": {
+      "image_file": "包含工作流信息的图片文件",
+      "extract_mode": "工作流信息提取模式（全部、仅Prompt、仅Extra信息）"
+    },
+    "outputs": {
+      "prompt": "工作流信息",
+      "extra_pnginfo": "额外信息",
+      "info": "状态信息"
+    }
+  },
   "ImagesToGifNodeV1": {
     "title": "图片转GIF节点 V1",
     "description": "将多张图片合并为GIF动画（无过渡效果）",
@@ -1464,6 +1504,84 @@
         "bmp": "BMP格式"
       }
     }
+  },
+  "SaveTextNode": {
+    "title": "保存文本节点",
+    "description": "将文本内容保存到指定文件，支持多种文件格式和处理模式",
+    "inputs": {
+      "required": {
+        "text": "文本",
+        "file_path": "文件路径",
+        "filename": "文件名",
+        "extension": "扩展名",
+        "exist_mode": "存在模式"
+      },
+      "optional": {
+        "text_prefix": "文本前缀"
+      }
+    },
+    "widgets": {
+      "file_path": "输入文件路径，留空则保存到output目录",
+      "filename": "文件名（不含扩展名）",
+      "extension": "文件扩展名",
+      "exist_mode": "文件存在时的处理方式",
+      "text_prefix": "输入要添加到文本前的前缀"
+    },
+    "outputs": {
+      "save_result": "保存结果"
+    },
+    "widget_values": {
+      "extension": {
+        "txt": "TXT格式",
+        "csv": "CSV格式", 
+        "md": "MD格式"
+      },
+      "exist_mode": {
+        "覆盖": "覆盖",
+        "追加": "追加",
+        "跳过": "跳过"
+      }
+    }
+  },
+  "TextToExcelNode": {
+    "title": "文本转Excel节点",
+    "description": "将文本内容转换为Excel文件，支持多种分隔符和自定义工作表名称",
+    "inputs": {
+      "required": {
+        "text": "文本",
+        "output_excel_path": "输出Excel路径",
+        "separator": "分隔符",
+        "sheet_name": "工作表名称",
+        "filename_conflict_resolution": "文件名冲突解决方案"
+      },
+      "optional": {
+        "has_header": "包含标题行"
+      }
+    },
+    "widgets": {
+      "text": "要转换为Excel的文本内容",
+      "output_excel_path": "输出Excel文件名（不含扩展名）",
+      "separator": "选择文本内容的分隔符",
+      "sheet_name": "Excel工作表的名称",
+      "has_header": "是否将第一行作为标题行",
+      "filename_conflict_resolution": "当文件已存在时的处理方式"
+    },
+    "outputs": {
+      "save_result": "保存结果"
+    },
+    "widget_values": {
+      "separator": {
+        "逗号": "逗号分隔符",
+        "分号": "分号分隔符", 
+        "制表符": "制表符分隔符",
+        "空格": "空格分隔符",
+        "竖线": "竖线分隔符"
+      },
+      "filename_conflict_resolution": {
+        "overwrite": "覆盖",
+        "append": "追加",
+        "skip": "跳过"
+      }
+    }
   }
-
 }

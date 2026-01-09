@@ -22,7 +22,7 @@ class SaveImageNode:
                 "folder_separator": ("STRING", {"default": "_"}),
                 "num_padding_digits": ("INT", {"default": 3, "min": 1, "max": 10, "step": 1}),
                 "extension": (["png", "jpg", "jpeg", "gif", "webp", "bmp"],),
-                "quality": ("INT", {"default": 95, "min": 1, "max": 100, "step": 1}),
+                "quality": ("INT", {"default": 100, "min": 1, "max": 100, "step": 1}),
                 "save_workflow": ("BOOLEAN", {"default": True}),
             },
             "hidden": {

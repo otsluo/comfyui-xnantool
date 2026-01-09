@@ -193,6 +193,29 @@
   - 需要自定义输出文件名和格式
   - 需要控制图片质量和文件名格式
 
+### 📊 文本转Excel节点 (TextToExcelNode)
+- **位置**: `XnanTool/实用工具`
+- **功能**: 将文本内容转换为Excel文件，支持多种分隔符和自定义工作表名称
+- **输入**:
+  - `text`: 要转换为Excel的文本内容
+  - `output_excel_path`: 输出Excel文件名（不含扩展名）
+  - `separator`: 分隔符（逗号/分号/制表符/空格/竖线）
+  - `sheet_name`: Excel工作表名称
+  - `has_header`: 是否包含标题行（可选，默认True）
+- **控件**:
+  - `text`: 要转换为Excel的文本内容
+  - `output_excel_path`: 输出Excel文件名（不含扩展名）
+  - `separator`: 选择文本内容的分隔符
+  - `sheet_name`: Excel工作表的名称
+  - `has_header`: 是否将第一行作为标题行
+- **输出**:
+  - `save_result`: 保存操作的结果信息
+- **适用场景**:
+  - 需要将分隔的文本数据转换为Excel表格
+  - 需要自定义Excel工作表名称
+  - 需要处理不同分隔符的文本数据
+  - 需要将文本数据以结构化形式保存
+
 
 ## 使用指南
 

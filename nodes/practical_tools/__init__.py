@@ -13,6 +13,9 @@ from .text_input_node import TextInputNode
 from .string_to_any_node import StringToAnyNode
 from .markdown_to_excel_node import MarkdownToExcelNode
 from .save_image_node import SaveImageNode
+from .save_text_node import SaveTextNode
+from .text_to_excel_node import TextToExcelNode
+
 
 # 节点类映射
 NODE_CLASS_MAPPINGS = {
@@ -27,6 +30,9 @@ NODE_CLASS_MAPPINGS = {
     "StringToAnyNode": StringToAnyNode,
     "MarkdownToExcelNode": MarkdownToExcelNode,
     "SaveImageNode": SaveImageNode,
+    "SaveTextNode": SaveTextNode,
+    "TextToExcelNode": TextToExcelNode,
+
 }
 
 # 节点显示名称映射
@@ -34,15 +40,17 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "ToggleValueNode": "切换值节点",
     "ToggleAnyNode": "切换任意值",
     "ToggleAnyOutputNode": "切换任意值（输出）",
+    "ToggleStringOutputNode": "切换字符串（输出）",
+    "StringMergeNode": "字符串合并节点",
     "RandomExecutionNode": "随机执行",
     "BatchCopyFilesNode": "批量复制文件",
-    "StringMergeNode": "字符串合并节点",
     "TextInputNode": "文本输入",
     "StringToAnyNode": "字符串到任意类型",
     "MarkdownToExcelNode": "MD转Excel",
-    "AdvancedMarkdownToExcelNode": "高级MD转Excel",
-    "ToggleStringOutputNode": "切换字符串输出节点",
     "SaveImageNode": "保存图片节点",
+    "SaveTextNode": "保存文本节点",
+    "TextToExcelNode": "文本转Excel节点",
+
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

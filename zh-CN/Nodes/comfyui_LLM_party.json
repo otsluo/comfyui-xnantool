@@ -1,0 +1,631 @@
+{
+    "LLM_api_loader": {
+        "title": "LLM API加载器",
+        "description": "加载LLM API配置",
+        "inputs": {
+            "model_name": "模型名称",
+            "model_type": "模型类型",
+            "api_key": "API密钥",
+            "base_url": "基础URL",
+            "azure_openai_api_version": "Azure OpenAI API版本",
+            "azure_openai_api_key": "Azure OpenAI API密钥",
+            "azure_openai_endpoint": "Azure OpenAI端点",
+            "aws_access_key_id": "AWS访问密钥ID",
+            "aws_secret_access_key": "AWS秘密访问密钥",
+            "aws_region_name": "AWS区域名称",
+            "google_api_key": "Google API密钥",
+            "gemini_model_name": "Gemini模型名称",
+            "hf_api_key": "Hugging Face API密钥",
+            "model_path": "模型路径",
+            "max_tokens": "最大令牌数",
+            "is_chat_model": "是否为聊天模型",
+            "is_use_tool": "是否使用工具",
+            "is_temperature": "是否使用温度参数",
+            "is_top_p": "是否使用Top P参数",
+            "is_top_k": "是否使用Top K参数",
+            "is_repetition_penalty": "是否使用重复惩罚参数"
+        },
+        "outputs": {
+            "model": "模型配置"
+        }
+    },
+    "easy_LLM_api_loader": {
+        "title": "简易LLM API加载器",
+        "description": "简易LLM API加载器，用于快速配置和加载LLM API模型。",
+        "inputs": {
+            "model_name": "模型名称",
+            "api_key": "API密钥",
+            "base_url": "基础URL",
+            "model_type": "模型类型"
+        },
+        "outputs": {
+            "model": "模型配置"
+        }
+    },
+    "LLM": {
+        "title": "LLM",
+        "description": "模型链的API版本，兼容所有API接口。",
+        "inputs": {
+            "system_prompt": "系统提示词",
+            "user_prompt": "用户提示词",
+            "model": "模型",
+            "temperature": "温度",
+            "is_memory": "是否启用记忆",
+            "is_tools_in_sys_prompt": "是否将工具集成到系统提示词",
+            "is_locked": "是否锁定",
+            "main_brain": "是否为主脑",
+            "max_length": "最大长度",
+            "system_prompt_input": "系统提示词输入",
+            "user_prompt_input": "用户提示词输入",
+            "tools": "工具",
+            "file_content": "文件内容",
+            "images": "图像",
+            "imgbb_api_key": "ImgBB API密钥",
+            "conversation_rounds": "对话轮次",
+            "historical_record": "历史记录",
+            "is_enable": "是否启用",
+            "extra_parameters": "额外参数",
+            "user_history": "用户历史",
+            "img_URL": "图像URL",
+            "stream": "是否流式输出"
+        },
+        "outputs": {
+            "assistant_response": "助手响应",
+            "history": "对话历史",
+            "tool": "工具接口",
+            "image": "图像",
+            "reasoning_content": "推理内容"
+        }
+    }
+    ,
+    "LLM_local": {
+        "title": "本地LLM",
+        "description": "本地LLM模型的通用链接，支持各种本地模型接口。",
+        "inputs": {
+            "system_prompt": "系统提示词",
+            "user_prompt": "用户提示词",
+            "model": "模型",
+            "temperature": "温度",
+            "is_memory": "是否启用记忆",
+            "is_tools_in_sys_prompt": "是否将工具集成到系统提示词",
+            "is_locked": "是否锁定",
+            "main_brain": "是否为主脑",
+            "max_length": "最大长度",
+            "system_prompt_input": "系统提示词输入",
+            "user_prompt_input": "用户提示词输入",
+            "tools": "工具",
+            "file_content": "文件内容",
+            "images": "图像",
+            "imgbb_api_key": "ImgBB API密钥",
+            "conversation_rounds": "对话轮次",
+            "historical_record": "历史记录",
+            "is_enable": "是否启用",
+            "extra_parameters": "额外参数",
+            "user_history": "用户历史",
+            "img_URL": "图像URL",
+            "stream": "是否流式输出"
+        },
+        "outputs": {
+            "assistant_response": "助手响应",
+            "history": "对话历史",
+            "tool": "工具接口",
+            "image": "图像",
+            "reasoning_content": "推理内容"
+        }
+    },
+    "LLM_local_loader": {
+        "title": "本地LLM加载器",
+        "description": "加载本地LLM模型配置",
+        "inputs": {
+            "model_name": "模型名称",
+            "model_path": "模型路径",
+            "max_tokens": "最大令牌数",
+            "is_chat_model": "是否为聊天模型",
+            "is_use_tool": "是否使用工具",
+            "is_temperature": "是否使用温度参数",
+            "is_top_p": "是否使用Top P参数",
+            "is_top_k": "是否使用Top K参数",
+            "is_repetition_penalty": "是否使用重复惩罚参数"
+        },
+        "outputs": {
+            "model": "模型配置"
+        }
+    },
+    "easy_LLM_local_loader": {
+        "title": "简易本地LLM加载器",
+        "description": "简易本地LLM加载器，用于快速配置和加载本地LLM模型。",
+        "inputs": {
+            "model_name": "模型名称",
+            "model_path": "模型路径"
+        },
+        "outputs": {
+            "model": "模型配置"
+        }
+    },
+    "aisuite_loader": {
+        "title": "Aisuite加载器",
+        "description": "加载Aisuite模型配置",
+        "inputs": {
+            "provider": "服务提供商",
+            "model_name": "模型名称",
+            "api_key": "API密钥",
+            "base_url": "基础URL",
+            "aws_access_key_id": "AWS访问密钥ID",
+            "aws_secret_access_key": "AWS秘密访问密钥",
+            "aws_region_name": "AWS区域名称",
+            "google_project_id": "Google项目ID",
+            "google_region": "Google区域",
+            "google_application_credentials": "Google应用凭证",
+            "hf_api_token": "Hugging Face API令牌"
+        },
+        "outputs": {
+            "model": "模型配置"
+        }
+    },
+    "load_ebd": {
+        "title": "加载嵌入",
+        "description": "加载嵌入模型配置",
+        "inputs": {
+            "ebd_model_name": "嵌入模型名称",
+            "embedding_api_key": "嵌入API密钥",
+            "embedding_base_url": "嵌入基础URL",
+            "embedding_model_path": "嵌入模型路径",
+            "is_api": "是否使用API",
+            "ebd_model_type": "嵌入模型类型"
+        },
+        "outputs": {
+            "ebd_model": "嵌入模型配置"
+        }
+    },
+    "load_file": {
+        "title": "加载文件",
+        "description": "加载文件内容",
+        "inputs": {
+            "file_path": "文件路径",
+            "encoding": "编码方式"
+        },
+        "outputs": {
+            "file_content": "文件内容"
+        }
+    },
+    "load_persona": {
+        "title": "加载人格面具",
+        "description": "加载人格面具配置",
+        "inputs": {
+            "persona_name": "人格面具名称",
+            "persona_content": "人格面具内容"
+        },
+        "outputs": {
+            "persona": "人格面具配置"
+        }
+    },
+    "embeddings_function": {
+        "title": "词向量搜索",
+        "description": "使用嵌入模型进行词向量搜索",
+        "inputs": {
+            "ebd_model": "嵌入模型",
+            "query": "查询文本",
+            "database": "数据库",
+            "top_k": "返回结果数量",
+            "threshold": "相似度阈值"
+        },
+        "outputs": {
+            "search_results": "搜索结果",
+            "relevant_content": "相关内容"
+        }
+    },
+    "classify_persona": {
+        "title": "分类人格面具",
+        "description": "对人格面具进行分类",
+        "inputs": {
+            "persona": "人格面具",
+            "classifier": "分类器",
+            "categories": "分类类别"
+        },
+        "outputs": {
+            "classification_result": "分类结果"
+        }
+    },
+    "classify_function": {
+        "title": "分类函数",
+        "description": "对函数进行分类",
+        "inputs": {
+            "function": "函数",
+            "classifier": "分类器",
+            "categories": "分类类别"
+        },
+        "outputs": {
+            "classification_result": "分类结果"
+        }
+    },
+    "classify_persona_plus": {
+        "title": "超大分类器面具",
+        "description": "对人格面具进行大规模分类",
+        "inputs": {
+            "persona": "人格面具",
+            "classifier": "分类器",
+            "categories": "分类类别"
+        },
+        "outputs": {
+            "classification_result": "分类结果"
+        }
+    },
+    "classify_function_plus": {
+        "title": "超大分类器函数",
+        "description": "对函数进行大规模分类",
+        "inputs": {
+            "function": "函数",
+            "classifier": "分类器",
+            "categories": "分类类别"
+        },
+        "outputs": {
+            "classification_result": "分类结果"
+        }
+    },
+    "tool_combine": {
+        "title": "工具组合",
+        "description": "组合多个工具",
+        "inputs": {
+            "tools": "工具列表"
+        },
+        "outputs": {
+            "combined_tool": "组合工具"
+        }
+    },
+    "tool_combine_plus": {
+        "title": "超大工具组合",
+        "description": "组合大量工具",
+        "inputs": {
+            "tools": "工具列表"
+        },
+        "outputs": {
+            "combined_tool": "组合工具"
+        }
+    },
+    "time_tool": {
+        "title": "时间工具",
+        "description": "获取当前时间",
+        "outputs": {
+            "current_time": "当前时间"
+        }
+    },
+    "accuweather_tool": {
+        "title": "AccuWeather工具",
+        "description": "获取天气信息",
+        "inputs": {
+            "location": "位置",
+            "api_key": "API密钥"
+        },
+        "outputs": {
+            "weather_info": "天气信息"
+        }
+    },
+    "google_tool": {
+        "title": "谷歌搜索工具",
+        "description": "使用谷歌搜索引擎",
+        "inputs": {
+            "query": "搜索查询",
+            "api_key": "API密钥",
+            "cx": "搜索引擎ID"
+        },
+        "outputs": {
+            "search_results": "搜索结果"
+        }
+    },
+    "bing_tool": {
+        "title": "必应搜索工具",
+        "description": "使用必应搜索引擎",
+        "inputs": {
+            "query": "搜索查询",
+            "api_key": "API密钥"
+        },
+        "outputs": {
+            "search_results": "搜索结果"
+        }
+    },
+    "check_web_tool": {
+        "title": "网页检查工具",
+        "description": "检查网页内容",
+        "inputs": {
+            "url": "网页URL"
+        },
+        "outputs": {
+            "web_content": "网页内容"
+        }
+    },
+    "file_combine": {
+        "title": "文件组合",
+        "description": "组合多个文件",
+        "inputs": {
+            "files": "文件列表"
+        },
+        "outputs": {
+            "combined_file": "组合文件"
+        }
+    },
+    "file_combine_plus": {
+        "title": "超大文件组合",
+        "description": "组合大量文件",
+        "inputs": {
+            "files": "文件列表"
+        },
+        "outputs": {
+            "combined_file": "组合文件"
+        }
+    },
+    "string_combine": {
+        "title": "字符串组合",
+        "description": "组合多个字符串",
+        "inputs": {
+            "strings": "字符串列表"
+        },
+        "outputs": {
+            "combined_string": "组合字符串"
+        }
+    },
+    "string_combine_plus": {
+        "title": "超大字符串组合",
+        "description": "组合大量字符串",
+        "inputs": {
+            "strings": "字符串列表"
+        },
+        "outputs": {
+            "combined_string": "组合字符串"
+        }
+    },
+    "start_dialog": {
+        "title": "开始对话",
+        "description": "开始一个对话",
+        "inputs": {
+            "persona": "人格面具",
+            "initial_prompt": "初始提示词"
+        },
+        "outputs": {
+            "dialog_session": "对话会话"
+        }
+    },
+    "end_dialog": {
+        "title": "结束对话",
+        "description": "结束一个对话",
+        "inputs": {
+            "dialog_session": "对话会话"
+        }
+    },
+    "ebd_tool": {
+        "title": "词嵌入工具",
+        "description": "使用词嵌入模型",
+        "inputs": {
+            "text": "文本",
+            "ebd_model": "嵌入模型"
+        },
+        "outputs": {
+            "embedding": "词嵌入向量"
+        }
+    },
+    "custom_persona": {
+        "title": "自定义人格面具",
+        "description": "创建自定义人格面具",
+        "inputs": {
+            "name": "名称",
+            "description": "描述",
+            "behavior": "行为模式"
+        },
+        "outputs": {
+            "persona": "人格面具"
+        }
+    },
+    "start_workflow": {
+        "title": "开始工作流",
+        "description": "开始一个工作流",
+        "inputs": {
+            "workflow_path": "工作流路径"
+        },
+        "outputs": {
+            "workflow_instance": "工作流实例"
+        }
+    },
+    "end_workflow": {
+        "title": "结束工作流",
+        "description": "结束一个工作流",
+        "inputs": {
+            "workflow_instance": "工作流实例"
+        }
+    },
+    "CLIPTextEncode_party": {
+        "title": "CLIP文本编码(派对版)",
+        "description": "使用CLIP模型对文本进行编码",
+        "inputs": {
+            "text": "文本",
+            "clip": "CLIP模型"
+        },
+        "outputs": {
+            "conditioning": "条件"
+        }
+    },
+    "KSampler_party": {
+        "title": "KSampler(派对版)",
+        "description": "使用KSampler进行采样",
+        "inputs": {
+            "model": "模型",
+            "seed": "种子",
+            "steps": "步数",
+            "cfg": "CFG",
+            "sampler_name": "采样器名称",
+            "scheduler": "调度器",
+            "positive": "正面提示词",
+            "negative": "负面提示词",
+            "latent_image": "潜在图像",
+            "denoise": "去噪强度"
+        },
+        "outputs": {
+            "latent": "潜在图像"
+        }
+    },
+    "VAEDecode_party": {
+        "title": "VAE解码(派对版)",
+        "description": "使用VAE模型对潜在图像进行解码",
+        "inputs": {
+            "samples": "样本",
+            "vae": "VAE模型"
+        },
+        "outputs": {
+            "image": "图像"
+        }
+    },
+    "string_logic": {
+        "title": "字符串逻辑",
+        "description": "对字符串进行逻辑操作",
+        "inputs": {
+            "string": "字符串",
+            "operation": "操作",
+            "value": "值"
+        },
+        "outputs": {
+            "result": "结果"
+        }
+    },
+    "show_text_party": {
+        "title": "显示文本(派对版)",
+        "description": "显示文本内容",
+        "inputs": {
+            "text": "文本"
+        }
+    },
+    "load_url": {
+        "title": "加载URL",
+        "description": "加载URL内容",
+        "inputs": {
+            "url": "URL地址"
+        },
+        "outputs": {
+            "content": "内容"
+        }
+    },
+    "load_file_folder": {
+        "title": "加载文件夹",
+        "description": "加载文件夹中的所有文件",
+        "inputs": {
+            "folder_path": "文件夹路径",
+            "file_extension": "文件扩展名"
+        },
+        "outputs": {
+            "file_contents": "文件内容列表"
+        }
+    },
+    "api_tool": {
+        "title": "API工具",
+        "description": "调用API接口",
+        "inputs": {
+            "url": "API URL",
+            "method": "请求方法",
+            "headers": "请求头",
+            "body": "请求体"
+        },
+        "outputs": {
+            "response": "响应"
+        }
+    },
+    "wikipedia_tool": {
+        "title": "维基百科工具",
+        "description": "从维基百科获取信息",
+        "inputs": {
+            "query": "搜索查询"
+        },
+        "outputs": {
+            "wikipedia_content": "维基百科内容"
+        }
+    },
+    "load_wikipedia": {
+        "title": "加载维基百科",
+        "description": "加载维基百科内容",
+        "inputs": {
+            "page_title": "页面标题"
+        },
+        "outputs": {
+            "content": "内容"
+        }
+    },
+    "workflow_transfer": {
+        "title": "工作流传输",
+        "description": "传输工作流",
+        "inputs": {
+            "workflow": "工作流",
+            "target": "目标"
+        },
+        "outputs": {
+            "result": "结果"
+        }
+    },
+    "About_us": {
+        "title": "关于我们",
+        "description": "显示关于我们的信息"
+    },
+    "workflow_tool": {
+        "title": "工作流工具",
+        "description": "工作流相关工具",
+        "inputs": {
+            "workflow": "工作流",
+            "operation": "操作"
+        },
+        "outputs": {
+            "result": "结果"
+        }
+    },
+    "github_tool": {
+        "title": "GitHub工具",
+        "description": "GitHub相关工具",
+        "inputs": {
+            "query": "搜索查询",
+            "api_key": "API密钥"
+        },
+        "outputs": {
+            "github_results": "GitHub结果"
+        }
+    },
+    "work_wechat_tool": {
+        "title": "企业微信工具",
+        "description": "企业微信相关工具",
+        "inputs": {
+            "message": "消息",
+            "api_key": "API密钥",
+            "chat_id": "聊天ID"
+        },
+        "outputs": {
+            "result": "结果"
+        }
+    },
+    "work_wechat": {
+        "title": "企业微信",
+        "description": "企业微信集成",
+        "inputs": {
+            "message": "消息",
+            "api_key": "API密钥",
+            "chat_id": "聊天ID"
+        },
+        "outputs": {
+            "result": "结果"
+        }
+    },
+    "interpreter_tool": {
+        "title": "代码执行工具",
+        "description": "执行代码",
+        "inputs": {
+            "code": "代码",
+            "language": "语言"
+        },
+        "outputs": {
+            "result": "执行结果"
+        }
+    },
+    "interpreter_function": {
+        "title": "解释器函数",
+        "description": "解释器函数",
+        "inputs": {
+            "code": "代码",
+            "language": "语言"
+        },
+        "outputs": {
+            "result": "执行结果"
+        }
+    }
+}
