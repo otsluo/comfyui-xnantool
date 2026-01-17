@@ -17,27 +17,27 @@ class SaveImageNode:
         return {
             "required": {
                 "images": ("IMAGE",),
-                "file_path": ("STRING", {"default": "ComfyUI/output"}),
+                "file_path": ("STRING", {"default": ""}),
                 "filename_prefix": ("STRING", {"default": "ComfyUI"}),
                 "folder_separator": ("STRING", {"default": "_"}),
                 "num_padding_digits": ("INT", {"default": 3, "min": 1, "max": 10, "step": 1}),
                 "extension": (["png", "jpg", "jpeg", "gif", "webp", "bmp"],),
                 "quality": ("INT", {"default": 100, "min": 1, "max": 100, "step": 1}),
-                "save_workflow": ("BOOLEAN", {"default": True}),
             },
             "hidden": {
                 "prompt": "PROMPT", 
-                "extra_pnginfo": "EXTRA_PNGINFO"
+                "extra_pnginfo": "EXTRA_PNGINFO",
+                "save_workflow": ("BOOLEAN", {"default": False})
             },
         }
 
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("save_result",)
+    RETURN_TYPES = ("IMAGE", "STRING")
+    RETURN_NAMES = ("images", "save_result")
     OUTPUT_NODE = True
     FUNCTION = "save_images"
     CATEGORY = "XnanTool/实用工具"
 
-    def save_images(self, images, file_path, filename_prefix="ComfyUI", folder_separator="_", num_padding_digits=3, extension="png", quality=95, save_workflow=True, prompt=None, extra_pnginfo=None):
+    def save_images(self, images, file_path, filename_prefix="ComfyUI", folder_separator="_", num_padding_digits=3, extension="png", quality=100, prompt=None, extra_pnginfo=None, save_workflow=False):
         """
         保存图片到指定路径
         """
@@ -125,7 +125,7 @@ class SaveImageNode:
             except Exception as e:
                 return {"ui": {"status": f"保存失败: {str(e)}"}, "result": (f"保存失败: {str(e)}",)}
 
-        return {"ui": {"status": f"成功保存 {len(images)} 张图片"}, "result": (f"成功保存 {len(images)} 张图片到 {full_output_dir}",)}
+        return {"ui": {"status": f"成功保存 {len(images)} 张图片"}, "result": (images, f"成功保存 {len(images)} 张图片到 {full_output_dir}")}
 
     @staticmethod
     def _get_workflow_exif_data(prompt, extra_pnginfo):

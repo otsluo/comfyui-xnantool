@@ -1583,5 +1583,77 @@
         "skip": "跳过"
       }
     }
+  },
+  "GetCurrentTimeNode": {
+    "title": "获取当前时间节点",
+    "description": "获取当前时间戳，输出字符串和整数格式",
+    "inputs": {
+      "format_type": "格式类型",
+      "trigger_input": "触发输入"
+    },
+    "widgets": {
+      "format_type": "时间格式类型（时间戳/日期时间/日期/时间）"
+    },
+    "outputs": {
+      "time_string": "时间字符串",
+      "timestamp_int": "时间戳整数"
+    }
+  },
+  "ZipSaveNode": {
+    "title": "保存为Zip文件",
+    "description": "将图像、视频、音频和文本保存为Zip文件",
+    "inputs": {
+      "filename_prefix": "文件名前缀",
+      "compression": "压缩方式",
+      "images": "图像",
+      "videos": "视频",
+      "audios": "音频",
+      "texts": "文本",
+      "text_filenames": "文本文件名",
+      "video_filenames": "视频文件名",
+      "audio_filenames": "音频文件名"
+    },
+    "widgets": {
+      "filename_prefix": "Zip文件的前缀名称",
+      "compression": "压缩方式（STORED或DEFLATED）",
+      "text_filenames": "文本文件的名称列表",
+      "video_filenames": "视频文件的名称列表",
+      "audio_filenames": "音频文件的名称列表"
+    },
+    "outputs": {
+      "save_result": "保存结果"
+    },
+    "widget_values": {
+      "compression": {
+        "STORED": "不压缩",
+        "DEFLATED": "压缩"
+      }
+    }
+  },
+  "ZipLoadNode": {
+    "title": "加载zip文件",
+    "description": "从Zip文件中加载图像、视频、音频和文本",
+    "inputs": {
+      "zip_file": "Zip文件",
+      "load_images": "加载图像",
+      "load_videos": "加载视频",
+      "load_audios": "加载音频",
+      "load_texts": "加载文本"
+    },
+    "widgets": {
+      "zip_file": "要加载的Zip文件",
+      "load_images": "是否加载图像",
+      "load_videos": "是否加载视频",
+      "load_audios": "是否加载音频",
+      "load_texts": "是否加载文本"
+    },
+    "outputs": {
+      "images": "图像",
+      "texts": "文本",
+      "filenames": "文件名",
+      "videos": "视频",
+      "audios": "音频"
+    }
   }
 }
+

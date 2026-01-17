@@ -15,6 +15,12 @@ from .markdown_to_excel_node import MarkdownToExcelNode
 from .save_image_node import SaveImageNode
 from .save_text_node import SaveTextNode
 from .text_to_excel_node import TextToExcelNode
+from .get_current_time_node import GetCurrentTimeNode
+
+
+# 新增导入的节点
+from .image_encrypt_basic_node import ImageEncryptNode
+from .image_encrypt_advanced_node import ImageEncryptNodeAdvanced
 
 
 # 节点类映射
@@ -32,6 +38,9 @@ NODE_CLASS_MAPPINGS = {
     "SaveImageNode": SaveImageNode,
     "SaveTextNode": SaveTextNode,
     "TextToExcelNode": TextToExcelNode,
+    "GetCurrentTimeNode": GetCurrentTimeNode,
+    "ImageEncryptNode": ImageEncryptNode,
+    "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
 
 }
 
@@ -50,7 +59,12 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "SaveImageNode": "保存图片节点",
     "SaveTextNode": "保存文本节点",
     "TextToExcelNode": "文本转Excel节点",
+    "GetCurrentTimeNode": "获取当前时间节点",
+    "ImageEncryptNode": "图片加密基础节点",
+    "ImageEncryptNodeAdvanced": "图片加密高级节点",
 
 }
 
-__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
+WEB_DIRECTORY = "./js"
+
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS', 'WEB_DIRECTORY']

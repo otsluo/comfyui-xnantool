@@ -45,8 +45,9 @@ class BatchLoadImagesNode:
             }
         }
 
-    RETURN_TYPES = ("IMAGE", "STRING", "INT")
-    RETURN_NAMES = ("images", "filenames", "count")
+    RETURN_TYPES = ("IMAGE", "STRING", "STRING", "INT")
+    RETURN_NAMES = ("images", "filenames", "filenames_without_extension", "count")
+    OUTPUT_IS_LIST = (True, True, True, False)
     FUNCTION = "load_images"
     CATEGORY = "XnanTool/图像处理"
     DESCRIPTION = """
@@ -54,8 +55,8 @@ class BatchLoadImagesNode:
 - 支持两种模式：加载全部图片或加载单张图片
 - 可自定义图片路径
 - 加载全部模式支持设置最高加载数量限制，设置为0表示加载全部图片
-- 自动处理不同尺寸的图片，将它们调整到统一尺寸
-- 返回图片张量、文件名列表和图片数量
+- 保持原始图片尺寸，不进行任何调整
+- 返回图片张量列表、文件名列表和图片数量
 """
 
     def load_images(self, mode, image_path, index=0, max_images=100):
@@ -125,35 +126,10 @@ class BatchLoadImagesNode:
                 
         if not images:
             raise ValueError("未能成功加载任何图片")
-        
-        # 检查图片尺寸是否一致，如果不一致则调整到统一尺寸
-        if len(set(image_sizes)) > 1:
-            # 使用最大的宽度和高度作为目标尺寸
-            target_width = max(size[0] for size in image_sizes)
-            target_height = max(size[1] for size in image_sizes)
             
-            # 调整所有图片到统一尺寸
-            resized_images = []
-            for img_tensor in images:
-                # 如果图片尺寸不匹配，则调整尺寸
-                if img_tensor.shape[1] != target_height or img_tensor.shape[2] != target_width:
-                    # 使用双线性插值调整图片尺寸
-                    resized_img = F.interpolate(
-                        img_tensor.permute(0, 3, 1, 2),  # 转换为(N, C, H, W)格式
-                        size=(target_height, target_width),
-                        mode='bilinear',
-                        align_corners=False
-                    ).permute(0, 2, 3, 1)  # 转换回(N, H, W, C)格式
-                    resized_images.append(resized_img)
-                else:
-                    resized_images.append(img_tensor)
-            
-            images = resized_images
-            
-        # 将所有图片堆叠成一个tensor (N, H, W, C)
-        batch_tensor = torch.cat(images, dim=0)
-        
-        return (batch_tensor, filenames, len(images))
+        # 生成不带后缀名的文件名列表
+        filenames_without_extension = [os.path.splitext(file)[0] for file in filenames]
+        return (images, filenames, filenames_without_extension, len(images))
 
     def load_single_image(self, image_path, index):
         """根据索引加载单张图片"""
@@ -201,7 +177,9 @@ class BatchLoadImagesNode:
             # 转换为tensor (H, W, C) -> (1, H, W, C)
             img_tensor = torch.from_numpy(img_array)[None,]
             
-            return (img_tensor, [filename], 1)
+            # 生成不带后缀名的文件名
+            filename_without_extension = os.path.splitext(filename)[0]
+            return ([img_tensor], [filename], [filename_without_extension], 1)
         except Exception as e:
             raise ValueError(f"无法加载图片 {file_path}: {str(e)}")
 
