@@ -90,7 +90,7 @@ class ImagesToGifNodeV2:
             "optimize": ("BOOLEAN", {
                 "default": True,
                 "label": "优化GIF",
-                "description": "是否优化GIF文件大小"
+                "description": "优化GIF大小"
             }),
             "palette_size": (["2", "4", "8", "16", "32", "64", "128", "256"], {
                 "default": "256",
@@ -100,7 +100,7 @@ class ImagesToGifNodeV2:
             "quality": (["1", "2", "3", "4", "5"], {
                 "default": "5",
                 "label": "质量等级",
-                "description": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）"
+                "description": "GIF质量（1=最低，5=最高）"
             }),
         })
         
@@ -240,9 +240,9 @@ class ImagesToGifNodeV2:
             resize_factor (float): 图像缩放比例（0.1-1.0）
             transition_effect (str): 过渡效果类型 ("none", "crossfade", "slide_left", "slide_right", "slide_up", "slide_down", "wipe_left", "wipe_right", "wipe_up", "wipe_down")
             transition_frames (int): 过渡效果的帧数（0表示无过渡）
-            optimize (bool): 是否优化GIF文件大小
+            optimize (bool): 优化GIF大小
             palette_size (str): GIF使用的颜色数量（"2"-"256"）
-            quality (str): GIF质量等级（"1"=低，"2"=中，"3"=高）
+            quality (str): GIF质量等级（"1"=低，"5"=高）
             image_1 to image_10 (torch.Tensor, optional): 输入的图片张量 (B, H, W, C) 或单张图片 (H, W, C)
             output_filename (str): GIF文件的输出名称
             
@@ -483,7 +483,7 @@ class ImagesToGifNodeV1:
             "optimize": ("BOOLEAN", {
                 "default": True,
                 "label": "优化GIF",
-                "description": "是否优化GIF文件大小"
+                "description": "优化GIF大小"
             }),
             "palette_size": (["2", "4", "8", "16", "32", "64", "128", "256"], {
                 "default": "256",
@@ -493,7 +493,7 @@ class ImagesToGifNodeV1:
             "quality": (["1", "2", "3", "4", "5"], {
                 "default": "5",
                 "label": "质量等级",
-                "description": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）"
+                "description": "GIF质量（1=最低，5=最高）"
             }),
         })
         
@@ -541,9 +541,9 @@ class ImagesToGifNodeV1:
             frame_duration (float): 每帧图片的显示时间（秒）
             loop_count (int): GIF循环播放次数（0表示无限循环）
             resize_factor (float): 图像缩放比例（0.1-1.0）
-            optimize (bool): 是否优化GIF文件大小
+            optimize (bool): 优化GIF大小
             palette_size (str): GIF使用的颜色数量（"2"-"256"）
-            quality (str): GIF质量等级（"1"=低，"2"=中，"3"=高）
+            quality (str): GIF质量等级（"1"=低，"5"=高）
             image_1 to image_10 (torch.Tensor, optional): 输入的图片张量 (B, H, W, C) 或单张图片 (H, W, C)
             output_filename (str): GIF文件的输出名称
             

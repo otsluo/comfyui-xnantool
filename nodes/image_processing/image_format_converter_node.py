@@ -39,7 +39,7 @@ class ImageFormatConverterNode:
                 }),
                 "optimize": ("BOOLEAN", {
                     "label": "优化PNG",
-                    "description": "是否优化PNG文件大小",
+                    "description": "优化PNG大小",
                     "default": True
                 })
             }

@@ -157,15 +157,16 @@
 - **功能**: 将Markdown文件转换为Excel文件，支持表格解析和自定义工作表名称
 - **输入**:
   - `md_file_path`: Markdown文件路径
-  - `output_excel_path`: 输出Excel文件路径
+  - `output_dir`: 输出目录路径（留空则使用输入文件所在目录）
+  - `output_filename`: 输出文件名（留空则使用输入文件名）
   - `sheet_name`: 工作表名称，默认为"Sheet1"
 - **输出**:
-  - `status`: 转换状态信息
-  - `excel_file_path`: 输出Excel文件路径
+  - `conversion_info`: 转换状态信息
 - **适用场景**: 
   - 将Markdown格式的文档转换为Excel格式
   - 保留Markdown中的表格结构到Excel中
   - 需要自定义Excel工作表名称的场景
+  - 需要灵活控制输出目录和文件名的场景
 
 ### 💾 保存图片节点 (SaveImageNode)
 - **位置**: `XnanTool/实用工具`

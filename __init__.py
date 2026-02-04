@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.6.12"
+__version__ = "0.6.13"
 
 # 导入所有节点模块
 # ==================== YOLO和SAM节点模块 ====================
@@ -30,9 +30,7 @@ from .nodes.ollama import NODE_DISPLAY_NAME_MAPPINGS as OLLAMA_NODE_DISPLAY_NAME
 from .nodes.practical_tools import NODE_CLASS_MAPPINGS as PRACTICAL_TOOLS_NODE_CLASS_MAPPINGS
 from .nodes.practical_tools import NODE_DISPLAY_NAME_MAPPINGS as PRACTICAL_TOOLS_NODE_DISPLAY_NAME_MAPPINGS
 
-# ==================== 开发工具节点模块 ====================
-# from .nodes.dev import NODE_CLASS_MAPPINGS as DEV_NODE_CLASS_MAPPINGS
-# from .nodes.dev import NODE_DISPLAY_NAME_MAPPINGS as DEV_NODE_DISPLAY_NAME_MAPPINGS
+
 
 # ==================== 版本信息节点 ====================
 from .nodes.version_info_node import NODE_CLASS_MAPPINGS as VERSION_INFO_NODE_CLASS_MAPPINGS
@@ -68,8 +66,7 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     # 实用工具节点
     PRACTICAL_TOOLS_NODE_CLASS_MAPPINGS,
     
-    # 开发工具节点
-    DEV_NODE_CLASS_MAPPINGS,
+
     
     # 版本信息节点
     VERSION_INFO_NODE_CLASS_MAPPINGS,
@@ -98,8 +95,7 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     # 实用工具节点
     PRACTICAL_TOOLS_NODE_DISPLAY_NAME_MAPPINGS,
     
-    # 开发工具节点
-    DEV_NODE_DISPLAY_NAME_MAPPINGS,
+
     
     # 版本信息节点
     VERSION_INFO_NODE_DISPLAY_NAME_MAPPINGS,

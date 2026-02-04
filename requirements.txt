@@ -21,7 +21,7 @@ opencv-python>=4.5.0  # 添加OpenCV，YOLO检测常用的图像处理库
 
 # SAM相关依赖
 # git+https://github.com/facebookresearch/segment-anything.git  # SAM模型库
-git+https://gitcode.com/GitHub_Trending/se/segment-anything.git # SAM模型库加速镜像
+# git+https://gitcode.com/GitHub_Trending/se/segment-anything.git # SAM模型库加速镜像
 # 可以通过秋叶命令提示符直接python install git+https://gitcode.com/GitHub_Trending/se/segment-anything.git
 onnxruntime  # ONNX运行时，用于模型导出
 onnx  # ONNX格式支持

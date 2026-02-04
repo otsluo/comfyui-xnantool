@@ -63,7 +63,7 @@ class VideoToGifNode:
                 "optimize": ("BOOLEAN", {
                     "default": True,
                     "label": "优化GIF",
-                    "description": "是否优化GIF文件大小"
+                    "description": "优化GIF大小"
                 }),
                 "palette_size": (["2", "4", "8", "16", "32", "64", "128", "256"], {
                     "default": "256",
@@ -73,7 +73,7 @@ class VideoToGifNode:
                 "quality": (["1", "2", "3", "4", "5"], {
                     "default": "3",
                     "label": "质量等级",
-                    "description": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）"
+                    "description": "GIF质量（1=最低，5=最高）"
                 }),
             },
             "optional": {
@@ -113,9 +113,9 @@ class VideoToGifNode:
             duration (float): GIF的持续时间（秒）
             fps (int): GIF的帧率
             resize_factor (float): 图像缩放比例（0.1-1.0）
-            optimize (bool): 是否优化GIF文件大小
+            optimize (bool): 优化GIF大小
             palette_size (str): GIF使用的颜色数量（"2"-"256"）
-            quality (str): GIF质量等级（"1"=低，"2"=中，"3"=高）
+            quality (str): GIF质量等级（"1"=低，"3"=高）
             output_filename (str): GIF文件的输出名称
             
         Returns:

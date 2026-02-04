@@ -47,5 +47,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "GetCurrentTimeNode": "获取当前时间节点"
+    "GetCurrentTimeNode": "获取当前时间"
 }

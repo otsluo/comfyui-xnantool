@@ -24,7 +24,7 @@ class SaveTextNode:
         return {
             "required": {
                 "text": ("STRING", {"multiline": True, "default": ""}),
-                "file_path": ("STRING", {"default": "", "placeholder": "输入文件路径，留空则保存到output目录"}),
+                "file_path": ("STRING", {"default": "", "placeholder": "输入文件路径"}),
                 "filename": ("STRING", {"default": "ComfyUI"}),
                 "extension": (["txt", "csv", "md"], {"default": "txt"}),
                 "exist_mode": (["覆盖", "追加", "跳过"], {"default": "追加"}),
@@ -111,5 +111,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SaveTextNode": "保存文本节点"
+    "SaveTextNode": "保存文本"
 }

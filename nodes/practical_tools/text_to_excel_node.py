@@ -120,5 +120,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "TextToExcelNode": "文本转Excel节点"
+    "TextToExcelNode": "文本转Excel"
 }

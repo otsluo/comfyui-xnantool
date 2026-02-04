@@ -53,10 +53,16 @@ class SaveImageNode:
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
             
             # 生成文件名
-            if len(images) > 1:
-                filename = f"{filename_prefix}{folder_separator}{idx:0{num_padding_digits}d}.{extension}"
-            else:
-                filename = f"{filename_prefix}.{extension}"
+            if filename_prefix and filename_prefix.strip():  # 检查文件名前缀是否为空或只包含空白字符
+                if len(images) > 1:
+                    filename = f"{filename_prefix}{folder_separator}{idx:0{num_padding_digits}d}.{extension}"
+                else:
+                    filename = f"{filename_prefix}.{extension}"
+            else:  # 如果文件名前缀为空或只包含空白字符，使用默认前缀
+                if len(images) > 1:
+                    filename = f"ComfyUI{folder_separator}{idx:0{num_padding_digits}d}.{extension}"
+                else:
+                    filename = f"ComfyUI.{extension}"
             
             # 处理文件存在的情况 - 默认追加数值
             file_path_full = os.path.join(full_output_dir, filename)
@@ -154,5 +160,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SaveImageNode": "保存图片节点"
+    "SaveImageNode": "保存图片"
 }

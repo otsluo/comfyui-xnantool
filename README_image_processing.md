@@ -94,3 +94,10 @@
 - **输入**: 图像目录(image_directory)、保存目录(save_directory)、缩放因子(scale_factor)、调整尺寸模式(resize_mode)、目标宽度(target_width)、目标高度(target_height)、重采样过滤器(resampling_filter)
 - **输出**: 结果信息(result_info)
 - **适用场景**: 批量调整图像尺寸以适应特定要求
+
+#### 图片合并节点 (ImageMergeNode)
+- **位置**: `XnanTool/图像处理`
+- **功能**: 将多张图片合并成一张图片，支持多种合并方式：水平合并、垂直合并、网格合并，网格合并支持自定义列数
+- **输入**: 合并方式(operation)、调整为相同尺寸(resize_to_same_size)、图片1-10(image1-image10)、网格列数(columns)
+- **输出**: 合并后的图片(merged_image)
+- **适用场景**: 将多张图像按指定布局合并成一张图像，常用于制作图像拼接、网格布局、对比图等

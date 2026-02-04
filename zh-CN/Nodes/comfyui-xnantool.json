@@ -65,9 +65,9 @@
       "frame_duration": "每帧图片的显示时间（秒）",
       "loop_count": "GIF循环播放次数（0表示无限循环）",
       "resize_factor": "图像缩放比例（0.1-1.0）",
-      "optimize": "是否优化GIF文件大小",
+      "optimize": "优化GIF大小",
       "palette_size": "GIF的颜色数量",
-      "quality": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）",
+      "quality": "GIF质量（1=最低，5=最高））",
       "output_filename": "GIF文件的输出名称"
     },
     "outputs": {
@@ -123,9 +123,9 @@
       "resize_factor": "图像缩放比例（0.1-1.0）",
       "transition_effect": "帧之间的过渡效果类型",
       "transition_frames": "过渡效果的帧数（0表示无过渡）",
-      "optimize": "是否优化GIF文件大小",
+      "optimize": "优化GIF大小",
       "palette_size": "GIF的颜色数量",
-      "quality": "GIF质量等级（1=最低，2=低，3=中，4=高，5=最高）",
+      "quality": "GIF质量（1=最低，5=最高）",
       "output_filename": "GIF文件的输出名称"
     },
     "outputs": {
@@ -838,7 +838,7 @@
       "duration": "GIF的持续时间（秒）",
       "fps": "GIF的帧率",
       "resize_factor": "图像缩放比例百分比",
-      "optimize": "是否优化GIF文件大小",
+      "optimize": "优化GIF大小",
       "palette_size": "GIF颜色数量（2=最低质量，256=最高质量）",
       "quality": "GIF质量等级（1=低，2=中，3=高）",
       "output_filename": "GIF文件的输出名称"
@@ -919,17 +919,18 @@
     "description": "将Markdown文件转换为Excel文件，支持表格解析和自定义工作表",
     "inputs": {
       "md_file_path": "Markdown文件路径",
-      "output_excel_path": "输出Excel文件路径",
+      "output_dir": "输出目录路径",
+      "output_filename": "输出文件名",
       "sheet_name": "工作表名称"
     },
     "widgets": {
       "md_file_path": "输入Markdown文件的完整路径",
-      "output_excel_path": "输出Excel文件的完整路径",
+      "output_dir": "输出目录路径（留空则使用输入文件所在目录）",
+      "output_filename": "输出文件名（留空则使用输入文件名）",
       "sheet_name": "Excel工作表名称，默认为Sheet1"
     },
     "outputs": {
-      "status": "转换状态信息",
-      "excel_file_path": "输出Excel文件路径"
+      "conversion_info": "转换状态信息"
     }
   },
   "CreateImageNode": {
@@ -1049,7 +1050,7 @@
     "widgets": {
       "format": "选择输出图像格式",
       "quality": "JPEG或WebP格式的质量（1-100）",
-      "optimize": "是否优化PNG文件大小"
+      "optimize": "优化PNG大小"
     },
     "outputs": {
       "output_paths": "输出文件路径列表"
@@ -1522,7 +1523,7 @@
       }
     },
     "widgets": {
-      "file_path": "输入文件路径，留空则保存到output目录",
+      "file_path": "输入文件路径",
       "filename": "文件名（不含扩展名）",
       "extension": "文件扩展名",
       "exist_mode": "文件存在时的处理方式",
@@ -1687,6 +1688,97 @@
         "horizontal": "水平合并",
         "vertical": "垂直合并",
         "grid": "网格合并"
+      }
+    }
+  },
+  "VideoToMp4Node": {
+    "title": "视频转MP4节点",
+    "description": "将视频文件转换为MP4格式，支持质量预设、编码器选择、预设速度、音频设置等高级选项",
+    "inputs": {
+      "video_path": "视频路径",
+      "start_time": "起始时间",
+      "duration": "持续时间",
+      "fps": "帧率",
+      "quality": "视频质量",
+      "crf_value": "CRF值",
+      "preset": "预设速度",
+      "codec": "编码器",
+      "audio_bitrate": "音频比特率",
+      "audio_sample_rate": "音频采样率",
+      "copy_audio": "复制音频",
+      "output_resolution": "输出分辨率",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "output_path": "输出路径",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "video_path": "视频文件路径",
+      "start_time": "从视频的哪个时间点开始转换（秒）",
+      "duration": "转换的持续时间（秒），-1表示整个视频",
+      "fps": "输出视频的帧率",
+      "quality": "视频质量预设",
+      "crf_value": "恒定速率因子(CRF)，数值越小质量越高(0-51)，仅在自定义质量时生效",
+      "preset": "编码速度预设，越快质量可能越低",
+      "codec": "视频编码器选择",
+      "audio_bitrate": "音频比特率，影响音频质量",
+      "audio_sample_rate": "音频采样率，影响音频质量",
+      "copy_audio": "是否直接复制原音频流而不重新编码",
+      "output_resolution": "选择输出视频分辨率",
+      "custom_width": "自定义输出宽度（像素）",
+      "custom_height": "自定义输出高度（像素）",
+      "output_path": "输出文件的路径",
+      "output_filename": "输出文件的名称"
+    },
+    "outputs": {
+      "output_path": "输出文件路径",
+      "info": "转换信息"
+    },
+    "widget_values": {
+      "quality": {
+        "high": "高质量",
+        "medium": "中等质量",
+        "low": "低质量",
+        "custom": "自定义"
+      },
+      "preset": {
+        "ultrafast": "极速",
+        "superfast": "超快",
+        "veryfast": "很快",
+        "faster": "较快",
+        "fast": "快速",
+        "medium": "中等",
+        "slow": "慢速",
+        "slower": "较慢",
+        "veryslow": "很慢"
+      },
+      "codec": {
+        "libx264": "H.264",
+        "libx265": "H.265/HEVC"
+      },
+      "audio_bitrate": {
+        "128k": "128kbps (标准)",
+        "192k": "192kbps (高品质)",
+        "256k": "256kbps (高保真)",
+        "320k": "320kbps (最高品质)"
+      },
+      "audio_sample_rate": {
+        "original": "原始采样率",
+        "22050": "22050Hz",
+        "44100": "44100Hz",
+        "48000": "48000Hz",
+        "96000": "96000Hz"
+      },
+      "output_resolution": {
+        "original": "原始分辨率",
+        "custom": "自定义",
+        "320x240": "320x240 (低清)",
+        "640x480": "640x480 (标准)",
+        "1280x720": "1280x720 (高清)",
+        "1920x1080": "1920x1080 (全高清)",
+        "2560x1440": "2560x1440 (2K)",
+        "3840x2160": "3840x2160 (4K)",
+        "7680x4320": "7680x4320 (8K)"
       }
     }
   }

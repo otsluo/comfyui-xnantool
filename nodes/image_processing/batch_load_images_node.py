@@ -189,7 +189,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BatchLoadImagesNode": "批量加载图片-【Beta】"
+    "BatchLoadImagesNode": "批量加载图片"
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
