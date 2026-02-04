@@ -808,6 +808,7 @@
     "outputs": {
       "images": "图片张量",
       "filenames": "文件名列表",
+      "filenames_without_extension": "无扩展名的文件名列表",
       "count": "图片数量"
     },
     "widget_values": {
@@ -1653,6 +1654,40 @@
       "filenames": "文件名",
       "videos": "视频",
       "audios": "音频"
+    }
+  },
+  "ImageMergeNode": {
+    "title": "图片合并",
+    "description": "图片合并节点 - 将多张图片合并成一张图片，支持多种合并方式：水平合并、垂直合并、网格合并，网格合并支持自定义列数",
+    "inputs": {
+      "operation": "合并方式",
+      "resize_to_same_size": "调整为相同尺寸",
+      "image1": "图片1",
+      "image2": "图片2",
+      "image3": "图片3",
+      "image4": "图片4",
+      "image5": "图片5",
+      "image6": "图片6",
+      "image7": "图片7",
+      "image8": "图片8",
+      "image9": "图片9",
+      "image10": "图片10",
+      "columns": "网格列数"
+    },
+    "widgets": {
+      "operation": "合并方式（水平、垂直或网格）",
+      "resize_to_same_size": "是否将所有图片调整为相同尺寸",
+      "columns": "网格列数，设置为0时自动计算最优列数"
+    },
+    "outputs": {
+      "merged_image": "合并后的图片"
+    },
+    "widget_values": {
+      "operation": {
+        "horizontal": "水平合并",
+        "vertical": "垂直合并",
+        "grid": "网格合并"
+      }
     }
   }
 }

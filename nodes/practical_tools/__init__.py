@@ -23,6 +23,7 @@ from .image_encrypt_basic_node import ImageEncryptNode
 from .image_encrypt_advanced_node import ImageEncryptNodeAdvanced
 
 
+
 # 节点类映射
 NODE_CLASS_MAPPINGS = {
     "ToggleValueNode": ToggleValueNode,
@@ -41,6 +42,7 @@ NODE_CLASS_MAPPINGS = {
     "GetCurrentTimeNode": GetCurrentTimeNode,
     "ImageEncryptNode": ImageEncryptNode,
     "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
+
 
 }
 

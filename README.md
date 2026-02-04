@@ -116,14 +116,9 @@ Ollama类节点集成了Ollama大语言模型服务，提供了连接配置、�
 
 ## 📝 版本信息
 - **当前版本**: v0.6.12
-- **更新日期**: 2026年1月17日
+- **更新日期**: 2026年2月4日
 - **更新日志**: 
-  - 优化 TextToExcelNode：添加文件名冲突解决方案（覆盖、递增、跳过）
-  - 优化 SaveImageNode：改进工作流信息保存机制，增加图像输出端口
-  - 新增 SaveTextNode：保存文本文件功能
-  - 新增 MarkdownToExcelNode：MD转Excel功能
-  - 新增实用工具节点：ToggleValueNode、StringMergeNode、RandomExecutionNode等
-  - 新增 GetCurrentTimeNode：获取当前时间戳功能 
+
 
 ## 📞 联系方式
 如有任何问题或建议，欢迎联系我们！

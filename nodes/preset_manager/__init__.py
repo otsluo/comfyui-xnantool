@@ -5,6 +5,7 @@ from .size_presets_node import SizeSelector
 from .image_video_prompt_presets_node import ImageVideoPromptSelector, ImageVideoPromptManager, PresetImageUploadNode
 from .random_prompt_generator_group_node import RandomPromptGeneratorGroupNode, RandomPromptGeneratorNode
 
+
 # 定义节点映射
 NODE_CLASS_MAPPINGS = {
     "SizeSelector": SizeSelector,

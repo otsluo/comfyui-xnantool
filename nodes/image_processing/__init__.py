@@ -14,6 +14,9 @@ from .rectangle_converter_node import RectangleConverter
 from .create_image_node import CreateImageNode
 from .batch_rename_images_by_md5_node import BatchRenameImagesByMD5Node
 from .batch_image_scaler_node import BatchImageScalerNode
+from .image_merge_node import ImageMergeNode
+
+
 
 # 定义节点映射
 NODE_CLASS_MAPPINGS = {
@@ -30,13 +33,14 @@ NODE_CLASS_MAPPINGS = {
     "CreateImageNode": CreateImageNode,
     "BatchRenameImagesByMD5Node": BatchRenameImagesByMD5Node,
     "BatchImageScalerNode": BatchImageScalerNode,
+    "ImageMergeNode": ImageMergeNode,
 }
 
 # 定义节点显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadImageNode": "加载图像-【Beta】",
     "LoadImagePathNode": "路径图片加载",
-    "BatchLoadImagesNode": "批量加载图片-【Beta】",
+    "BatchLoadImagesNode": "批量加载图片",
     "ImageFormatConverterNode": "图像格式转换器",
     "BatchImageFormatConverterNode": "批量图像格式转换器",
     "Imageencodinggeneration": "图片编码生成",
@@ -47,6 +51,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "CreateImageNode": "创建图像",
     "BatchRenameImagesByMD5Node": "批量重命名图片(MD5)",
     "BatchImageScalerNode": "批量图像缩放",
+    "ImageMergeNode": "图片合并",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

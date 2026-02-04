@@ -1,0 +1,17 @@
+{
+    "QwenMultiangleCameraNode": {
+        "title": "Qwen多角度相机",
+        "description": "3D相机角度控制节点，提供3D场景来调整相机角度并输出格式化的提示词字符串",
+        "inputs": {
+            "horizontal_angle": "水平角度",
+            "vertical_angle": "垂直角度",
+            "zoom": "缩放",
+            "default_prompts": "默认提示词",
+            "camera_view": "相机视图",
+            "image": "图像"
+        },
+        "outputs": {
+            "prompt": "提示词"
+        }
+    }
+}
