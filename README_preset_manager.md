@@ -6,9 +6,9 @@
 
 ### 1. 尺寸预设节点 (SizeSelector)
 - **位置**: `XnanTool/预设`
-- **功能**: 提供常用图像尺寸的快速选择，支持SD 1.5、SDXL、Flux和Qwen-Image等模型的推荐尺寸
+- **功能**: 提供常用图像尺寸的快速选择，格式为'比例-名称：宽x高'，支持SD 1.5、SDXL、Flux和Qwen-Image等模型的推荐尺寸
 - **输入参数**:
-  - `size_preset` (STRING): 尺寸预设选项，包括各种常用尺寸及其标签
+  - `size_preset` (STRING): 尺寸预设选项，包括各种常用尺寸及其标签，格式为'比例-名称：宽x高'
 - **输出参数**:
   - `width` (INT): 图像宽度
   - `height` (INT): 图像高度
@@ -70,7 +70,16 @@
   - `prompt` (STRING): 生成的随机提示词
 - **适用场景**: 当需要生成多样化的提示词组合时使用，可以根据不同分类随机选择提示词
 
-### 6. 随机提示词生成器节点 (RandomPromptGeneratorNode)
+### 6. 比例预设节点 (AspectRatioPresetSelector)
+- **位置**: `XnanTool/预设`
+- **功能**: 提供常用比例的快速选择，支持正方形、竖屏、横屏等多种比例
+- **输入参数**:
+  - `aspect_ratio_preset` (STRING): 比例预设选项，包括各种常用比例
+- **输出参数**:
+  - `aspect_ratio` (STRING): 比例
+- **适用场景**: 当需要快速选择标准比例时使用，特别适用于不同显示设备和社交媒体平台的推荐比例
+
+### 7. 随机提示词生成器节点 (RandomPromptGeneratorNode)
 - **位置**: `XnanTool/预设`
 - **功能**: 在手动输入的提示词中随机输出指定个数的提示词
 - **输入参数**:

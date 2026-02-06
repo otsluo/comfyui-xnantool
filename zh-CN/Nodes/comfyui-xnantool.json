@@ -371,7 +371,7 @@
   },
   "SizeSelector": {
     "title": "尺寸预设",
-    "description": "提供常用图像尺寸的快速选择",
+    "description": "提供常用图像尺寸的快速选择，格式为'比例-名称：宽x高'",
     "inputs": {
       "size_preset": "尺寸预设"
     },
@@ -680,6 +680,35 @@
       "caption": "视频描述"
     }
   },
+
+  "AspectRatioPresetSelector": {
+    "title": "比例预设",
+    "description": "提供常用比例的快速选择",
+    "inputs": {
+      "aspect_ratio_preset": "比例预设"
+    },
+    "widgets": {
+      "aspect_ratio_preset": "比例预设"
+    },
+    "outputs": {
+      "aspect_ratio": "比例"
+    }
+  },
+
+  "ResolutionPresetSelector": {
+    "title": "分辨率预设",
+    "description": "提供常见分辨率名称的快速选择，包括1K、2K、4K和8K等标准分辨率名称",
+    "inputs": {
+      "resolution_preset": "分辨率预设"
+    },
+    "widgets": {
+      "resolution_preset": "分辨率预设（1K、2K、4K、8K等）"
+    },
+    "outputs": {
+      "resolution": "分辨率"
+    }
+  },
+
   "ModelscopeApiTextGenerationNode": {
     "title": "魔搭API文本生成节点",
     "description": "使用魔搭API生成文本内容",

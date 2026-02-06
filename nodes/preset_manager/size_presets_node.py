@@ -3,33 +3,36 @@ import os
 
 # 定义AI生图常用尺寸列表，每个尺寸都标注比例
 DEFAULT_SIZE_PRESETS = [
-    # SD 1.5 推荐尺寸
-    ["512x512", "SD 1.5 - 正方形 (1:1)"],
-    ["512x768", "SD 1.5 - 竖屏 (2:3)"],
-    ["768x512", "SD 1.5 - 横屏 (3:2)"],
-    ["768x768", "SD 1.5 - 大正方形 (1:1)"],
+    # 正方形 (1:1)
+    ["1:1-正方形：512x512", "512x512"],
+    ["1:1-大正方形：768x768", "768x768"],
+    ["1:1-高清正方形：1024x1024", "1024x1024"],
+    ["1:1-Qwen正方形：1328x1328", "1328x1328"],
+    ["1:1-超高清正方形：2048x2048", "2048x2048"],
     
-    # SDXL 推荐尺寸
-    ["1024x1024", "SDXL - 正方形 (1:1)"],
-    ["1152x896", "SDXL - 竖屏 (4:3)"],
-    ["896x1152", "SDXL - 横屏 (3:4)"],
-
-
-    # Flux 推荐尺寸
-    ["1024x1024", "Flux - 标准正方形 (1:1)"],
-    ["1600x1200", "Flux - 高清横屏 (4:3)"],
-    ["1200x1600", "Flux - 高清竖屏 (3:4)"],
-    ["2048x2048", "Flux - 超高清正方形 (1:1)"],
+    # 2:3 比例 (竖屏)
+    ["2:3-竖屏：512x768", "512x768"],
+    ["2:3-高清竖屏：1056x1584", "1056x1584"],
     
-
-    # Qwen-Image 推荐尺寸
-    ["1328x1328", "Qwen-Image - 正方形 (1:1)"],
-    ["1664x928", "Qwen-Image - 横屏 (16:9)"],
-    ["928x1664", "Qwen-Image - 竖屏 (9:16)"],
-    ["1472x1140", "Qwen-Image - 横屏 (4:3)"],
-    ["1140x1472", "Qwen-Image - 竖屏 (3:4)"],
-    ["1584x1056", "Qwen-Image - 横屏 (3:2)"],
-    ["1056x1584", "Qwen-Image - 竖屏 (2:3)"],
+    # 3:2 比例 (横屏)
+    ["3:2-横屏：768x512", "768x512"],
+    ["3:2-高清横屏：1584x1056", "1584x1056"],
+    
+    # 3:4 比例 (竖屏)
+    ["3:4-中等竖屏：896x1152", "896x1152"],
+    ["3:4-高清竖屏：1140x1472", "1140x1472"],
+    ["3:4-超清竖屏：1200x1600", "1200x1600"],
+    
+    # 4:3 比例 (横屏)
+    ["4:3-中等横屏：1152x896", "1152x896"],
+    ["4:3-高清横屏：1472x1140", "1472x1140"],
+    ["4:3-超清横屏：1600x1200", "1600x1200"],
+    
+    # 16:9 比例 (横屏)
+    ["16:9-宽屏：1664x928", "1664x928"],
+    
+    # 9:16 比例 (竖屏)
+    ["9:16-竖屏：928x1664", "928x1664"],
 ]
 
 # 尺寸配置相关函数
@@ -49,7 +52,7 @@ def load_size_config():
         }
 
 class SizeSelector:
-    """尺寸选择器节点 - 提供常用图像尺寸的快速选择"""
+    """尺寸选择器节点 - 提供常用图像尺寸的快速选择，格式为'比例-名称：宽x高'"""
     def __init__(self):
         pass
     
@@ -58,18 +61,16 @@ class SizeSelector:
         config = load_size_config()
         sizes = config.get("sizes", DEFAULT_SIZE_PRESETS)
         
-        # 提取所有尺寸字符串和显示名称
-        size_strings = [size[0] for size in sizes]
-        size_labels = {size[0]: size[1] for size in sizes}
+        # 提取所有标签作为选项
+        size_options = [size[0] for size in sizes]
         
         # 返回输入类型配置
         return {
             "required": {
-                "size_preset": (size_strings, {
-                    "default": size_strings[0] if size_strings else "",
-                    "labels": size_labels,
+                "size_preset": (size_options, {
+                    "default": size_options[0] if size_options else "",
                     "label": "尺寸预设",
-                    "description": "选择预设的图像尺寸，格式为'宽x高'"
+                    "description": "选择预设的图像尺寸，格式为'比例-名称：宽x高'"
                 })
             }
         }
@@ -81,8 +82,17 @@ class SizeSelector:
     
     def get_size(self, size_preset):
         """解析选中的尺寸预设，返回宽度和高度"""
+        config = load_size_config()
+        sizes = config.get("sizes", DEFAULT_SIZE_PRESETS)
+        
+        # 创建标签到尺寸的映射
+        size_map = {size[0]: size[1] for size in sizes}
+        
+        # 获取对应的尺寸字符串
+        size_str = size_map.get(size_preset, "512x512")
+        
         try:
-            width, height = map(int, size_preset.split('x'))
+            width, height = map(int, size_str.split('x'))
             return (width, height)
         except ValueError:
             # 如果解析失败，返回默认值
