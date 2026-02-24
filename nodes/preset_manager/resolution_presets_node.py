@@ -3,9 +3,13 @@ import os
 
 # 定义常见分辨率预设列表
 DEFAULT_RESOLUTION_PRESETS = [
+    # 1K分辨率
     "1K",
+    # 2K分辨率
     "2K",
+    # 4K分辨率
     "4K",
+    # 8K分辨率
     "8K",
 ]
 

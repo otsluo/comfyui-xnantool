@@ -16,6 +16,7 @@ from .save_image_node import SaveImageNode
 from .save_text_node import SaveTextNode
 from .text_to_excel_node import TextToExcelNode
 from .get_current_time_node import GetCurrentTimeNode
+from .save_video_node import SaveVideoNode
 
 
 # 新增导入的节点
@@ -40,6 +41,7 @@ NODE_CLASS_MAPPINGS = {
     "SaveTextNode": SaveTextNode,
     "TextToExcelNode": TextToExcelNode,
     "GetCurrentTimeNode": GetCurrentTimeNode,
+    "SaveVideoNode": SaveVideoNode,
     "ImageEncryptNode": ImageEncryptNode,
     "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
 
@@ -48,22 +50,23 @@ NODE_CLASS_MAPPINGS = {
 
 # 节点显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ToggleValueNode": "切换值节点",
+    "ToggleValueNode": "切换值",
     "ToggleAnyNode": "切换任意值",
     "ToggleAnyOutputNode": "切换任意值（输出）",
     "ToggleStringOutputNode": "切换字符串（输出）",
-    "StringMergeNode": "字符串合并节点",
+    "StringMergeNode": "字符串合并",
     "RandomExecutionNode": "随机执行",
     "BatchCopyFilesNode": "批量复制文件",
     "TextInputNode": "文本输入",
     "StringToAnyNode": "字符串到任意类型",
     "MarkdownToExcelNode": "MD转Excel",
-    "SaveImageNode": "保存图片节点",
-    "SaveTextNode": "保存文本节点",
-    "TextToExcelNode": "文本转Excel节点",
-    "GetCurrentTimeNode": "获取当前时间节点",
-    "ImageEncryptNode": "图片加密基础节点",
-    "ImageEncryptNodeAdvanced": "图片加密高级节点",
+    "SaveImageNode": "保存图片",
+    "SaveTextNode": "保存文本",
+    "TextToExcelNode": "文本转Excel",
+    "GetCurrentTimeNode": "获取当前时间",
+    "SaveVideoNode": "保存视频",
+    "ImageEncryptNode": "图片加密基础",
+    "ImageEncryptNodeAdvanced": "图片加密高级",
 
 }
 

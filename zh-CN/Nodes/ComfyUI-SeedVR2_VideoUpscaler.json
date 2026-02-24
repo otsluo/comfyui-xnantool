@@ -1,0 +1,79 @@
+{
+    "SeedVR2VideoUpscaler": {
+        "title": "SeedVR2 视频超分辨率",
+        "description": "使用扩散模型进行高质量视频超分辨率处理，支持多种模型变体、自适应VRAM管理、高级数据类型兼容性、优化的推理管道和实时进度报告。",
+        "inputs": {
+            "image": "输入视频帧",
+            "dit": "DiT模型配置",
+            "vae": "VAE模型配置",
+            "seed": "随机种子",
+            "resolution": "目标分辨率",
+            "max_resolution": "最大分辨率",
+            "batch_size": "批次大小",
+            "uniform_batch_size": "统一批次大小",
+            "temporal_overlap": "时间重叠",
+            "prepend_frames": "前置帧",
+            "color_correction": "色彩校正",
+            "input_noise_scale": "输入噪声缩放",
+            "latent_noise_scale": "潜在空间噪声缩放",
+            "offload_device": "卸载设备",
+            "enable_debug": "启用调试"
+        },
+        "outputs": {
+            "image": "超分辨率视频帧"
+        }
+    },
+    "SeedVR2LoadDiTModel": {
+        "title": "SeedVR2 加载 DiT 模型",
+        "description": "加载并配置SeedVR2 DiT（扩散Transformer）模型，支持BlockSwap内存优化、模型缓存、多GPU卸载和torch.compile加速。",
+        "inputs": {
+            "model": "DiT模型",
+            "device": "推理设备",
+            "blocks_to_swap": "交换块数量",
+            "swap_io_components": "交换I/O组件",
+            "offload_device": "卸载设备",
+            "cache_model": "缓存模型",
+            "attention_mode": "注意力计算模式",
+            "torch_compile_args": "Torch编译参数"
+        },
+        "outputs": {
+            "SEEDVR2_DIT": "DiT模型配置"
+        }
+    },
+    "SeedVR2LoadVAEModel": {
+        "title": "SeedVR2 加载 VAE 模型",
+        "description": "加载并配置SeedVR2 VAE（变分自编码器）模型，支持分块处理、模型缓存、多GPU卸载和torch.compile加速。",
+        "inputs": {
+            "model": "VAE模型",
+            "device": "推理设备",
+            "encode_tiled": "启用编码分块",
+            "encode_tile_size": "编码分块大小",
+            "encode_tile_overlap": "编码分块重叠",
+            "decode_tiled": "启用解码分块",
+            "decode_tile_size": "解码分块大小",
+            "decode_tile_overlap": "解码分块重叠",
+            "tile_debug": "分块调试",
+            "offload_device": "卸载设备",
+            "cache_model": "缓存模型",
+            "torch_compile_args": "Torch编译参数"
+        },
+        "outputs": {
+            "SEEDVR2_VAE": "VAE模型配置"
+        }
+    },
+    "SeedVR2TorchCompileSettings": {
+        "title": "SeedVR2 Torch 编译设置",
+        "description": "配置SeedVR2 torch.compile优化，为DiT提供20-40%的速度提升，为VAE提供15-25%的速度提升。以更长的首次运行编译时间换取更快的推理速度。",
+        "inputs": {
+            "backend": "编译后端",
+            "mode": "优化模式",
+            "fullgraph": "全图编译",
+            "dynamic": "动态形状",
+            "dynamo_cache_size_limit": "Dynamo缓存大小限制",
+            "dynamo_recompile_limit": "Dynamo重编译限制"
+        },
+        "outputs": {
+            "TORCH_COMPILE_ARGS": "Torch编译参数"
+        }
+    }
+}

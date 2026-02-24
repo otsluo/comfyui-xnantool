@@ -650,6 +650,30 @@
       }
     }
   },
+
+  "SaveVideoNode": {
+    "title": "保存视频",
+    "description": "将图像序列保存为视频文件",
+    "inputs": {
+      "images": "图像序列",
+      "filename_prefix": "文件名前缀",
+      "fps": "帧率",
+      "video_format": "视频格式",
+      "codec": "编码器",
+      "output_path": "输出路径"
+    },
+    "widgets": {
+      "filename_prefix": "视频文件名前缀",
+      "fps": "视频帧率（1-60）",
+      "video_format": "选择视频格式（mp4/avi/mov/mkv）",
+      "codec": "选择视频编码器",
+      "output_path": "视频输出路径（留空使用默认输出路径）"
+    },
+    "outputs": {
+      "video_path": "视频路径"
+    }
+  },
+
   "ModelscopeApiImageCaptionNode": {
     "title": "魔搭API图片反推节点",
     "description": "使用魔搭API对图片进行反推描述",
@@ -702,7 +726,7 @@
       "resolution_preset": "分辨率预设"
     },
     "widgets": {
-      "resolution_preset": "分辨率预设（1K、2K、4K、8K等）"
+      "resolution_preset": "分辨率预设"
     },
     "outputs": {
       "resolution": "分辨率"
@@ -1440,7 +1464,7 @@
     }
   },
   "StringMergeNode": {
-    "title": "字符串合并节点",
+    "title": "字符串合并",
     "description": "将多个字符串合并为一个字符串的节点，支持自定义分隔符",
     "inputs": {
       "string1": "字符串1",
@@ -1809,6 +1833,24 @@
         "3840x2160": "3840x2160 (4K)",
         "7680x4320": "7680x4320 (8K)"
       }
+    }
+  },
+  "DimensionMultiplierNode": {
+    "title": "尺寸倍数",
+    "description": "根据倍数调整输入的宽度和高度值",
+    "inputs": {
+      "multiplier": "倍数",
+      "width": "宽度",
+      "height": "高度"
+    },
+    "widgets": {
+      "multiplier": "尺寸调整倍数",
+      "width": "输入的宽度值",
+      "height": "输入的高度值"
+    },
+    "outputs": {
+      "width": "输出宽度",
+      "height": "输出高度"
     }
   }
 }

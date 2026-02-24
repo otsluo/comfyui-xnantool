@@ -3,6 +3,9 @@ import os
 
 # 定义常用比例预设列表
 DEFAULT_ASPECT_RATIO_PRESETS = [
+    # 自动
+    "auto",
+    
     # 正方形
     "1:1",
     
@@ -18,10 +21,10 @@ DEFAULT_ASPECT_RATIO_PRESETS = [
     
     # 电影比例
     "21:9",
-    "2:1",
     
     # 特殊比例
     "1:2",
+    "2:1",
     "5:4",
     "4:5",
 ]

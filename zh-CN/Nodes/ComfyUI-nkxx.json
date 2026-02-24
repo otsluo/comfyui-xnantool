@@ -1,0 +1,285 @@
+{
+    "GrsaiNanoBanana": {
+        "title": "Grsai香蕉图像生成",
+        "description": "使用Grsai API生成香蕉模型图像，支持多图输入",
+        "inputs": {
+            "prompt": "提示词",
+            "model": "模型",
+            "concurrency": "并发数",
+            "aspect_ratio": "宽高比",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4",
+            "image_5": "图像5",
+            "image_6": "图像6",
+            "image_7": "图像7",
+            "image_8": "图像8"
+        },
+        "outputs": {
+            "image": "图像",
+            "status": "状态"
+        }
+    },
+    "GrsaiNanoBananaPro": {
+        "title": "Grsai香蕉专业版",
+        "description": "使用专业版香蕉模型生成图像，支持更高分辨率",
+        "inputs": {
+            "prompt": "提示词",
+            "model": "模型",
+            "concurrency": "并发数",
+            "aspect_ratio": "宽高比",
+            "image_size": "图像尺寸",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4",
+            "image_5": "图像5",
+            "image_6": "图像6",
+            "image_7": "图像7",
+            "image_8": "图像8",
+            "image_9": "图像9",
+            "image_10": "图像10",
+            "image_11": "图像11",
+            "image_12": "图像12",
+            "image_13": "图像13",
+            "image_14": "图像14"
+        },
+        "outputs": {
+            "image": "图像",
+            "status": "状态"
+        }
+    },
+    "GrsaiNanoBananaBatch": {
+        "title": "Grsai香蕉批量生成",
+        "description": "从CSV/Excel文件批量生成图像",
+        "inputs": {
+            "file_path": "文件路径",
+            "column_name": "列名",
+            "prompt_prefix": "提示词前缀",
+            "model": "模型",
+            "concurrency": "并发数",
+            "max_count": "最大数量",
+            "aspect_ratio": "宽高比",
+            "image_size": "图像尺寸",
+            "executions_per_prompt": "单提示词执行次数",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4"
+        },
+        "outputs": {
+            "images_batch": "批量图像",
+            "status": "状态"
+        }
+    },
+    "GrsaiNanoBananaSaveWithPrompt": {
+        "title": "Grsai香蕉带提示词保存",
+        "description": "批量生成并保存图像，支持自定义文件名",
+        "inputs": {
+            "file_path": "文件路径",
+            "column_name": "列名",
+            "prompt_prefix": "提示词前缀",
+            "filename_prefix": "文件名前缀",
+            "rm_prompt_prefix": "移除提示词前缀",
+            "rm_prompt_suffix": "移除提示词后缀",
+            "model": "模型",
+            "concurrency": "并发数",
+            "max_count": "最大数量",
+            "aspect_ratio": "宽高比",
+            "image_size": "图像尺寸",
+            "ui_display_mode": "UI显示模式",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4"
+        },
+        "outputs": {
+            "image": "图像",
+            "status": "状态",
+            "filenames": "文件名"
+        }
+    },
+    "GrsaiLLMWriter": {
+        "title": "Grsai语言模型生成",
+        "description": "使用Gemini模型生成文本内容",
+        "inputs": {
+            "model": "模型",
+            "main_prompt": "主要提示词",
+            "system_prompt": "系统提示词",
+            "output_filename": "输出文件名",
+            "column_name": "列名",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3"
+        },
+        "outputs": {
+            "file_path": "文件路径",
+            "status": "状态"
+        }
+    },
+    "SaveImageByFilename": {
+        "title": "按文件名保存图像",
+        "description": "根据提供的文件名列表保存图像",
+        "inputs": {
+            "images": "图像",
+            "filenames": "文件名",
+            "output_path": "输出路径",
+            "suffix": "后缀"
+        }
+    },
+    "GrsaiNanoBananaBatchDir": {
+        "title": "Grsai香蕉文件夹批量处理",
+        "description": "处理文件夹中的图片并批量生成",
+        "inputs": {
+            "directory_path": "目录路径",
+            "csv_file_path": "CSV文件路径",
+            "column_name": "CSV列名",
+            "model": "模型",
+            "max_concurrent_files": "同时处理文件数",
+            "aspect_ratio": "宽高比",
+            "image_size": "图像尺寸",
+            "executions_per_prompt": "单条Prompt执行次数",
+            "fixed_prompt": "固定提示词",
+            "api_key": "API密钥"
+        },
+        "outputs": {
+            "images_preview_15": "图像预览",
+            "status_report": "状态报告"
+        }
+    },
+    "NanoBananaAsyncSubmit": {
+        "title": "香蕉异步提交",
+        "description": "异步提交香蕉图像生成任务",
+        "inputs": {
+            "prompt": "提示词",
+            "model": "模型",
+            "image_size": "图像尺寸",
+            "concurrency": "并发数",
+            "aspect_ratio": "宽高比",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4",
+            "image_5": "图像5",
+            "image_6": "图像6",
+            "image_7": "图像7",
+            "image_8": "图像8",
+            "image_9": "图像9",
+            "image_10": "图像10",
+            "image_11": "图像11",
+            "image_12": "图像12",
+            "image_13": "图像13",
+            "image_14": "图像14"
+        },
+        "outputs": {
+            "status": "状态"
+        }
+    },
+    "NanoBananaAsyncBatchSubmit": {
+        "title": "香蕉异步批量提交",
+        "description": "从CSV/Excel文件异步批量提交任务",
+        "inputs": {
+            "file_path": "文件路径",
+            "column_name": "列名",
+            "prompt_prefix": "提示词前缀",
+            "model": "模型",
+            "image_size": "图像尺寸",
+            "aspect_ratio": "宽高比",
+            "executions_per_prompt": "单提示词执行次数",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4"
+        },
+        "outputs": {
+            "status": "状态"
+        }
+    },
+    "NanoBananaAsyncQuery": {
+        "title": "香蕉异步查询下载",
+        "description": "查询并下载异步任务的结果",
+        "inputs": {
+            "api_key": "API密钥"
+        },
+        "outputs": {
+            "image": "图像",
+            "status": "状态"
+        }
+    },
+    "GrsaiGptImage": {
+        "title": "Grsai GPT图像生成",
+        "description": "使用GPT图像模型生成图像",
+        "inputs": {
+            "prompt": "提示词",
+            "size": "尺寸",
+            "variants": "单次生成数量",
+            "concurrency": "并发任务数",
+            "api_key": "API密钥",
+            "image_1": "图像1",
+            "image_2": "图像2",
+            "image_3": "图像3",
+            "image_4": "图像4",
+            "image_5": "图像5"
+        },
+        "outputs": {
+            "images": "图像",
+            "status": "状态"
+        }
+    },
+    "Sora2Generator_Grsai": {
+        "title": "Sora2视频生成",
+        "description": "使用Sora-2模型生成视频",
+        "inputs": {
+            "prompt": "提示词",
+            "aspect_ratio": "宽高比",
+            "duration": "时长",
+            "size": "尺寸",
+            "api_key": "API密钥",
+            "image": "图像",
+            "remixTargetId": "续作目标ID"
+        },
+        "outputs": {
+            "video": "视频",
+            "video_url": "视频URL",
+            "response": "响应"
+        }
+    },
+    "Sora2UploadCharacter_Grsai": {
+        "title": "Sora2上传创建角色",
+        "description": "上传视频创建Sora2角色",
+        "inputs": {
+            "video_path": "视频路径",
+            "start_time": "开始时间",
+            "end_time": "结束时间",
+            "api_key": "API密钥",
+            "备注": "备注"
+        },
+        "outputs": {
+            "character_id": "角色ID",
+            "status": "状态"
+        }
+    },
+    "Sora2FromPidCharacter_Grsai": {
+        "title": "Sora2从PID创建角色",
+        "description": "从视频PID创建Sora2角色",
+        "inputs": {
+            "pid": "PID",
+            "start_time": "开始时间",
+            "end_time": "结束时间",
+            "api_key": "API密钥",
+            "备注": "备注"
+        },
+        "outputs": {
+            "character_id": "角色ID",
+            "status": "状态"
+        }
+    }
+}

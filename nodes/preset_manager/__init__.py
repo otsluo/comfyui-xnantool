@@ -6,6 +6,7 @@ from .image_video_prompt_presets_node import ImageVideoPromptSelector, ImageVide
 from .random_prompt_generator_group_node import RandomPromptGeneratorGroupNode, RandomPromptGeneratorNode
 from .resolution_presets_node import ResolutionPresetSelector
 from .aspect_ratio_presets_node import AspectRatioPresetSelector
+from .dimension_multiplier_node import DimensionMultiplierNode
 
 
 # 定义节点映射
@@ -18,6 +19,7 @@ NODE_CLASS_MAPPINGS = {
     "RandomPromptGeneratorNode": RandomPromptGeneratorNode,
     "ResolutionPresetSelector": ResolutionPresetSelector,
     "AspectRatioPresetSelector": AspectRatioPresetSelector,
+    "DimensionMultiplierNode": DimensionMultiplierNode,
 }
 
 # 定义节点显示名称映射
@@ -30,6 +32,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "RandomPromptGeneratorNode": "随机提示词生成器",
     "ResolutionPresetSelector": "分辨率预设",
     "AspectRatioPresetSelector": "比例预设",
+    "DimensionMultiplierNode": "尺寸倍数",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
