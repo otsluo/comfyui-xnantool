@@ -49,8 +49,8 @@ class VideoToAudioNode:
             }
         }
     
-    RETURN_TYPES = ("STRING", "STRING")
-    RETURN_NAMES = ("audio_file_path", "status_message")
+    RETURN_TYPES = ("STRING", "STRING", "AUDIO")
+    RETURN_NAMES = ("audio_file_path", "status_message", "audio")
     FUNCTION = "extract_audio"
     CATEGORY = "XnanTool/媒体处理"
     OUTPUT_NODE = True
@@ -123,16 +123,63 @@ class VideoToAudioNode:
             # 使用ffmpeg提取音频
             success = self._extract_audio_with_ffmpeg(video_path, output_file, quality_params)
             
+            # 加载音频数据
+            audio_data = self._load_audio_data(output_file)
+            
             if success:
                 message = f"✅ 音频提取成功！\n文件路径: {output_file}\n格式: {output_format}\n质量: {audio_quality}"
-                return (output_file, message)
+                return (output_file, message, audio_data)
             else:
-                return ("", "❌ 音频提取失败，请检查日志信息")
+                return ("", "❌ 音频提取失败，请检查日志信息", None)
                 
         except Exception as e:
             error_msg = f"❌ 处理过程中出现错误: {str(e)}"
             print(error_msg)
-            return ("", error_msg)
+            return ("", error_msg, None)
+    
+    def _load_audio_data(self, audio_file_path):
+        """
+        从音频文件中加载音频数据
+        
+        Args:
+            audio_file_path: 音频文件路径
+            
+        Returns:
+            dict: ComfyUI音频格式字典 {'waveform': tensor, 'sample_rate': int}
+        """
+        try:
+            import soundfile as sf
+            
+            # 读取音频文件
+            audio_data, sample_rate = sf.read(audio_file_path)
+            
+            # 转换为 torch 张量
+            audio_tensor = torch.from_numpy(audio_data).float()
+            
+            # 确保音频是2D张量 (C, L)
+            if audio_tensor.dim() == 1:
+                audio_tensor = audio_tensor.unsqueeze(0)
+            elif audio_tensor.dim() == 2:
+                if audio_tensor.shape[0] > audio_tensor.shape[1]:
+                    audio_tensor = audio_tensor.transpose(0, 1)
+            
+            # 归一化到 [-1, 1]
+            if audio_tensor.max() > 1.0 or audio_tensor.min() < -1.0:
+                audio_tensor = torch.clamp(audio_tensor, -1.0, 1.0)
+            
+            # 返回ComfyUI音频格式字典
+            audio_dict = {
+                'waveform': audio_tensor.unsqueeze(0),
+                'sample_rate': sample_rate
+            }
+            
+            return audio_dict
+            
+        except Exception as e:
+            print(f"[VideoToAudioNode] 加载音频数据时发生错误: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            return None
     
     def _is_video_file(self, file_path):
         """检查文件是否为视频格式"""

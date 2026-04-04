@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class LoadImagePathNode:
     """
-    路径图片加载节点
+    加载图片路径节点
     从指定文件路径加载图像文件并转换为ComfyUI可用的格式
     """
     
@@ -22,17 +22,16 @@ class LoadImagePathNode:
         return {
             "required": {
                 "image_path": ("STRING", {
-                    "label": "图片路径",
-                    "description": "输入图片的完整文件路径",
                     "default": "",
-                    "multiline": True,
-                    "dynamicPrompts": False
-                })
+                    "multiline": False,
+                    "label": "图片路径",
+                    "description": "图片文件的完整路径"
+                }),
             }
         }
     
-    RETURN_TYPES = ("IMAGE", "STRING")
-    RETURN_NAMES = ("image", "image_path")
+    RETURN_TYPES = ("IMAGE", "STRING", "STRING")
+    RETURN_NAMES = ("image", "image_path", "image_name")
     FUNCTION = "load_image_from_path"
     CATEGORY = "XnanTool/图像处理"
     
@@ -42,17 +41,6 @@ class LoadImagePathNode:
         if os.path.exists(image_path):
             return os.path.getmtime(image_path)
         return 0
-
-    @classmethod
-    def VALIDATE_INPUTS(cls, image_path):
-        if not os.path.exists(image_path):
-            return "Invalid image file path: {}".format(image_path)
-        # 检查文件扩展名是否为支持的图像格式
-        supported_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.webp', '.tiff']
-        _, ext = os.path.splitext(image_path.lower())
-        if ext not in supported_extensions:
-            return "Unsupported image format: {}".format(ext)
-        return True
 
     def load_image_from_path(self, image_path):
         """
@@ -92,7 +80,10 @@ class LoadImagePathNode:
             logger.info(f"图像尺寸: {image.size}")
             logger.info(f"图像模式: {image.mode}")
             
-            return (image_tensor, image_path)
+            # 获取图片名称
+            image_name = os.path.basename(image_path)
+            
+            return (image_tensor, image_path, image_name)
             
         except Exception as e:
             logger.error(f"从路径加载图像过程中发生错误: {str(e)}")
@@ -104,7 +95,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LoadImagePathNode": "路径图片加载"
+    "LoadImagePathNode": "加载图片路径",
 }
 
 # 确保模块被正确导入

@@ -20,8 +20,14 @@ from .save_video_node import SaveVideoNode
 
 
 # 新增导入的节点
-from .image_encrypt_basic_node import ImageEncryptNode
-from .image_encrypt_advanced_node import ImageEncryptNodeAdvanced
+# from .image_encrypt_basic_node import ImageEncryptNode
+# from .image_encrypt_advanced_node import ImageEncryptNodeAdvanced
+from .list_folders_node import ListFoldersNode
+from .list_files_node import ListFilesNode
+from .create_folder_node import CreateFolderNode
+from .loop_generator_node import LoopGeneratorNode
+from .loop_generator_output_splitter_node import LoopGeneratorOutputSplitterNode
+from .counter_node import CounterNode
 
 
 
@@ -42,9 +48,14 @@ NODE_CLASS_MAPPINGS = {
     "TextToExcelNode": TextToExcelNode,
     "GetCurrentTimeNode": GetCurrentTimeNode,
     "SaveVideoNode": SaveVideoNode,
-    "ImageEncryptNode": ImageEncryptNode,
-    "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
-
+    # "ImageEncryptNode": ImageEncryptNode,
+    # "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
+    "ListFoldersNode": ListFoldersNode,
+    "ListFilesNode": ListFilesNode,
+    "CreateFolderNode": CreateFolderNode,
+    "LoopGeneratorNode": LoopGeneratorNode,
+    "LoopGeneratorOutputSplitterNode": LoopGeneratorOutputSplitterNode,
+    "CounterNode": CounterNode,
 
 }
 
@@ -65,11 +76,15 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TextToExcelNode": "文本转Excel",
     "GetCurrentTimeNode": "获取当前时间",
     "SaveVideoNode": "保存视频",
-    "ImageEncryptNode": "图片加密基础",
-    "ImageEncryptNodeAdvanced": "图片加密高级",
+    # "ImageEncryptNode": "图片加密基础",
+    # "ImageEncryptNodeAdvanced": "图片加密高级",
+    "ListFoldersNode": "列出文件夹",
+    "ListFilesNode": "列出文件",
+    "CreateFolderNode": "批量创建文件夹（支持多级）",
+    "LoopGeneratorNode": "循环生成器",
+    "LoopGeneratorOutputSplitterNode": "循环生成器输出转接",
+    "CounterNode": "计数器",
 
 }
 
-WEB_DIRECTORY = "./js"
-
-__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS', 'WEB_DIRECTORY']
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

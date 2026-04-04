@@ -7,6 +7,7 @@ from .random_prompt_generator_group_node import RandomPromptGeneratorGroupNode, 
 from .resolution_presets_node import ResolutionPresetSelector
 from .aspect_ratio_presets_node import AspectRatioPresetSelector
 from .dimension_multiplier_node import DimensionMultiplierNode
+from .video_size_preset_node import VideoSizePresetNode
 
 
 # 定义节点映射
@@ -20,6 +21,7 @@ NODE_CLASS_MAPPINGS = {
     "ResolutionPresetSelector": ResolutionPresetSelector,
     "AspectRatioPresetSelector": AspectRatioPresetSelector,
     "DimensionMultiplierNode": DimensionMultiplierNode,
+    "VideoSizePresetNode": VideoSizePresetNode,
 }
 
 # 定义节点显示名称映射
@@ -33,6 +35,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "ResolutionPresetSelector": "分辨率预设",
     "AspectRatioPresetSelector": "比例预设",
     "DimensionMultiplierNode": "尺寸倍数",
+    "VideoSizePresetNode": "视频尺寸预设",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

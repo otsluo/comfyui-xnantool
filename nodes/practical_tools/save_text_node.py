@@ -27,7 +27,7 @@ class SaveTextNode:
                 "file_path": ("STRING", {"default": "", "placeholder": "输入文件路径"}),
                 "filename": ("STRING", {"default": "ComfyUI"}),
                 "extension": (["txt", "csv", "md"], {"default": "txt"}),
-                "exist_mode": (["覆盖", "追加", "跳过"], {"default": "追加"}),
+                "exist_mode": (["覆盖", "直接追加", "换行追加", "跳过"], {"default": "换行追加"}),
             },
             "optional": {
                 "text_prefix": ("STRING", {"multiline": True, "default": "", "placeholder": "输入要添加到文本前的前缀"}),
@@ -84,11 +84,19 @@ class SaveTextNode:
                 # 直接覆盖
                 with open(file_path_full, 'w', encoding='utf-8') as f:
                     f.write(final_text)
-            elif exist_mode == "追加":
-                # 追加到现有内容，如果存在text_prefix则换行再追加
+            elif exist_mode == "直接追加":
+                # 直接追加到现有内容，不换行
                 with open(file_path_full, 'a', encoding='utf-8') as f:
                     if text_prefix:
-                        f.write('\n' + text_prefix)
+                        f.write(text_prefix)
+                    f.write(text)
+            elif exist_mode == "换行追加":
+                # 换行追加到现有内容
+                with open(file_path_full, 'a', encoding='utf-8') as f:
+                    f.write('\n')
+                    # 如果存在text_prefix则先写入前缀
+                    if text_prefix:
+                        f.write(text_prefix + '\n')
                     f.write(text)
             elif exist_mode == "跳过":
                 # 跳过，不保存

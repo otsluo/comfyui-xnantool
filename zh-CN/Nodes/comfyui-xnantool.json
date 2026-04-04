@@ -40,7 +40,7 @@
     }
   },
   "ImagesToGifNodeV1": {
-    "title": "图片转GIF节点 V1",
+    "title": "图片转GIF V1",
     "description": "将多张图片合并为GIF动画（无过渡效果）",
     "inputs": {
       "image_1": "图片1",
@@ -67,7 +67,7 @@
       "resize_factor": "图像缩放比例（0.1-1.0）",
       "optimize": "优化GIF大小",
       "palette_size": "GIF的颜色数量",
-      "quality": "GIF质量（1=最低，5=最高））",
+      "quality": "GIF质量（1=最低，5=最高）",
       "output_filename": "GIF文件的输出名称"
     },
     "outputs": {
@@ -94,7 +94,7 @@
     }
   },
   "ImagesToGifNodeV2": {
-    "title": "图片转GIF节点 V2",
+    "title": "图片转GIF V2",
     "description": "将多张图片合并为GIF动画（带过渡效果）",
     "inputs": {
       "image_1": "图片1",
@@ -124,7 +124,7 @@
       "transition_effect": "帧之间的过渡效果类型",
       "transition_frames": "过渡效果的帧数（0表示无过渡）",
       "optimize": "优化GIF大小",
-      "palette_size": "GIF的颜色数量",
+      "palette_size": "GIF颜色数量",
       "quality": "GIF质量（1=最低，5=最高）",
       "output_filename": "GIF文件的输出名称"
     },
@@ -246,8 +246,36 @@
       "image_path": "图像路径"
     }
   },
+  "BatchLoadImagesNode": {
+    "title": "批量加载图片",
+    "description": "批量加载图片文件，支持加载全部图片或按索引加载单张图片",
+    "inputs": {
+      "mode": "加载模式",
+      "image_path": "图片路径",
+      "index": "索引",
+      "max_images": "最大图片数量"
+    },
+    "widgets": {
+      "mode": "选择加载模式：加载全部图片或按索引加载单张图片",
+      "image_path": "图片目录路径或单张图片路径",
+      "index": "当模式为'加载单张'时，指定要加载的图片索引（从0开始）",
+      "max_images": "当模式为'加载全部'时，限制最多加载的图片数量，设置为0表示加载全部图片"
+    },
+    "outputs": {
+      "images": "图片列表",
+      "filenames": "文件名列表",
+      "filenames_without_extension": "不带扩展名的文件名列表",
+      "count": "图片数量"
+    },
+    "widget_values": {
+      "mode": {
+        "加载全部": "加载全部图片",
+        "加载单张": "按索引加载单张图片"
+      }
+    }
+  },
   "LoadImagePathNode": {
-    "title": "路径图片加载节点",
+    "title": "加载图片路径",
     "description": "从指定的文件路径加载图像，支持多种图像格式（jpg, jpeg, png, bmp, webp, tiff）",
     "inputs": {
       "image_path": "图片路径"
@@ -671,6 +699,42 @@
     },
     "outputs": {
       "video_path": "视频路径"
+    },
+    "widget_values": {
+      "video_format": {
+        "mp4": "MP4格式",
+        "avi": "AVI格式",
+        "mov": "MOV格式",
+        "mkv": "MKV格式"
+      },
+      "codec": {
+        "libx264": "H.264",
+        "libx265": "H.265/HEVC"
+      },
+      "audio_bitrate": {
+        "128k": "128kbps (标准)",
+        "192k": "192kbps (高品质)",
+        "256k": "256kbps (高保真)",
+        "320k": "320kbps (最高品质)"
+      },
+      "audio_sample_rate": {
+        "original": "原始采样率",
+        "22050": "22050Hz",
+        "44100": "44100Hz",
+        "48000": "48000Hz",
+        "96000": "96000Hz"
+      },
+      "output_resolution": {
+        "original": "原始分辨率",
+        "custom": "自定义",
+        "320x240": "320x240 (低清)",
+        "640x480": "640x480 (标准)",
+        "1280x720": "1280x720 (高清)",
+        "1920x1080": "1920x1080 (全高清)",
+        "2560x1440": "2560x1440 (2K)",
+        "3840x2160": "3840x2160 (4K)",
+        "7680x4320": "7680x4320 (8K)"
+      }
     }
   },
 
@@ -689,6 +753,7 @@
       "caption": "图片描述"
     }
   },
+
   "ModelscopeApiVideoCaptionNode": {
     "title": "魔搭API视频反推节点",
     "description": "使用魔搭API对视频进行反推描述",
@@ -721,7 +786,7 @@
 
   "ResolutionPresetSelector": {
     "title": "分辨率预设",
-    "description": "提供常见分辨率名称的快速选择，包括1K、2K、4K和8K等标准分辨率名称",
+    "description": "提供常用分辨率的快速选择",
     "inputs": {
       "resolution_preset": "分辨率预设"
     },
@@ -729,712 +794,116 @@
       "resolution_preset": "分辨率预设"
     },
     "outputs": {
-      "resolution": "分辨率"
+      "width": "宽度",
+      "height": "高度"
     }
   },
 
-  "ModelscopeApiTextGenerationNode": {
-    "title": "魔搭API文本生成节点",
-    "description": "使用魔搭API生成文本内容",
+  "RandomPromptGeneratorGroupNode": {
+    "title": "随机提示词生成器",
+    "description": "根据预设的提示词模板随机生成提示词",
     "inputs": {
-      "prompt": "提示词",
-      "system_prompt": "系统提示词"
+      "prompt_template": "提示词模板"
     },
     "widgets": {
-      "api_token": "API令牌",
-      "model_name": "模型名称",
-      "max_tokens": "最大令牌数",
-      "temperature": "温度系数",
-      "top_p": "Top P"
+      "prompt_template": "提示词模板"
     },
     "outputs": {
-      "生成文本": "生成文本"
+      "prompt": "生成的提示词"
     }
   },
-  "YoloSamBackgroundRemovalNode": {
-    "title": "YOLO+SAM背景去除",
-    "description": "使用YOLO目标检测和SAM分割技术进行精确的背景去除和裁剪",
-    "inputs": {
-      "yolo_model": "YOLO模型",
-      "sam_model": "SAM模型",
-      "image": "输入图像",
-      "classes": "检测类别",
-      "selection_mode": "选择模式",
-      "object_index": "物体索引",
-      "confidence_threshold": "置信度阈值",
-      "padding": "边界填充"
-    },
-    "widgets": {
-      "classes": "检测类别",
-      "selection_mode": "选择模式",
-      "object_index": "物体索引",
-      "confidence_threshold": "置信度阈值",
-      "padding": "边界填充",
-      "mask_dilation": "遮罩扩张",
-      "mask_blur": "遮罩模糊"
-    },
-    "outputs": {
-      "cropped_image": "裁剪图像",
-      "foreground_mask": "前景遮罩",
-      "info": "处理信息"
-    },
-    "widget_values": {
-      "selection_mode": {
-        "highest_confidence": "最高置信度",
-        "manual_index": "手动索引"
-      }
-    }
-  },
-  "ImageVideoPromptSelector": {
-    "title": "图片视频提示词预设",
-    "description": "提供预设提示词的快速选择，用于图片和视频生成",
-    "inputs": {
-      "prompt_preset": "提示词预设"
-    },
-    "widgets": {
-      "prompt_preset": "提示词预设"
-    },
-    "outputs": {
-      "image_prompt": "请输入图片的中文、英文提示词",
-      "video_prompt": "请输入视频的中文、英文提示词",
-      "preset_image": "预设图片"
-    }
-  },
-  "ImageVideoPromptManager": {
-    "title": "图片视频提示词预设管理器",
-    "description": "用于查看和管理预设提示词，可以添加、删除和列出所有可用的预设。",
-    "inputs": {
-      "action": "操作类型",
-      "preset_name": "预设名称",
-      "image_prompt": "请输入图片的中文、英文提示词",
-      "video_prompt": "请输入视频的中文、英文提示词",
-      "preset_to_delete": "要删除的预设"
-    },
-    "widgets": {
-      "action": "操作类型",
-      "preset_name": "预设名称",
-      "image_prompt": "请输入图片的中文、英文提示词",
-      "video_prompt": "请输入视频的中文、英文提示词",
-      "preset_to_delete": "要删除的预设"
-    },
-    "outputs": {
-      "status_message": "状态信息"
-    },
-    "widget_values": {
-      "action": {
-        "list": "列出",
-        "add": "添加",
-        "delete": "删除"
-      }
-    }
-  },
-  "PresetImageUploadNode": {
-    "title": "预设图像上传节点",
-    "description": "用于为预设添加图像预览",
-    "inputs": {
-      "preset_name": "预设名称",
-      "image": "图像"
-    },
-    "widgets": {
-      "preset_name": "预设名称",
-      "image": "图像"
-    },
-    "outputs": {
-      "status_message": "状态信息"
-    }
-  },
-  "BatchLoadImagesNode": {
-    "title": "批量加载图片",
-    "description": "批量加载图片节点，支持加载目录中的所有图片或按索引加载单张图片，自动处理不同尺寸的图片",
-    "inputs": {
-      "mode": "加载模式",
-      "image_path": "图片路径",
-      "index": "图片索引",
-      "max_images": "最大图片数量"
-    },
-    "widgets": {
-      "mode": "加载模式",
-      "image_path": "图片目录路径或单张图片路径",
-      "index": "当模式为'加载单张'时，指定要加载的图片索引",
-      "max_images": "当模式为'加载全部'时，请设置加载的图片数量，0表示加载全部图片"
-    },
-    "outputs": {
-      "images": "图片张量",
-      "filenames": "文件名列表",
-      "filenames_without_extension": "无扩展名的文件名列表",
-      "count": "图片数量"
-    },
-    "widget_values": {
-      "mode": {
-        "加载全部": "加载全部",
-        "加载单张": "加载单张"
-      }
-    }
-  },
-  "VideoToGifNode": {
-    "title": "视频转GIF节点",
-    "description": "将视频文件转换为GIF动画，支持优化和调色板大小设置",
-    "inputs": {
-      "video_file": "视频文件",
-      "start_time": "开始时间",
-      "duration": "持续时间",
-      "fps": "帧率",
-      "resize_factor": "图像缩放比例",
-      "optimize": "优化GIF",
-      "palette_size": "调色板大小",
-      "quality": "质量等级",
-      "output_filename": "输出文件名"
-    },
-    "widgets": {
-      "video_file": "选择要转换的视频",
-      "start_time": "视频开始时间（秒）",
-      "duration": "GIF的持续时间（秒）",
-      "fps": "GIF的帧率",
-      "resize_factor": "图像缩放比例百分比",
-      "optimize": "优化GIF大小",
-      "palette_size": "GIF颜色数量（2=最低质量，256=最高质量）",
-      "quality": "GIF质量等级（1=低，2=中，3=高）",
-      "output_filename": "GIF文件的输出名称"
-    },
-    "outputs": {
-      "output_path": "GIF文件路径"
-    },
-    "widget_values": {
-      "palette_size": {
-        "2": "2色（最小文件）",
-        "4": "4色",
-        "8": "8色",
-        "16": "16色",
-        "32": "32色",
-        "64": "64色",
-        "128": "128色",
-        "256": "256色（最佳质量）"
-      },
-      "quality": {
-        "1": "低质量",
-        "2": "中等质量",
-        "3": "高质量"
-      }
-    }
-  },
+
   "ToggleValueNode": {
-    "title": "切换值节点",
-    "description": "可以在两个值之间切换的节点，支持多种数据类型输入（FLOAT, INT, STRING）",
+    "title": "切换值",
+    "description": "在不同值之间切换的节点",
     "inputs": {
-      "input_value": "假为值A，真为值B",
-      "value_a": "值A",
-      "value_b": "值B"
+      "value": "输入值"
     },
     "widgets": {
-      "input_value": "假为值A，真为值B",
-      "value_a": "第一个可选值",
-      "value_b": "第二个可选值"
+      "toggle": "切换开关"
     },
     "outputs": {
-      "原始类型输出": "原始类型输出",
-      "字符串输出": "字符串输出",
-      "整数输出": "整数输出",
-      "浮点输出": "浮点输出"
+      "output": "输出值"
     }
   },
+
+  "ToggleAnyNode": {
+    "title": "切换任意值",
+    "description": "在任意类型值之间切换的节点",
+    "inputs": {
+      "value": "输入值"
+    },
+    "widgets": {
+      "toggle": "切换开关"
+    },
+    "outputs": {
+      "output": "输出值"
+    }
+  },
+
   "ToggleAnyOutputNode": {
     "title": "切换任意值（输出）",
-    "description": "根据布尔值将单个输入值路由到两个输出端口中的一个，实现单输入双输出的切换功能",
+    "description": "在任意类型值之间切换并输出的节点",
     "inputs": {
-      "toggle": "切换",
-      "input_value": "输入值"
+      "value": "输入值"
     },
     "widgets": {
-      "toggle": "假为值A，真为值B"
+      "toggle": "切换开关"
     },
     "outputs": {
-      "output_a": "输出A（假）",
-      "output_b": "输出B（真）"
+      "output": "输出值"
     }
   },
+
   "ToggleStringOutputNode": {
     "title": "切换字符串（输出）",
-    "description": "根据布尔值将字符串输入路由到两个输出端口中的一个，实现字符串单输入双输出的切换功能",
+    "description": "在字符串值之间切换并输出的节点",
     "inputs": {
-      "toggle": "切换",
-      "input_string": "输入字符串"
+      "value": "输入字符串"
     },
     "widgets": {
-      "toggle": "假为值A，真为值B"
+      "toggle": "切换开关"
     },
     "outputs": {
-      "output_a": "输出A（假）",
-      "output_b": "输出B（真）"
+      "output": "输出字符串"
     }
   },
-  "MarkdownToExcelNode": {
-    "title": "MD转Excel",
-    "description": "将Markdown文件转换为Excel文件，支持表格解析和自定义工作表",
+
+  "StringMergeNode": {
+    "title": "字符串合并",
+    "description": "将多个字符串合并为一个字符串",
     "inputs": {
-      "md_file_path": "Markdown文件路径",
-      "output_dir": "输出目录路径",
-      "output_filename": "输出文件名",
-      "sheet_name": "工作表名称"
+      "string_1": "字符串1",
+      "string_2": "字符串2",
+      "string_3": "字符串3"
     },
     "widgets": {
-      "md_file_path": "输入Markdown文件的完整路径",
-      "output_dir": "输出目录路径（留空则使用输入文件所在目录）",
-      "output_filename": "输出文件名（留空则使用输入文件名）",
-      "sheet_name": "Excel工作表名称，默认为Sheet1"
+      "separator": "分隔符"
     },
     "outputs": {
-      "conversion_info": "转换状态信息"
+      "merged_string": "合并后的字符串"
     }
   },
-  "CreateImageNode": {
-    "title": "创建图像节点",
-    "description": "创建指定尺寸和颜色的图片节点",
-    "inputs": {
-      "width": "图像宽度",
-      "height": "图像高度",
-      "color": "图像颜色"
-    },
-    "widgets": {
-      "width": "图像宽度（像素）",
-      "height": "图像高度（像素）",
-      "color": "图像颜色（十六进制）"
-    },
-    "outputs": {
-      "image": "生成的图像"
-    }
-  },
-  "Imageencodinggeneration": {
-    "title": "图片编码生成节点",
-    "description": "读取图片并生成唯一的UUID值和多种哈希值(MD5, SHA1, SHA256, SHA512)",
-    "inputs": {
-      "image": "输入图像",
-      "image_path": "图像路径"
-    },
-    "widgets": {
-      "image_path": "图像文件路径"
-    },
-    "outputs": {
-      "uuid": "生成的UUID",
-      "md5": "MD5哈希值",
-      "sha1": "SHA1哈希值",
-      "sha256": "SHA256哈希值",
-      "sha512": "SHA512哈希值",
-      "image_info": "图像信息"
-    }
-  },
-  "ImageEncodingGenerationNoConvertNode": {
-    "title": "图片编码生成节点-不转化",
-    "description": "直接从文件路径读取图片并生成唯一的UUID值和多种哈希值(MD5, SHA1, SHA256, SHA512)，不进行图像格式转换，确保哈希值与原始文件一致",
-    "inputs": {
-      "image_path": "图片路径"
-    },
-    "widgets": {
-      "image_path": "图片文件的完整路径"
-    },
-    "outputs": {
-      "uuid": "生成的UUID",
-      "md5": "MD5哈希值",
-      "sha1": "SHA1哈希值",
-      "sha256": "SHA256哈希值",
-      "sha512": "SHA512哈希值",
-      "image_info": "图片信息"
-    }
-  },
-  "BatchResizeCropNode": {
-    "title": "批量图像缩放裁切",
-    "description": "批量图像缩放和裁切节点，支持按宽度或高度缩放，以及按常见比例缩放后裁切",
-    "inputs": {
-      "images": "输入图像",
-      "resize_mode": "缩放模式",
-      "target_width": "目标宽度",
-      "target_height": "目标高度",
-      "aspect_ratio": "宽高比",
-      "crop_if_needed": "需要时裁切",
-      "crop_method": "裁切方式",
-      "batch_size": "批次大小"
-    },
-    "widgets": {
-      "resize_mode": "选择缩放模式：按宽度、按高度或按比例",
-      "target_width": "当按宽度缩放时的目标宽度",
-      "target_height": "当按高度缩放时的目标高度",
-      "aspect_ratio": "按比例缩放时的目标宽高比",
-      "crop_if_needed": "是否在缩放后按需裁切以匹配目标尺寸",
-      "crop_method": "选择裁切方式：中心、左、右、上、下",
-      "batch_size": "处理的图像数量"
-    },
-    "outputs": {
-      "resized_images": "缩放裁切后的图像",
-      "width": "图像宽度",
-      "height": "图像高度"
-    },
-    "widget_values": {
-      "resize_mode": {
-        "by_width": "按宽度缩放",
-        "by_height": "按高度缩放",
-        "by_ratio": "按比例缩放"
-      },
-      "aspect_ratio": {
-        "3:4": "3:4",
-        "4:3": "4:3",
-        "9:16": "9:16",
-        "16:9": "16:9",
-        "1:1": "1:1",
-        "2:3": "2:3",
-        "3:2": "3:2"
-      },
-      "crop_method": {
-        "center": "中心裁切",
-        "left": "左裁切",
-        "right": "右裁切",
-        "top": "上裁切",
-        "bottom": "下裁切"
-      }
-    }
-  },
-  "ImageFormatConverterNode": {
-    "title": "图像格式转换器",
-    "description": "图像格式转换节点，支持将图像转换为JPEG、PNG、WEBP或BMP格式",
-    "inputs": {
-      "images": "输入图像",
-      "format": "目标格式",
-      "quality": "JPEG/WebP质量",
-      "optimize": "优化PNG"
-    },
-    "widgets": {
-      "format": "选择输出图像格式",
-      "quality": "JPEG或WebP格式的质量（1-100）",
-      "optimize": "优化PNG大小"
-    },
-    "outputs": {
-      "output_paths": "输出文件路径列表"
-    },
-    "widget_values": {
-      "format": {
-        "JPEG": "JPEG格式",
-        "PNG": "PNG格式",
-        "WEBP": "WebP格式",
-        "BMP": "BMP格式"
-      },
-      "optimize": {
-        "false": "不优化",
-        "true": "优化文件大小"
-      }
-    }
-  },
-  "BatchImageFormatConverterNode": {
-    "title": "批量图像格式转换器",
-    "description": "批量图像格式转换器节点，支持将指定文件夹中的图像转换为JPEG、PNG、WEBP或BMP格式",
-    "inputs": {
-      "input_folder": "输入文件夹",
-      "output_format": "输出格式",
-      "quality": "JPEG/WebP质量",
-      "output_folder": "输出文件夹"
-    },
-    "widgets": {
-      "input_folder": "输入文件夹",
-      "output_format": "输出图像格式",
-      "quality": "JPEG或WebP格式的质量（1-100）",
-      "output_folder": "输出件夹路径（留空则保存到输入文件夹）"
-    },
-    "outputs": {
-      "output_paths": "输出文件路径列表"
-    },
-    "widget_values": {
-      "output_format": {
-        "JPEG": "JPEG格式",
-        "PNG": "PNG格式",
-        "WEBP": "WebP格式",
-        "BMP": "BMP格式"
-      }
-    }
-  },
-  "BatchImageResizerWithConversionNode": {
-    "title": "批量图像缩放（带格式转换）",
-    "description": "批量图像缩放（带格式转换）节点，支持将指定文件夹中的图像按宽度或高度进行批量缩放，并可转换图像格式",
-    "inputs": {
-      "input_folder": "输入文件夹",
-      "resize_mode": "缩放模式",
-      "size": "目标尺寸",
-      "output_folder": "输出文件夹",
-      "output_format": "输出格式",
-      "quality": "图像质量"
-    },
-    "widgets": {
-      "input_folder": "输入文件夹路径",
-      "resize_mode": "选择宽度或高度进行缩放",
-      "size": "目标宽度或高度的像素值",
-      "output_folder": "保存的文件夹路径（留空则保存到输入文件夹）",
-      "output_format": "选择输出图像的格式",
-      "quality": "JPEG或WebP格式的质量（1-100）"
-    },
-    "outputs": {
-      "output_paths": "输出文件路径列表"
-    },
-    "widget_values": {
-      "resize_mode": {
-        "WIDTH": "按宽度缩放",
-        "HEIGHT": "按高度缩放"
-      },
-      "output_format": {
-        "保持原格式": "保持原格式",
-        "JPEG": "JPEG格式",
-        "PNG": "PNG格式",
-        "WEBP": "WebP格式",
-        "BMP": "BMP格式"
-      }
-    }
-  },
-  "VersionInfoNode": {
-    "title": "应用查看版本",
-    "description": "显示当前插件的版本信息",
-    "inputs": {
-      "dummy_input": "虚拟输入"
-    },
-    "outputs": {
-      "version_info": "版本信息"
-    }
-  },
-  "RandomPromptGeneratorGroupNode": {
-    "title": "随机提示词生成器组",
-    "description": "支持多个分类的预设提示词，可随机选择指定数量的提示词",
-    "inputs": {
-      "manual_prompt": "手动输入提示词",
-      "enable_person": "启用人物分类",
-      "person_count": "人物提示词数量",
-      "enable_scene": "启用场景分类",
-      "scene_count": "场景提示词数量",
-      "enable_style": "启用风格分类",
-      "style_count": "风格提示词数量",
-      "enable_lighting": "启用光影分类",
-      "lighting_count": "光影提示词数量",
-      "enable_color": "启用色彩分类",
-      "color_count": "色彩提示词数量",
-      "enable_detail": "启用细节分类",
-      "detail_count": "细节提示词数量",
-      "seed": "随机种子"
-    },
-    "widgets": {
-      "manual_prompt": "手动输入的提示词，将添加到生成的随机提示词前面",
-      "enable_person": "人物分类",
-      "person_count": "输出数量",
-      "enable_scene": "场景分类",
-      "scene_count": "输出数量",
-      "enable_style": "风格分类",
-      "style_count": "输出数量",
-      "enable_lighting": "光影分类",
-      "lighting_count": "输出数量",
-      "enable_color": "色彩分类",
-      "color_count": "输出数量",
-      "enable_detail": "细节分类",
-      "detail_count": "输出数量",
-      "seed": "随机种子果"
-    },
-    "outputs": {
-      "prompt": "生成的提示词"
-    }
-  },
-  "RandomPromptGeneratorNode": {
-    "title": "随机提示词生成器",
-    "description": "在手动输入的提示词中随机输出指定个数的提示词",
-    "inputs": {
-      "input_prompts": "输入提示词",
-      "output_count": "输出个数",
-      "separator": "分隔符",
-      "seed": "随机种子"
-    },
-    "widgets": {
-      "input_prompts": "手动输入的提示词，用逗号分隔",
-      "output_count": "输出数量",
-      "separator": "分隔符",
-      "seed": "随机种子"
-    },
-    "outputs": {
-      "prompt": "生成的提示词"
-    }
-  },
-  "ExtractFrameFromVideoNode": {
-    "title": "视频帧提取节点",
-    "description": "从视频文件中提取指定帧并导出为图片",
-    "inputs": {
-      "video_file": "视频文件",
-      "frame_extraction_method": "提取方式",
-      "frame_number": "帧号",
-      "timestamp": "时间戳（秒）",
-      "output_format": "输出格式",
-      "image_quality": "图片质量",
-      "output_filename": "输出文件名"
-    },
-    "widgets": {
-      "video_file": "选择要提取帧的视频文件",
-      "frame_extraction_method": "选择帧提取的方式：按帧号或按时间戳",
-      "frame_number": "要提取的帧号（从1开始）",
-      "timestamp": "要提取帧的时间点（秒）",
-      "output_format": "输出图片的格式",
-      "image_quality": "输出图片的质量（仅对JPG格式有效）",
-      "output_filename": "可选：自定义输出文件名（不含扩展名）"
-    },
-    "outputs": {
-      "image": "图像",
-      "image_path": "图像路径",
-      "frame_index": "帧索引",
-      "status_message": "状态信息"
-    },
-    "widget_values": {
-      "frame_extraction_method": {
-        "frame_number": "按帧号",
-        "timestamp": "按时间戳"
-      },
-      "output_format": {
-        "png": "PNG格式",
-        "jpg": "JPG格式",
-        "bmp": "BMP格式"
-      }
-    }
-  },
-  "BatchRenameImagesByMD5Node": {
-    "title": "批量重命名图片(MD5)",
-    "description": "批量重命名图片文件，使用图片内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复",
-    "inputs": {
-      "input_directory": "输入目录",
-      "output_directory": "输出目录",
-      "overwrite_existing": "覆盖已存在文件",
-      "file_extensions": "文件扩展名",
-      "delete_original_files": "删除原始文件"
-    },
-    "widgets": {
-      "input_directory": "需要重命名图片的路径",
-      "output_directory": "重命名后保存的路径（留空则在原目录处理）",
-      "overwrite_existing": "是否覆盖同名文件",
-      "file_extensions": "需要处理的图片文件扩展名，用逗号分隔",
-      "delete_original_files": "当输出目录留空或与输入目录相同时，是否删除重命名前的原始文件"
-    },
-    "outputs": {
-      "result_info": "处理结果信息"
-    }
-  },
-  "BatchImageScalerNode": {
-    "title": "批量图像缩放节点",
-    "description": "批量调整图像尺寸，支持多种缩放模式和参数配置",
-    "inputs": {
-      "image_directory": "图像目录",
-      "save_directory": "保存目录",
-      "scale_factor": "缩放因子",
-      "resize_mode": "缩放模式",
-      "target_width": "目标宽度",
-      "target_height": "目标高度",
-      "resampling_filter": "重采样过滤器"
-    },
-    "widgets": {
-      "image_directory": "包含需要缩放的图像文件的目录路径",
-      "scale_factor": "图像缩放比例（0.1-5.0）",
-      "resize_mode": "缩放模式：按比例缩放、固定宽度、固定高度或固定尺寸",
-      "target_width": "目标宽度（像素）",
-      "target_height": "目标高度（像素）",
-      "resampling_filter": "重采样过滤器类型",
-      "save_directory": "缩放后图像保存的目录路径（留空则保存到输入目录）"
-    },
-    "outputs": {
-      "result_info": "处理结果信息"
-    },
-    "widget_values": {
-      "resize_mode": {
-        "按比例缩放": "按比例缩放",
-        "固定宽度": "固定宽度",
-        "固定高度": "固定高度",
-        "固定尺寸": "固定尺寸（同时设置目标宽度和高度）"
-      },
-      "resampling_filter": {
-        "LANCZOS": "LANCZOS",
-        "BICUBIC": "BICUBIC",
-        "BILINEAR": "BILINEAR",
-        "NEAREST": "NEAREST"
-      }
-    }
-  },
-  "BatchExtractFrameFromVideoNode": {
-    "title": "批量视频帧提取节点",
-    "description": "从指定文件夹中的所有视频文件提取指定帧并导出为图片，支持从输入目录选择文件夹或自定义路径，支持将提取的图片导出到指定文件夹",
-    "inputs": {
-      "folder_selection_mode": "文件夹选择模式",
-      "video_folder": "视频文件夹",
-      "custom_video_folder_path": "自定义视频文件夹路径",
-      "frame_extraction_method": "提取方式",
-      "frame_number": "帧号",
-      "timestamp": "时间戳（秒）",
-      "output_format": "输出格式",
-      "image_quality": "图片质量",
-      "output_filename_prefix": "输出文件名前缀",
-      "output_folder": "输出文件夹路径"
-    },
-    "widgets": {
-      "folder_selection_mode": "选择文件夹的方式：从输入目录选择或自定义路径",
-      "video_folder": "从输入目录中选择包含视频文件的文件夹",
-      "custom_video_folder_path": "输入自定义视频文件夹",
-      "frame_extraction_method": "选择帧提取的方式：按帧号或按时间戳",
-      "frame_number": "要提取的帧号（从1开始）",
-      "timestamp": "要提取帧的时间点（秒）",
-      "output_format": "输出图片的格式",
-      "image_quality": "输出图片的质量（仅对JPG格式有效）",
-      "output_filename_prefix": "可选：输出文件名前缀",
-      "output_folder": "可选：输出文件夹路径（留空则使用默认输出目录）"
-    },
-    "outputs": {
-      "image_paths": "图像路径列表",
-      "frame_indices": "帧索引列表",
-      "status_message": "状态信息"
-    },
-    "widget_values": {
-      "folder_selection_mode": {
-        "select_from_input_dir": "从输入目录选择",
-        "custom_path": "自定义路径"
-      },
-      "frame_extraction_method": {
-        "frame_number": "按帧号",
-        "timestamp": "按时间戳"
-      },
-      "output_format": {
-        "png": "PNG格式",
-        "jpg": "JPG格式",
-        "bmp": "BMP格式"
-      }
-    }
-  },
+
   "RandomExecutionNode": {
     "title": "随机执行",
-    "description": "支持随机、固定、顺序循环等多种执行模式的节点，根据实际连接的端口数量执行相应数量的操作，支持多种数据类型输入，在顺序循环模式下会自动依次执行所有输入，执行到底后重新从头开始执行",
+    "description": "随机选择并执行节点",
     "inputs": {
-      "mode": "执行模式",
-      "seed": "随机种子",
-      "position": "位置编号",
       "input_1": "输入1",
       "input_2": "输入2",
-      "input_3": "输入3",
-      "input_4": "输入4",
-      "input_5": "输入5"
+      "input_3": "输入3"
     },
     "widgets": {
-      "mode": "选择执行模式：random(随机), fixed(固定), sequential(顺序循环)",
-      "seed": "用于随机模式的种子值",
-      "position": "用于fixed模式的位置编号"
+      "seed": "随机种子"
     },
     "outputs": {
-      "原始类型输出": "原始类型输出",
-      "字符串输出": "字符串输出",
-      "整数输出": "整数输出",
-      "浮点输出": "浮点输出",
-      "选中索引": "选中索引"
-    },
-    "widget_values": {
-      "mode": {
-        "random": "随机",
-        "fixed": "固定",
-        "sequential": "顺序循环"
-      }
+      "output": "随机输出"
     }
   },
+
   "BatchCopyFilesNode": {
     "title": "批量复制文件",
-    "description": "支持将指定目录中的文件批量复制到目标目录，支持文件过滤、覆盖选项和目录结构保留",
+    "description": "批量复制文件到目标目录",
     "inputs": {
       "source_directory": "源目录路径",
       "destination_directory": "目标目录路径",
@@ -1451,390 +920,305 @@
     },
     "outputs": {
       "result_info": "处理结果信息"
-    },
-    "widget_values": {
-      "overwrite_existing": {
-        "true": "是",
-        "false": "否"
-      },
-      "preserve_structure": {
-        "true": "是",
-        "false": "否"
-      }
     }
   },
-  "StringMergeNode": {
-    "title": "字符串合并",
-    "description": "将多个字符串合并为一个字符串的节点，支持自定义分隔符",
-    "inputs": {
-      "string1": "字符串1",
-      "string2": "字符串2",
-      "string3": "字符串3",
-      "string4": "字符串4",
-      "string5": "字符串5",
-      "separator": "分隔符"
-    },
-    "widgets": {
-      "string1": "第一个字符串",
-      "string2": "第二个字符串",
-      "string3": "第三个字符串",
-      "string4": "第四个字符串",
-      "string5": "第五个字符串",
-      "separator": "分隔符（用于连接各个字符串，默认为空）"
-    },
-    "outputs": {
-      "merged_string": "合并后的字符串"
-    }
-  },
+
   "TextInputNode": {
     "title": "文本输入",
-    "description": "允许用户输入多行文本的节点",
-    "inputs": {},
+    "description": "允许用户输入文本的节点",
+    "inputs": {
+      "text": "文本"
+    },
     "widgets": {
-      "text_content": "文本内容（支持多行输入）"
+      "text": "输入文本"
     },
     "outputs": {
-      "STRING": "输出文本"
+      "text": "输出文本"
     }
   },
+
   "StringToAnyNode": {
     "title": "字符串到任意类型",
-    "description": "将字符串转换为任意类型的节点",
+    "description": "将字符串转换为任意类型",
     "inputs": {
-      "input_string": "输入字符串"
+      "string": "字符串"
     },
     "widgets": {
-      "input_string": "要转换的字符串内容"
+      "target_type": "目标类型"
     },
     "outputs": {
-      "any_output": "任意类型输出"
+      "output": "转换后的值"
     }
   },
-  "ToggleAnyNode": {
-    "title": "切换任意值",
-    "description": "可以在两个任意类型的值之间切换的节点",
+
+  "MarkdownToExcelNode": {
+    "title": "MD转Excel",
+    "description": "将Markdown文件转换为Excel文件，支持表格解析",
     "inputs": {
-      "input_value": "假为值A，真为值B",
-      "value_a": "值A（假）",
-      "value_b": "值B（真）"
+      "md_file_path": "Markdown文件路径",
+      "output_dir": "输出目录",
+      "output_filename": "输出文件名",
+      "sheet_name": "工作表名称"
     },
     "widgets": {
-      "input_value": "假为值A，真为值B"
+      "md_file_path": "包含表格的Markdown文件的完整路径",
+      "output_dir": "Excel文件的输出目录路径",
+      "output_filename": "输出Excel文件名（不含扩展名）",
+      "sheet_name": "Excel工作表名称（默认Sheet1）"
     },
     "outputs": {
-      "any_output": "任意类型输出"
+      "conversion_info": "转换信息"
     }
   },
+
   "SaveImageNode": {
-    "title": "保存图片节点",
-    "description": "将图像保存到指定路径，支持多种格式和质量设置",
+    "title": "保存图片",
+    "description": "将图像保存到指定路径，支持多种图片格式",
     "inputs": {
       "images": "图像",
       "file_path": "文件路径",
       "filename_prefix": "文件名前缀",
-      "folder_separator": "文件夹分隔符",
-      "num_padding_digits": "文件名数值填充位数",
+      "folder_separator": "分隔符",
+      "num_padding_digits": "数字位数",
       "extension": "图片格式",
-      "quality": "图片质量",
+      "quality": "质量",
       "save_workflow": "保存工作流"
     },
     "widgets": {
-      "file_path": "保存图片的子文件夹路径",
-      "extension": "选择输出图片格式",
-      "quality": "图片质量（1-100）",
-      "filename_prefix": "文件名前缀",
-      "folder_separator": "文件名与索引之间的分隔符",
-      "num_padding_digits": "文件名中数值的填充位数（1-9）",
+      "file_path": "图片保存路径（留空使用默认输出路径）",
+      "filename_prefix": "图片文件名前缀",
+      "folder_separator": "文件名和数字之间的分隔符（默认下划线_）",
+      "num_padding_digits": "数字后缀的填充位数（例如：3位则显示为001, 002, 003）",
+      "extension": "图片格式（png/jpg/jpeg/gif/webp/bmp）",
+      "quality": "图片质量（1-100，数值越大质量越高）",
       "save_workflow": "是否将工作流信息保存到图片中"
     },
     "outputs": {
+      "images": "图像",
       "save_result": "保存结果"
     },
     "widget_values": {
       "extension": {
         "png": "PNG格式",
-        "jpeg": "JPEG格式",
         "jpg": "JPG格式",
-        "webp": "WEBP格式",
+        "jpeg": "JPEG格式",
+        "gif": "GIF格式",
+        "webp": "WebP格式",
         "bmp": "BMP格式"
       }
     }
   },
+
   "SaveTextNode": {
-    "title": "保存文本节点",
-    "description": "将文本内容保存到指定文件，支持多种文件格式和处理模式",
+    "title": "保存文本",
+    "description": "将文本保存为指定格式的文件，支持txt、csv、md格式",
     "inputs": {
-      "required": {
-        "text": "文本",
-        "file_path": "文件路径",
-        "filename": "文件名",
-        "extension": "扩展名",
-        "exist_mode": "存在模式"
-      },
-      "optional": {
-        "text_prefix": "文本前缀"
-      }
-    },
-    "widgets": {
-      "file_path": "输入文件路径",
-      "filename": "文件名（不含扩展名）",
+      "text": "文本",
+      "file_path": "文件路径",
+      "filename": "文件名",
       "extension": "文件扩展名",
       "exist_mode": "文件存在时的处理方式",
-      "text_prefix": "输入要添加到文本前的前缀"
+      "text_prefix": "文本前缀"
+    },
+    "widgets": {
+      "text": "要保存的文本内容",
+      "file_path": "文件保存的目录路径（留空使用默认输出路径）",
+      "filename": "文件名（不含扩展名，默认ComfyUI）",
+      "extension": "文件扩展名（txt/csv/md）",
+      "exist_mode": "当文件已存在时的处理方式：覆盖、直接追加、换行追加或跳过",
+      "text_prefix": "要添加到文本前的前缀内容"
     },
     "outputs": {
-      "save_result": "保存结果"
+      "save_result": "保存结果信息"
     },
     "widget_values": {
       "extension": {
-        "txt": "TXT格式",
-        "csv": "CSV格式", 
-        "md": "MD格式"
+        "txt": "txt文件",
+        "csv": "csv文件",
+        "md": "markdown文件"
       },
       "exist_mode": {
-        "覆盖": "覆盖",
-        "追加": "追加",
-        "跳过": "跳过"
+        "覆盖": "覆盖（直接替换现有文件）",
+        "直接追加": "直接追加（不换行追加到文件末尾）",
+        "换行追加": "换行追加（先换行再追加到文件末尾，默认）",
+        "跳过": "跳过（文件已存在时不处理）"
       }
     }
   },
+
   "TextToExcelNode": {
-    "title": "文本转Excel节点",
-    "description": "将文本内容转换为Excel文件，支持多种分隔符和自定义工作表名称",
+    "title": "文本转Excel",
+    "description": "将文本数据转换为Excel文件，支持多种分隔符和自定义工作表名称",
     "inputs": {
-      "required": {
-        "text": "文本",
-        "output_excel_path": "输出Excel路径",
-        "separator": "分隔符",
-        "sheet_name": "工作表名称",
-        "filename_conflict_resolution": "文件名冲突解决方案"
-      },
-      "optional": {
-        "has_header": "包含标题行"
-      }
+      "text": "文本数据",
+      "output_excel_path": "输出路径",
+      "separator": "分隔符",
+      "sheet_name": "工作表名称",
+      "filename_conflict_resolution": "文件名冲突处理",
+      "has_header": "有表头"
     },
     "widgets": {
-      "text": "要转换为Excel的文本内容",
-      "output_excel_path": "输出Excel文件名（不含扩展名）",
-      "separator": "选择文本内容的分隔符",
-      "sheet_name": "Excel工作表的名称",
-      "has_header": "是否将第一行作为标题行",
-      "filename_conflict_resolution": "当文件已存在时的处理方式"
+      "text": "要转换为Excel的文本内容（每行代表一行数据，使用指定分隔符分隔列）",
+      "output_excel_path": "输出Excel文件名（不含扩展名，默认ComfyUI）",
+      "separator": "数据列之间的分隔符类型",
+      "sheet_name": "Excel工作表名称（默认Sheet1）",
+      "filename_conflict_resolution": "当文件名已存在时的处理方式：跳过、覆盖或递增",
+      "has_header": "文本第一行是否为列名"
     },
     "outputs": {
-      "save_result": "保存结果"
+      "save_result": "保存结果信息"
     },
     "widget_values": {
       "separator": {
-        "逗号": "逗号分隔符",
-        "分号": "分号分隔符", 
-        "制表符": "制表符分隔符",
-        "空格": "空格分隔符",
-        "竖线": "竖线分隔符"
+        "逗号": "逗号（,）",
+        "分号": "分号（;）",
+        "制表符": "制表符（Tab）",
+        "空格": "空格",
+        "竖线": "竖线（|）"
       },
       "filename_conflict_resolution": {
-        "overwrite": "覆盖",
-        "append": "追加",
-        "skip": "跳过"
+        "跳过": "跳过（文件已存在时不处理）",
+        "覆盖": "覆盖（直接替换现有文件）",
+        "递增": "递增（自动添加数字后缀）"
       }
     }
   },
+
   "GetCurrentTimeNode": {
-    "title": "获取当前时间节点",
-    "description": "获取当前时间戳，输出字符串和整数格式",
+    "title": "获取当前时间",
+    "description": "获取当前系统时间并格式化输出",
     "inputs": {
-      "format_type": "格式类型",
-      "trigger_input": "触发输入"
     },
     "widgets": {
-      "format_type": "时间格式类型（时间戳/日期时间/日期/时间）"
+      "format": "时间格式"
     },
     "outputs": {
       "time_string": "时间字符串",
-      "timestamp_int": "时间戳整数"
+      "timestamp": "时间戳"
+    },
+    "widget_values": {
+      "format": {
+        "yyyy-MM-dd HH:mm:ss": "年-月-日 时:分:秒",
+        "yyyy-MM-dd": "年-月-日",
+        "HH:mm:ss": "时:分:秒",
+        "yyyyMMdd_HHmmss": "年月日_时分秒",
+        "timestamp": "时间戳"
+      }
     }
   },
-  "ZipSaveNode": {
-    "title": "保存为Zip文件",
-    "description": "将图像、视频、音频和文本保存为Zip文件",
+
+  "SaveVideoNode": {
+    "title": "保存视频",
+    "description": "将图像序列保存为视频文件",
     "inputs": {
+      "images": "图像序列",
       "filename_prefix": "文件名前缀",
-      "compression": "压缩方式",
-      "images": "图像",
-      "videos": "视频",
-      "audios": "音频",
-      "texts": "文本",
-      "text_filenames": "文本文件名",
-      "video_filenames": "视频文件名",
-      "audio_filenames": "音频文件名"
-    },
-    "widgets": {
-      "filename_prefix": "Zip文件的前缀名称",
-      "compression": "压缩方式（STORED或DEFLATED）",
-      "text_filenames": "文本文件的名称列表",
-      "video_filenames": "视频文件的名称列表",
-      "audio_filenames": "音频文件的名称列表"
-    },
-    "outputs": {
-      "save_result": "保存结果"
-    },
-    "widget_values": {
-      "compression": {
-        "STORED": "不压缩",
-        "DEFLATED": "压缩"
-      }
-    }
-  },
-  "ZipLoadNode": {
-    "title": "加载zip文件",
-    "description": "从Zip文件中加载图像、视频、音频和文本",
-    "inputs": {
-      "zip_file": "Zip文件",
-      "load_images": "加载图像",
-      "load_videos": "加载视频",
-      "load_audios": "加载音频",
-      "load_texts": "加载文本"
-    },
-    "widgets": {
-      "zip_file": "要加载的Zip文件",
-      "load_images": "是否加载图像",
-      "load_videos": "是否加载视频",
-      "load_audios": "是否加载音频",
-      "load_texts": "是否加载文本"
-    },
-    "outputs": {
-      "images": "图像",
-      "texts": "文本",
-      "filenames": "文件名",
-      "videos": "视频",
-      "audios": "音频"
-    }
-  },
-  "ImageMergeNode": {
-    "title": "图片合并",
-    "description": "图片合并节点 - 将多张图片合并成一张图片，支持多种合并方式：水平合并、垂直合并、网格合并，网格合并支持自定义列数",
-    "inputs": {
-      "operation": "合并方式",
-      "resize_to_same_size": "调整为相同尺寸",
-      "image1": "图片1",
-      "image2": "图片2",
-      "image3": "图片3",
-      "image4": "图片4",
-      "image5": "图片5",
-      "image6": "图片6",
-      "image7": "图片7",
-      "image8": "图片8",
-      "image9": "图片9",
-      "image10": "图片10",
-      "columns": "网格列数"
-    },
-    "widgets": {
-      "operation": "合并方式（水平、垂直或网格）",
-      "resize_to_same_size": "是否将所有图片调整为相同尺寸",
-      "columns": "网格列数，设置为0时自动计算最优列数"
-    },
-    "outputs": {
-      "merged_image": "合并后的图片"
-    },
-    "widget_values": {
-      "operation": {
-        "horizontal": "水平合并",
-        "vertical": "垂直合并",
-        "grid": "网格合并"
-      }
-    }
-  },
-  "VideoToMp4Node": {
-    "title": "视频转MP4节点",
-    "description": "将视频文件转换为MP4格式，支持质量预设、编码器选择、预设速度、音频设置等高级选项",
-    "inputs": {
-      "video_path": "视频路径",
-      "start_time": "起始时间",
-      "duration": "持续时间",
       "fps": "帧率",
-      "quality": "视频质量",
-      "crf_value": "CRF值",
-      "preset": "预设速度",
+      "video_format": "视频格式",
       "codec": "编码器",
-      "audio_bitrate": "音频比特率",
-      "audio_sample_rate": "音频采样率",
-      "copy_audio": "复制音频",
-      "output_resolution": "输出分辨率",
-      "custom_width": "自定义宽度",
-      "custom_height": "自定义高度",
-      "output_path": "输出路径",
-      "output_filename": "输出文件名"
+      "output_path": "输出路径"
     },
     "widgets": {
-      "video_path": "视频文件路径",
-      "start_time": "从视频的哪个时间点开始转换（秒）",
-      "duration": "转换的持续时间（秒），-1表示整个视频",
-      "fps": "输出视频的帧率",
-      "quality": "视频质量预设",
-      "crf_value": "恒定速率因子(CRF)，数值越小质量越高(0-51)，仅在自定义质量时生效",
-      "preset": "编码速度预设，越快质量可能越低",
-      "codec": "视频编码器选择",
-      "audio_bitrate": "音频比特率，影响音频质量",
-      "audio_sample_rate": "音频采样率，影响音频质量",
-      "copy_audio": "是否直接复制原音频流而不重新编码",
-      "output_resolution": "选择输出视频分辨率",
-      "custom_width": "自定义输出宽度（像素）",
-      "custom_height": "自定义输出高度（像素）",
-      "output_path": "输出文件的路径",
-      "output_filename": "输出文件的名称"
+      "filename_prefix": "视频文件名前缀",
+      "fps": "视频帧率（1-60）",
+      "video_format": "选择视频格式（mp4/avi/mov/mkv）",
+      "codec": "选择视频编码器",
+      "output_path": "视频输出路径（留空使用默认输出路径）"
     },
     "outputs": {
-      "output_path": "输出文件路径",
-      "info": "转换信息"
-    },
-    "widget_values": {
-      "quality": {
-        "high": "高质量",
-        "medium": "中等质量",
-        "low": "低质量",
-        "custom": "自定义"
-      },
-      "preset": {
-        "ultrafast": "极速",
-        "superfast": "超快",
-        "veryfast": "很快",
-        "faster": "较快",
-        "fast": "快速",
-        "medium": "中等",
-        "slow": "慢速",
-        "slower": "较慢",
-        "veryslow": "很慢"
-      },
-      "codec": {
-        "libx264": "H.264",
-        "libx265": "H.265/HEVC"
-      },
-      "audio_bitrate": {
-        "128k": "128kbps (标准)",
-        "192k": "192kbps (高品质)",
-        "256k": "256kbps (高保真)",
-        "320k": "320kbps (最高品质)"
-      },
-      "audio_sample_rate": {
-        "original": "原始采样率",
-        "22050": "22050Hz",
-        "44100": "44100Hz",
-        "48000": "48000Hz",
-        "96000": "96000Hz"
-      },
-      "output_resolution": {
-        "original": "原始分辨率",
-        "custom": "自定义",
-        "320x240": "320x240 (低清)",
-        "640x480": "640x480 (标准)",
-        "1280x720": "1280x720 (高清)",
-        "1920x1080": "1920x1080 (全高清)",
-        "2560x1440": "2560x1440 (2K)",
-        "3840x2160": "3840x2160 (4K)",
-        "7680x4320": "7680x4320 (8K)"
-      }
+      "video_path": "视频路径"
     }
   },
+
+  "ImageEncryptNode": {
+    "title": "图片加密基础",
+    "description": "对图片进行基础加密处理",
+    "inputs": {
+      "image": "输入图像",
+      "password": "密码"
+    },
+    "widgets": {
+      "password": "加密密码"
+    },
+    "outputs": {
+      "encrypted_image": "加密后的图像"
+    }
+  },
+
+  "ImageEncryptNodeAdvanced": {
+    "title": "图片加密高级",
+    "description": "对图片进行高级加密处理，支持多种加密算法",
+    "inputs": {
+      "image": "输入图像",
+      "password": "密码",
+      "algorithm": "加密算法"
+    },
+    "widgets": {
+      "password": "加密密码",
+      "algorithm": "选择加密算法"
+    },
+    "outputs": {
+      "encrypted_image": "加密后的图像"
+    }
+  },
+
+  "ListFoldersNode": {
+    "title": "列出文件夹",
+    "description": "读取输入文件夹并输出该文件夹下的所有文件夹名称列表",
+    "inputs": {
+      "input_directory": "输入文件夹路径",
+      "recursive": "递归搜索",
+      "separator": "分隔符"
+    },
+    "widgets": {
+      "input_directory": "要读取的文件夹路径",
+      "recursive": "是否递归搜索子文件夹",
+      "separator": "多个文件夹名称之间的分隔符（默认为换行符）"
+    },
+    "outputs": {
+      "folder_list": "文件夹列表字符串",
+      "count": "文件夹数量"
+    }
+  },
+  "ListFilesNode": {
+    "title": "列出文件",
+    "description": "读取输入文件夹并输出该文件夹下的所有文件名称列表",
+    "inputs": {
+      "input_directory": "输入文件夹路径",
+      "recursive": "递归搜索",
+      "separator": "分隔符",
+      "file_extensions": "文件扩展名过滤"
+    },
+    "widgets": {
+      "input_directory": "要读取的文件夹路径",
+      "recursive": "是否递归搜索子文件夹",
+      "separator": "多个文件名称之间的分隔符（默认为换行符）",
+      "file_extensions": "要过滤的文件扩展名（多个用逗号分隔，留空则列出所有文件）"
+    },
+    "outputs": {
+      "file_list": "文件列表字符串",
+      "count": "文件数量"
+    }
+  },
+  "CreateFolderNode": {
+    "title": "批量创建文件夹",
+    "description": "批量创建文件夹",
+    "inputs": {
+      "base_path": "基础路径",
+      "folder_names": "文件夹名称",
+      "exist_ok": "已存在时"
+    },
+    "widgets": {
+      "base_path": "文件夹创建的基础目录路径",
+      "folder_names": "要创建的文件夹路径列表，每行一个路径（支持多级目录，如：111\\sub1 或 222\\sub2\\sub3）",
+      "exist_ok": "如果文件夹已存在是否忽略错误"
+    },
+    "outputs": {
+      "status": "状态",
+      "info": "信息"
+    }
+  },
+
   "DimensionMultiplierNode": {
     "title": "尺寸倍数",
     "description": "根据倍数调整输入的宽度和高度值",
@@ -1852,6 +1236,1663 @@
       "width": "输出宽度",
       "height": "输出高度"
     }
+  },
+
+  "ImagesToVideoNode": {
+    "title": "图片转视频",
+    "description": "将图片拉长成视频，支持图片或图片帧序列，支持添加背景音乐",
+    "inputs": {
+      "duration": "时长(秒)",
+      "fps": "帧率",
+      "output_resolution": "输出分辨率",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "output_filename": "输出文件名",
+      "output_path": "输出路径",
+      "conflict_mode": "文件名冲突处理",
+      "pad_width": "数字位数",
+      "separator": "分隔符",
+      "image": "图片",
+      "image_frames": "图片帧序列",
+      "audio": "音频"
+    },
+    "widgets": {
+      "duration": "视频时长（秒）",
+      "fps": "视频帧率（1-60帧/秒）",
+      "output_resolution": "输出视频的分辨率（选择custom可自定义宽高）",
+      "custom_width": "自定义输出宽度",
+      "custom_height": "自定义输出高度",
+      "output_filename": "视频文件的输出名称（不含扩展名）",
+      "output_path": "视频文件的输出目录（默认为video文件夹）",
+      "conflict_mode": "当文件名已存在时的处理方式：覆盖、跳过或添加数字后缀",
+      "pad_width": "数字后缀的填充位数（例如：2位则显示为01, 02, 03）",
+      "separator": "文件名和数字之间的分隔符（默认下划线_）",
+      "image": "输入图片（与图片帧序列二选一）",
+      "image_frames": "图片帧序列（与图片二选一）"
+    },
+    "outputs": {
+      "output_path": "输出文件路径",
+      "info": "处理信息"
+    },
+    "widget_values": {
+      "output_resolution": {
+        "original": "原始分辨率",
+        "custom": "自定义",
+        "320x240": "320x240",
+        "640x480": "640x480",
+        "1280x720": "1280x720",
+        "1920x1080": "1920x1080",
+        "2560x1440": "2560x1440",
+        "3840x2160": "3840x2160"
+      },
+      "conflict_mode": {
+        "覆盖": "覆盖",
+        "跳过": "跳过",
+        "数字后缀": "数字后缀（使用时间戳确保唯一性）"
+      }
+    }
+  },
+
+  "DoubaoSeedreamTextToImageGenerationNode": {
+    "title": "豆包Seedream文生图",
+    "description": "使用火山引擎豆包Seedream模型进行文本到图像生成",
+    "inputs": {
+      "prompt": "提示词",
+      "model_id": "模型ID",
+      "api_key": "API密钥",
+      "aspect_ratio": "比例",
+      "resolution": "分辨率",
+      "mode": "生成模式",
+      "max_images": "图像数量",
+      "seed": "随机种子",
+      "watermark": "水印"
+    },
+    "widgets": {
+      "prompt": "图像生成的文本提示词",
+      "model_id": "选择使用的豆包Seedream模型",
+      "api_key": "火山引擎方舟API密钥",
+      "aspect_ratio": "生成图像的比例",
+      "resolution": "生成图像的分辨率",
+      "mode": "生成模式：single=单张图像，batch=批量连贯图像",
+      "max_images": "生成的图像数量（批量模式下有效，1-10）",
+      "seed": "随机种子（0为随机）",
+      "watermark": "是否在生成的图像上添加水印"
+    },
+    "outputs": {
+      "images": "生成的图像",
+      "status_info": "状态信息"
+    },
+    "widget_values": {
+      "model_id": {
+        "doubao-seedream-5-0-260128": "豆包Seedream 5.0模型",
+        "doubao-seedream-4-5-251128": "豆包Seedream 4.5模型"
+      },
+      "aspect_ratio": {
+        "1:1": "1:1 正方形",
+        "2:3": "2:3 竖屏",
+        "3:2": "3:2 横屏",
+        "3:4": "3:4 竖屏",
+        "4:3": "4:3 横屏",
+        "5:4": "5:4 横屏",
+        "4:5": "4:5 竖屏",
+        "9:16": "9:16 竖屏",
+        "16:9": "16:9 横屏",
+        "21:9": "21:9 超宽屏"
+      },
+      "resolution": {
+        "1K": "1K分辨率",
+        "2K": "2K分辨率",
+        "4K": "4K分辨率"
+      },
+      "mode": {
+        "single": "单张图像",
+        "batch": "批量连贯图像"
+      }
+    }
+  },
+
+  "DoubaoSeedreamImageToImageGenerationNode": {
+    "title": "豆包Seedream图生图",
+    "description": "使用火山引擎豆包Seedream模型进行图像到图像生成",
+    "inputs": {
+      "prompt": "提示词",
+      "model_id": "模型ID",
+      "api_key": "API密钥",
+      "aspect_ratio": "比例",
+      "resolution": "分辨率",
+      "mode": "生成模式",
+      "max_images": "图像数量",
+      "watermark": "水印",
+      "image1": "参考图片1",
+      "image2": "参考图片2",
+      "image3": "参考图片3"
+    },
+    "widgets": {
+      "prompt": "图像生成的文本提示词",
+      "model_id": "选择使用的豆包Seedream模型",
+      "api_key": "火山引擎方舟API密钥",
+      "aspect_ratio": "生成图像的比例",
+      "resolution": "生成图像的分辨率",
+      "mode": "生成模式：single=单张图像，batch=批量连贯图像",
+      "max_images": "生成的图像数量（批量模式下有效，1-10）",
+      "watermark": "是否在生成的图像上添加水印",
+      "image1": "作为参考的图片1",
+      "image2": "作为参考的图片2",
+      "image3": "作为参考的图片3"
+    },
+    "outputs": {
+      "images": "生成的图像",
+      "status_info": "状态信息"
+    },
+    "widget_values": {
+      "model_id": {
+        "doubao-seedream-5-0-260128": "豆包Seedream 5.0模型",
+        "doubao-seedream-4-5-251128": "豆包Seedream 4.5模型"
+      },
+      "aspect_ratio": {
+        "1:1": "1:1 正方形",
+        "2:3": "2:3 竖屏",
+        "3:2": "3:2 横屏",
+        "3:4": "3:4 竖屏",
+        "4:3": "4:3 横屏",
+        "5:4": "5:4 横屏",
+        "4:5": "4:5 竖屏",
+        "9:16": "9:16 竖屏",
+        "16:9": "16:9 横屏",
+        "21:9": "21:9 超宽屏"
+      },
+      "resolution": {
+        "1K": "1K分辨率",
+        "2K": "2K分辨率",
+        "4K": "4K分辨率"
+      },
+      "mode": {
+        "single": "单张图像",
+        "batch": "批量连贯图像"
+      }
+    }
+  },
+
+  "ImageToVideoNode": {
+    "title": "图片转视频",
+    "description": "将图片转换为视频文件",
+    "inputs": {
+      "image": "输入图片",
+      "filename_prefix": "文件名前缀",
+      "fps": "帧率",
+      "video_format": "视频格式",
+      "codec": "编码器",
+      "output_path": "输出路径"
+    },
+    "widgets": {
+      "filename_prefix": "视频文件名前缀",
+      "fps": "视频帧率（1-60）",
+      "video_format": "选择视频格式（mp4/avi/mov/mkv）",
+      "codec": "选择视频编码器",
+      "output_path": "视频输出路径（留空使用默认输出路径）"
+    },
+    "outputs": {
+      "video_path": "视频路径"
+    },
+    "widget_values": {
+      "video_format": {
+        "mp4": "MP4格式",
+        "avi": "AVI格式",
+        "mov": "MOV格式",
+        "mkv": "MKV格式"
+      },
+      "codec": {
+        "libx264": "H.264",
+        "libx265": "H.265/HEVC"
+      }
+    }
+  },
+  "LoadAudioPathNode": {
+    "title": "加载音频路径",
+    "description": "从指定的音频文件路径加载音频数据",
+    "inputs": {
+      "audio_path": "音频路径"
+    },
+    "widgets": {
+      "audio_path": "音频文件的完整路径"
+    },
+    "outputs": {
+      "audio": "音频数据",
+      "audio_path": "音频路径"
+    }
+  },
+  "LoadVideoPathNode": {
+    "title": "加载视频路径",
+    "description": "从指定的视频文件路径加载视频",
+    "inputs": {
+      "video_path": "视频路径"
+    },
+    "widgets": {
+      "video_path": "视频文件的完整路径"
+    },
+    "outputs": {
+        "video_frames": "视频帧序列",
+        "video_path": "视频路径"
+      }
+  },
+  "BailianLLMNode": {
+    "title": "百炼LLM",
+    "description": "调用阿里云百炼大模型服务",
+    "inputs": {
+      "prompt": "提示词",
+      "model": "模型",
+      "api_key": "API Key",
+      "temperature": "温度",
+      "top_p": "Top P",
+      "max_tokens": "最大输出长度",
+      "enable_thinking": "思考模式"
+    },
+    "widgets": {
+      "prompt": "输入给大模型的提示词",
+      "model": "选择要使用的模型",
+      "api_key": "阿里云百炼API Key（从控制台获取）",
+      "temperature": "控制输出的随机性，值越大越随机",
+      "top_p": "累积概率阈值，控制生成的多样性",
+      "max_tokens": "最大输出Token数量",
+      "enable_thinking": "仅适用于deepseek-r1系列模型，开启思考模式"
+    },
+    "outputs": {
+      "response": "响应文本"
+    }
+  },
+  "BailianVLNode": {
+    "title": "百炼VL",
+    "description": "调用阿里云百炼视觉语言模型",
+    "inputs": {
+      "prompt": "提示词",
+      "image": "图片",
+      "model": "模型",
+      "api_key": "API Key",
+      "temperature": "温度",
+      "top_p": "Top P",
+      "max_tokens": "最大输出长度"
+    },
+    "widgets": {
+      "prompt": "输入给大模型的提示词（可包含图片描述）",
+      "image": "输入的图片",
+      "model": "选择要使用的VL模型",
+      "api_key": "阿里云百炼API Key（从控制台获取）",
+      "temperature": "控制输出的随机性，值越大越随机",
+      "top_p": "累积概率阈值，控制生成的多样性",
+      "max_tokens": "最大输出Token数量"
+    },
+    "outputs": {
+      "response": "响应文本",
+      "full_response": "完整响应"
+    }
+  },
+  "BailianQwenNode": {
+    "title": "百炼Qwen(图片生成)",
+    "description": "调用阿里云百炼图片生成模型",
+    "inputs": {
+      "prompt": "提示词",
+      "model": "模型",
+      "api_key": "API Key",
+      "negative_prompt": "反向提示词",
+      "image_width": "图片宽度",
+      "image_height": "图片高度",
+      "steps": "采样步数",
+      "scale": "提示词相关性"
+    },
+    "widgets": {
+      "prompt": "生成图片的提示词",
+      "model": "选择要使用的图片生成模型",
+      "api_key": "阿里云百炼API Key（从控制台获取）",
+      "negative_prompt": "不希望出现在图片中的内容",
+      "image_width": "生成图片的宽度（像素）",
+      "image_height": "生成图片的高度（像素）",
+      "steps": "生成图片的采样步数",
+      "scale": "提示词对生成图片的影响程度"
+    },
+    "outputs": {
+      "image": "生成的图片",
+      "image_path": "图片保存路径"
+    }
+  },
+  "BailianTTSSNode": {
+    "title": "百炼TTS",
+    "description": "调用阿里云百炼语音合成模型",
+    "inputs": {
+      "text": "文本",
+      "model": "模型",
+      "voice": "发音人",
+      "api_key": "API Key",
+      "speed": "语速",
+      "volume": "音量",
+      "sample_rate": "采样率"
+    },
+    "widgets": {
+      "text": "要合成语音的文本内容",
+      "model": "选择要使用的TTS模型",
+      "voice": "发音人名称，不同模型支持不同的发音人",
+      "api_key": "阿里云百炼API Key（从控制台获取）",
+      "speed": "语音合成的语速，1.0为正常语速",
+      "volume": "语音合成的音量，1.0为正常音量",
+      "sample_rate": "输出音频的采样率（Hz）"
+    },
+    "outputs": {
+      "audio": "音频数据",
+      "audio_path": "音频路径"
+    }
+  },
+  "BailianWanNode": {
+    "title": "百炼Wan视频生成",
+    "description": "调用阿里云百炼视频生成模型",
+    "inputs": {
+      "prompt": "提示词",
+      "model": "模型",
+      "api_key": "API Key",
+      "image": "首帧图像",
+      "end_image": "尾帧图像",
+      "video": "参考视频URL",
+      "audio": "音频URL",
+      "video_duration": "视频时长",
+      "resolution": "分辨率"
+    },
+    "widgets": {
+      "prompt": "生成视频的提示词",
+      "model": "选择要使用的视频生成模型",
+      "api_key": "阿里云百炼API Key（从控制台获取）",
+      "image": "图生视频时的首帧图像（可选）",
+      "end_image": "首尾帧生视频时的尾帧图像（可选）",
+      "video": "参考生视频时的参考视频URL（可选）",
+      "audio": "有声视频的音频URL（可选）",
+      "video_duration": "生成视频的时长（秒），范围2-15秒",
+      "resolution": "生成视频的分辨率"
+    },
+    "outputs": {
+      "video_url": "视频URL",
+      "task_id": "任务ID"
+    }
+  },
+  "BatchRenameImagesByMD5Node": {
+    "title": "批量重命名图片(MD5)",
+    "description": "批量重命名图片文件，使用图片内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复",
+    "inputs": {
+      "input_directory": "输入目录",
+      "output_directory": "输出目录",
+      "include_subfolders": "包含子文件夹",
+      "overwrite_existing": "覆盖已存在文件",
+      "delete_original_files": "删除原始文件",
+      "file_extensions": "文件扩展名"
+    },
+    "widgets": {
+      "input_directory": "包含需要重命名图片的目录路径",
+      "output_directory": "重命名后图片保存的目录路径（留空则在原目录处理）",
+      "include_subfolders": "是否递归处理子文件夹中的图片文件",
+      "overwrite_existing": "是否覆盖输出目录中已存在的同名文件",
+      "delete_original_files": "当输出目录留空或与输入目录相同时，是否删除重命名前的原始文件",
+      "file_extensions": "需要处理的图片文件扩展名，用逗号分隔"
+    },
+    "outputs": {
+      "info": "处理信息"
+    }
+  },
+  "BatchRenameVideoByMD5Node": {
+    "title": "批量重命名视频(MD5)",
+    "description": "批量重命名视频文件，使用视频内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复",
+    "inputs": {
+      "video_folder": "视频文件夹",
+      "include_subfolders": "包含子文件夹",
+      "output_folder": "输出文件夹",
+      "overwrite_existing": "覆盖已存在文件",
+      "delete_original_files": "删除原始文件",
+      "video_extensions": "视频扩展名"
+    },
+    "widgets": {
+      "video_folder": "包含需要重命名视频的文件夹路径",
+      "include_subfolders": "是否递归处理子文件夹中的视频文件",
+      "output_folder": "重命名后视频保存的文件夹路径（留空则在原文件夹处理）",
+      "overwrite_existing": "是否覆盖输出文件夹中已存在的同名文件",
+      "delete_original_files": "当输出文件夹留空或与输入文件夹相同时，是否删除重命名前的原始文件",
+      "video_extensions": "需要处理的视频文件扩展名，用逗号分隔"
+    },
+    "outputs": {
+      "info": "处理信息"
+    }
+  },
+  "ImageFormatConverterNode": {
+    "title": "图像格式转换器",
+    "description": "将图像转换为JPEG、PNG、WEBP或BMP格式",
+    "inputs": {
+      "images": "输入图像",
+      "format": "目标格式",
+      "quality": "JPEG/WebP质量",
+      "optimize": "优化PNG"
+    },
+    "widgets": {
+      "images": "需要转换格式的图像批次",
+      "format": "选择输出图像格式（JPEG、PNG、WEBP、BMP）",
+      "quality": "JPEG或WebP格式的质量（1-100）",
+      "optimize": "是否优化PNG大小"
+    },
+    "outputs": {
+      "converted_images": "转换后的图像"
+    }
+  },
+  "BatchImageFormatConverterNode": {
+    "title": "批量图像格式转换器",
+    "description": "批量将指定文件夹中的图像转换为JPEG、PNG、WEBP或BMP格式",
+    "inputs": {
+      "input_folder": "输入文件夹",
+      "output_format": "输出格式",
+      "quality": "图像质量",
+      "output_folder": "输出文件夹"
+    },
+    "widgets": {
+      "input_folder": "包含需要转换格式的图像的文件夹路径",
+      "output_format": "选择输出格式（JPEG、PNG、WEBP、BMP）",
+      "quality": "JPEG/WEBP格式的图像质量（1-100）",
+      "output_folder": "转换后的图像保存的文件夹路径（留空则在原文件夹处理）"
+    },
+    "outputs": {
+      "output_info": "输出信息"
+    }
+  },
+  "ImageGridSplitNode": {
+    "title": "图像拆分网格",
+    "description": "将图像按指定的网格行数和列数拆分成多个小图像",
+    "inputs": {
+      "images": "输入图像",
+      "grid_rows": "网格行数",
+      "grid_cols": "网格列数"
+    },
+    "widgets": {
+      "images": "需要拆分的输入图像",
+      "grid_rows": "网格的行数（默认2）",
+      "grid_cols": "网格的列数（默认2）"
+    },
+    "outputs": {
+      "image_grid": "图像网格"
+    }
+  },
+  "VideoToGifNode": {
+    "title": "视频转GIF",
+    "description": "将视频文件转换为GIF动画",
+    "inputs": {
+      "video_file": "视频文件",
+      "duration": "持续时间",
+      "fps": "帧率",
+      "resize_factor": "缩放因子",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小",
+      "quality": "质量等级",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "video_file": "选择要转换为GIF的视频文件",
+      "duration": "GIF的持续时间（秒）",
+      "fps": "GIF的帧率",
+      "resize_factor": "图像缩放比例（0.1-1.0）",
+      "optimize": "优化GIF大小",
+      "palette_size": "GIF的颜色数量",
+      "quality": "GIF质量（1=最低，5=最高）",
+      "output_filename": "GIF文件的输出名称"
+    },
+    "outputs": {
+      "output_path": "GIF文件路径"
+    },
+    "widget_values": {
+      "palette_size": {
+        "2": "2色（最小文件）",
+        "4": "4色",
+        "8": "8色",
+        "16": "16色",
+        "32": "32色",
+        "64": "64色",
+        "128": "128色",
+        "256": "256色（最高质量）"
+      },
+      "quality": {
+        "1": "低质量",
+        "2": "中低质量",
+        "3": "中等质量",
+        "4": "高质量",
+        "5": "最高质量"
+      }
+    }
+  },
+  "BatchImageResizerWithConversionNode": {
+    "title": "批量图像缩放（带格式转换）",
+    "description": "批量将指定文件夹中的图片按宽度或高度进行缩放，并可转换图像格式",
+    "inputs": {
+      "input_folder": "输入文件夹",
+      "resize_mode": "缩放模式",
+      "target_size": "目标尺寸",
+      "output_format": "输出格式",
+      "quality": "图像质量",
+      "output_folder": "输出文件夹"
+    },
+    "widgets": {
+      "input_folder": "包含需要缩放的图片的文件夹路径",
+      "resize_mode": "缩放模式：width=按宽度缩放，height=按高度缩放",
+      "target_size": "目标尺寸（像素）",
+      "output_format": "输出格式（JPEG、PNG、WEBP、BMP）",
+      "quality": "JPEG/WEBP格式的图像质量（1-100）",
+      "output_folder": "缩放后的图像保存的文件夹路径（留空则在原文件夹处理）"
+    },
+    "outputs": {
+      "output_info": "输出信息"
+    }
+  },
+  "SaveAudioNode": {
+    "title": "保存音频",
+    "description": "将音频数据保存为WAV、MP3、FLAC、OGG或M4A格式",
+    "inputs": {
+      "audio": "音频数据",
+      "filename_prefix": "文件名前缀",
+      "output_dir": "输出目录",
+      "format": "音频格式",
+      "sample_rate": "采样率"
+    },
+    "widgets": {
+      "audio": "需要保存的音频数据",
+      "filename_prefix": "输出文件名的前缀",
+      "output_dir": "音频文件的输出目录（留空则使用默认output/audio目录）",
+      "format": "选择音频格式（WAV、MP3、FLAC、OGG、M4A）",
+      "sample_rate": "音频采样率（Hz）"
+    },
+    "outputs": {
+      "output_path": "输出文件路径"
+    }
+  },
+  "BatchFolderImageCompressorNode": {
+    "title": "批量文件夹图片压缩",
+    "description": "批量压缩指定文件夹中的图片，支持调整质量、尺寸和格式，自动处理文件冲突",
+    "inputs": {
+      "image_directory": "图片目录",
+      "output_directory": "输出目录",
+      "output_format": "输出格式",
+      "quality": "压缩质量",
+      "max_width": "最大宽度",
+      "max_height": "最大高度",
+      "keep_structure": "保留原始结构",
+      "process_subfolders": "压缩子目录",
+      "conflict_mode": "文件冲突处理",
+      "suffix_text": "自定义后缀文本"
+    },
+    "widgets": {
+      "image_directory": "输入图像文件夹路径",
+      "output_directory": "输出图像保存路径",
+      "output_format": "选择输出图片的格式",
+      "quality": "压缩质量（1-100），数值越大质量越高",
+      "max_width": "最大宽度（0表示不限制）",
+      "max_height": "最大高度（0表示不限制）",
+      "keep_structure": "是：保留子目录结构；否：所有文件输出到同一目录",
+      "process_subfolders": "是：递归处理所有子目录；否：仅处理当前目录",
+      "conflict_mode": "当输出文件已存在时的处理方式",
+      "suffix_text": "在文件名后添加的自定义文本（仅文本后缀模式生效）"
+    },
+    "outputs": {
+      "result_info": "处理结果信息"
+    },
+    "widget_values": {
+      "output_format": {
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WebP": "WebP格式"
+      },
+      "keep_structure": {
+        "是": "保留结构",
+        "否": "不保留结构"
+      },
+      "process_subfolders": {
+        "是": "处理子目录",
+        "否": "不处理子目录"
+      },
+      "conflict_mode": {
+        "覆盖": "覆盖现有文件",
+        "跳过": "跳过现有文件",
+        "数字后缀": "添加数字后缀",
+        "文本后缀": "添加文本后缀"
+      }
+    }
+  },
+  "LoadImagePathNode": {
+    "title": "加载图片路径",
+    "description": "从指定的文件路径加载图像，支持多种图像格式",
+    "inputs": {
+      "image_path": "图片路径"
+    },
+    "widgets": {
+      "image_path": "图片路径"
+    },
+    "outputs": {
+      "image": "图像",
+      "image_path": "图片路径",
+      "image_name": "图片名称"
+    }
+  },
+  "ImagesToVideoNode": {
+    "title": "图片转视频",
+    "description": "将图片拉长成视频（支持单张图片或图片帧序列）",
+    "inputs": {
+      "duration": "时长(秒)",
+      "fps": "帧率",
+      "output_resolution": "输出分辨率",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "output_filename": "输出文件名",
+      "output_path": "输出路径",
+      "conflict_mode": "文件名冲突处理",
+      "pad_width": "数字位数",
+      "separator": "分隔符",
+      "image": "单张图片",
+      "image_frames": "图片帧序列",
+      "audio": "音频输入"
+    },
+    "widgets": {
+      "duration": "视频时长（秒）",
+      "fps": "视频帧率（1-60帧/秒）",
+      "output_resolution": "输出视频的分辨率（选择custom可自定义宽高）",
+      "custom_width": "自定义宽度（像素）",
+      "custom_height": "自定义高度（像素）",
+      "output_filename": "视频文件的输出名称（不含扩展名）",
+      "output_path": "视频文件的输出目录（默认为video文件夹）",
+      "conflict_mode": "当文件名已存在时的处理方式：覆盖、跳过或添加数字后缀",
+      "pad_width": "数字后缀的填充位数（例如：2位则显示为01, 02, 03）",
+      "separator": "文件名和数字之间的分隔符（默认下划线_）",
+      "image": "单张输入图片（可选，与image_frames二选一）",
+      "image_frames": "图片帧序列（可选，与image二选一）",
+      "audio": "音频输入（可选）"
+    },
+    "outputs": {
+      "output_path": "输出文件路径",
+      "info": "信息"
+    },
+    "widget_values": {
+      "output_resolution": {
+        "original": "原始尺寸",
+        "custom": "自定义",
+        "320x240": "320x240",
+        "640x480": "640x480",
+        "1280x720": "1280x720",
+        "1920x1080": "1920x1080",
+        "2560x1440": "2560x1440",
+        "3840x2160": "3840x2160"
+      },
+      "conflict_mode": {
+        "覆盖": "覆盖",
+        "跳过": "跳过",
+        "数字后缀": "数字后缀"
+      }
+    }
+  },
+  "LoadVideoPathNode": {
+    "title": "加载视频路径",
+    "description": "从指定路径加载视频文件，支持提取视频帧和音频",
+    "inputs": {
+      "video_path": "视频路径",
+      "max_frames": "最大帧数",
+      "extract_audio": "提取音频"
+    },
+    "widgets": {
+      "video_path": "视频文件的完整路径",
+      "max_frames": "限制加载的最大帧数（0表示不限制）",
+      "extract_audio": "是否从视频中提取音频"
+    },
+    "outputs": {
+      "video_frames": "视频帧",
+      "video_path": "视频路径",
+      "audio": "音频数据"
+    }
+  },
+  "VideoToAudioNode": {
+    "title": "视频转音频",
+    "description": "从视频文件中提取音频轨道并保存为音频文件",
+    "inputs": {
+      "video_file": "视频文件",
+      "output_format": "输出格式",
+      "audio_quality": "音频质量",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "video_file": "选择要提取音频的视频文件",
+      "output_format": "音频文件的格式",
+      "audio_quality": "音频的质量",
+      "output_filename": "可选：自定义输出文件名（不含扩展名）"
+    },
+    "outputs": {
+      "audio_file_path": "音频文件路径",
+      "status_message": "状态信息",
+      "audio": "音频数据"
+    },
+    "widget_values": {
+      "output_format": {
+        "mp3": "MP3格式",
+        "wav": "WAV格式",
+        "aac": "AAC格式",
+        "flac": "FLAC格式"
+      },
+      "audio_quality": {
+        "high": "高质量",
+        "medium": "中等质量",
+        "low": "低质量"
+      }
+    }
+  },
+  "ImagesToGifNode": {
+    "title": "图片转GIF",
+    "description": "将多张图片合并为GIF动画",
+    "inputs": {
+      "images": "图片列表",
+      "frame_duration": "帧间隔",
+      "loop_count": "循环次数",
+      "resize_factor": "缩放因子",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小",
+      "quality": "质量等级",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "images": "需要合并的图片列表",
+      "frame_duration": "每帧图片的显示时间（秒）",
+      "loop_count": "GIF循环播放次数（0表示无限循环）",
+      "resize_factor": "图像缩放比例（0.1-1.0）",
+      "optimize": "优化GIF大小",
+      "palette_size": "GIF的颜色数量",
+      "quality": "GIF质量（1=最低，5=最高）",
+      "output_filename": "GIF文件的输出名称"
+    },
+    "outputs": {
+      "output_path": "GIF文件路径"
+    },
+    "widget_values": {
+      "palette_size": {
+        "2": "2色（最小文件）",
+        "4": "4色",
+        "8": "8色",
+        "16": "16色",
+        "32": "32色",
+        "64": "64色",
+        "128": "128色",
+        "256": "256色（最佳质量）"
+      },
+      "quality": {
+        "1": "最低质量",
+        "2": "低质量",
+        "3": "中等质量",
+        "4": "高质量",
+        "5": "最高质量"
+      }
+    }
+  },
+  "VideoToGifNode": {
+    "title": "视频转GIF",
+    "description": "将视频文件转换为GIF动画",
+    "inputs": {
+      "video_file": "视频文件",
+      "duration": "持续时间",
+      "fps": "帧率",
+      "resize_factor": "缩放因子",
+      "optimize": "优化GIF",
+      "palette_size": "调色板大小",
+      "quality": "质量等级",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "video_file": "选择要转换为GIF的视频文件",
+      "duration": "GIF的持续时间（秒）",
+      "fps": "GIF的帧率",
+      "resize_factor": "图像缩放比例（0.1-1.0）",
+      "optimize": "优化GIF大小",
+      "palette_size": "GIF的颜色数量",
+      "quality": "GIF质量（1=最低，5=最高）",
+      "output_filename": "GIF文件的输出名称"
+    },
+    "outputs": {
+      "output_path": "GIF文件路径"
+    },
+    "widget_values": {
+      "palette_size": {
+        "2": "2色（最小文件）",
+        "4": "4色",
+        "8": "8色",
+        "16": "16色",
+        "32": "32色",
+        "64": "64色",
+        "128": "128色",
+        "256": "256色（最佳质量）"
+      },
+      "quality": {
+        "1": "最低质量",
+        "2": "低质量",
+        "3": "中等质量",
+        "4": "高质量",
+        "5": "最高质量"
+      }
+    }
+  },
+  "BatchLoadImagesNode": {
+    "title": "批量加载图片",
+    "description": "批量加载图片文件，支持加载全部图片或按索引加载单张图片",
+    "inputs": {
+      "mode": "加载模式",
+      "image_path": "图片路径",
+      "index": "索引",
+      "max_images": "最大图片数量"
+    },
+    "widgets": {
+      "mode": "选择加载模式：加载全部图片或按索引加载单张图片",
+      "image_path": "图片目录路径或单张图片路径",
+      "index": "当模式为'加载单张'时，指定要加载的图片索引（从0开始）",
+      "max_images": "当模式为'加载全部'时，限制最多加载的图片数量，设置为0表示加载全部图片"
+    },
+    "outputs": {
+      "images": "图片列表",
+      "filenames": "文件名列表",
+      "filenames_without_extension": "不带扩展名的文件名列表",
+      "count": "图片数量"
+    },
+    "widget_values": {
+      "mode": {
+        "加载全部": "加载全部图片",
+        "加载单张": "按索引加载单张图片"
+      }
+    }
+  },
+  "SaveVideoNode": {
+    "title": "保存视频",
+    "description": "将视频帧保存为视频文件，支持添加音频",
+    "inputs": {
+      "frames": "视频帧",
+      "fps": "帧率",
+      "output_filename": "输出文件名",
+      "output_path": "输出路径",
+      "format": "视频格式",
+      "quality": "质量",
+      "audio": "音频输入"
+    },
+    "widgets": {
+      "frames": "需要保存的视频帧",
+      "fps": "视频帧率（帧/秒）",
+      "output_filename": "视频文件的输出名称（不含扩展名）",
+      "output_path": "视频文件的输出目录",
+      "format": "视频格式（MP4、AVI、MOV）",
+      "quality": "视频质量（1-5，5为最高）",
+      "audio": "音频输入（可选）"
+    },
+    "outputs": {
+      "output_path": "输出文件路径",
+      "info": "信息"
+    }
+  },
+  "SaveAudioNode": {
+    "title": "保存音频",
+    "description": "将音频数据保存为WAV、MP3、FLAC、OGG或M4A格式",
+    "inputs": {
+      "audio": "音频数据",
+      "filename_prefix": "文件名前缀",
+      "output_dir": "输出目录",
+      "format": "音频格式",
+      "sample_rate": "采样率"
+    },
+    "widgets": {
+      "audio": "需要保存的音频数据",
+      "filename_prefix": "输出文件名的前缀",
+      "output_dir": "音频文件的输出目录（留空则使用默认output/audio目录）",
+      "format": "选择音频格式（WAV、MP3、FLAC、OGG、M4A）",
+      "sample_rate": "音频采样率（Hz）"
+    },
+    "outputs": {
+      "output_path": "输出文件路径"
+    },
+    "widget_values": {
+      "format": {
+        "WAV": "WAV格式",
+        "MP3": "MP3格式",
+        "FLAC": "FLAC格式",
+        "OGG": "OGG格式",
+        "M4A": "M4A格式"
+      }
+    }
+  },
+  "ImageFormatConverterNode": {
+    "title": "图像格式转换器",
+    "description": "将单张图片从一种格式转换为另一种格式",
+    "inputs": {
+      "image": "输入图像",
+      "output_format": "输出格式",
+      "quality": "图像质量",
+      "output_filename": "输出文件名"
+    },
+    "widgets": {
+      "image": "需要转换格式的图像",
+      "output_format": "目标格式（JPEG、PNG、WebP、BMP、TIFF）",
+      "quality": "JPEG/WebP格式的质量（1-100）",
+      "output_filename": "输出文件名（不含扩展名）"
+    },
+    "outputs": {
+      "output_path": "输出文件路径"
+    },
+    "widget_values": {
+      "output_format": {
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WebP": "WebP格式",
+        "BMP": "BMP格式",
+        "TIFF": "TIFF格式"
+      }
+    }
+  },
+  "BatchImageFormatConverterNode": {
+    "title": "批量图像格式转换器",
+    "description": "批量将指定文件夹中的图片转换为另一种格式",
+    "inputs": {
+      "input_folder": "输入文件夹",
+      "output_format": "输出格式",
+      "quality": "图像质量",
+      "output_folder": "输出文件夹"
+    },
+    "widgets": {
+      "input_folder": "包含需要转换的图片的文件夹路径",
+      "output_format": "目标格式（JPEG、PNG、WebP、BMP、TIFF）",
+      "quality": "JPEG/WebP格式的质量（1-100）",
+      "output_folder": "转换后的图像保存的文件夹路径（留空则在原文件夹处理）"
+    },
+    "outputs": {
+      "output_info": "输出信息"
+    },
+    "widget_values": {
+      "output_format": {
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WebP": "WebP格式",
+        "BMP": "BMP格式",
+        "TIFF": "TIFF格式"
+      }
+    }
+  },
+  "BatchImageScalerNode": {
+    "title": "批量图像缩放",
+    "description": "批量缩放指定文件夹中的图片",
+    "inputs": {
+      "image_directory": "输入图像文件夹",
+      "save_directory": "输出图像保存路径",
+      "scale_factor": "缩放因子",
+      "resize_mode": "缩放模式",
+      "target_width": "目标宽度",
+      "target_height": "目标高度",
+      "resampling_filter": "重采样过滤器"
+    },
+    "widgets": {
+      "image_directory": "包含需要缩放的图片的文件夹路径",
+      "save_directory": "缩放后的图像保存的文件夹路径（留空则保存到输入目录）",
+      "scale_factor": "图像缩放比例（0.1-5.0）",
+      "resize_mode": "缩放模式：按比例缩放、固定宽度、固定高度、固定尺寸",
+      "target_width": "目标宽度（像素）",
+      "target_height": "目标高度（像素）",
+      "resampling_filter": "重采样过滤器"
+    },
+    "outputs": {
+      "result_info": "结果信息"
+    },
+    "widget_values": {
+      "resize_mode": {
+        "按比例缩放": "按比例缩放",
+        "固定宽度": "固定宽度",
+        "固定高度": "固定高度",
+        "固定尺寸": "固定尺寸"
+      },
+      "resampling_filter": {
+        "LANCZOS": "LANCZOS（高质量）",
+        "BICUBIC": "BICUBIC",
+        "BILINEAR": "BILINEAR",
+        "NEAREST": "NEAREST（最快）"
+      }
+    }
+  },
+  "ImageGridSplitNode": {
+    "title": "图像拆分网格",
+    "description": "将图像拆分为网格状的多个小图像",
+    "inputs": {
+      "image": "输入图像",
+      "grid_rows": "行数",
+      "grid_cols": "列数",
+      "overlap": "重叠",
+      "keep_original_size": "保持原始尺寸"
+    },
+    "widgets": {
+      "grid_rows": "网格的行数",
+      "grid_cols": "网格的列数",
+      "overlap": "每个小图像之间的重叠像素数",
+      "keep_original_size": "是否保持原始图像尺寸"
+    },
+    "outputs": {
+      "images": "图像网格",
+      "count": "图像数量"
+    }
+  },
+  "BatchRenameImagesByMD5Node": {
+    "title": "批量重命名图片（MD5）",
+    "description": "根据图片内容的MD5值批量重命名图片",
+    "inputs": {
+      "image_directory": "输入图像文件夹",
+      "output_directory": "输出图像保存路径"
+    },
+    "widgets": {
+      "image_directory": "包含需要重命名的图片的文件夹路径",
+      "output_directory": "重命名后的图像保存的文件夹路径（留空则保存到输入目录）"
+    },
+    "outputs": {
+      "result_info": "结果信息"
+    }
+  },
+  "YoloModelLoader": {
+    "title": "YOLO模型加载器 (v8预设)",
+    "description": "加载YOLO模型进行目标检测",
+    "inputs": {
+      "model_name": "模型名称",
+      "confidence_threshold": "置信度阈值",
+      "iou_threshold": "IOU阈值"
+    },
+    "widgets": {
+      "model_name": "模型名称",
+      "confidence_threshold": "置信度阈值",
+      "iou_threshold": "IOU阈值"
+    },
+    "outputs": {
+      "model": "YOLO模型",
+      "model_info": "模型信息"
+    }
+  },
+  "YoloModelLoaderV2": {
+    "title": "YOLO模型加载器V2(本地模型)",
+    "description": "加载本地YOLO模型进行目标检测",
+    "inputs": {
+      "local_model": "本地模型",
+      "confidence_threshold": "置信度阈值",
+      "iou_threshold": "IOU阈值"
+    },
+    "widgets": {
+      "local_model": "本地模型",
+      "confidence_threshold": "置信度阈值",
+      "iou_threshold": "IOU阈值"
+    },
+    "outputs": {
+      "model": "YOLO模型",
+      "model_info": "模型信息"
+    }
+  },
+  "YoloModelLoaderCustomPath": {
+    "title": "YOLO模型加载器(自定义路径)",
+    "description": "从自定义路径加载YOLO模型进行目标检测",
+    "inputs": {
+      "custom_model_path": "自定义模型路径",
+      "use_cache": "使用缓存",
+      "confidence_threshold": "置信度阈值",
+      "iou_threshold": "IOU阈值"
+    },
+    "widgets": {
+      "custom_model_path": "自定义模型路径",
+      "use_cache": "使用缓存",
+      "confidence_threshold": "置信度阈值",
+      "iou_threshold": "IOU阈值"
+    },
+    "outputs": {
+      "model": "YOLO模型",
+      "model_info": "模型信息"
+    }
+  },
+  "SamModelLoader": {
+    "title": "SAM模型加载器（预设）",
+    "description": "加载和配置SAM模型",
+    "inputs": {
+    },
+    "widgets": {
+      "model_type": "模型类型",
+      "auto_download": "自动下载",
+      "use_cache": "使用缓存"
+    },
+    "outputs": {
+      "model": "SAM模型",
+      "model_info": "模型信息"
+    }
+  },
+  "SamModelLoaderV2": {
+    "title": "SAM模型加载器V2 (本地模型)",
+    "description": "加载本地SAM模型",
+    "inputs": {
+      "local_model": "本地模型",
+      "use_cache": "使用缓存"
+    },
+    "widgets": {
+      "local_model": "本地模型",
+      "use_cache": "使用缓存"
+    },
+    "outputs": {
+      "model": "SAM模型",
+      "model_info": "模型信息"
+    }
+  },
+  "SamModelLoaderCustomPath": {
+    "title": "SAM模型加载器(自定义路径)",
+    "description": "从自定义路径加载SAM模型",
+    "inputs": {
+      "custom_model_path": "模型完整路径",
+      "use_cache": "使用缓存"
+    },
+    "widgets": {
+      "custom_model_path": "模型完整路径",
+      "use_cache": "使用缓存"
+    },
+    "outputs": {
+      "model": "SAM模型",
+      "model_info": "模型信息"
+    }
+  },
+  "YoloDetectionNode": {
+    "title": "YOLO检测节点",
+    "description": "执行YOLO目标检测并显示结果",
+    "inputs": {
+      "yolo_model": "YOLO模型",
+      "image": "输入图像",
+      "classes": "检测类别",
+      "confidence_threshold": "置信度阈值",
+      "show_annotations": "显示标注"
+    },
+    "widgets": {
+      "classes": "检测类别",
+      "confidence_threshold": "置信度阈值",
+      "show_annotations": "显示标注"
+    },
+    "outputs": {
+      "annotated_image": "带标注图像",
+      "detection_results": "检测结果",
+      "detected_objects_count": "检测对象数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectionResultsProcessor": {
+    "title": "YOLO检测结果处理器",
+    "description": "处理YOLO检测结果，提供过滤、统计和格式化功能",
+    "inputs": {
+      "detection_results": "检测结果",
+      "min_confidence": "最小置信度",
+      "class_filter": "类别过滤器",
+      "max_objects": "最大对象数"
+    },
+    "widgets": {
+      "min_confidence": "最小置信度",
+      "class_filter": "类别过滤器",
+      "max_objects": "最大对象数"
+    },
+    "outputs": {
+      "filtered_results": "过滤结果",
+      "object_count": "对象数量",
+      "summary": "摘要信息",
+      "class_list": "类别列表"
+    }
+  },
+  "YoloDetectionResultsToBboxes": {
+    "title": "YOLO检测结果转边界框",
+    "description": "将YOLO检测结果转换为边界框坐标列表",
+    "inputs": {
+      "detection_results": "检测结果"
+    },
+    "widgets": {
+    },
+    "outputs": {
+      "bboxes": "边界框列表",
+      "count": "边界框数量"
+    }
+  },
+  "YoloDetectionCropNode": {
+    "title": "YOLO检测裁切节点",
+    "description": "根据YOLO检测结果裁切图像中的每个检测对象",
+    "inputs": {
+      "image": "输入图像",
+      "detection_results": "检测结果",
+      "padding": "裁切边距",
+      "square_crop": "方形裁切",
+      "crop_index": "裁切索引"
+    },
+    "widgets": {
+      "padding": "裁切边距",
+      "square_crop": "方形裁切",
+      "crop_index": "裁切索引"
+    },
+    "outputs": {
+      "cropped_images": "裁切图像",
+      "masks": "裁切遮罩",
+      "crop_count": "裁切数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectionMultiCropNode": {
+    "title": "YOLO检测多裁切节点",
+    "description": "根据YOLO检测结果裁切图像中的每个检测对象，直接输出多个裁剪图片结果",
+    "inputs": {
+      "image": "输入图像",
+      "detection_results": "检测结果",
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "widgets": {
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "outputs": {
+      "cropped_images": "裁切图像",
+      "masks": "裁切遮罩",
+      "crop_count": "裁切数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectionMultiOutputCropNode": {
+    "title": "YOLO检测多输出裁切节点",
+    "description": "根据YOLO检测结果裁切图像中的每个检测对象，通过多个独立输出端口分别输出裁切图像1至裁切图像5",
+    "inputs": {
+      "image": "输入图像",
+      "detection_results": "检测结果",
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "widgets": {
+      "padding": "裁切边距",
+      "square_crop": "方形裁切"
+    },
+    "outputs": {
+      "cropped_image_1": "裁切图像1",
+      "cropped_image_2": "裁切图像2",
+      "cropped_image_3": "裁切图像3",
+      "cropped_image_4": "裁切图像4",
+      "cropped_image_5": "裁切图像5",
+      "mask_1": "遮罩1",
+      "mask_2": "遮罩2",
+      "mask_3": "遮罩3",
+      "mask_4": "遮罩4",
+      "mask_5": "遮罩5",
+      "crop_count": "裁切数量",
+      "info": "信息"
+    }
+  },
+  "YoloDetectAndCropNode": {
+    "title": "YOLO检测与裁剪一体化",
+    "description": "YOLO检测与裁剪一体化节点，直接输入图片，执行YOLO检测并输出裁剪结果，支持自动切换CUDA/CPU设备",
+    "inputs": {
+      "yolo_model": "YOLO模型",
+      "image": "输入图像",
+      "classes": "检测类别",
+      "confidence_threshold": "置信度阈值",
+      "padding": "边界填充"
+    },
+    "widgets": {
+      "classes": "检测类别",
+      "confidence_threshold": "置信度阈值",
+      "padding": "边界填充"
+    },
+    "outputs": {
+      "cropped_image": "裁剪图像",
+      "detection_results": "检测结果",
+      "detected_objects_count": "检测对象数量",
+      "crop_info": "裁剪信息",
+      "crop_regions_count": "裁剪区域数量",
+      "info": "信息"
+    }
+  },
+  "modelscopeLoraTextToImageNode": {
+    "title": "魔搭API文生图节点",
+    "description": "使用魔搭API生成图像",
+    "inputs": {
+    },
+    "widgets": {
+      "prompt": "提示词",
+      "api_token": "API令牌",
+      "base_model": "基础模型",
+      "lora_model": "LoRA模型",
+      "negative_prompt": "负面提示词",
+      "width": "宽度",
+      "height": "高度",
+      "seed": "随机种子",
+      "text_seed": "文本种子",
+      "steps": "采样步数",
+      "guidance": "引导系数",
+      "lora_weight": "LoRA权重",
+      "batch_size": "批次大小"
+    },
+    "outputs": {
+      "image": "生成图像"
+    }
+  },
+  "modelscopeLoraImageEditNode": {
+    "title": "魔搭API图像编辑节点",
+    "description": "使用魔搭API编辑图像",
+    "inputs": {
+      "image": "输入图像"
+    },
+    "widgets": {
+      "prompt": "编辑提示词",
+      "api_token": "API令牌",
+      "base_model": "基础模型",
+      "lora_model": "LoRA模型",
+      "negative_prompt": "负面提示词",
+      "use_custom_size": "使用自定义尺寸",
+      "width": "宽度",
+      "height": "高度",
+      "seed": "随机种子",
+      "vision_seed": "视觉种子",
+      "steps": "采样步数",
+      "guidance": "引导系数",
+      "lora_weight": "LoRA权重"
+    },
+    "outputs": {
+      "edited_image": "编辑图像"
+    }
+  },
+  "ModelscopeApiSelector": {
+    "title": "魔搭API模型选择器",
+    "description": "提供模型名称选择功能",
+    "inputs": {
+    },
+    "widgets": {
+      "model_name": "模型名称"
+    },
+    "outputs": {
+      "model_name": "模型名称"
+    }
+  },
+  "ModelscopeApiManager": {
+    "title": "魔搭API列表管理",
+    "description": "用于管理可用模型，支持list/add/delete操作",
+    "inputs": {
+    },
+    "widgets": {
+      "action": "操作类型",
+      "model_id": "模型ID",
+      "model_display_name": "显示名称",
+      "model_to_delete": "要删除的模型"
+    },
+    "outputs": {
+      "status_message": "状态信息"
+    },
+    "widget_values": {
+      "action": {
+        "list": "列出",
+        "add": "添加",
+        "delete": "删除"
+      }
+    }
+  },
+  "ModelscopeApiLoraSelector": {
+    "title": "魔搭API-Lora模型选择器",
+    "description": "提供Lora模型名称选择功能",
+    "inputs": {
+    },
+    "widgets": {
+      "lora_model_name": "Lora模型名称"
+    },
+    "outputs": {
+      "lora_model_name": "Lora模型名称"
+    }
+  },
+  "ModelscopeApiLoraManager": {
+    "title": "魔搭API-Lora列表管理",
+    "description": "用于管理可用Lora模型，支持list/add/delete操作",
+    "inputs": {
+    },
+    "widgets": {
+      "action": "操作类型",
+      "lora_model_id": "Lora模型ID",
+      "lora_model_display_name": "显示名称",
+      "lora_model_to_delete": "要删除的Lora模型"
+    },
+    "outputs": {
+      "status_message": "状态信息"
+    },
+    "widget_values": {
+      "action": {
+        "list": "列出",
+        "add": "添加",
+        "delete": "删除"
+      }
+    }
+  },
+  "SquareConverter": {
+    "title": "正方形转换器",
+    "description": "输入一个尺寸，例如是200x300，那么会把较短尺寸填充到与较长尺寸相等，图片保持不变，同时可以增加边距，使得最终尺寸的短边加边距等于长边加边距",
+    "inputs": {
+      "image": "输入图像",
+      "margin": "边距"
+    },
+    "widgets": {
+      "pad_color": "填充颜色"
+    },
+    "outputs": {
+      "image": "图像",
+      "width": "宽度",
+      "height": "高度"
+    }
+  },
+  "RectangleConverter": {
+    "title": "长方形转换器",
+    "description": "将正方形图像转换为长方形图像，支持左右和上下的扩展，可以手动指定最终长度",
+    "inputs": {
+      "image": "输入图像",
+      "direction": "扩展方向",
+      "target_length": "目标长度",
+      "margin": "边距"
+    },
+    "widgets": {
+      "direction": "扩展方向",
+      "target_length": "目标长度",
+      "pad_color": "填充颜色"
+    },
+    "outputs": {
+      "image": "图像",
+      "width": "宽度",
+      "height": "高度"
+    },
+    "widget_values": {
+      "direction": {
+        "left_right": "左右扩展",
+        "top_bottom": "上下扩展"
+      }
+    }
+  },
+  "SizeSelector": {
+    "title": "尺寸预设",
+    "description": "提供常用图像尺寸的快速选择，格式为'比例-名称：宽x高'",
+    "inputs": {
+      "size_preset": "尺寸预设"
+    },
+    "widgets": {
+      "size_preset": "尺寸预设"
+    },
+    "outputs": {
+      "width": "宽度",
+      "height": "高度"
+    }
+  },
+  "LoopGeneratorNode": {
+    "title": "循环生成器",
+    "description": "支持最多3层嵌套循环，每层使用多行字符串输入",
+    "inputs": {
+      "layer1_items": "第1层项目",
+      "layer2_items": "第2层项目",
+      "layer3_items": "第3层项目",
+      "separator": "分隔符",
+      "line_separator": "输出分隔"
+    },
+    "widgets": {
+      "layer1_items": "第1层项目，每行一个",
+      "layer2_items": "第2层项目，每行一个",
+      "layer3_items": "第3层项目，每行一个（可选）",
+      "separator": "层与层之间的分隔符",
+      "line_separator": "每行结果之间的分隔符"
+    },
+    "outputs": {
+      "结果": "结果",
+      "总数": "总数"
+    },
+    "widget_values": {
+      "line_separator": {
+        "换行": "换行",
+        "逗号": "逗号",
+        "分号": "分号",
+        "制表符": "制表符"
+      }
+    }
+  },
+  "LoopGeneratorOutputSplitterNode": {
+    "title": "循环生成器输出转接",
+    "description": "将循环生成器的输出按索引选择某一行，然后拆分成多个输出端口",
+    "inputs": {
+      "input_string": "输入字符串",
+      "separator": "分隔符",
+      "line_index": "行索引"
+    },
+    "widgets": {
+      "input_string": "循环生成器的输出结果",
+      "separator": "用于拆分的分隔符",
+      "line_index": "要提取的行索引（从0开始）"
+    },
+    "outputs": {
+      "端口1": "端口1",
+      "端口2": "端口2",
+      "端口3": "端口3"
+    }
+  },
+  "CounterNode": {
+    "title": "计数器",
+    "description": "每次点击运行时数值加一，支持上限和循环计数",
+    "inputs": {
+      "counter_id": "计数器ID",
+      "reset": "重置",
+      "increment": "增量",
+      "max_value": "上限值",
+      "restart_on_max": "超过上限重新计数",
+      "trigger": "触发器"
+    },
+    "widgets": {
+      "counter_id": "计数器的唯一标识符，不同ID独立计数",
+      "reset": "是：重置计数器为0；否：正常计数",
+      "increment": "每次增加的数值",
+      "max_value": "上限值（0表示不限制）",
+      "restart_on_max": "是：达到上限后重新从0开始计数；否：达到上限后停止计数",
+      "trigger": "输入任意值触发计数"
+    },
+    "outputs": {
+      "计数值": "计数值",
+      "信息": "信息"
+    },
+    "widget_values": {
+      "reset": {
+        "否": "正常计数",
+        "是": "重置为0"
+      },
+      "restart_on_max": {
+        "否": "停止计数",
+        "是": "重新从0开始"
+      }
+    }
+  },
+  "ImageMergeNode": {
+    "title": "图片合并",
+    "description": "将多张图片合并成一张图片，支持水平合并、垂直合并和网格合并",
+    "inputs": {
+      "operation": "合并方式",
+      "resize_to_same_size": "调整到相同尺寸",
+      "image1": "图片1",
+      "image2": "图片2",
+      "image3": "图片3",
+      "image4": "图片4",
+      "image5": "图片5",
+      "image6": "图片6",
+      "image7": "图片7",
+      "image8": "图片8",
+      "image9": "图片9",
+      "image10": "图片10",
+      "columns": "网格列数"
+    },
+    "widgets": {
+      "operation": "合并方式（水平、垂直、网格）",
+      "resize_to_same_size": "是否将所有图片调整为相同尺寸",
+      "columns": "网格列数，设置为0时自动计算最优列数"
+    },
+    "outputs": {
+      "merged_image": "合并后的图像"
+    },
+    "widget_values": {
+      "operation": {
+        "horizontal": "水平合并",
+        "vertical": "垂直合并",
+        "grid": "网格合并"
+      }
+    }
+  },
+  "BatchImageMergeNode": {
+    "title": "批量图片合并",
+    "description": "将多张图片帧批量合并成一张图片，支持水平合并、垂直合并和网格合并",
+    "inputs": {
+      "operation": "合并方式",
+      "resize_to_same_size": "调整到相同尺寸",
+      "columns": "网格列数",
+      "images": "图片帧"
+    },
+    "widgets": {
+      "operation": "合并方式（水平、垂直、网格）",
+      "resize_to_same_size": "是否将所有图片调整为相同尺寸",
+      "columns": "网格列数，设置为0时自动计算最优列数"
+    },
+    "outputs": {
+      "merged_image": "合并后的图像"
+    },
+    "widget_values": {
+      "operation": {
+        "horizontal": "水平合并",
+        "vertical": "垂直合并",
+        "grid": "网格合并"
+      }
+    }
+  },
+  "VideoSizePresetNode": {
+    "title": "视频尺寸预设",
+    "description": "提供常用视频尺寸的快速选择，所有尺寸均能被32整除",
+    "inputs": {
+      "size_preset": "尺寸预设"
+    },
+    "widgets": {
+      "size_preset": "视频尺寸预设"
+    },
+    "outputs": {
+      "宽度": "视频宽度",
+      "高度": "视频高度",
+      "尺寸字符串": "尺寸字符串（格式：宽度x高度）"
+    },
+    "widget_values": {
+      "size_preset": {
+        "512x512 (正方形 1:1)": "512x512 (正方形 1:1)",
+        "640x640 (正方形 1:1)": "640x640 (正方形 1:1)",
+        "768x768 (正方形 1:1)": "768x768 (正方形 1:1)",
+        "1024x1024 (正方形 1:1)": "1024x1024 (正方形 1:1)",
+        "1536x1536 (正方形 1:1)": "1536x1536 (正方形 1:1)",
+        "576x768 (竖屏 3:4)": "576x768 (竖屏 3:4)",
+        "768x1024 (竖屏 3:4)": "768x1024 (竖屏 3:4)",
+        "1152x1536 (竖屏 3:4)": "1152x1536 (竖屏 3:4)",
+        "1536x2048 (竖屏 3:4)": "1536x2048 (竖屏 3:4)",
+        "768x576 (横屏 4:3)": "768x576 (横屏 4:3)",
+        "1024x768 (横屏 4:3)": "1024x768 (横屏 4:3)",
+        "1536x1152 (横屏 4:3)": "1536x1152 (横屏 4:3)",
+        "2048x1536 (横屏 4:3)": "2048x1536 (横屏 4:3)",
+        "480x832 (竖屏 9:16 480p)": "480x832 (竖屏 9:16 480p)",
+        "704x1280 (竖屏 9:16 720p)": "704x1280 (竖屏 9:16 720p)",
+        "1056x1920 (竖屏 9:16 1080p)": "1056x1920 (竖屏 9:16 1080p)",
+        "1440x2560 (竖屏 9:16 2K)": "1440x2560 (竖屏 9:16 2K)",
+        "2144x3840 (竖屏 9:16 4K)": "2144x3840 (竖屏 9:16 4K)",
+        "4320x7680 (竖屏 9:16 8K)": "4320x7680 (竖屏 9:16 8K)",
+        "832x480 (横屏 16:9 480p)": "832x480 (横屏 16:9 480p)",
+        "1280x704 (横屏 16:9 720p)": "1280x704 (横屏 16:9 720p)",
+        "1920x1056 (横屏 16:9 1080p)": "1920x1056 (横屏 16:9 1080p)",
+        "2560x1440 (横屏 16:9 2K)": "2560x1440 (横屏 16:9 2K)",
+        "3840x2144 (横屏 16:9 4K)": "3840x2144 (横屏 16:9 4K)",
+        "7680x4320 (横屏 16:9 8K)": "7680x4320 (横屏 16:9 8K)"
+      }
+    }
   }
 }
-

@@ -15,6 +15,9 @@ from .create_image_node import CreateImageNode
 from .batch_rename_images_by_md5_node import BatchRenameImagesByMD5Node
 from .batch_image_scaler_node import BatchImageScalerNode
 from .image_merge_node import ImageMergeNode
+from .image_grid_split_node import ImageGridSplitNode
+from .batch_folder_image_compressor_node import BatchFolderImageCompressorNode
+from .batch_image_merge_node import BatchImageMergeNode
 
 
 
@@ -34,12 +37,15 @@ NODE_CLASS_MAPPINGS = {
     "BatchRenameImagesByMD5Node": BatchRenameImagesByMD5Node,
     "BatchImageScalerNode": BatchImageScalerNode,
     "ImageMergeNode": ImageMergeNode,
+    "ImageGridSplitNode": ImageGridSplitNode,
+    "BatchFolderImageCompressorNode": BatchFolderImageCompressorNode,
+    "BatchImageMergeNode": BatchImageMergeNode,
 }
 
 # 定义节点显示名称映射
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadImageNode": "加载图像-【Beta】",
-    "LoadImagePathNode": "路径图片加载",
+    "LoadImagePathNode": "加载图片路径",
     "BatchLoadImagesNode": "批量加载图片",
     "ImageFormatConverterNode": "图像格式转换器",
     "BatchImageFormatConverterNode": "批量图像格式转换器",
@@ -49,9 +55,12 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "SquareConverter": "正方形转换器",
     "RectangleConverter": "长方形转换器",
     "CreateImageNode": "创建图像",
-    "BatchRenameImagesByMD5Node": "批量重命名图片(MD5)",
+    "BatchRenameImagesByMD5Node": "批量重命名图片（MD5）",
     "BatchImageScalerNode": "批量图像缩放",
     "ImageMergeNode": "图片合并",
+    "ImageGridSplitNode": "图像拆分网格",
+    "BatchFolderImageCompressorNode": "批量文件夹图片压缩",
+    "BatchImageMergeNode": "批量图片合并",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

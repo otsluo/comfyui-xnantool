@@ -5,10 +5,16 @@ import os
 DEFAULT_RESOLUTION_PRESETS = [
     # 1K分辨率
     "1K",
+    "1K宽屏",
+    
     # 2K分辨率
     "2K",
+    "2K高清",
+    
     # 4K分辨率
     "4K",
+    "4K电影",
+    
     # 8K分辨率
     "8K",
 ]

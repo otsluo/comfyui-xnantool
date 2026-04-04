@@ -28,13 +28,18 @@ class BatchRenameImagesByMD5Node:
                     "label": "输入目录",
                     "description": "包含需要重命名图片的目录路径"
                 }),
-            },
-            "optional": {
                 "output_directory": ("STRING", {
                     "default": "",
                     "multiline": False,
                     "label": "输出目录",
                     "description": "重命名后图片保存的目录路径（留空则在原目录处理）"
+                }),
+            },
+            "optional": {
+                "include_subfolders": ("BOOLEAN", {
+                    "default": False,
+                    "label": "包含子文件夹",
+                    "description": "是否递归处理子文件夹中的图片文件"
                 }),
                 "overwrite_existing": ("BOOLEAN", {
                     "default": False,
@@ -56,7 +61,7 @@ class BatchRenameImagesByMD5Node:
         }
 
     RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("result_info",)
+    RETURN_NAMES = ("info",)
     FUNCTION = "rename_images_by_md5"
     CATEGORY = "XnanTool/图像处理"
     DESCRIPTION = "批量重命名图片文件，使用图片内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复"
@@ -95,30 +100,31 @@ class BatchRenameImagesByMD5Node:
         _, ext = os.path.splitext(filename.lower())
         return ext.lstrip('.') in [ext.strip().lower() for ext in extensions]
 
-    def rename_images_by_md5(self, input_directory, output_directory="", overwrite_existing=False, delete_original_files=False, file_extensions="jpg,jpeg,png,bmp,gif,tiff,webp"):
+    def rename_images_by_md5(self, input_directory, output_directory="", include_subfolders=False, overwrite_existing=False, delete_original_files=False, file_extensions="jpg,jpeg,png,bmp,gif,tiff,webp"):
         """
         批量重命名图片文件为MD5哈希值
         
         Args:
             input_directory (str): 输入目录路径
             output_directory (str): 输出目录路径（可选）
+            include_subfolders (bool): 是否递归处理子文件夹
             overwrite_existing (bool): 是否覆盖已存在文件
             delete_original_files (bool): 当输出目录留空或与输入目录相同时，是否删除重命名前的原始文件
             file_extensions (str): 支持的文件扩展名，逗号分隔
             
         Returns:
-            tuple: (处理信息, 处理文件数, 重命名文件数, 错误信息)
+            tuple: (处理信息,)
         """
         # 检查输入目录是否存在
         if not os.path.exists(input_directory):
             error_msg = f"输入目录不存在: {input_directory}"
             logger.error(error_msg)
-            return (error_msg, 0, 0, error_msg)
+            return (error_msg,)
         
         if not os.path.isdir(input_directory):
             error_msg = f"输入路径不是目录: {input_directory}"
             logger.error(error_msg)
-            return (error_msg, 0, 0, error_msg)
+            return (error_msg,)
         
         # 如果未指定输出目录，则使用输入目录
         if not output_directory:
@@ -131,31 +137,43 @@ class BatchRenameImagesByMD5Node:
             except Exception as e:
                 error_msg = f"无法创建输出目录 {output_directory}: {str(e)}"
                 logger.error(error_msg)
-                return (error_msg, 0, 0, error_msg)
+                return (error_msg,)
         
         # 解析文件扩展名
         extensions = [ext.strip().lower() for ext in file_extensions.split(',')]
         
         # 获取所有支持的图片文件
         image_files = []
-        for filename in os.listdir(input_directory):
-            if self.is_supported_image(filename, extensions):
-                image_files.append(filename)
+        if include_subfolders:
+            for root, dirs, files in os.walk(input_directory):
+                for filename in files:
+                    if self.is_supported_image(filename, extensions):
+                        image_files.append((root, filename))
+        else:
+            for filename in os.listdir(input_directory):
+                if self.is_supported_image(filename, extensions):
+                    image_files.append((input_directory, filename))
         
         if not image_files:
             info_msg = f"在目录 {input_directory} 中未找到支持的图片文件"
             logger.info(info_msg)
-            return (info_msg, 0, 0, "")
+            return (info_msg,)
         
         processed_count = 0
         renamed_count = 0
+        skip_count = 0
         error_files = []
         
         # 处理每个图片文件
-        for filename in image_files:
+        for item in image_files:
             try:
+                if isinstance(item, tuple):
+                    file_directory, filename = item
+                else:
+                    file_directory, filename = input_directory, item
+                
                 processed_count += 1
-                input_path = os.path.join(input_directory, filename)
+                input_path = os.path.join(file_directory, filename)
                 
                 # 获取原始文件扩展名
                 _, ext = os.path.splitext(filename.lower())
@@ -170,6 +188,7 @@ class BatchRenameImagesByMD5Node:
                     # 检查目标文件是否已存在
                     if os.path.exists(output_path) and not overwrite_existing:
                         logger.warning(f"文件 {new_filename} 已存在且未启用覆盖选项，跳过 {filename}")
+                        skip_count += 1
                         continue
                     
                     # 复制文件到新名称
@@ -215,16 +234,21 @@ class BatchRenameImagesByMD5Node:
         
         # 生成结构化的处理结果信息
         result_lines = []
-        result_lines.append(f"处理完成: 共处理 {processed_count} 个文件，重命名 {renamed_count} 个文件")
+        result_lines.append(f"批量重命名完成:")
+        result_lines.append(f"成功: {renamed_count} 个")
+        result_lines.append(f"失败: {len(error_files)} 个")
+        result_lines.append(f"跳过: {skip_count} 个")
+        result_lines.append(f"重命名: {renamed_count} 个")
+        result_lines.append(f"输出目录: {output_directory}")
         if delete_original_files and input_directory == output_directory:
             result_lines.append(f"删除 {deleted_count} 个原始文件")
         if error_info:
             result_lines.append(f"错误信息:\n{error_info}")
         
-        result_info = "\n".join(result_lines)
-        logger.info(result_info)
+        info = "\n".join(result_lines)
+        logger.info(info)
         
-        return (result_info,)
+        return (info,)
 
 
 # 节点映射和显示名称映射

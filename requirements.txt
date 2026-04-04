@@ -41,9 +41,11 @@ ollama
 # 视频处理相关依赖
 imageio>=2.9.0  # 用于读取和写入图像序列，包括GIF
 imageio-ffmpeg>=0.4.2  # imageio的ffmpeg插件，用于视频处理
+soundfile>=0.12.0  # 用于处理音频文件，支持音频合并功能
 # 注意：本插件的视频转音频功能需要系统安装ffmpeg命令行工具
 # Windows用户可以从 https://ffmpeg.org/download.html 下载并安装
 # 确保ffmpeg命令在系统PATH环境变量中可用
+# 如果是秋叶包，记得卸载试下运行，不行然后再安装后点同步ffmpeg
 
 # Markdown转Excel功能依赖
 pandas>=1.5.0
@@ -53,3 +55,6 @@ markdown>=3.3.0
 # 加密解密相关
 cryptography>=3.4.8
 pycryptodome>=3.18.0
+
+# 火山引擎SDK（用于豆包Seedream图像生成和豆包Seedance视频生成）
+volcengine-python-sdk[ark]>=1.0.0
