@@ -10,13 +10,16 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
-# 导入必要的函数
-from .modelscope_api_node import load_api_token, save_api_token
-
 # 支持的文本生成模型列表
 SUPPORTED_TEXT_GENERATION_MODELS = [
     ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL 235B A22B Instruct"),
 ]
+
+def load_api_token():
+    return ""
+
+def save_api_token(token):
+    return True
 
 class ModelscopeApiTextGenerationNode:
     """魔搭API文本生成节点 - 用于生成文本内容"""
@@ -49,32 +52,23 @@ class ModelscopeApiTextGenerationNode:
         saved_token = load_api_token()
         return {
             "required": {
+                "system_prompt": ("STRING", {
+                    "default": "",
+                    "label": "系统提示词",
+                    "description": "系统级别的提示词，用于设定AI的行为",
+                    "multiline": True
+                }),
                 "prompt": ("STRING", {
-                    "default": "请生成一段关于人工智能的文本",
+                    "default": "",
                     "label": "提示词",
                     "description": "用于文本生成的提示词",
                     "multiline": True
-                }),
-                "api_token": ("STRING", {
-                    "default": saved_token,
-                    "label": "API Token",
-                    "description": "modelscope API 令牌",
-                    "placeholder": "请输入您的 modelscope API Token",
-                    "multiline": False
                 }),
                 "model_name": ("STRING", {
                     "default": "Qwen/Qwen3-VL-235B-A22B-Instruct",
                     "options": [model[0] for model in SUPPORTED_TEXT_GENERATION_MODELS],
                     "labels": {model[0]: model[1] for model in SUPPORTED_TEXT_GENERATION_MODELS},
                     "label": "模型名称"
-                }),
-            },
-            "optional": {
-                "system_prompt": ("STRING", {
-                    "default": "你是一个有帮助的AI助手",
-                    "label": "系统提示词",
-                    "description": "系统级别的提示词，用于设定AI的行为",
-                    "multiline": True
                 }),
                 "max_tokens": ("INT", {
                     "default": 1000,
@@ -99,6 +93,19 @@ class ModelscopeApiTextGenerationNode:
                     "label": "Top P",
                     "description": "控制生成文本的多样性"
                 }),
+                "seed": ("INT", {
+                    "default": -1,
+                    "min": -1,
+                    "max": 2147483647,
+                    "label": "随机种子"
+                }),
+                "api_token": ("STRING", {
+                    "default": saved_token,
+                    "label": "API Token",
+                    "description": "modelscope API 令牌",
+                    "placeholder": "请输入您的 modelscope API Token",
+                    "multiline": False
+                }),
             }
         }
     
@@ -107,7 +114,7 @@ class ModelscopeApiTextGenerationNode:
     FUNCTION = "generate_text"
     CATEGORY = "XnanTool/魔搭api"
     
-    def generate_text(self, prompt, api_token, model_name, system_prompt="你是一个有帮助的AI助手", max_tokens=1000, temperature=0.7, top_p=0.9):
+    def generate_text(self, system_prompt, prompt, model_name, max_tokens, temperature, top_p, seed, api_token):
         if not OPENAI_AVAILABLE:
             return ("请先安装openai库: pip install openai",)
         
@@ -159,8 +166,13 @@ class ModelscopeApiTextGenerationNode:
                     max_tokens=max_tokens,
                     temperature=temperature,
                     top_p=top_p,
+                    seed=seed if seed >= 0 else None,
                     stream=False
                 )
+                
+                # 检查响应是否有效
+                if not response or not response.choices or len(response.choices) == 0:
+                    raise Exception("API返回空响应，可能是模型调用失败")
                 
                 # 成功获取结果
                 generated_text = response.choices[0].message.content
@@ -171,6 +183,8 @@ class ModelscopeApiTextGenerationNode:
             except Exception as e:
                 error_msg = f"API调用失败: {str(e)}"
                 print(f"❌ {error_msg}")
+                if 'response' in locals():
+                    print(f"🔍 响应详情: {response}")
                 return (error_msg,)
             
         except Exception as e:

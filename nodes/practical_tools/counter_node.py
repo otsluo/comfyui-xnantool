@@ -80,7 +80,7 @@ class CounterNode:
     RETURN_TYPES = ("INT", "STRING")
     RETURN_NAMES = ("计数值", "信息")
     FUNCTION = "count"
-    CATEGORY = "XnanTool/工具"
+    CATEGORY = "XnanTool/实用工具"
     
     def count(self, counter_id, reset, increment, max_value, restart_on_max, abort_on_max, seed, start_value, trigger=None):
         """

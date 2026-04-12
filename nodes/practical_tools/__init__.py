@@ -17,6 +17,8 @@ from .save_text_node import SaveTextNode
 from .text_to_excel_node import TextToExcelNode
 from .get_current_time_node import GetCurrentTimeNode
 from .save_video_node import SaveVideoNode
+from .text_to_list_node import TextToListNode
+from .package_manager_node import PackageManagerNode
 
 
 # 新增导入的节点
@@ -48,6 +50,8 @@ NODE_CLASS_MAPPINGS = {
     "TextToExcelNode": TextToExcelNode,
     "GetCurrentTimeNode": GetCurrentTimeNode,
     "SaveVideoNode": SaveVideoNode,
+    "TextToListNode": TextToListNode,
+    "PackageManagerNode": PackageManagerNode,
     # "ImageEncryptNode": ImageEncryptNode,
     # "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
     "ListFoldersNode": ListFoldersNode,
@@ -76,6 +80,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TextToExcelNode": "文本转Excel",
     "GetCurrentTimeNode": "获取当前时间",
     "SaveVideoNode": "保存视频",
+    "TextToListNode": "文本到列表",
+    "PackageManagerNode": "依赖包管理",
     # "ImageEncryptNode": "图片加密基础",
     # "ImageEncryptNodeAdvanced": "图片加密高级",
     "ListFoldersNode": "列出文件夹",

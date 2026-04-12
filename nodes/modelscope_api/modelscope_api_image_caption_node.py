@@ -15,15 +15,40 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
-# 导入必要的函数
-from .modelscope_api_node import load_api_token, save_api_token, tensor_to_base64_url
-
 # 支持的图片反推模型列表
 SUPPORTED_CAPTION_MODELS = [
     ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL 235B A22B Instruct"),
     ("Qwen/Qwen3-VL-8B-Instruct", "Qwen3-VL 8B Instruct"),
     ("Qwen/Qwen3-VL-2B-Instruct", "Qwen3-VL 2B Instruct"),
 ]
+
+def load_api_token():
+    return ""
+
+def save_api_token(token):
+    return True
+
+def tensor_to_base64_url(image_tensor):
+    try:
+        if len(image_tensor.shape) == 4:
+            image_tensor = image_tensor.squeeze(0)
+        
+        if image_tensor.max() <= 1.0:
+            image_np = (image_tensor.cpu().numpy() * 255).astype(np.uint8)
+        else:
+            image_np = image_tensor.cpu().numpy().astype(np.uint8)
+        
+        pil_image = Image.fromarray(image_np)
+        
+        buffer = BytesIO()
+        pil_image.save(buffer, format='JPEG', quality=85)
+        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        
+        return f"data:image/jpeg;base64,{img_base64}"
+        
+    except Exception as e:
+        print(f"图像转换失败: {e}")
+        raise Exception(f"图像格式转换失败: {str(e)}")
 
 class ModelscopeApiImageCaptionNode:
     """魔搭API图片反推节点 - 用于从图像生成描述文本"""
@@ -56,27 +81,18 @@ class ModelscopeApiImageCaptionNode:
         saved_token = load_api_token()
         return {
             "required": {
-                "image": ("IMAGE",),
-                "api_token": ("STRING", {
-                    "default": saved_token,
-                    "label": "API Token",
-                    "description": "modelscope API 令牌",
-                    "placeholder": "请输入您的 modelscope API Token",
-                    "multiline": False
-                }),
-                "model_name": ("STRING", {
-                    "default": "Qwen/Qwen3-VL-235B-A22B-Instruct",
-                    "options": [model[0] for model in SUPPORTED_CAPTION_MODELS],
-                    "labels": {model[0]: model[1] for model in SUPPORTED_CAPTION_MODELS},
-                    "label": "模型名称"
-                }),
-            },
-            "optional": {
                 "prompt": ("STRING", {
                     "default": "详细描述这张图片的内容，包括主体、背景、颜色、风格等信息",
                     "label": "提示词",
                     "description": "用于图片描述的提示词",
                     "multiline": True
+                }),
+                "image": ("IMAGE",),
+                "model_name": ("STRING", {
+                    "default": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+                    "options": [model[0] for model in SUPPORTED_CAPTION_MODELS],
+                    "labels": {model[0]: model[1] for model in SUPPORTED_CAPTION_MODELS},
+                    "label": "模型名称"
                 }),
                 "max_tokens": ("INT", {
                     "default": 1000,
@@ -93,6 +109,19 @@ class ModelscopeApiImageCaptionNode:
                     "label": "温度系数",
                     "description": "控制生成文本的随机性"
                 }),
+                "seed": ("INT", {
+                    "default": -1,
+                    "min": -1,
+                    "max": 2147483647,
+                    "label": "随机种子"
+                }),
+                "api_token": ("STRING", {
+                    "default": saved_token,
+                    "label": "API Token",
+                    "description": "modelscope API 令牌",
+                    "placeholder": "请输入您的 modelscope API Token",
+                    "multiline": False
+                }),
             }
         }
     
@@ -101,7 +130,7 @@ class ModelscopeApiImageCaptionNode:
     FUNCTION = "generate_caption"
     CATEGORY = "XnanTool/魔搭api"
     
-    def generate_caption(self, image, api_token, model_name, prompt="详细描述这张图片的内容，包括主体、背景、颜色、风格等信息", max_tokens=1000, temperature=0.7):
+    def generate_caption(self, prompt, image, model_name, max_tokens, temperature, seed, api_token):
         if not OPENAI_AVAILABLE:
             return ("请先安装openai库: pip install openai",)
         
@@ -157,8 +186,13 @@ class ModelscopeApiImageCaptionNode:
                     messages=messages,
                     max_tokens=max_tokens,
                     temperature=temperature,
+                    seed=seed if seed >= 0 else None,
                     stream=False
                 )
+                
+                # 检查响应是否有效
+                if not response or not response.choices or len(response.choices) == 0:
+                    raise Exception("API返回空响应，可能是模型调用失败")
                 
                 # 成功获取结果
                 description = response.choices[0].message.content
@@ -169,6 +203,8 @@ class ModelscopeApiImageCaptionNode:
             except Exception as e:
                 error_msg = f"API调用失败: {str(e)}"
                 print(f"❌ {error_msg}")
+                if 'response' in locals():
+                    print(f"🔍 响应详情: {response}")
                 return (error_msg,)
             
         except Exception as e:

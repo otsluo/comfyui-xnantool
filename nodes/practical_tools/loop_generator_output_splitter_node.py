@@ -37,7 +37,7 @@ class LoopGeneratorOutputSplitterNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING")
     RETURN_NAMES = ("端口1", "端口2", "端口3")
     FUNCTION = "split_output"
-    CATEGORY = "XnanTool/工具"
+    CATEGORY = "XnanTool/实用工具"
     
     def split_output(self, input_string, separator, line_index):
         """

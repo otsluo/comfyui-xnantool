@@ -15,9 +15,6 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
-# 导入必要的函数
-from .modelscope_api_node import load_api_token, save_api_token, tensor_to_base64_url
-
 # 支持的视频反推模型列表
 SUPPORTED_VIDEO_CAPTION_MODELS = [
     ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL 235B A22B Instruct"),
@@ -25,6 +22,34 @@ SUPPORTED_VIDEO_CAPTION_MODELS = [
     ("Qwen/Qwen2-VL-7B-Instruct", "Qwen2-VL 7B Instruct"),
     ("Qwen/Qwen-VL-Chat", "Qwen-VL Chat"),
 ]
+
+def load_api_token():
+    return ""
+
+def save_api_token(token):
+    return True
+
+def tensor_to_base64_url(image_tensor):
+    try:
+        if len(image_tensor.shape) == 4:
+            image_tensor = image_tensor.squeeze(0)
+        
+        if image_tensor.max() <= 1.0:
+            image_np = (image_tensor.cpu().numpy() * 255).astype(np.uint8)
+        else:
+            image_np = image_tensor.cpu().numpy().astype(np.uint8)
+        
+        pil_image = Image.fromarray(image_np)
+        
+        buffer = BytesIO()
+        pil_image.save(buffer, format='JPEG', quality=85)
+        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        
+        return f"data:image/jpeg;base64,{img_base64}"
+        
+    except Exception as e:
+        print(f"图像转换失败: {e}")
+        raise Exception(f"图像格式转换失败: {str(e)}")
 
 class ModelscopeApiVideoCaptionNode:
     """魔搭API视频反推节点 - 用于从视频生成描述文本"""
@@ -57,27 +82,18 @@ class ModelscopeApiVideoCaptionNode:
         saved_token = load_api_token()
         return {
             "required": {
-                "video_frames": ("IMAGE",),
-                "api_token": ("STRING", {
-                    "default": saved_token,
-                    "label": "API Token",
-                    "description": "modelscope API 令牌",
-                    "placeholder": "请输入您的 modelscope API Token",
-                    "multiline": False
-                }),
-                "model_name": ("STRING", {
-                    "default": "Qwen/Qwen3-VL-235B-A22B-Instruct",
-                    "options": [model[0] for model in SUPPORTED_VIDEO_CAPTION_MODELS],
-                    "labels": {model[0]: model[1] for model in SUPPORTED_VIDEO_CAPTION_MODELS},
-                    "label": "模型名称"
-                }),
-            },
-            "optional": {
                 "prompt": ("STRING", {
                     "default": "请详细描述这个视频的内容，包括场景、动作、主体、背景等信息",
                     "label": "提示词",
                     "description": "用于视频描述的提示词",
                     "multiline": True
+                }),
+                "video_frames": ("IMAGE",),
+                "model_name": ("STRING", {
+                    "default": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+                    "options": [model[0] for model in SUPPORTED_VIDEO_CAPTION_MODELS],
+                    "labels": {model[0]: model[1] for model in SUPPORTED_VIDEO_CAPTION_MODELS},
+                    "label": "模型名称"
                 }),
                 "max_tokens": ("INT", {
                     "default": 1000,
@@ -94,6 +110,19 @@ class ModelscopeApiVideoCaptionNode:
                     "label": "温度系数",
                     "description": "控制生成文本的随机性"
                 }),
+                "seed": ("INT", {
+                    "default": -1,
+                    "min": -1,
+                    "max": 2147483647,
+                    "label": "随机种子"
+                }),
+                "api_token": ("STRING", {
+                    "default": saved_token,
+                    "label": "API Token",
+                    "description": "modelscope API 令牌",
+                    "placeholder": "请输入您的 modelscope API Token",
+                    "multiline": False
+                }),
             }
         }
     
@@ -102,7 +131,7 @@ class ModelscopeApiVideoCaptionNode:
     FUNCTION = "generate_caption"
     CATEGORY = "XnanTool/魔搭api"
     
-    def generate_caption(self, video_frames, api_token, model_name, prompt="请详细描述这个视频的内容，包括场景、动作、主体、背景等信息", max_tokens=1000, temperature=0.7):
+    def generate_caption(self, prompt, video_frames, model_name, max_tokens, temperature, seed, api_token):
         if not OPENAI_AVAILABLE:
             return ("请先安装openai库: pip install openai",)
         
@@ -128,6 +157,7 @@ class ModelscopeApiVideoCaptionNode:
             # 转换视频帧为base64格式列表
             if isinstance(video_frames, torch.Tensor):
                 # 处理视频帧张量 (batch of images)
+                print(f"🔍 输入张量形状: {video_frames.shape}, 数据类型: {video_frames.dtype}")
                 frame_count = video_frames.shape[0]
                 print(f"🎞️ 视频帧数量: {frame_count}")
                 
@@ -140,13 +170,19 @@ class ModelscopeApiVideoCaptionNode:
                 # 添加所有视频帧
                 for i in range(frame_count):
                     frame_tensor = video_frames[i:i+1]  # 取单帧
-                    frame_url = tensor_to_base64_url(frame_tensor)
-                    content.append({
-                        'type': 'image_url',
-                        'image_url': {
-                            'url': frame_url,
-                        },
-                    })
+                    print(f"🖼️ 处理第 {i+1}/{frame_count} 帧，形状: {frame_tensor.shape}")
+                    try:
+                        frame_url = tensor_to_base64_url(frame_tensor)
+                        content.append({
+                            'type': 'image_url',
+                            'image_url': {
+                                'url': frame_url,
+                            },
+                        })
+                        print(f"✅ 第 {i+1} 帧转换成功")
+                    except Exception as e:
+                        print(f"❌ 第 {i+1} 帧转换失败: {e}")
+                        raise Exception(f"视频帧 {i+1} 转换失败: {str(e)}")
                 
                 messages = [{
                     'role': 'user',
@@ -177,8 +213,13 @@ class ModelscopeApiVideoCaptionNode:
                     messages=messages,
                     max_tokens=max_tokens,
                     temperature=temperature,
+                    seed=seed if seed >= 0 else None,
                     stream=False
                 )
+                
+                # 检查响应是否有效
+                if not response or not response.choices or len(response.choices) == 0:
+                    raise Exception("API返回空响应，可能是模型调用失败")
                 
                 # 成功获取结果
                 description = response.choices[0].message.content
@@ -189,6 +230,8 @@ class ModelscopeApiVideoCaptionNode:
             except Exception as e:
                 error_msg = f"API调用失败: {str(e)}"
                 print(f"❌ {error_msg}")
+                if 'response' in locals():
+                    print(f"🔍 响应详情: {response}")
                 return (error_msg,)
             
         except Exception as e:
