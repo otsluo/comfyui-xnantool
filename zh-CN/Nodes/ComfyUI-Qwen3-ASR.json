@@ -1,0 +1,46 @@
+{
+    "Qwen3ASRLoader": {
+        "title": "Qwen3-ASR 模型加载器",
+        "description": "加载Qwen3-ASR语音识别模型，支持多种模型大小和精度配置",
+        "inputs": {
+            "repo_id": "模型仓库ID",
+            "source": "下载源",
+            "precision": "精度",
+            "attention": "注意力实现",
+            "forced_aligner": "强制对齐器",
+            "local_model_path": "本地模型路径"
+        },
+        "outputs": {
+            "model": "Qwen3-ASR模型"
+        }
+    },
+    "Qwen3ASRTranscribe": {
+        "title": "Qwen3-ASR 语音识别",
+        "description": "使用Qwen3-ASR模型进行单个音频文件的语音识别",
+        "inputs": {
+            "model": "Qwen3-ASR模型",
+            "audio": "音频",
+            "language": "语言",
+            "context": "上下文",
+            "return_timestamps": "返回时间戳"
+        },
+        "outputs": {
+            "text": "识别文本",
+            "language": "检测语言",
+            "timestamps": "时间戳"
+        }
+    },
+    "Qwen3ASRBatchTranscribe": {
+        "title": "Qwen3-ASR 批量语音识别",
+        "description": "使用Qwen3-ASR模型批量处理多个音频文件的语音识别",
+        "inputs": {
+            "model": "Qwen3-ASR模型",
+            "audio_list": "音频列表",
+            "language": "语言",
+            "return_timestamps": "返回时间戳"
+        },
+        "outputs": {
+            "transcriptions": "识别结果"
+        }
+    }
+}

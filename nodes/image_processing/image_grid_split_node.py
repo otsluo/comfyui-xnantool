@@ -5,6 +5,7 @@ import torch
 class ImageGridSplitNode:
     """
     图像拆分网格节点 - 将图像按网格拆分成多个小图像
+    支持批量处理多张图像
     """
     
     @classmethod
@@ -52,30 +53,31 @@ class ImageGridSplitNode:
             
             batch_size, height, width, channels = images.shape
             
-            if batch_size != 1:
-                raise ValueError("当前版本仅支持单张图像拆分")
-            
-            image = images[0]
-            
             cell_height = height // grid_rows
             cell_width = width // grid_cols
             
-            split_images = []
+            if cell_height == 0 or cell_width == 0:
+                raise ValueError(f"图像尺寸 {height}x{width} 小于网格尺寸 {grid_rows}x{grid_cols}")
             
-            for row in range(grid_rows):
-                for col in range(grid_cols):
-                    y_start = row * cell_height
-                    y_end = y_start + cell_height
-                    x_start = col * cell_width
-                    x_end = x_start + cell_width
-                    
-                    cell = image[y_start:y_end, x_start:x_end, :]
-                    split_images.append(cell)
+            all_split_images = []
             
-            if len(split_images) == 0:
+            for batch_idx in range(batch_size):
+                image = images[batch_idx]
+                
+                for row in range(grid_rows):
+                    for col in range(grid_cols):
+                        y_start = row * cell_height
+                        y_end = y_start + cell_height
+                        x_start = col * cell_width
+                        x_end = x_start + cell_width
+                        
+                        cell = image[y_start:y_end, x_start:x_end, :]
+                        all_split_images.append(cell)
+            
+            if len(all_split_images) == 0:
                 raise ValueError("没有拆分出任何图像")
             
-            split_images_tensor = torch.stack(split_images, dim=0)
+            split_images_tensor = torch.stack(all_split_images, dim=0)
             
             return (split_images_tensor,)
             
@@ -83,7 +85,7 @@ class ImageGridSplitNode:
             print(f"[ImageGridSplitNode] 拆分图像时发生错误: {str(e)}")
             import traceback
             traceback.print_exc()
-            return (None,)
+            return (torch.zeros((1, 512, 512, 3), dtype=torch.float32),)
 
 
 NODE_CLASS_MAPPINGS = {

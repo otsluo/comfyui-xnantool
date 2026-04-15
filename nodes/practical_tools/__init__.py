@@ -30,6 +30,7 @@ from .create_folder_node import CreateFolderNode
 from .loop_generator_node import LoopGeneratorNode
 from .loop_generator_output_splitter_node import LoopGeneratorOutputSplitterNode
 from .counter_node import CounterNode
+from .text_line_reader_node import TextLineReaderNode
 
 
 
@@ -60,7 +61,7 @@ NODE_CLASS_MAPPINGS = {
     "LoopGeneratorNode": LoopGeneratorNode,
     "LoopGeneratorOutputSplitterNode": LoopGeneratorOutputSplitterNode,
     "CounterNode": CounterNode,
-
+    "TextLineReaderNode": TextLineReaderNode,
 }
 
 # 节点显示名称映射
@@ -90,7 +91,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LoopGeneratorNode": "循环生成器",
     "LoopGeneratorOutputSplitterNode": "循环生成器输出转接",
     "CounterNode": "计数器",
-
+    "TextLineReaderNode": "文本逐行读取",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

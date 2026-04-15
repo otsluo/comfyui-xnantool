@@ -26,7 +26,7 @@ class SaveTextNode:
                 "text": ("STRING", {"multiline": True, "default": ""}),
                 "file_path": ("STRING", {"default": "", "placeholder": "输入文件路径"}),
                 "filename": ("STRING", {"default": "ComfyUI"}),
-                "extension": (["txt", "csv", "md"], {"default": "txt"}),
+                "extension": (["txt", "csv", "md", "srt"], {"default": "txt"}),
                 "exist_mode": (["覆盖", "直接追加", "换行追加", "跳过"], {"default": "换行追加"}),
             },
             "optional": {
