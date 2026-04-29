@@ -154,6 +154,14 @@ class BailianLLMNode:
                     "label": "思考模式",
                     "description": "仅适用于 deepseek-r1 系列模型（deepseek-r1、deepseek-r1-0528），开启思考模式可获得更长推理链"
                 }),
+                "seed": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 9999999999,
+                    "step": 1,
+                    "label": "随机种子",
+                    "description": "随机种子（0为随机）"
+                }),
                 "endpoint": ("STRING", {
                     "default": "",
                     "multiline": False,
@@ -168,7 +176,7 @@ class BailianLLMNode:
     FUNCTION = "call_llm"
     CATEGORY = "XnanTool/API/阿里百炼"
     
-    def call_llm(self, system_prompt, prompt, model, api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, enable_thinking="false", endpoint=None):
+    def call_llm(self, system_prompt, prompt, model, api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, enable_thinking="false", seed=0, endpoint=None):
         """
         调用阿里云百炼LLM
         
@@ -181,6 +189,7 @@ class BailianLLMNode:
             top_p: Top P参数
             max_tokens: 最大输出长度
             enable_thinking: 是否开启思考模式
+            seed: 随机种子
             endpoint: API Endpoint URL（已废弃，SDK自动使用默认值）
             
         Returns:
@@ -289,8 +298,12 @@ class BailianLLMNode:
                     "result_format": 'message',
                     "temperature": float(temperature),
                     "top_p": float(top_p),
-                    "max_tokens": int(max_tokens)
+                    "max_tokens": int(max_tokens),
+                    "seed": int(seed) if seed > 0 else None
                 }
+                
+                # 移除None值
+                params = {k: v for k, v in params.items() if v is not None}
                 
                 # 如果开启思考模式（仅适用于deepseek-r1系列）
                 if enable_thinking == "true":

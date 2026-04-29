@@ -1,0 +1,107 @@
+{
+    "TDQwen3TTSModelLoader": {
+        "title": "TD Qwen3 TTS 模型加载器",
+        "description": "加载Qwen3-TTS语音合成模型，支持多种模型类型和精度配置",
+        "inputs": {
+            "model_path": "模型路径",
+            "precision": "精度",
+            "device": "设备",
+            "attn_implementation": "注意力实现",
+            "auto_download": "自动下载",
+            "download_source": "下载源"
+        },
+        "outputs": {
+            "model": "Qwen3-TTS模型"
+        }
+    },
+    "TDQwen3TTSCustomVoice": {
+        "title": "TD Qwen3 TTS 自定义语音",
+        "description": "使用预设说话人生成语音，支持多语言和指令",
+        "inputs": {
+            "model": "Qwen3-TTS模型",
+            "text": "文本",
+            "speaker": "说话人",
+            "language": "语言",
+            "instruct": "指令"
+        },
+        "outputs": {
+            "audio": "音频"
+        }
+    },
+    "TDQwen3TTSMultiDialog": {
+        "title": "TD Qwen3 TTS 多人对话",
+        "description": "生成多人对话音频，支持自定义角色和预设说话人",
+        "inputs": {
+            "model": "Qwen3-TTS模型",
+            "text": "对话文本",
+            "interval": "间隔时间",
+            "seed": "种子",
+            "speaker_list": "说话人列表",
+            "speaker_1": "说话人1"
+        },
+        "outputs": {
+            "audio": "音频"
+        }
+    },
+    "TDQwen3TTSDefineSpeaker": {
+        "title": "TD Qwen3 TTS 定义说话人",
+        "description": "通过音频定义自定义说话人",
+        "inputs": {
+            "audio": "音频",
+            "name": "说话人名称"
+        },
+        "outputs": {
+            "speaker": "说话人"
+        }
+    },
+    "TDQwen3TTSBatchGenerateSpeaker": {
+        "title": "TD Qwen3 TTS 批量生成说话人",
+        "description": "批量生成多个自定义说话人",
+        "inputs": {
+            "model": "Qwen3-TTS模型",
+            "speakers_config": "说话人配置"
+        },
+        "outputs": {
+            "speakers": "说话人列表"
+        }
+    },
+    "TDQwen3TTSVoiceDesign": {
+        "title": "TD Qwen3 TTS 语音设计",
+        "description": "通过指令设计语音风格",
+        "inputs": {
+            "model": "Qwen3-TTS模型",
+            "text": "文本",
+            "instruct": "语音指令",
+            "language": "语言"
+        },
+        "outputs": {
+            "audio": "音频"
+        }
+    },
+    "TDQwen3TTSVoiceClone": {
+        "title": "TD Qwen3 TTS 语音克隆",
+        "description": "通过参考音频克隆语音",
+        "inputs": {
+            "model": "Qwen3-TTS模型",
+            "text": "文本",
+            "ref_audio": "参考音频",
+            "language": "语言",
+            "ref_text": "参考文本",
+            "x_vector_only_mode": "仅X向量模式"
+        },
+        "outputs": {
+            "audio": "音频"
+        }
+    },
+    "TDParseJson": {
+        "title": "TD 解析 JSON",
+        "description": "解析JSON字符串并提取指定键的值",
+        "inputs": {
+            "json_string": "JSON字符串",
+            "key": "键"
+        },
+        "outputs": {
+            "value_json": "值"
+        }
+    }
+}

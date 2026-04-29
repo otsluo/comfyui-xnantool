@@ -67,14 +67,8 @@ class TextToListNode:
         return (result,)
     
     @classmethod
-    def IS_CHANGED(cls, text, *args):
+    def IS_CHANGED(cls, text, delimiter, strip_whitespace=True, remove_empty=True):
         return text
-    
-    @classmethod
-    def VALIDATE_INPUTS(cls, text, delimiter, **kwargs):
-        if not text:
-            return "请输入文本"
-        return True
 
 
 NODE_CLASS_MAPPINGS = {

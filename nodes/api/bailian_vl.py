@@ -94,6 +94,14 @@ class BailianVLNode:
                     "label": "最大输出长度",
                     "description": "最大输出Token数量"
                 }),
+                "seed": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 9999999999,
+                    "step": 1,
+                    "label": "随机种子",
+                    "description": "随机种子（0为随机）"
+                }),
             }
         }
     
@@ -102,7 +110,7 @@ class BailianVLNode:
     FUNCTION = "call_vl"
     CATEGORY = "XnanTool/API/阿里百炼"
     
-    def call_vl(self, prompt, image, model, api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024):
+    def call_vl(self, prompt, image, model, api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, seed=0):
         """
         调用阿里云百炼VL模型
         
@@ -168,8 +176,12 @@ class BailianVLNode:
                 "result_format": "message",
                 "temperature": float(temperature),
                 "top_p": float(top_p),
-                "max_tokens": int(max_tokens)
+                "max_tokens": int(max_tokens),
+                "seed": int(seed) if seed > 0 else None
             }
+            
+            # 移除None值
+            params = {k: v for k, v in params.items() if v is not None}
             
             # 调用VL模型
             response = dashscope.MultiModalConversation.call(**params)

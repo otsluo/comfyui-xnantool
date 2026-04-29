@@ -83,6 +83,14 @@ class BailianQwenNode:
                     "label": "提示词相关性",
                     "description": "提示词对生成图片的影响程度"
                 }),
+                "seed": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 9999999999,
+                    "step": 1,
+                    "label": "随机种子",
+                    "description": "随机种子（0为随机）"
+                }),
             }
         }
     
@@ -91,7 +99,7 @@ class BailianQwenNode:
     FUNCTION = "generate_image"
     CATEGORY = "XnanTool/API/阿里百炼"
     
-    def generate_image(self, prompt, model, api_key=None, negative_prompt="", image_width=1024, image_height=1024, steps=30, scale=7.5):
+    def generate_image(self, prompt, model, api_key=None, negative_prompt="", image_width=1024, image_height=1024, steps=30, scale=7.5, seed=0):
         """
         调用阿里云百炼图片生成模型
         
@@ -140,8 +148,12 @@ class BailianQwenNode:
                 "n": 1,
                 "size": f"{int(image_width)}*{int(image_height)}",
                 "prompt_extend": True,
-                "watermark": False
+                "watermark": False,
+                "seed": int(seed) if seed > 0 else None
             }
+            
+            # 移除None值
+            params = {k: v for k, v in params.items() if v is not None}
             
             # 调用图片生成模型
             response = dashscope.ImageSynthesis.call(**params)

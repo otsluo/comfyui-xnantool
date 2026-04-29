@@ -74,6 +74,10 @@ class CounterNode:
                     "label": "触发器",
                     "description": "输入任意值触发计数"
                 }),
+                "usage_notes": ("STRING", {
+                    "default": "计数器节点\n配合【运行】按钮旁边的批次数量，效果更好，这样【超过上限重新计数】和【超过上限中止运行】可以不设置。\n\n- 配合批次数量可实现自动递增计数",
+                    "multiline": True
+                }),
             },
         }
     
@@ -82,7 +86,7 @@ class CounterNode:
     FUNCTION = "count"
     CATEGORY = "XnanTool/实用工具"
     
-    def count(self, counter_id, reset, increment, max_value, restart_on_max, abort_on_max, seed, start_value, trigger=None):
+    def count(self, counter_id, reset, increment, max_value, restart_on_max, abort_on_max, seed, start_value, trigger=None, usage_notes=None):
         """
         计数器函数
         
@@ -104,28 +108,24 @@ class CounterNode:
         # 如果需要重置
         if reset == "是":
             self._counters[counter_id] = start_value
+            # 清除中止标记
+            if f"{counter_id}_aborted" in self._counters:
+                del self._counters[f"{counter_id}_aborted"]
             return (start_value, f"计数器 '{counter_id}' 已重置为 {start_value}")
+        
+        # 如果已经中止，不输出任何值
+        if self._counters.get(f"{counter_id}_aborted", False):
+            return ("", "")
         
         # 初始化计数器（如果不存在）
         if counter_id not in self._counters:
             self._counters[counter_id] = start_value
         
-        # 检查是否达到上限
-        if max_value > 0 and self._counters[counter_id] >= max_value:
-            if abort_on_max == "是":
-                print(f"\033[31m[CounterNode ERROR] 计数器 '{counter_id}' 已达到上限 {max_value}，运行已中止\033[0m")
-                return (self._counters[counter_id], f"计数器 '{counter_id}' 已达到上限 {max_value}，运行已中止")
-            elif restart_on_max == "是":
-                print(f"\033[33m[CounterNode WARNING] 计数器 '{counter_id}' 已达到上限 {max_value}，重新开始计数\033[0m")
-                self._counters[counter_id] = 0
-                new_value = increment
-                if max_value > 0 and new_value > max_value:
-                    new_value = max_value
-                self._counters[counter_id] = new_value
-                return (new_value, f"计数器 '{counter_id}': {new_value}（重新开始）")
-            else:
-                print(f"\033[33m[CounterNode WARNING] 计数器 '{counter_id}' 已达到上限 {max_value}\033[0m")
-                return (self._counters[counter_id], f"计数器 '{counter_id}' 已达到上限 {max_value}")
+        # 如果标记需要重新开始
+        if self._counters.get(f"{counter_id}_restart", False):
+            self._counters[f"{counter_id}_restart"] = False
+            self._counters[counter_id] = start_value
+            return (start_value, f"计数器 '{counter_id}': {start_value}（重新开始）")
         
         # 增加计数
         new_value = self._counters[counter_id] + increment
@@ -137,14 +137,18 @@ class CounterNode:
         self._counters[counter_id] = new_value
         current_count = new_value
         
+        # 检查是否达到上限
         if max_value > 0 and current_count >= max_value:
             if abort_on_max == "是":
+                # 标记已中止
+                self._counters[f"{counter_id}_aborted"] = True
                 print(f"\033[31m[CounterNode ERROR] 计数器 '{counter_id}': {current_count}（已达到上限 {max_value}，运行已中止）\033[0m")
                 return (current_count, f"计数器 '{counter_id}': {current_count}（已达到上限 {max_value}，运行已中止）")
             elif restart_on_max == "是":
-                print(f"\033[33m[CounterNode WARNING] 计数器 '{counter_id}': {current_count}（已达到上限 {max_value}，重新开始）\033[0m")
-                self._counters[counter_id] = 0
-                return (0, f"计数器 '{counter_id}': 0（重新开始）")
+                # 标记下次运行需要重新开始
+                self._counters[f"{counter_id}_restart"] = True
+                print(f"\033[33m[CounterNode WARNING] 计数器 '{counter_id}': {current_count}（已达到上限 {max_value}，下次运行将重新开始）\033[0m")
+                return (current_count, f"计数器 '{counter_id}': {current_count}（已达到上限 {max_value}，下次运行将重新开始）")
             else:
                 print(f"\033[33m[CounterNode WARNING] 计数器 '{counter_id}': {current_count}（已达到上限 {max_value}）\033[0m")
                 return (current_count, f"计数器 '{counter_id}': {current_count}（已达到上限 {max_value}）")

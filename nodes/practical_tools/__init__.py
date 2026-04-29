@@ -31,6 +31,12 @@ from .loop_generator_node import LoopGeneratorNode
 from .loop_generator_output_splitter_node import LoopGeneratorOutputSplitterNode
 from .counter_node import CounterNode
 from .text_line_reader_node import TextLineReaderNode
+from .text_multi_line_reader_node import TextMultiLineReaderNode
+from .json_formatter_node import JSONFormatterNode
+from .json_parser_node import JSONParserNode
+from .multi_text_node import MultiTextNode
+from .index_switch_node import IndexSwitchNode
+from .sensitive_word_filter_node import SensitiveWordFilterNode
 
 
 
@@ -62,6 +68,12 @@ NODE_CLASS_MAPPINGS = {
     "LoopGeneratorOutputSplitterNode": LoopGeneratorOutputSplitterNode,
     "CounterNode": CounterNode,
     "TextLineReaderNode": TextLineReaderNode,
+    "TextMultiLineReaderNode": TextMultiLineReaderNode,
+    "JSONFormatterNode": JSONFormatterNode,
+    "JSONParserNode": JSONParserNode,
+    "MultiTextNode": MultiTextNode,
+    "IndexSwitchNode": IndexSwitchNode,
+    "SensitiveWordFilterNode": SensitiveWordFilterNode,
 }
 
 # 节点显示名称映射
@@ -92,6 +104,9 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LoopGeneratorOutputSplitterNode": "循环生成器输出转接",
     "CounterNode": "计数器",
     "TextLineReaderNode": "文本逐行读取",
+    "TextMultiLineReaderNode": "文本多行读取",
+    "JSONFormatterNode": "JSON格式化",
+    "JSONParserNode": "JSON解析",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

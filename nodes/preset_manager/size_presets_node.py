@@ -52,7 +52,7 @@ def load_size_config():
         }
 
 class SizeSelector:
-    """尺寸选择器节点 - 提供常用图像尺寸的快速选择，格式为'比例-名称：宽x高'"""
+    """尺寸选择器节点 - 提供常用图像尺寸的快速选择，支持自定义尺寸"""
     def __init__(self):
         pass
     
@@ -71,7 +71,30 @@ class SizeSelector:
                     "default": size_options[0] if size_options else "",
                     "label": "尺寸预设",
                     "description": "选择预设的图像尺寸，格式为'比例-名称：宽x高'"
-                })
+                }),
+                "use_custom_size": (["否", "是"], {
+                    "default": "否",
+                    "label": "启用自定义尺寸",
+                    "description": "启用后使用自定义宽度和高度，否则使用预设尺寸"
+                }),
+            },
+            "optional": {
+                "custom_width": ("INT", {
+                    "default": 1024,
+                    "min": 64,
+                    "max": 8192,
+                    "step": 64,
+                    "label": "自定义宽度",
+                    "description": "自定义图像宽度（启用自定义尺寸时生效）"
+                }),
+                "custom_height": ("INT", {
+                    "default": 1024,
+                    "min": 64,
+                    "max": 8192,
+                    "step": 64,
+                    "label": "自定义高度",
+                    "description": "自定义图像高度（启用自定义尺寸时生效）"
+                }),
             }
         }
     
@@ -80,8 +103,13 @@ class SizeSelector:
     FUNCTION = "get_size"
     CATEGORY = "XnanTool/预设"
     
-    def get_size(self, size_preset):
+    def get_size(self, size_preset, use_custom_size, custom_width=1024, custom_height=1024):
         """解析选中的尺寸预设，返回宽度和高度"""
+        # 如果启用了自定义尺寸
+        if use_custom_size == "是":
+            return (custom_width, custom_height)
+        
+        # 否则使用预设尺寸
         config = load_size_config()
         sizes = config.get("sizes", DEFAULT_SIZE_PRESETS)
         

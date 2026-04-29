@@ -30,8 +30,8 @@ class LoadImagePathNode:
             }
         }
     
-    RETURN_TYPES = ("IMAGE", "STRING", "STRING")
-    RETURN_NAMES = ("image", "image_path", "image_name")
+    RETURN_TYPES = ("IMAGE", "STRING", "STRING", "STRING")
+    RETURN_NAMES = ("image", "image_path", "image_name", "image_name_with_ext")
     FUNCTION = "load_image_from_path"
     CATEGORY = "XnanTool/图像处理"
     
@@ -80,10 +80,12 @@ class LoadImagePathNode:
             logger.info(f"图像尺寸: {image.size}")
             logger.info(f"图像模式: {image.mode}")
             
-            # 获取图片名称
-            image_name = os.path.basename(image_path)
+            # 获取图片名称（不带扩展名）
+            image_name = os.path.splitext(os.path.basename(image_path))[0]
+            # 获取图片名称（带扩展名）
+            image_name_with_ext = os.path.basename(image_path)
             
-            return (image_tensor, image_path, image_name)
+            return (image_tensor, image_path, image_name, image_name_with_ext)
             
         except Exception as e:
             logger.error(f"从路径加载图像过程中发生错误: {str(e)}")

@@ -1,0 +1,80 @@
+{
+    "Apply Whisper": {
+        "title": "应用 Whisper 语音识别",
+        "description": "使用Whisper模型将音频转换为文本，支持多种模型大小和语言",
+        "inputs": {
+            "audio": "音频",
+            "model": "模型",
+            "language": "语言",
+            "prompt": "提示词"
+        },
+        "outputs": {
+            "text": "文本",
+            "segments_alignment": "段落对齐",
+            "words_alignment": "单词对齐"
+        }
+    },
+    "Add Subtitles To Frames": {
+        "title": "添加字幕到帧",
+        "description": "将字幕添加到视频帧，支持自定义字体、颜色和位置",
+        "inputs": {
+            "images": "图像",
+            "alignment": "对齐数据",
+            "font_color": "字体颜色",
+            "font_family": "字体系列",
+            "font_size": "字体大小",
+            "x_position": "X位置",
+            "y_position": "Y位置",
+            "center_x": "居中X",
+            "center_y": "居中Y",
+            "video_fps": "视频帧率"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "MASK": "蒙版",
+            "cropped_subtitles": "裁剪的字幕",
+            "subtitle_coord": "字幕坐标"
+        }
+    },
+    "Add Subtitles To Background": {
+        "title": "添加字幕到背景",
+        "description": "将字幕添加到背景，创建动态字幕效果",
+        "inputs": {
+            "images": "图像",
+            "alignment": "对齐数据",
+            "font_family": "字体系列",
+            "num_words": "单词数量",
+            "text_displacement": "文本位移",
+            "font_size_displacement": "字体大小位移",
+            "min_font_size": "最小字体大小",
+            "max_font_size": "最大字体大小",
+            "video_fps": "视频帧率"
+        },
+        "outputs": {
+            "IMAGE": "图像"
+        }
+    },
+    "Resize Cropped Subtitles": {
+        "title": "调整裁剪字幕大小",
+        "description": "调整裁剪字幕的大小以匹配原始帧",
+        "inputs": {
+            "cropped_subtitles": "裁剪的字幕",
+            "original_frames": "原始帧",
+            "subtitle_coord": "字幕坐标"
+        },
+        "outputs": {
+            "IMAGE": "图像"
+        }
+    },
+    "Save SRT": {
+        "title": "保存 SRT 字幕",
+        "description": "将对齐数据保存为SRT字幕文件",
+        "inputs": {
+            "alignment": "对齐数据",
+            "name": "文件名"
+        },
+        "outputs": {
+            "srt_path": "SRT文件路径"
+        }
+    }
+}

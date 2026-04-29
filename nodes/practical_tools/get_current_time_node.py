@@ -12,7 +12,7 @@ class GetCurrentTimeNode:
                 "format_type": (["timestamp", "datetime", "date", "time"], {"default": "timestamp"}),
             },
             "optional": {
-                "any": ("*", {}),
+                "input_value": ("*", {}),
             }
         }
 
@@ -21,7 +21,7 @@ class GetCurrentTimeNode:
     FUNCTION = "get_current_time"
     CATEGORY = "XnanTool/实用工具"
 
-    def get_current_time(self, format_type, any=None):
+    def get_current_time(self, format_type, input_value=None):
         """
         获取当前时间，返回字符串和整数格式
         """

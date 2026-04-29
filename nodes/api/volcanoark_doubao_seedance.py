@@ -37,6 +37,14 @@ class DoubaoSeedanceVideoGenerationNode:
                     "default": False,
                     "label": "启用图片转视频",
                     "description": "是否使用图片作为视频生成的首帧"
+                }),
+                "seed": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 9999999999,
+                    "step": 1,
+                    "label": "随机种子",
+                    "description": "随机种子（0为随机）"
                 })
             },
             "optional": {
@@ -55,7 +63,7 @@ class DoubaoSeedanceVideoGenerationNode:
     FUNCTION = "generate_video"
     CATEGORY = "XnanTool/API/火山引擎"
     
-    def generate_video(self, prompt, model_id, api_key, enable_image_to_video, image_url=None):
+    def generate_video(self, prompt, model_id, api_key, enable_image_to_video, seed=0, image_url=None):
         """
         使用豆包Seedance模型生成视频
         """
@@ -87,10 +95,16 @@ class DoubaoSeedanceVideoGenerationNode:
                 })
             
             # 创建视频生成任务
-            create_result = client.content_generation.tasks.create(
-                model=model_id,
-                content=content
-            )
+            create_kwargs = {
+                "model": model_id,
+                "content": content
+            }
+            
+            # 添加随机种子（0表示随机）
+            if seed > 0:
+                create_kwargs["seed"] = int(seed)
+            
+            create_result = client.content_generation.tasks.create(**create_kwargs)
             
             task_id = create_result.id
             print(f"任务ID: {task_id}")

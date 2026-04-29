@@ -101,6 +101,14 @@ class BailianWanNode:
                     "label": "分辨率",
                     "description": "生成视频的分辨率"
                 }),
+                "seed": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 9999999999,
+                    "step": 1,
+                    "label": "随机种子",
+                    "description": "随机种子（0为随机）"
+                }),
             }
         }
     
@@ -110,7 +118,7 @@ class BailianWanNode:
     CATEGORY = "XnanTool/API/阿里百炼"
     
     def generate_video(self, prompt, model, api_key=None, image=None, end_image=None, 
-                      video="", audio="", video_duration=5, resolution="1080P"):
+                      video="", audio="", video_duration=5, resolution="1080P", seed=0):
         """
         调用阿里云百炼视频生成模型
         
@@ -158,9 +166,13 @@ class BailianWanNode:
                 },
                 "parameters": {
                     "duration": int(video_duration),
-                    "resolution": resolution
+                    "resolution": resolution,
+                    "seed": int(seed) if seed > 0 else None
                 }
             }
+            
+            # 移除None值
+            params["parameters"] = {k: v for k, v in params["parameters"].items() if v is not None}
             
             # 根据模型类型添加不同的输入参数
             model_lower = model.lower()
