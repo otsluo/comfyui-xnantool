@@ -37,6 +37,7 @@ from .json_parser_node import JSONParserNode
 from .multi_text_node import MultiTextNode
 from .index_switch_node import IndexSwitchNode
 from .sensitive_word_filter_node import SensitiveWordFilterNode
+from .cover_text_generator_node import CoverTextGeneratorNode
 
 
 
@@ -74,6 +75,7 @@ NODE_CLASS_MAPPINGS = {
     "MultiTextNode": MultiTextNode,
     "IndexSwitchNode": IndexSwitchNode,
     "SensitiveWordFilterNode": SensitiveWordFilterNode,
+    "CoverTextGeneratorNode": CoverTextGeneratorNode,
 }
 
 # 节点显示名称映射
@@ -107,6 +109,8 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "TextMultiLineReaderNode": "文本多行读取",
     "JSONFormatterNode": "JSON格式化",
     "JSONParserNode": "JSON解析",
+    "SensitiveWordFilterNode": "违禁词过滤",
+    "CoverTextGeneratorNode": "封面文字生成器",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

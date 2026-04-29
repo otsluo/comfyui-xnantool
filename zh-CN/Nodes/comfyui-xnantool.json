@@ -32,16 +32,16 @@
       "endpoint": "Endpoint URL"
     },
     "widgets": {
-      "system_prompt": "系统提示词，用于设定模型的角色和行为规范",
+      "system_prompt": "系统提示词",
       "prompt": "输入给大模型的用户提示词",
       "model": "选择要使用的模型",
-      "api_key": "阿里云百炼API Key（从控制台获取）",
+      "api_key": "API Key",
       "temperature": "控制输出的随机性，值越大越随机",
       "top_p": "累积概率阈值，控制生成的多样性",
       "max_tokens": "最大输出Token数量",
-      "enable_thinking": "仅适用于 deepseek-r1 系列模型，开启思考模式可获得更长推理链",
-      "seed": "随机种子（0为随机，大于0为固定种子）",
-      "endpoint": "阿里云百炼API Endpoint（留空使用默认值，SDK无需配置）"
+      "enable_thinking": "仅适用于 deepseek-r1 系列模型",
+      "seed": "随机种子",
+      "endpoint": "API Endpoint"
     },
     "outputs": {
       "response": "响应文本"
@@ -1864,6 +1864,69 @@
       "case_sensitive": {
         "否": "不区分大小写",
         "是": "区分大小写"
+      }
+    }
+  },
+  "CoverTextGeneratorNode": {
+    "title": "封面文字生成器",
+    "description": "生成透明底文字图片，支持文字位置选择、角度微调和字体选择",
+    "inputs": {
+      "text": "文字内容",
+      "width": "图片宽度",
+      "height": "图片高度",
+      "position": "文字位置",
+      "alignment": "对齐方式",
+      "font_name": "字体选择",
+      "font_size": "字体大小",
+      "rotation": "旋转角度",
+      "text_color": "文字颜色",
+      "stroke_color": "描边颜色",
+      "stroke_width": "描边大小",
+      "stroke_style": "描边样式",
+      "font_file": "字体文件路径",
+      "offset_x": "水平偏移",
+      "offset_y": "垂直偏移"
+    },
+    "widgets": {
+      "text": "要显示的文字内容",
+      "width": "输出图片的宽度",
+      "height": "输出图片的高度",
+      "position": "文字在图片中的位置",
+      "alignment": "多行文字的对齐方式",
+      "font_name": "选择字体（默认字体表示使用PIL默认字体）",
+      "font_size": "文字的字体大小",
+      "rotation": "文字的旋转角度（-180到180）",
+      "text_color": "文字的颜色（十六进制）",
+      "stroke_color": "文字描边的颜色（十六进制）",
+      "stroke_width": "文字描边的宽度（0表示不描边）",
+      "stroke_style": "文字描边的样式",
+      "font_file": "自定义字体文件路径（.ttf或.otf，优先使用此路径）",
+      "offset_x": "文字的水平偏移量（像素）",
+      "offset_y": "文字的垂直偏移量（像素）"
+    },
+    "outputs": {
+      "image": "透明底文字图片"
+    },
+    "widget_values": {
+      "position": {
+        "左上": "文字位于图片左上角",
+        "中上": "文字位于图片中上方",
+        "右上": "文字位于图片右上角",
+        "左中": "文字位于图片左侧中间",
+        "居中": "文字位于图片正中间",
+        "右中": "文字位于图片右侧中间",
+        "左下": "文字位于图片左下角",
+        "中下": "文字位于图片中下方",
+        "右下": "文字位于图片右下角"
+      },
+      "alignment": {
+        "左对齐": "多行文字左对齐",
+        "居中对齐": "多行文字居中对齐",
+        "右对齐": "多行文字右对齐"
+      },
+      "stroke_style": {
+        "外描边": "描边在文字外部，先绘制描边再绘制文字覆盖内部",
+        "发光效果": "多层渐变描边，形成发光效果"
       }
     }
   },
