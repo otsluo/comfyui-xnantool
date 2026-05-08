@@ -8,6 +8,11 @@
 import os
 import json
 import folder_paths
+from datetime import datetime
+import uuid
+import platform
+import random
+import string
 
 class SaveTextNode:
     """
@@ -35,13 +40,17 @@ class SaveTextNode:
         }
 
     RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("save_result",)
+    RETURN_NAMES = ("保存信息",)
     OUTPUT_NODE = True
     CATEGORY = "XnanTool/实用工具"
 
     FUNCTION = "save_text"
 
     def save_text(self, text, file_path, filename, extension, exist_mode, text_prefix=""):
+        # 解析路径中的日期变量
+        file_path = self._parse_path_variables(file_path)
+        filename = self._parse_path_variables(filename)
+        
         # 如果路径为空，使用output目录
         if not file_path or file_path.strip() == "":
             full_path = self.output_dir
@@ -100,7 +109,8 @@ class SaveTextNode:
                     f.write(text)
             elif exist_mode == "跳过":
                 # 跳过，不保存
-                return (f"跳过保存，文件已存在: {file_path_full}",)
+                save_info = f"⚠️ 跳过保存，文件已存在: {file_path_full}"
+                return (save_info,)
         else:
             # 文件不存在，直接保存
             # 处理文本前缀
@@ -110,8 +120,84 @@ class SaveTextNode:
             with open(file_path_full, 'w', encoding='utf-8') as f:
                 f.write(final_text)
         
-        result = f"文本已保存: {file_path_full}"
-        return (result,)
+        save_info = (
+            f"✅ 文本已保存\n\n"
+            f"📄 文件: {file_path_full}\n"
+            f"📊 格式: {extension.upper()}\n"
+            f"📝 模式: {exist_mode}"
+        )
+        return (save_info,)
+    
+    def _parse_path_variables(self, path):
+        """解析路径中的日期变量"""
+        if not path:
+            return path
+        
+        now = datetime.now()
+        
+        # 支持的变量
+        variables = {
+            # 日期相关
+            '%date:yyyyMMdd%': now.strftime('%Y%m%d'),
+            '%date:yyyy-MM-dd%': now.strftime('%Y-%m-%d'),
+            '%date:yyyy/MM/dd%': now.strftime('%Y/%m/%d'),
+            '%date:yyMMdd%': now.strftime('%y%m%d'),
+            '%date:MMdd%': now.strftime('%m%d'),
+            '%date:MM-dd%': now.strftime('%m-%d'),
+            '%date:hhmm%': now.strftime('%H%M'),
+            '%date:hh-mm%': now.strftime('%H-%M'),
+            # 时间相关
+            '%date:yyyyMMddHHmmss%': now.strftime('%Y%m%d%H%M%S'),
+            '%date:yyyy-MM-dd HH:mm:ss%': now.strftime('%Y-%m-%d %H:%M:%S'),
+            '%time:HHmmss%': now.strftime('%H%M%S'),
+            '%time:HH-mm-ss%': now.strftime('%H-%M-%S'),
+            '%time:HHmm%': now.strftime('%H%M'),
+            '%time:HH-mm%': now.strftime('%H-%M'),
+            '%time:HHmmssfff%': now.strftime('%H%M%S') + f'{now.microsecond // 1000:03d}',
+            # 单独的时间单位
+            '%year%': now.strftime('%Y'),
+            '%month%': now.strftime('%m'),
+            '%day%': now.strftime('%d'),
+            '%hour%': now.strftime('%H'),
+            '%minute%': now.strftime('%M'),
+            '%second%': now.strftime('%S'),
+            '%millisecond%': str(now.microsecond // 1000).zfill(3),
+            # 星期相关
+            '%weekday:name%': now.strftime('%A'),
+            '%weekday:name:cn%': ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'][now.weekday()],
+            '%weekday:num%': str(now.weekday() + 1),
+            # 周数
+            '%week:num%': str(now.isocalendar()[1]).zfill(2),
+            '%yearweek%': now.strftime('%Y') + str(now.isocalendar()[1]).zfill(2),
+            # 一年中的第几天
+            '%yearday%': str(now.timetuple().tm_yday).zfill(3),
+            # 时间戳
+            '%timestamp%': str(int(now.timestamp())),
+            '%timestamp:ms%': str(int(now.timestamp() * 1000)),
+            # 随机数
+            '%random:4%': ''.join(random.choices(string.digits, k=4)),
+            '%random:6%': ''.join(random.choices(string.digits, k=6)),
+            '%random:8%': ''.join(random.choices(string.digits, k=8)),
+            '%random:letter:4%': ''.join(random.choices(string.ascii_lowercase, k=4)),
+            '%random:letter:6%': ''.join(random.choices(string.ascii_lowercase, k=6)),
+            '%random:alnum:6%': ''.join(random.choices(string.ascii_lowercase + string.digits, k=6)),
+            '%random:alnum:8%': ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)),
+            # UUID
+            '%uuid%': str(uuid.uuid4()),
+            '%uuid:short%': str(uuid.uuid4())[:8],
+            # 系统信息
+            '%computer%': platform.node(),
+            '%user%': platform.user() if hasattr(platform, 'user') else os.environ.get('USERNAME', os.environ.get('USER', 'unknown')),
+            # 文件计数器（如果路径中包含%counter%）
+            '%counter:3%': '{counter:03d}',
+            '%counter:4%': '{counter:04d}',
+            '%counter:5%': '{counter:05d}',
+        }
+        
+        for var, value in variables.items():
+            path = path.replace(var, value)
+        
+        return path
 
 
 NODE_CLASS_MAPPINGS = {

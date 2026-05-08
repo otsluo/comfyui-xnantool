@@ -10,25 +10,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# 模型说明
-MODEL_DESCRIPTIONS = {
-    "qwen3.5-plus": "通义千问3.5 Plus（推荐）",
-    "qwen3.5-plus-2026-02-15": "通义千问3.5 Plus 2026-02-15",
-    "qwen3.5-flash": "通义千问3.5 Flash",
-    "qwen3.5-flash-2026-02-23": "通义千问3.5 Flash 2026-02-23",
-    "qwen3.5-35b-a3b": "通义千问3.5 35B-A3B",
-    "qwen3.5-27b": "通义千问3.5 27B",
-    "qwen3.5-122b-a10b": "通义千问3.5 122B-A10B",
-    "qwen3.5-397b-a17b": "通义千问3.5 397B-A17B（推荐）",
-    "qwen3-vl-plus": "通义千问3 VL Plus（推荐）",
-    "qwen3-vl-plus-2025-12-19": "通义千问3 VL Plus 2025-12-19",
-    "qwen3-vl-plus-2025-09-23": "通义千问3 VL Plus 2025-09-23",
-    "qwen3-vl-flash": "通义千问3 VL Flash",
-    "qwen3-vl-flash-2026-01-22": "通义千问3 VL Flash 2026-01-22",
-    "qwen3-vl-flash-2025-10-15": "通义千问3 VL Flash 2025-10-15",
-    "qwen3-vl-30b-a3b-thinking": "通义千问3 VL 30B-A3B 思考模式",
-}
-
 class BailianVLNode:
     """
     阿里云百炼VL节点 - 调用阿里云百炼视觉语言模型
@@ -52,11 +33,11 @@ class BailianVLNode:
                     "label": "图片",
                     "description": "输入的图片"
                 }),
-                "model": (["qwen3.5-plus", "qwen3.5-plus-2026-02-15", 
-                          "qwen3.5-flash", "qwen3.5-flash-2026-02-23",
+                "model": (["qwen3.5-plus", 
+                          "qwen3.5-flash",
                           "qwen3.5-35b-a3b", "qwen3.5-27b", "qwen3.5-122b-a10b", "qwen3.5-397b-a17b",
-                          "qwen3-vl-plus", "qwen3-vl-plus-2025-12-19", "qwen3-vl-plus-2025-09-23",
-                          "qwen3-vl-flash", "qwen3-vl-flash-2026-01-22", "qwen3-vl-flash-2025-10-15",
+                          "qwen3-vl-plus",
+                          "qwen3-vl-flash",
                           "qwen3-vl-30b-a3b-thinking"], {
                     "default": "qwen3-vl-plus",
                     "label": "模型",

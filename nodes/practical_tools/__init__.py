@@ -38,6 +38,12 @@ from .multi_text_node import MultiTextNode
 from .index_switch_node import IndexSwitchNode
 from .sensitive_word_filter_node import SensitiveWordFilterNode
 from .cover_text_generator_node import CoverTextGeneratorNode
+from .image_compositor_node import ImageCompositorNode
+from .load_video_node import LoadVideoNode
+from .preview_video_node import PreviewVideoNode
+from .move_files_node import MoveFilesNode
+from .batch_image_loader_node import BatchImageLoaderNode
+from .multi_path_image_loader_node import MultiPathImageLoaderNode
 
 
 
@@ -76,6 +82,12 @@ NODE_CLASS_MAPPINGS = {
     "IndexSwitchNode": IndexSwitchNode,
     "SensitiveWordFilterNode": SensitiveWordFilterNode,
     "CoverTextGeneratorNode": CoverTextGeneratorNode,
+    "ImageCompositorNode": ImageCompositorNode,
+    "LoadVideoNode": LoadVideoNode,
+    "PreviewVideoNode": PreviewVideoNode,
+    "MoveFilesNode": MoveFilesNode,
+    "BatchImageLoaderNode": BatchImageLoaderNode,
+    "MultiPathImageLoaderNode": MultiPathImageLoaderNode,
 }
 
 # 节点显示名称映射
@@ -111,6 +123,12 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "JSONParserNode": "JSON解析",
     "SensitiveWordFilterNode": "违禁词过滤",
     "CoverTextGeneratorNode": "封面文字生成器",
+    "ImageCompositorNode": "图像合成（图层）",
+    "LoadVideoNode": "加载视频",
+    "PreviewVideoNode": "预览视频",
+    "MoveFilesNode": "移动文件",
+    "BatchImageLoaderNode": "多行路径图片批次输出",
+    "MultiPathImageLoaderNode": "多行路径图片列表输出",
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

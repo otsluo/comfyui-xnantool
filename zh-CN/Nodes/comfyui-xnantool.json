@@ -32,8 +32,8 @@
       "endpoint": "Endpoint URL"
     },
     "widgets": {
-      "system_prompt": "系统提示词",
-      "prompt": "输入给大模型的用户提示词",
+      "system_prompt": "系统提示词，用于设定模型的角色和行为规范（可选）",
+      "prompt": "输入给大模型的用户提示词（可选）",
       "model": "选择要使用的模型",
       "api_key": "API Key",
       "temperature": "控制输出的随机性，值越大越随机",
@@ -1760,7 +1760,8 @@
       "folder_separator": "文件夹分隔符",
       "num_padding_digits": "填充数字位数",
       "extension": "文件格式",
-      "quality": "图片质量"
+      "quality": "图片质量",
+      "save_workflow": "保存信息"
     },
     "widgets": {
       "images": "要保存的图像",
@@ -1769,11 +1770,12 @@
       "folder_separator": "文件名中的分隔符",
       "num_padding_digits": "文件名中数字的填充位数",
       "extension": "图片保存格式",
-      "quality": "图片质量（1-100）"
+      "quality": "图片质量（1-100）",
+      "save_workflow": "是否将工作流信息嵌入到图片中"
     },
     "outputs": {
       "images": "输出的图像",
-      "save_result": "保存结果信息"
+      "保存信息": "保存结果信息"
     },
     "widget_values": {
       "extension": {
@@ -1905,7 +1907,8 @@
       "offset_y": "文字的垂直偏移量（像素）"
     },
     "outputs": {
-      "image": "透明底文字图片"
+      "image": "图片",
+      "mask": "遮罩"
     },
     "widget_values": {
       "position": {
@@ -1932,27 +1935,37 @@
   },
   "SaveVideoNode": {
     "title": "保存视频",
-    "description": "保存视频节点，将图像序列保存为视频文件，支持音频合并",
+    "description": "保存视频节点，将图像序列或视频保存为视频文件，支持音频合并、编码预设和CRF质量控制",
     "inputs": {
       "images": "图像序列",
+      "video": "视频",
+      "audio": "音频",
+      "output_path": "输出路径",
       "filename_prefix": "文件名前缀",
       "fps": "帧率",
       "video_format": "视频格式",
       "codec": "编码器",
-      "audio": "音频",
-      "output_path": "输出路径"
+      "preset": "编码预设",
+      "crf": "CRF质量",
+      "audio_sample_rate": "音频采样率",
+      "audio_bitrate": "音频比特率"
     },
     "widgets": {
-      "images": "要保存的图像序列",
+      "images": "图像序列",
+      "video": "视频",
+      "audio": "音频",
+      "output_path": "输出路径（留空使用默认输出目录）",
       "filename_prefix": "视频文件名前缀",
-      "fps": "视频帧率（每秒帧数）",
+      "fps": "视频帧率（每秒帧数，自动使用视频原始帧率）",
       "video_format": "视频文件格式",
-      "codec": "视频编码器",
-      "audio": "要合并的音频文件",
-      "output_path": "输出路径（留空使用默认输出目录）"
+      "codec": "视频编码器（自动根据格式选择）",
+      "preset": "编码速度预设（越快文件越大，越慢压缩率越高）",
+      "crf": "视频质量参数（0-51，越小质量越高，自动使用默认值23）",
+      "audio_sample_rate": "音频采样率（自动使用原始采样率）",
+      "audio_bitrate": "音频比特率（自动使用128k）"
     },
     "outputs": {
-      "video_path": "视频文件路径"
+      "保存信息": "保存结果信息（包含文件路径和状态）"
     },
     "widget_values": {
       "video_format": {
@@ -1962,11 +1975,220 @@
         "mkv": "mkv（MKV格式）"
       },
       "codec": {
-        "mp4v": "mp4v（MPEG-4）",
-        "XVID": "XVID（Xvid编码）",
-        "MJPG": "MJPG（Motion JPEG）",
-        "X264": "X264（H.264编码）",
-        "X265": "X265（H.265编码）"
+        "自动": "自动（根据格式选择）",
+        "libx264": "libx264（H.264编码）",
+        "libx265": "libx265（H.265编码）",
+        "mpeg4": "mpeg4（MPEG-4编码）",
+        "vp9": "vp9（VP9编码）"
+      },
+      "preset": {
+        "ultrafast": "ultrafast（最快，文件最大）",
+        "superfast": "superfast（非常快）",
+        "veryfast": "veryfast（很快）",
+        "faster": "faster（较快）",
+        "fast": "fast（快速，推荐）",
+        "medium": "medium（平衡）",
+        "slow": "slow（较慢，文件较小）",
+        "slower": "slower（很慢）",
+        "veryslow": "veryslow（最慢，文件最小）"
+      },
+      "crf": {
+        "自动": "自动（使用默认值23）",
+        "0": "0（无损）",
+        "5": "5（接近无损）",
+        "10": "10（高质量）",
+        "15": "15（很好质量）",
+        "18": "18（视觉无损）",
+        "20": "20（好质量）",
+        "23": "23（默认质量）",
+        "25": "25（标准质量）",
+        "28": "28（标准压缩）",
+        "30": "30（中等压缩）",
+        "35": "35（高压缩）",
+        "40": "40（很高压缩）",
+        "45": "45（极高压缩）",
+        "51": "51（最低质量）"
+      },
+      "fps": {
+        "自动": "自动（使用视频原始帧率或30fps）",
+        "1": "1 fps（极低帧率）",
+        "24": "24 fps（电影标准）",
+        "25": "25 fps（PAL标准）",
+        "30": "30 fps（NTSC标准）",
+        "60": "60 fps（高帧率）"
+      },
+      "audio_sample_rate": {
+        "自动": "自动（使用原始采样率）",
+        "8000": "8000（电话语音）",
+        "16000": "16000（低质量语音）",
+        "22050": "22050（低质量音频）",
+        "32000": "32000（中等质量）",
+        "44100": "44100（CD音质）",
+        "48000": "48000（视频标准音质）",
+        "96000": "96000（高保真音频）"
+      },
+      "audio_bitrate": {
+        "自动": "自动（128k）",
+        "64k": "64k（语音/低质量）",
+        "128k": "128k（标准音质）",
+        "192k": "192k（较好音质）",
+        "256k": "256k（高质量）",
+        "320k": "320k（最高音质）"
+      }
+    }
+  },
+  "LoadVideoNode": {
+    "title": "加载视频",
+    "description": "加载本地视频文件，输出视频流和音频流",
+    "inputs": {
+      "video_file": "视频文件"
+    },
+    "widgets": {
+      "video_file": "选择要加载的视频文件（支持mp4、avi、mov、mkv、flv、webm格式）"
+    },
+    "outputs": {
+      "video": "视频流",
+      "audio": "音频流",
+      "filename": "视频文件名"
+    }
+  },
+  "PreviewVideoNode": {
+    "title": "预览视频",
+    "description": "预览处理后的视频，支持在ComfyUI界面中播放",
+    "inputs": {
+      "video": "视频",
+      "filename_prefix": "文件名前缀",
+      "max_width": "最大宽度"
+    },
+    "widgets": {
+      "video": "要预览的视频流",
+      "filename_prefix": "预览视频的文件名前缀",
+      "max_width": "最大预览宽度，0表示不限制"
+    },
+    "outputs": {}
+  },
+  "PreviewVideoNode": {
+    "title": "预览视频",
+    "description": "预览处理后的视频，支持在ComfyUI界面中播放",
+    "inputs": {
+      "video": "视频",
+      "filename_prefix": "文件名前缀",
+      "max_width": "最大宽度"
+    },
+    "widgets": {
+      "video": "要预览的视频流",
+      "filename_prefix": "预览视频的文件名前缀",
+      "max_width": "最大预览宽度，0表示不限制"
+    },
+    "outputs": {}
+  },
+  "VideoProcessorNode": {
+    "title": "视频处理器-调试中",
+    "description": "视频处理节点，提供视频质量、尺寸、裁剪、旋转、水印等功能",
+    "inputs": {
+      "video": "视频",
+      "watermark_image": "水印图像",
+      "output_path": "输出路径",
+      "filename_prefix": "文件名前缀",
+      "video_format": "视频格式",
+      "codec": "编码器",
+      "crf": "CRF质量",
+      "preset": "编码预设",
+      "scale_mode": "缩放模式",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "trim_start": "裁剪开始时间",
+      "trim_end": "裁剪结束时间",
+      "rotation": "旋转角度",
+      "flip_mode": "翻转模式",
+      "fade_in_duration": "视频淡入时长",
+      "fade_out_duration": "视频淡出时长",
+      "audio_volume": "音频音量",
+      "audio_fade_in": "音频淡入时长",
+      "audio_fade_out": "音频淡出时长",
+      "watermark_position": "水印位置",
+      "watermark_opacity": "水印透明度",
+      "watermark_scale": "水印缩放"
+    },
+    "widgets": {
+      "video": "要处理的视频文件",
+      "watermark_image": "水印图像（可选）",
+      "output_path": "输出路径（留空使用默认输出目录）",
+      "filename_prefix": "视频文件名前缀",
+      "video_format": "视频文件格式",
+      "codec": "视频编码器",
+      "crf": "视频质量参数（0-51，越小质量越高，自动使用默认值）",
+      "preset": "编码速度预设（越快文件越大，越慢压缩率越高）",
+      "scale_mode": "视频缩放模式",
+      "custom_width": "自定义宽度（缩放模式为自定义时生效）",
+      "custom_height": "自定义高度（缩放模式为自定义时生效）",
+      "trim_start": "裁剪开始时间（秒，0表示不裁剪）",
+      "trim_end": "裁剪结束时间（秒，0表示不裁剪）",
+      "rotation": "视频旋转角度",
+      "flip_mode": "视频翻转模式",
+      "fade_in_duration": "视频开头淡入时长（秒，0表示不启用）",
+      "fade_out_duration": "视频结尾淡出时长（秒，0表示不启用）",
+      "audio_volume": "音频音量增益（1.0为原始音量）",
+      "audio_fade_in": "音频开头淡入时长（秒，0表示不启用）",
+      "audio_fade_out": "音频结尾淡出时长（秒，0表示不启用）",
+      "watermark_position": "水印在视频中的位置",
+      "watermark_opacity": "水印透明度（0.0完全透明，1.0完全不透明）",
+      "watermark_scale": "水印相对于视频的尺寸比例"
+    },
+    "outputs": {
+      "video_path": "处理后的视频文件路径"
+    },
+    "widget_values": {
+      "video_format": {
+        "mp4": "mp4（MP4格式）",
+        "avi": "avi（AVI格式）",
+        "mov": "mov（MOV格式）",
+        "mkv": "mkv（MKV格式）"
+      },
+      "codec": {
+        "libx264": "libx264（H.264编码）",
+        "libx265": "libx265（H.265编码）",
+        "mpeg4": "mpeg4（MPEG-4编码）",
+        "vp9": "vp9（VP9编码）"
+      },
+      "crf": {
+        "自动": "自动（使用编码器默认值）",
+        "0": "0（无损）",
+        "18": "18（视觉无损）",
+        "23": "23（默认质量）",
+        "28": "28（标准压缩）"
+      },
+      "preset": {
+        "ultrafast": "ultrafast（最快，文件最大）",
+        "fast": "fast（快速）",
+        "medium": "medium（平衡）",
+        "slow": "slow（较慢，文件较小）",
+        "veryslow": "veryslow（最慢，文件最小）"
+      },
+      "scale_mode": {
+        "原始尺寸": "原始尺寸（不缩放）",
+        "1080p": "1080p（1920x1080）",
+        "720p": "720p（1280x720）",
+        "480p": "480p（854x480）",
+        "自定义": "自定义（使用自定义宽高）"
+      },
+      "rotation": {
+        "0°": "0°（不旋转）",
+        "90°": "90°（顺时针旋转90度）",
+        "180°": "180°（旋转180度）",
+        "270°": "270°（逆时针旋转90度）"
+      },
+      "flip_mode": {
+        "无": "无（不翻转）",
+        "水平翻转": "水平翻转（左右镜像）",
+        "垂直翻转": "垂直翻转（上下镜像）"
+      },
+      "watermark_position": {
+        "左上": "左上角",
+        "右上": "右上角",
+        "左下": "左下角",
+        "右下": "右下角",
+        "居中": "居中"
       }
     }
   },
@@ -2774,6 +2996,127 @@
     "outputs": {
       "images": "生成的图像",
       "text_to_image_models": "支持的文生图模型列表"
+    }
+  },
+  "ImageCompositorNode": {
+    "title": "图像合成（图层）",
+    "description": "类似PS图层合成功能，支持单图层、位置、缩放、透明度、混合模式、遮罩",
+    "inputs": {
+      "background_image": "背景图片",
+      "layer_image": "图层图片",
+      "layer_x": "X位置",
+      "layer_y": "Y位置",
+      "layer_scale": "缩放",
+      "layer_opacity": "透明度",
+      "blend_mode": "混合模式",
+      "layer_mask": "图层遮罩"
+    },
+    "widgets": {
+      "background_image": "作为背景的图片",
+      "layer_image": "要合成的图层图片",
+      "layer_x": "图层的水平位置（像素）",
+      "layer_y": "图层的垂直位置（像素）",
+      "layer_scale": "图层的缩放比例（1.0为原始大小）",
+      "layer_opacity": "图层的不透明度（1.0为完全不透明，0.0为完全透明）",
+      "blend_mode": "图层与背景的混合模式",
+      "layer_mask": "图层的遮罩（白色显示，黑色隐藏，可选）"
+    },
+    "outputs": {
+      "合成图片": "合成后的图片"
+    },
+    "widget_values": {
+      "blend_mode": {
+        "正常": "正常叠加，使用alpha通道混合",
+        "正片叠底": "将底色和混合色相乘，结果更暗",
+        "滤色": "将底色和混合色的互补色相乘，结果更亮",
+        "叠加": "根据底色决定使用正片叠底还是滤色",
+        "变亮": "比较底色和混合色，保留较亮的颜色",
+        "变暗": "比较底色和混合色，保留较暗的颜色",
+        "差值": "计算底色和混合色的差值绝对值",
+        "排除": "类似差值，但对比度更低"
+      }
+    }
+  },
+  "MoveFilesNode": {
+    "title": "移动文件",
+    "description": "将文件从源文件夹移动到目标文件夹，支持文件过滤和目录结构保留",
+    "inputs": {
+      "source_directory": "源文件夹位置",
+      "destination_directory": "输出目标文件夹位置",
+      "file_extensions": "文件扩展名过滤",
+      "overwrite_existing": "覆盖已有文件",
+      "preserve_structure": "保留目录结构"
+    },
+    "widgets": {
+      "source_directory": "要移动文件的源目录路径",
+      "destination_directory": "文件移动到的目标目录路径",
+      "file_extensions": "要移动的文件扩展名，用逗号分隔（如：.jpg,.png,.txt），*表示所有文件",
+      "overwrite_existing": "是否覆盖目标目录中已存在的同名文件",
+      "preserve_structure": "是否保留源目录的子目录结构"
+    },
+    "outputs": {
+      "移动信息": "处理结果信息"
+    },
+    "widget_values": {
+      "overwrite_existing": {
+        "true": "覆盖",
+        "false": "不覆盖"
+      },
+      "preserve_structure": {
+        "true": "保留",
+        "false": "不保留"
+      }
+    }
+  },
+  "BatchImageLoaderNode": {
+    "title": "多行路径图片批次输出",
+    "description": "从多行图片路径中逐批次加载并输出图片",
+    "inputs": {
+      "image_paths": "图片路径列表",
+      "batch_size": "每次输出数量",
+      "seed": "随机种子",
+      "shuffle": "打乱顺序",
+      "restart": "重新开始"
+    },
+    "widgets": {
+      "image_paths": "每行一个图片路径，支持绝对路径和相对路径",
+      "batch_size": "每次运行输出的图片数量，0表示输出所有图片",
+      "seed": "随机打乱时的种子值",
+      "shuffle": "是否每次随机打乱顺序输出",
+      "restart": "是否重新开始读取"
+    },
+    "outputs": {
+      "图片": "当前批次的图片数据",
+      "路径列表": "当前批次的图片路径列表",
+      "当前批次": "当前批次号",
+      "是否完成": "是否已完成全部输出"
+    },
+    "widget_values": {
+      "shuffle": {
+        "否": "按顺序输出",
+        "是": "随机打乱顺序"
+      },
+      "restart": {
+        "否": "继续读取",
+        "是": "重新开始"
+      }
+    }
+  },
+  "MultiPathImageLoaderNode": {
+    "title": "多行路径图片列表输出",
+    "description": "从多行图片路径中加载所有图片并一次性输出为列表",
+    "inputs": {
+      "image_paths": "图片路径列表"
+    },
+    "widgets": {
+      "image_paths": "每行一个图片路径，支持绝对路径和相对路径"
+    },
+    "outputs": {
+      "图片列表": "所有成功加载的图片数据（列表）",
+      "文件名列表": "成功加载的文件名列表",
+      "成功路径列表": "成功加载的完整路径列表",
+      "成功数量": "成功加载的图片数量",
+      "跳过路径列表": "无法加载的路径及错误信息"
     }
   }
 }

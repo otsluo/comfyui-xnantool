@@ -121,8 +121,8 @@ class CoverTextGeneratorNode:
             }
         }
     
-    RETURN_TYPES = ("IMAGE",)
-    RETURN_NAMES = ("image",)
+    RETURN_TYPES = ("IMAGE", "MASK")
+    RETURN_NAMES = ("image", "mask")
     FUNCTION = "generate_cover_image"
     CATEGORY = "XnanTool/实用工具"
     OUTPUT_NODE = False
@@ -195,20 +195,23 @@ class CoverTextGeneratorNode:
             offset_y: 垂直偏移
             
         Returns:
-            tuple: (图片tensor)
+            tuple: (图片tensor, 遮罩tensor)
         """
         if not text or not text.strip():
-            # 返回空透明图片
+            # 返回空透明图片和遮罩
             image = Image.new('RGBA', (width, height), (0, 0, 0, 0))
-            return (self._pil_to_tensor(image),)
+            mask = Image.new('L', (width, height), 0)
+            return (self._pil_to_tensor(image), self._pil_to_mask(mask))
         
         # 解析颜色值
         text_rgb = self._parse_color(text_color)
         stroke_rgb = self._parse_color(stroke_color)
         
-        # 创建透明背景图片
+        # 创建透明背景图片和遮罩
         image = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+        mask = Image.new('L', (width, height), 0)
         draw = ImageDraw.Draw(image)
+        mask_draw = ImageDraw.Draw(mask)
         
         # 加载字体
         font = self._load_font(font_name, font_file, font_size)
@@ -230,6 +233,8 @@ class CoverTextGeneratorNode:
                 line_x = self._calculate_line_x(line, x, width, alignment, font)
                 
                 self._draw_text_with_stroke(draw, line_x, current_y, line, text_rgb, stroke_rgb, stroke_width, stroke_style, font)
+                # 在遮罩上绘制白色文字
+                mask_draw.text((line_x, current_y), line, fill=255, font=font, stroke_width=stroke_width, stroke_fill=255)
                 
                 current_y += line_height
         else:
@@ -249,7 +254,9 @@ class CoverTextGeneratorNode:
             padding = max(max_width, total_height) // 2 + 10 + stroke_width * 2
             temp_size = int(max(max_width, total_height) * 1.5) + padding * 2
             temp_image = Image.new('RGBA', (temp_size, temp_size), (0, 0, 0, 0))
+            temp_mask = Image.new('L', (temp_size, temp_size), 0)
             temp_draw = ImageDraw.Draw(temp_image)
+            temp_mask_draw = ImageDraw.Draw(temp_mask)
             
             # 在临时图片中心绘制多行文字
             current_y = (temp_size - total_height) // 2
@@ -259,21 +266,25 @@ class CoverTextGeneratorNode:
                 line_x = self._calculate_line_x(line, (temp_size - max_width) // 2, temp_size, alignment, font)
                 
                 self._draw_text_with_stroke(temp_draw, line_x, current_y, line, text_rgb, stroke_rgb, stroke_width, stroke_style, font)
+                # 在遮罩上绘制白色文字
+                temp_mask_draw.text((line_x, current_y), line, fill=255, font=font, stroke_width=stroke_width, stroke_fill=255)
                 
                 current_y += line_height
             
             # 旋转
             rotated_image = temp_image.rotate(-rotation, resample=Image.BICUBIC, expand=True)
+            rotated_mask = temp_mask.rotate(-rotation, resample=Image.BICUBIC, expand=True)
             
             # 粘贴到主图片
             paste_x = int(x - rotated_image.width // 2 + max_width // 2)
             paste_y = int(y - rotated_image.height // 2 + total_height // 2)
             
             image.paste(rotated_image, (paste_x, paste_y), rotated_image)
+            mask.paste(rotated_mask, (paste_x, paste_y), rotated_mask)
         
         print(f"🎨 生成封面文字图片: {width}x{height}, 位置: {position}, 字体: {font_name}, 字体大小: {font_size}, 旋转: {rotation}°, 描边: {stroke_width}px")
         
-        return (self._pil_to_tensor(image),)
+        return (self._pil_to_tensor(image), self._pil_to_mask(mask))
     
     def _parse_color(self, color_str):
         """解析颜色字符串为RGBA元组"""
@@ -349,9 +360,9 @@ class CoverTextGeneratorNode:
         if alignment == "左对齐":
             return base_x
         elif alignment == "右对齐":
-            return base_x + (width - base_x * 2 - line_width) if base_x > 0 else width - line_width - 20
+            return width - line_width - 20
         else:  # 居中对齐
-            return base_x
+            return (width - line_width) // 2
     
     def _calculate_position(self, lines, width, height, position, alignment, font, offset_x, offset_y):
         """计算文字位置"""
@@ -401,6 +412,18 @@ class CoverTextGeneratorNode:
         image_tensor = torch.from_numpy(image_np)[None,]
         
         return image_tensor
+    
+    def _pil_to_mask(self, pil_mask):
+        """将PIL遮罩转换为ComfyUI的MASK tensor格式"""
+        # 确保是L模式
+        if pil_mask.mode != 'L':
+            pil_mask = pil_mask.convert('L')
+        
+        # 转换为tensor格式 (H, W) -> (1, H, W)
+        mask_np = np.array(pil_mask).astype(np.float32) / 255.0
+        mask_tensor = torch.from_numpy(mask_np)[None,]
+        
+        return mask_tensor
 
 
 # 节点映射和显示名称映射

@@ -48,21 +48,22 @@ class TextLineReaderNode:
             }
         }
     
-    RETURN_TYPES = ("STRING", "INT", "BOOL")
-    RETURN_NAMES = ("当前行", "行号", "是否最后一行")
+    RETURN_TYPES = ("STRING", "INT", "BOOL", "INT")
+    RETURN_NAMES = ("当前行", "行号", "是否最后一行", "总行数")
     FUNCTION = "read_line"
     CATEGORY = "XnanTool/实用工具"
-    DESCRIPTION = "文本逐行读取，每次运行输出一行，文本输出完毕后输出“运行完毕”"
+    DESCRIPTION = "文本逐行读取，每次运行输出一行，文本输出完毕后输出'运行完毕'"
     
     def read_line(self, text, seed=0, random_order="否", restart="否"):
         """读取下一行文本"""
         try:
             # 如果文本为空，返回空
             if not text or text.strip() == "":
-                return ("", 0, True)
+                return ("", 0, True, 0)
             
             # 分割文本为行列表
             lines = text.split('\n')
+            total_lines = len(lines)
             
             # 获取当前节点的唯一标识
             node_id = id(self)
@@ -78,7 +79,7 @@ class TextLineReaderNode:
                     TextLineReaderNode._line_order[node_id] = list(range(len(lines)))
                     random.shuffle(TextLineReaderNode._line_order[node_id])
                 # 重新开始后读取第一行
-                return (lines[0], 1, len(lines) <= 1)
+                return (lines[0], 1, len(lines) <= 1, total_lines)
             
             # 如果是第一次运行，初始化索引
             if node_id not in TextLineReaderNode._current_line_index:
@@ -88,7 +89,7 @@ class TextLineReaderNode:
             
             # 如果文本已经输出完毕，返回"运行完毕"
             if TextLineReaderNode._has_completed.get(node_id, False):
-                return ("运行完毕", 0, True)
+                return ("运行完毕", 0, True, total_lines)
             
             # 如果启用随机顺序
             if random_order == "是":
@@ -106,7 +107,7 @@ class TextLineReaderNode:
                 if current_index >= len(line_order):
                     # 文本输出完毕
                     TextLineReaderNode._has_completed[node_id] = True
-                    return ("运行完毕", 0, True)
+                    return ("运行完毕", 0, True, total_lines)
                 
                 actual_line_index = line_order[current_index]
                 current_line = lines[actual_line_index]
@@ -118,7 +119,7 @@ class TextLineReaderNode:
                 # 判断是否是最后一行
                 is_last_line = (next_index >= len(line_order))
                 
-                return (current_line, actual_line_index + 1, is_last_line)
+                return (current_line, actual_line_index + 1, is_last_line, total_lines)
             
             # 正常顺序读取
             current_index = TextLineReaderNode._current_line_index[node_id]
@@ -127,7 +128,7 @@ class TextLineReaderNode:
             if current_index >= len(lines):
                 # 文本输出完毕
                 TextLineReaderNode._has_completed[node_id] = True
-                return ("运行完毕", 0, True)
+                return ("运行完毕", 0, True, total_lines)
             
             # 获取当前行
             current_line = lines[current_index]
@@ -139,11 +140,11 @@ class TextLineReaderNode:
             # 判断是否是最后一行
             is_last_line = (next_index >= len(lines))
             
-            return (current_line, current_index + 1, is_last_line)
+            return (current_line, current_index + 1, is_last_line, total_lines)
             
         except Exception as e:
             error_msg = f"读取失败: {str(e)}"
-            return (error_msg, 0, True)
+            return (error_msg, 0, True, 0)
 
 
 # 节点映射和显示名称映射

@@ -3,6 +3,11 @@ import folder_paths
 from PIL import Image
 import numpy as np
 import torch
+from datetime import datetime
+import uuid
+import platform
+import random
+import string
 
 class SaveImageNode:
     """
@@ -23,16 +28,12 @@ class SaveImageNode:
                 "num_padding_digits": ("INT", {"default": 3, "min": 1, "max": 10, "step": 1}),
                 "extension": (["png", "jpg", "jpeg", "gif", "webp", "bmp"],),
                 "quality": ("INT", {"default": 100, "min": 1, "max": 100, "step": 1}),
-            },
-            "hidden": {
-                "prompt": "PROMPT", 
-                "extra_pnginfo": "EXTRA_PNGINFO",
-                "save_workflow": ("BOOLEAN", {"default": False})
+                "save_workflow": ("BOOLEAN", {"default": False}),
             },
         }
 
     RETURN_TYPES = ("IMAGE", "STRING")
-    RETURN_NAMES = ("images", "save_result")
+    RETURN_NAMES = ("images", "保存信息")
     OUTPUT_NODE = True
     FUNCTION = "save_images"
     CATEGORY = "XnanTool/实用工具"
@@ -41,38 +42,41 @@ class SaveImageNode:
         """
         保存图片到指定路径
         """
+        # 解析路径中的变量
+        file_path = self._parse_path_variables(file_path)
+        filename_prefix = self._parse_path_variables(filename_prefix)
+        
         # 确保输出目录存在
         full_output_dir = os.path.join(self.output_dir, file_path)
         if not os.path.exists(full_output_dir):
             os.makedirs(full_output_dir, exist_ok=True)
         
-        results = []
+        saved_files = []
+        
+        # 生成文件名前缀
+        if filename_prefix and filename_prefix.strip():
+            base_name = f"{filename_prefix}{folder_separator}"
+        else:
+            base_name = f"ComfyUI{folder_separator}"
+        
+        # 查找当前可用的起始编号
+        start_counter = 1
+        while True:
+            test_filename = f"{base_name}{start_counter:0{num_padding_digits}d}.{extension}"
+            test_file_path = os.path.join(full_output_dir, test_filename)
+            if not os.path.exists(test_file_path):
+                break
+            start_counter += 1
+        
         for idx, image in enumerate(images):
             # 转换图像格式
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
             
-            # 生成文件名
-            if filename_prefix and filename_prefix.strip():  # 检查文件名前缀是否为空或只包含空白字符
-                if len(images) > 1:
-                    filename = f"{filename_prefix}{folder_separator}{idx:0{num_padding_digits}d}.{extension}"
-                else:
-                    filename = f"{filename_prefix}.{extension}"
-            else:  # 如果文件名前缀为空或只包含空白字符，使用默认前缀
-                if len(images) > 1:
-                    filename = f"ComfyUI{folder_separator}{idx:0{num_padding_digits}d}.{extension}"
-                else:
-                    filename = f"ComfyUI.{extension}"
-            
-            # 处理文件存在的情况 - 默认追加数值
+            # 使用连续编号
+            counter = start_counter + idx
+            filename = f"{base_name}{counter:0{num_padding_digits}d}.{extension}"
             file_path_full = os.path.join(full_output_dir, filename)
-            original_file_path_full = file_path_full
-            counter = 1
-            name, ext = os.path.splitext(filename)
-            while os.path.exists(file_path_full):
-                new_filename = f"{name}_{counter:0{num_padding_digits}d}{ext}"
-                file_path_full = os.path.join(full_output_dir, new_filename)
-                counter += 1
             
             # 保存图片
             try:
@@ -122,16 +126,15 @@ class SaveImageNode:
                         # 不保留工作流信息
                         img.save(file_path_full, format=extension.upper())
                 
-                results.append({
-                    "filename": os.path.basename(file_path_full),
-                    "subfolder": file_path,
-                    "type": self.type
-                })
+                saved_files.append(file_path_full)
                     
             except Exception as e:
                 return {"ui": {"status": f"保存失败: {str(e)}"}, "result": (f"保存失败: {str(e)}",)}
 
-        return {"ui": {"status": f"成功保存 {len(images)} 张图片"}, "result": (images, f"成功保存 {len(images)} 张图片到 {full_output_dir}")}
+        file_list = "\n".join([f"✅ 图片已保存: {f}" for f in saved_files])
+        save_info = f"✅ 成功保存 {len(images)} 张图片\n\n{file_list}\n\n📄 格式: {extension.upper()}\n📊 质量: {quality}"
+        
+        return {"ui": {"status": save_info}, "result": (images, save_info)}
 
     @staticmethod
     def _get_workflow_exif_data(prompt, extra_pnginfo):
@@ -153,6 +156,73 @@ class SaveImageNode:
                 metadata.add_text(x, json.dumps(extra_pnginfo[x]))
         
         return metadata
+    
+    def _parse_path_variables(self, path):
+        """解析路径中的日期变量"""
+        if not path:
+            return path
+        
+        now = datetime.now()
+        
+        # 支持的变量
+        variables = {
+            # 日期相关
+            '%date:yyyyMMdd%': now.strftime('%Y%m%d'),
+            '%date:yyyy-MM-dd%': now.strftime('%Y-%m-%d'),
+            '%date:yyyy/MM/dd%': now.strftime('%Y/%m/%d'),
+            '%date:yyMMdd%': now.strftime('%y%m%d'),
+            '%date:MMdd%': now.strftime('%m%d'),
+            '%date:MM-dd%': now.strftime('%m-%d'),
+            '%date:hhmm%': now.strftime('%H%M'),
+            '%date:hh-mm%': now.strftime('%H-%M'),
+            # 时间相关
+            '%date:yyyyMMddHHmmss%': now.strftime('%Y%m%d%H%M%S'),
+            '%date:yyyy-MM-dd HH:mm:ss%': now.strftime('%Y-%m-%d %H:%M:%S'),
+            '%time:HHmmss%': now.strftime('%H%M%S'),
+            '%time:HH-mm-ss%': now.strftime('%H-%M-%S'),
+            '%time:HHmm%': now.strftime('%H%M'),
+            '%time:HH-mm%': now.strftime('%H-%M'),
+            '%time:HHmmssfff%': now.strftime('%H%M%S') + f'{now.microsecond // 1000:03d}',
+            # 单独的时间单位
+            '%year%': now.strftime('%Y'),
+            '%month%': now.strftime('%m'),
+            '%day%': now.strftime('%d'),
+            '%hour%': now.strftime('%H'),
+            '%minute%': now.strftime('%M'),
+            '%second%': now.strftime('%S'),
+            '%millisecond%': str(now.microsecond // 1000).zfill(3),
+            # 星期相关
+            '%weekday:name%': now.strftime('%A'),
+            '%weekday:name:cn%': ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'][now.weekday()],
+            '%weekday:num%': str(now.weekday() + 1),
+            # 周数
+            '%week:num%': str(now.isocalendar()[1]).zfill(2),
+            '%yearweek%': now.strftime('%Y') + str(now.isocalendar()[1]).zfill(2),
+            # 一年中的第几天
+            '%yearday%': str(now.timetuple().tm_yday).zfill(3),
+            # 时间戳
+            '%timestamp%': str(int(now.timestamp())),
+            '%timestamp:ms%': str(int(now.timestamp() * 1000)),
+            # 随机数
+            '%random:4%': ''.join(random.choices(string.digits, k=4)),
+            '%random:6%': ''.join(random.choices(string.digits, k=6)),
+            '%random:8%': ''.join(random.choices(string.digits, k=8)),
+            '%random:letter:4%': ''.join(random.choices(string.ascii_lowercase, k=4)),
+            '%random:letter:6%': ''.join(random.choices(string.ascii_lowercase, k=6)),
+            '%random:alnum:6%': ''.join(random.choices(string.ascii_lowercase + string.digits, k=6)),
+            '%random:alnum:8%': ''.join(random.choices(string.ascii_lowercase + string.digits, k=8)),
+            # UUID
+            '%uuid%': str(uuid.uuid4()),
+            '%uuid:short%': str(uuid.uuid4())[:8],
+            # 系统信息
+            '%computer%': platform.node(),
+            '%user%': platform.user() if hasattr(platform, 'user') else os.environ.get('USERNAME', os.environ.get('USER', 'unknown')),
+        }
+        
+        for var, value in variables.items():
+            path = path.replace(var, value)
+        
+        return path
 
 
 NODE_CLASS_MAPPINGS = {
