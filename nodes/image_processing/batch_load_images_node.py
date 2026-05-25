@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image, ImageOps
 import torch
 import torch.nn.functional as F
+import random
 
 class BatchLoadImagesNode:
     """
@@ -17,7 +18,7 @@ class BatchLoadImagesNode:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "mode": (["加载全部", "加载单张"], {
+                "mode": (["加载全部", "加载单张", "随机输出"], {
                     "default": "加载全部",
                     "tooltip": "选择加载模式：加载全部图片或按索引加载单张图片"
                 }),
@@ -40,7 +41,14 @@ class BatchLoadImagesNode:
                     "min": 0,
                     "max": 999999,
                     "step": 1,
-                    "tooltip": "当模式为'加载全部'时，限制最多加载的图片数量，设置为0表示加载全部图片"
+                    "tooltip": "当模式为'加载全部'或'随机输出'时，限制最多加载的图片数量，设置为 0 表示加载全部图片"
+                }),
+                "seed": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 999999999,
+                    "step": 1,
+                    "tooltip": "当模式为'随机输出'时，随机种子用于控制随机性"
                 })
             }
         }
@@ -59,18 +67,20 @@ class BatchLoadImagesNode:
 - 返回图片张量列表、文件名列表和图片数量
 """
 
-    def load_images(self, mode, image_path, index=0, max_images=100):
+    def load_images(self, mode, image_path, index=0, max_images=100, seed=0):
         if not image_path:
             raise ValueError("图片路径不能为空")
             
         # 检查路径是否存在
         if not os.path.exists(image_path):
-            raise ValueError(f"指定的路径不存在: {image_path}")
+            raise ValueError(f"指定的路径不存在：{image_path}")
         
         if mode == "加载全部":
             return self.load_all_images(image_path, max_images)
-        else:
+        elif mode == "加载单张":
             return self.load_single_image(image_path, index)
+        else:  # 随机输出
+            return self.load_random_images(image_path, max_images, seed)
 
     def load_all_images(self, image_path, max_images):
         """加载目录中的所有图片"""
@@ -122,6 +132,67 @@ class BatchLoadImagesNode:
                 filenames.append(file)
             except Exception as e:
                 print(f"警告: 无法加载图片 {file}: {str(e)}")
+                continue
+                
+        if not images:
+            raise ValueError("未能成功加载任何图片")
+            
+        # 生成不带后缀名的文件名列表
+        filenames_without_extension = [os.path.splitext(file)[0] for file in filenames]
+        return (images, filenames, filenames_without_extension, len(images))
+
+    def load_random_images(self, image_path, max_images, seed):
+        """随机加载指定数量的图片"""
+        if not os.path.isdir(image_path):
+            raise ValueError("随机输出模式需要指定一个目录路径")
+            
+        # 支持的图片格式
+        supported_formats = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.webp')
+        
+        # 获取所有图片文件
+        image_files = []
+        for file in os.listdir(image_path):
+            if file.lower().endswith(supported_formats):
+                image_files.append(file)
+                
+        if not image_files:
+            raise ValueError(f"在目录 {image_path} 中未找到支持的图片文件")
+        
+        # 设置随机种子
+        random.seed(seed)
+        
+        # 确定实际加载的图片数量
+        if max_images == 0 or max_images > len(image_files):
+            actual_count = len(image_files)
+        else:
+            actual_count = max_images
+        
+        # 随机选择图片
+        selected_files = random.sample(image_files, actual_count)
+        
+        # 加载选中的图片
+        images = []
+        filenames = []
+        
+        for file in selected_files:
+            file_path = os.path.join(image_path, file)
+            try:
+                img = Image.open(file_path)
+                img = ImageOps.exif_transpose(img)  # 处理 EXIF 方向
+                
+                # 转换为 RGB（如果需要）
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                
+                # 转换为 numpy 数组并归一化到 0-1 范围
+                img_array = np.array(img).astype(np.float32) / 255.0
+                
+                # 转换为 tensor (H, W, C) -> (1, H, W, C)
+                img_tensor = torch.from_numpy(img_array)[None,]
+                images.append(img_tensor)
+                filenames.append(file)
+            except Exception as e:
+                print(f"警告：无法加载图片 {file}: {str(e)}")
                 continue
                 
         if not images:

@@ -33,7 +33,10 @@ class BailianVLNode:
                     "label": "图片",
                     "description": "输入的图片"
                 }),
-                "model": (["qwen3.5-plus", 
+                "model": (["qwen3.6-plus", "qwen3.6-plus-2026-04-02",
+                          "qwen3.6-flash", "qwen3.6-flash-2026-04-16",
+                          "qwen3.6-35b-a3b", "qwen3.6-27b",
+                          "qwen3.5-plus", 
                           "qwen3.5-flash",
                           "qwen3.5-35b-a3b", "qwen3.5-27b", "qwen3.5-122b-a10b", "qwen3.5-397b-a17b",
                           "qwen3-vl-plus",

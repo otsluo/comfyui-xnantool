@@ -12,6 +12,7 @@ class TextInputNode:
         return {
             "required": {
                 "text": ("STRING", {"default": "", "multiline": True}),
+                "disabled": ("BOOLEAN", {"default": False}),
             }
         }
 
@@ -20,16 +21,19 @@ class TextInputNode:
     FUNCTION = "get_text"
     CATEGORY = "XnanTool/实用工具"
 
-    def get_text(self, text):
+    def get_text(self, text, disabled):
         """
         返回输入的文本
         
         Args:
             text: 输入的文本
+            disabled: 是否禁用
             
         Returns:
             tuple: 包含输入文本的元组
         """
+        if disabled:
+            return ("",)
         return (text,)
 
 # 注册节点

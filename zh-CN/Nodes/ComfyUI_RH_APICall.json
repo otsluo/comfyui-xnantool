@@ -1,0 +1,143 @@
+{
+    "RH_SettingsNode": {
+        "title": "RH 设置",
+        "description": "该节点接收apiKey和workflowId，返回结构化数据供后续节点使用",
+        "inputs": {},
+        "widgets": {
+            "base_url": "基础URL",
+            "apiKey": "API密钥",
+            "workflowId_webappId": "工作流ID/Web应用ID"
+        },
+        "outputs": {
+            "STRUCT": "结构化配置数据"
+        }
+    },
+    "RH_NodeInfoListNode": {
+        "title": "RH 节点信息列表",
+        "description": "该节点允许用户配置多个nodeId、fieldName和fieldValue参数，并将多个nodeInfoList输出为数组。支持链式连接，多个节点将合并为一个数组。",
+        "inputs": {
+            "previousNodeInfoList": "前一个节点信息列表"
+        },
+        "widgets": {
+            "nodeId": "节点ID",
+            "fieldName": "字段名称",
+            "fieldValue": "字段值"
+        },
+        "outputs": {
+            "ARRAY": "节点信息数组"
+        }
+    },
+    "RH_ExecuteNode": {
+        "title": "RH 执行",
+        "description": "执行节点，用于运行工作流任务并返回结果",
+        "inputs": {
+            "apiConfig": "API配置",
+            "nodeInfoList": "节点信息列表"
+        },
+        "widgets": {
+            "run_timeout": "运行超时时间",
+            "concurrency_limit": "并发限制",
+            "is_webapp_task": "是否为AI应用任务",
+            "use_rtx4090_48g": "使用RTX4090 48G实例"
+        },
+        "outputs": {
+            "images": "图像",
+            "video_frames": "视频帧",
+            "latent": "潜空间",
+            "text": "文本",
+            "audio": "音频",
+            "video1": "视频1",
+            "video2": "视频2",
+            "video3": "视频3",
+            "video4": "视频4",
+            "video5": "视频5"
+        }
+    },
+    "RH_ImageUploaderNode": {
+        "title": "RH 图像上传器",
+        "description": "将输入图像上传到服务器并返回服务器返回的文件名",
+        "inputs": {
+            "apiConfig": "API配置",
+            "image": "图像"
+        },
+        "widgets": {},
+        "outputs": {
+            "filename": "文件名"
+        }
+    },
+    "RH_VideoUploader": {
+        "title": "RH 视频上传器",
+        "description": "将视频文件上传到RunningHub API，并返回生成的文件名/ID",
+        "inputs": {
+            "apiConfig": "API配置"
+        },
+        "widgets": {
+            "video": "视频"
+        },
+        "outputs": {
+            "filename": "文件名"
+        }
+    },
+    "RH_AudioUploader": {
+        "title": "RH 音频上传器",
+        "description": "将音频文件上传到RunningHub API，并返回生成的文件名/ID",
+        "inputs": {
+            "apiConfig": "API配置"
+        },
+        "widgets": {
+            "audio": "音频"
+        },
+        "outputs": {
+            "filename": "文件名"
+        }
+    },
+    "RH_VideoUploaderPath": {
+        "title": "RH 视频路径上传器",
+        "description": "通过文件路径将视频上传到RunningHub API，并返回生成的文件名/ID",
+        "inputs": {
+            "apiConfig": "API配置",
+            "video_path": "视频路径"
+        },
+        "widgets": {},
+        "outputs": {
+            "filename": "文件名"
+        }
+    },
+    "RH_Utils": {
+        "title": "RH 任意类型转字符串",
+        "description": "将任何输入类型转换为字符串",
+        "inputs": {
+            "anything": "任意类型"
+        },
+        "widgets": {},
+        "outputs": {
+            "STRING": "字符串"
+        }
+    },
+    "RH_ExtractImage": {
+        "title": "RH 从图像列表中提取图像",
+        "description": "从图像列表中提取指定索引的图像",
+        "inputs": {
+            "images": "图像列表"
+        },
+        "widgets": {
+            "image_index": "图像索引"
+        },
+        "outputs": {
+            "image": "图像"
+        }
+    },
+    "RH_BatchImages": {
+        "title": "RH 从图像列表中批量处理图像",
+        "description": "从图像列表中选择多个图像并批处理为单个批次",
+        "inputs": {
+            "images": "图像列表"
+        },
+        "widgets": {
+            "image_indices": "图像索引列表"
+        },
+        "outputs": {
+            "image": "图像"
+        }
+    }
+}

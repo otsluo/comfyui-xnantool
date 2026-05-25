@@ -99,7 +99,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "StringMergeNode": "字符串合并",
     "RandomExecutionNode": "随机执行",
     "BatchCopyFilesNode": "批量复制文件",
-    "TextInputNode": "文本输入",
+    "TextInputNode": "文本",
     "StringToAnyNode": "字符串到任意类型",
     "MarkdownToExcelNode": "MD转Excel",
     "SaveImageNode": "保存图片",

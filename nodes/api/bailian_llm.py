@@ -48,6 +48,7 @@ class BailianLLMNode:
                           "qwen3-plus",
                           "qwen3-flash",
                           "qwen3.5-122b-a10b", "qwen3.5-27b", "qwen3.5-35b-a3b", "qwen3.5-flash", "qwen3.5-flash-2026-02-23",
+                          "qwen3.6-35b-a3b",
                           "gui-plus-2026-02-26",
                           "deepseek-v4-pro", "deepseek-v4-flash",
                           "deepseek-v3.2", "deepseek-v3.2-exp", "deepseek-v3.1", "deepseek-v3",
@@ -79,7 +80,7 @@ class BailianLLMNode:
                     "description": "累积概率阈值，控制生成的多样性"
                 }),
                 "max_tokens": ("INT", {
-                    "default": 1024,
+                    "default": 4096,
                     "min": 1,
                     "max": 65536,
                     "step": 1,
@@ -160,12 +161,12 @@ class BailianLLMNode:
             # 根据模型选择调用方式
             # qwen3.5-122b-a10b 等新模型需要使用 compatible-mode endpoint
             new_models = [
-                "qwen3.6-max-preview", "qwen3.6-plus", "qwen3.6-flash",
+                "qwen3.6-max-preview", "qwen3.6-plus", "qwen3.6-flash", "qwen3.6-plus-2026-04-02", "qwen3.6-35b-a3b",
                 "qwen3.5-122b-a10b", "qwen3.5-397b-a17b", "qwen3.5-27b", "qwen3.5-35b-a3b",
-                "qwen3.5-plus", "qwen3.5-flash",
+                "qwen3.5-plus", "qwen3.5-flash", "qwen3.5-flash-2026-02-23",
                 "qwen3-max", "qwen3-flash",
                 "deepseek-v4-pro", "deepseek-v4-flash",
-                "kimi-k2.6", "glm-5.1", "MiniMax-M2.7"
+                "kimi-k2.6", "glm-5.1", "MiniMax-M2.7", "MiniMax-M2.5"
             ]
             
             if actual_model in new_models:

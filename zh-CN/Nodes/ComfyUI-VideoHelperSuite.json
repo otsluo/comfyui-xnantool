@@ -1,0 +1,567 @@
+{
+    "VHS_VideoCombine": {
+        "title": "视频合并 🎥🅥🅗🅢",
+        "description": "将图像序列合成为视频或GIF动画",
+        "inputs": {
+            "images": "图像/潜空间",
+            "audio": "音频",
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "frame_rate": "帧率",
+            "loop_count": "循环次数",
+            "filename_prefix": "文件名前缀",
+            "format": "格式",
+            "pingpong": "往返播放",
+            "save_output": "保存输出"
+        },
+        "outputs": {
+            "Filenames": "文件名列表"
+        }
+    },
+    "VHS_LoadVideo": {
+        "title": "加载视频 (上传) 🎥🅥🅗🅢",
+        "description": "从输入目录上传并加载视频文件",
+        "inputs": {
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "video": "视频文件",
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "skip_first_frames": "跳过前几帧",
+            "select_every_nth": "每隔N帧选择",
+            "format": "预设格式"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "frame_count": "帧数",
+            "audio": "音频",
+            "video_info": "视频信息"
+        }
+    },
+    "VHS_LoadVideoPath": {
+        "title": "加载视频 (路径) 🎥🅥🅗🅢",
+        "description": "通过文件路径加载视频文件",
+        "inputs": {
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "video": "视频路径",
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "skip_first_frames": "跳过前几帧",
+            "select_every_nth": "每隔N帧选择",
+            "format": "预设格式"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "frame_count": "帧数",
+            "audio": "音频",
+            "video_info": "视频信息"
+        }
+    },
+    "VHS_LoadVideoFFmpeg": {
+        "title": "加载视频 FFmpeg (上传) 🎥🅥🅗🅢",
+        "description": "使用FFmpeg从输入目录上传并加载视频文件，支持更多格式",
+        "inputs": {
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "video": "视频文件",
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "start_time": "开始时间",
+            "format": "预设格式"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "mask": "蒙版",
+            "audio": "音频",
+            "video_info": "视频信息"
+        }
+    },
+    "VHS_LoadVideoFFmpegPath": {
+        "title": "加载视频 FFmpeg (路径) 🎥🅥🅗🅢",
+        "description": "使用FFmpeg通过文件路径加载视频文件，支持更多格式和Alpha通道",
+        "inputs": {
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "video": "视频路径",
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "start_time": "开始时间",
+            "format": "预设格式"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "mask": "蒙版",
+            "audio": "音频",
+            "video_info": "视频信息"
+        }
+    },
+    "VHS_LoadImagePath": {
+        "title": "加载图像 (路径) 🎥🅥🅗🅢",
+        "description": "通过文件路径加载图像文件",
+        "inputs": {
+            "vae": "VAE"
+        },
+        "widgets": {
+            "image": "图像路径",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "mask": "蒙版"
+        }
+    },
+    "VHS_LoadImages": {
+        "title": "加载图像 (上传) 🎥🅥🅗🅢",
+        "description": "从输入目录上传并加载图像序列",
+        "inputs": {
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "directory": "目录",
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "skip_first_frames": "跳过前几帧",
+            "select_every_nth": "每隔N帧选择",
+            "format": "预设格式"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "frame_count": "帧数",
+            "video_info": "视频信息"
+        }
+    },
+    "VHS_LoadImagesPath": {
+        "title": "加载图像 (路径) 🎥🅥🅗🅢",
+        "description": "通过目录路径加载图像序列",
+        "inputs": {
+            "meta_batch": "元批次管理器",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "directory": "目录路径",
+            "force_rate": "强制帧率",
+            "custom_width": "自定义宽度",
+            "custom_height": "自定义高度",
+            "frame_load_cap": "帧加载上限",
+            "skip_first_frames": "跳过前几帧",
+            "select_every_nth": "每隔N帧选择",
+            "format": "预设格式"
+        },
+        "outputs": {
+            "IMAGE": "图像",
+            "frame_count": "帧数",
+            "video_info": "视频信息"
+        }
+    },
+    "VHS_LoadAudio": {
+        "title": "加载音频 (路径)🎥🅥🅗🅢",
+        "description": "通过文件路径加载音频文件",
+        "widgets": {
+            "audio_file": "音频文件路径",
+            "seek_seconds": "起始位置",
+            "duration": "持续时间"
+        },
+        "outputs": {
+            "audio": "音频",
+            "duration": "时长"
+        }
+    },
+    "VHS_LoadAudioUpload": {
+        "title": "加载音频 (上传)🎥🅥🅗🅢",
+        "description": "从输入目录上传并加载音频文件",
+        "widgets": {
+            "audio": "音频文件",
+            "start_time": "起始时间",
+            "duration": "持续时间"
+        },
+        "outputs": {
+            "audio": "音频",
+            "duration": "时长"
+        }
+    },
+    "VHS_AudioToVHSAudio": {
+        "title": "音频转旧版 VHS_AUDIO🎥🅥🅗🅢",
+        "description": "将标准音频格式转换为旧版VHS_AUDIO格式（已弃用）",
+        "inputs": {
+            "audio": "音频"
+        },
+        "outputs": {
+            "vhs_audio": "旧版VHS音频"
+        }
+    },
+    "VHS_VHSAudioToAudio": {
+        "title": "旧版 VHS_AUDIO 转音频🎥🅥🅗🅢",
+        "description": "将旧版VHS_AUDIO格式转换为标准音频格式（已弃用）",
+        "inputs": {
+            "vhs_audio": "旧版VHS音频"
+        },
+        "outputs": {
+            "audio": "音频"
+        }
+    },
+    "VHS_PruneOutputs": {
+        "title": "清理输出 🎥🅥🅗🅢",
+        "description": "删除中间文件和临时文件",
+        "inputs": {
+            "filenames": "文件名列表"
+        },
+        "widgets": {
+            "options": "清理选项"
+        }
+    },
+    "VHS_BatchManager": {
+        "title": "元批次管理器 🎥🅥🅗🅢",
+        "description": "管理视频处理的分批处理，用于内存优化",
+        "widgets": {
+            "frames_per_batch": "每批帧数"
+        },
+        "outputs": {
+            "meta_batch": "元批次管理器"
+        }
+    },
+    "VHS_VideoInfo": {
+        "title": "视频信息 🎥🅥🅗🅢",
+        "description": "获取视频的源信息和加载信息",
+        "inputs": {
+            "video_info": "视频信息"
+        },
+        "outputs": {
+            "source_fps🟨": "源帧率",
+            "source_frame_count🟨": "源帧数",
+            "source_duration🟨": "源时长",
+            "source_width🟨": "源宽度",
+            "source_height🟨": "源高度",
+            "loaded_fps🟦": "加载帧率",
+            "loaded_frame_count🟦": "加载帧数",
+            "loaded_duration🟦": "加载时长",
+            "loaded_width🟦": "加载宽度",
+            "loaded_height🟦": "加载高度"
+        }
+    },
+    "VHS_VideoInfoSource": {
+        "title": "视频信息 (源) 🎥🅥🅗🅢",
+        "description": "获取视频的原始源信息",
+        "inputs": {
+            "video_info": "视频信息"
+        },
+        "outputs": {
+            "fps🟨": "帧率",
+            "frame_count🟨": "帧数",
+            "duration🟨": "时长",
+            "width🟨": "宽度",
+            "height🟨": "高度"
+        }
+    },
+    "VHS_VideoInfoLoaded": {
+        "title": "视频信息 (已加载) 🎥🅥🅗🅢",
+        "description": "获取视频的加载后信息",
+        "inputs": {
+            "video_info": "视频信息"
+        },
+        "outputs": {
+            "fps🟦": "帧率",
+            "frame_count🟦": "帧数",
+            "duration🟦": "时长",
+            "width🟦": "宽度",
+            "height🟦": "高度"
+        }
+    },
+    "VHS_SelectFilename": {
+        "title": "选择文件名 🎥🅥🅗🅢",
+        "description": "从文件名列表中选择指定索引的文件",
+        "inputs": {
+            "filenames": "文件名列表"
+        },
+        "widgets": {
+            "index": "索引"
+        },
+        "outputs": {
+            "Filename": "文件名"
+        }
+    },
+    "VHS_VAEEncodeBatched": {
+        "title": "VAE编码批次 🎥🅥🅗🅢",
+        "description": "批量编码图像为潜空间",
+        "inputs": {
+            "pixels": "像素",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "batch_size": "批次大小"
+        },
+        "outputs": {
+            "latent": "潜空间"
+        }
+    },
+    "VHS_VAEDecodeBatched": {
+        "title": "VAE解码批次 🎥🅥🅗🅢",
+        "description": "批量解码潜空间为图像",
+        "inputs": {
+            "samples": "样本",
+            "vae": "VAE"
+        },
+        "widgets": {
+            "batch_size": "批次大小"
+        },
+        "outputs": {
+            "pixels": "像素"
+        }
+    },
+    "VHS_SplitLatents": {
+        "title": "分割潜空间 🎥🅥🅗🅢",
+        "description": "将潜空间批量分割为单个样本",
+        "inputs": {
+            "latents": "潜空间"
+        },
+        "outputs": {
+            "latent": "潜空间"
+        }
+    },
+    "VHS_SplitImages": {
+        "title": "分割图像 🎥🅥🅗🅢",
+        "description": "将图像批量分割为单个图像",
+        "inputs": {
+            "images": "图像"
+        },
+        "outputs": {
+            "image": "图像"
+        }
+    },
+    "VHS_SplitMasks": {
+        "title": "分割蒙版 🎥🅥🅗🅢",
+        "description": "将蒙版批量分割为单个蒙版",
+        "inputs": {
+            "masks": "蒙版"
+        },
+        "outputs": {
+            "mask": "蒙版"
+        }
+    },
+    "VHS_MergeLatents": {
+        "title": "合并潜空间 🎥🅥🅗🅢",
+        "description": "将多个潜空间合并为一个批量",
+        "inputs": {
+            "latent": "潜空间"
+        },
+        "outputs": {
+            "latents": "潜空间"
+        }
+    },
+    "VHS_MergeImages": {
+        "title": "合并图像 🎥🅥🅗🅢",
+        "description": "将多个图像合并为一个批量",
+        "inputs": {
+            "image": "图像"
+        },
+        "outputs": {
+            "images": "图像"
+        }
+    },
+    "VHS_MergeMasks": {
+        "title": "合并蒙版 🎥🅥🅗🅢",
+        "description": "将多个蒙版合并为一个批量",
+        "inputs": {
+            "mask": "蒙版"
+        },
+        "outputs": {
+            "masks": "蒙版"
+        }
+    },
+    "VHS_GetLatentCount": {
+        "title": "获取潜空间数量 🎥🅥🅗🅢",
+        "description": "获取潜空间批量中的样本数量",
+        "inputs": {
+            "latents": "潜空间"
+        },
+        "outputs": {
+            "count": "数量"
+        }
+    },
+    "VHS_GetImageCount": {
+        "title": "获取图像数量 🎥🅥🅗🅢",
+        "description": "获取图像批量中的图像数量",
+        "inputs": {
+            "images": "图像"
+        },
+        "outputs": {
+            "count": "数量"
+        }
+    },
+    "VHS_GetMaskCount": {
+        "title": "获取蒙版数量 🎥🅥🅗🅢",
+        "description": "获取蒙版批量中的蒙版数量",
+        "inputs": {
+            "masks": "蒙版"
+        },
+        "outputs": {
+            "count": "数量"
+        }
+    },
+    "VHS_DuplicateLatents": {
+        "title": "重复潜空间 🎥🅥🅗🅢",
+        "description": "重复潜空间指定次数",
+        "inputs": {
+            "latents": "潜空间"
+        },
+        "widgets": {
+            "amount": "重复次数"
+        },
+        "outputs": {
+            "latents": "潜空间"
+        }
+    },
+    "VHS_DuplicateImages": {
+        "title": "重复图像 🎥🅥🅗🅢",
+        "description": "重复图像指定次数",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "amount": "重复次数"
+        },
+        "outputs": {
+            "images": "图像"
+        }
+    },
+    "VHS_DuplicateMasks": {
+        "title": "重复蒙版 🎥🅥🅗🅢",
+        "description": "重复蒙版指定次数",
+        "inputs": {
+            "masks": "蒙版"
+        },
+        "widgets": {
+            "amount": "重复次数"
+        },
+        "outputs": {
+            "masks": "蒙版"
+        }
+    },
+    "VHS_SelectEveryNthLatent": {
+        "title": "每隔N个选择潜空间 🎥🅥🅗🅢",
+        "description": "从潜空间批量中每隔N个选择一个",
+        "inputs": {
+            "latents": "潜空间"
+        },
+        "widgets": {
+            "n": "间隔数"
+        },
+        "outputs": {
+            "latents": "潜空间"
+        }
+    },
+    "VHS_SelectEveryNthImage": {
+        "title": "每隔N个选择图像 🎥🅥🅗🅢",
+        "description": "从图像批量中每隔N个选择一个",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "n": "间隔数"
+        },
+        "outputs": {
+            "images": "图像"
+        }
+    },
+    "VHS_SelectEveryNthMask": {
+        "title": "每隔N个选择蒙版 🎥🅥🅗🅢",
+        "description": "从蒙版批量中每隔N个选择一个",
+        "inputs": {
+            "masks": "蒙版"
+        },
+        "widgets": {
+            "n": "间隔数"
+        },
+        "outputs": {
+            "masks": "蒙版"
+        }
+    },
+    "VHS_SelectLatents": {
+        "title": "选择潜空间 🎥🅥🅗🅢",
+        "description": "从潜空间批量中选择指定索引范围",
+        "inputs": {
+            "latents": "潜空间"
+        },
+        "widgets": {
+            "start": "起始索引",
+            "end": "结束索引",
+            "step": "步长"
+        },
+        "outputs": {
+            "latents": "潜空间"
+        }
+    },
+    "VHS_SelectImages": {
+        "title": "选择图像 🎥🅥🅗🅢",
+        "description": "从图像批量中选择指定索引范围",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "start": "起始索引",
+            "end": "结束索引",
+            "step": "步长"
+        },
+        "outputs": {
+            "images": "图像"
+        }
+    },
+    "VHS_SelectMasks": {
+        "title": "选择蒙版 🎥🅥🅗🅢",
+        "description": "从蒙版批量中选择指定索引范围",
+        "inputs": {
+            "masks": "蒙版"
+        },
+        "widgets": {
+            "start": "起始索引",
+            "end": "结束索引",
+            "step": "步长"
+        },
+        "outputs": {
+            "masks": "蒙版"
+        }
+    },
+    "VHS_Unbatch": {
+        "title": "取消批次 🎥🅥🅗🅢",
+        "description": "将分批处理的结果合并为单个批量",
+        "inputs": {
+            "batched": "分批数据"
+        },
+        "outputs": {
+            "unbatched": "合并后数据"
+        }
+    },
+    "VHS_SelectLatest": {
+        "title": "选择最新文件 🎥🅥🅗🅢",
+        "description": "选择指定前缀和后缀的最新输出文件（实验性）",
+        "widgets": {
+            "filename_prefix": "文件名前缀",
+            "filename_postfix": "文件名后缀"
+        },
+        "outputs": {
+            "Filename": "文件名"
+        }
+    }
+}

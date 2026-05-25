@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.7.0"
+__version__ = "0.7.6"
 
 # 导入所有节点模块
 # ==================== YOLO和SAM节点模块 ====================
@@ -38,6 +38,10 @@ from .nodes.api import NODE_DISPLAY_NAME_MAPPINGS as API_NODE_DISPLAY_NAME_MAPPI
 from .nodes.version_info_node import NODE_CLASS_MAPPINGS as VERSION_INFO_NODE_CLASS_MAPPINGS
 from .nodes.version_info_node import NODE_DISPLAY_NAME_MAPPINGS as VERSION_INFO_NODE_DISPLAY_NAME_MAPPINGS
 
+# ==================== 版本检查与更新节点 ====================
+from .nodes.version_check_node import NODE_CLASS_MAPPINGS as VERSION_CHECK_NODE_CLASS_MAPPINGS
+from .nodes.version_check_node import NODE_DISPLAY_NAME_MAPPINGS as VERSION_CHECK_NODE_DISPLAY_NAME_MAPPINGS
+
 # 合并所有节点映射的工具函数
 def merge_node_mappings(*mappings):
     merged = {}
@@ -73,6 +77,9 @@ NODE_CLASS_MAPPINGS = merge_node_mappings(
     
     # 版本信息节点
     VERSION_INFO_NODE_CLASS_MAPPINGS,
+    
+    # 版本检查与更新节点
+    VERSION_CHECK_NODE_CLASS_MAPPINGS,
 )
 
 # 合并所有节点显示名称映射
@@ -103,6 +110,9 @@ NODE_DISPLAY_NAME_MAPPINGS = merge_node_mappings(
     
     # 版本信息节点
     VERSION_INFO_NODE_DISPLAY_NAME_MAPPINGS,
+    
+    # 版本检查与更新节点
+    VERSION_CHECK_NODE_DISPLAY_NAME_MAPPINGS,
 )
 
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

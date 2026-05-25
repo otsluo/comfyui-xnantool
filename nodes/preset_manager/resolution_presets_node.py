@@ -3,21 +3,19 @@ import os
 
 # 定义常见分辨率预设列表
 DEFAULT_RESOLUTION_PRESETS = [
-    # 1K分辨率
     "1K",
-    "1K宽屏",
-    
-    # 2K分辨率
     "2K",
-    "2K高清",
-    
-    # 4K分辨率
     "4K",
-    "4K电影",
-    
-    # 8K分辨率
     "8K",
 ]
+
+# 分辨率预设对应的数值映射
+RESOLUTION_VALUE_MAP = {
+    "1K": 1024,
+    "2K": 2048,
+    "4K": 4096,
+    "8K": 8192,
+}
 
 class ResolutionPresetSelector:
     """分辨率预设选择器节点 - 提供常见分辨率名称的快速选择
@@ -42,15 +40,17 @@ class ResolutionPresetSelector:
             }
         }
     
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("resolution",)
+    RETURN_TYPES = ("STRING", "INT")
+    RETURN_NAMES = ("resolution", "resolution_value")
     FUNCTION = "get_resolution"
     CATEGORY = "XnanTool/预设"
     
     def get_resolution(self, resolution_preset):
-        """解析选中的分辨率预设，返回用户选择的选项名称"""
-        # 直接返回用户选择的选项名称
-        return (resolution_preset,)
+        """解析选中的分辨率预设，返回用户选择的选项名称和对应的数值"""
+        # 获取对应的数值
+        value = RESOLUTION_VALUE_MAP.get(resolution_preset, 0)
+        # 返回分辨率名称和数值
+        return (resolution_preset, value)
 
 # 导出节点映射和显示名称映射
 NODE_CLASS_MAPPINGS = {
