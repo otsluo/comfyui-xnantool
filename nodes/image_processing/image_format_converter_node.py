@@ -48,7 +48,7 @@ class ImageFormatConverterNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("converted_images",)
     FUNCTION = "convert_format"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
 
     def convert_format(self, images, format, quality, optimize):
         """
@@ -138,12 +138,10 @@ NODE_CLASS_MAPPINGS = {
     "ImageFormatConverterNode": ImageFormatConverterNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageFormatConverterNode": "图像格式转换器"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -25,7 +25,7 @@ class MarkdownToExcelNode:
     
     FUNCTION = "convert_md_to_excel"
     
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     def convert_md_to_excel(self, md_file_path, output_dir, output_filename, sheet_name="Sheet1"):
         """
@@ -143,8 +143,10 @@ NODE_CLASS_MAPPINGS = {
     "MarkdownToExcelNode": MarkdownToExcelNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "MarkdownToExcelNode": "MD转Excel"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

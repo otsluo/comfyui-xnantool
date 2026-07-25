@@ -64,7 +64,7 @@ class TextMultiLineReaderNode:
     RETURN_TYPES = ("STRING", "STRING", "INT", "BOOL")
     RETURN_NAMES = ("输出文本", "行号列表", "当前批次", "是否完成")
     FUNCTION = "read_multi_lines"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "文本多行读取，每次运行输出指定行数，可打乱顺序"
     
     def read_multi_lines(self, text, lines_per_output=1, seed=0, shuffle="否", restart="否", usage_notes=None):
@@ -178,12 +178,15 @@ class TextMultiLineReaderNode:
             return (error_msg, "", 0, True)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "TextMultiLineReaderNode": TextMultiLineReaderNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TextMultiLineReaderNode": "文本多行读取",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

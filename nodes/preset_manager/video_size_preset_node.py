@@ -79,7 +79,7 @@ class VideoSizePresetNode:
     RETURN_TYPES = ("INT", "INT")
     RETURN_NAMES = ("宽度", "高度")
     FUNCTION = "get_size_preset"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
     
     def get_size_preset(self, size_preset):
         """
@@ -106,12 +106,15 @@ class VideoSizePresetNode:
         return (1920, 1080)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "VideoSizePresetNode": VideoSizePresetNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "VideoSizePresetNode": "视频尺寸预设"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

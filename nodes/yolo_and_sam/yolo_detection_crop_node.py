@@ -53,7 +53,7 @@ class YoloDetectionCropNode:
     RETURN_TYPES = ("IMAGE", "MASK", "INT", "STRING")
     RETURN_NAMES = ("cropped_images", "masks", "crop_count", "info")
     FUNCTION = "crop_detections"
-    CATEGORY = "XnanTool/yolo和sam/yolo"
+    CATEGORY = "❤️❤️❤️XnanTool/yolo和sam/yolo"
     
     def crop_detections(self, image, detection_results, padding, square_crop, crop_index=0):
         """
@@ -196,8 +196,10 @@ NODE_CLASS_MAPPINGS = {
     "YoloDetectionCropNode": YoloDetectionCropNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "YoloDetectionCropNode": "YOLO检测裁切节点"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

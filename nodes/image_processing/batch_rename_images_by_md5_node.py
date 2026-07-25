@@ -63,7 +63,7 @@ class BatchRenameImagesByMD5Node:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("info",)
     FUNCTION = "rename_images_by_md5"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     DESCRIPTION = "批量重命名图片文件，使用图片内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复"
 
     def calculate_image_md5(self, image_path):
@@ -251,14 +251,15 @@ class BatchRenameImagesByMD5Node:
         return (info,)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "BatchRenameImagesByMD5Node": BatchRenameImagesByMD5Node
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchRenameImagesByMD5Node": "批量重命名图片(MD5)"
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

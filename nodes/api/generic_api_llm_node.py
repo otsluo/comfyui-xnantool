@@ -24,35 +24,23 @@ class GenericAPILLMNode:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "api_url": ("STRING", {
-                    "default": "https://api.openai.com/v1/chat/completions",
-                    "multiline": False,
-                    "label": "API地址",
-                    "description": "API的完整URL地址（OpenAI兼容格式）"
-                }),
-                "api_key": ("STRING", {
-                    "default": "",
-                    "multiline": False,
-                    "label": "API密钥",
-                    "description": "API认证密钥"
-                }),
-                "model": ("STRING", {
-                    "default": "gpt-3.5-turbo",
-                    "multiline": False,
-                    "label": "模型名称",
-                    "description": "要调用的模型名称"
-                }),
                 "system_prompt": ("STRING", {
                     "default": "",
                     "multiline": True,
                     "label": "系统提示词",
                     "description": "系统提示词，用于设定模型的角色和行为规范"
                 }),
-                "user_prompt": ("STRING", {
+                "prompt": ("STRING", {
                     "default": "",
                     "multiline": True,
-                    "label": "用户提示词",
-                    "description": "输入给模型的用户提示词"
+                    "label": "提示词",
+                    "description": "输入给模型的提示词"
+                }),
+                "model": ("STRING", {
+                    "default": "gpt-3.5-turbo",
+                    "multiline": False,
+                    "label": "模型名称",
+                    "description": "要调用的模型名称"
                 }),
             },
             "optional": {
@@ -110,17 +98,30 @@ class GenericAPILLMNode:
                     "label": "随机种子",
                     "description": "随机种子（0为随机）"
                 }),
+                "api_url": ("STRING", {
+                    "default": "https://api.openai.com/v1/chat/completions",
+                    "multiline": False,
+                    "label": "API地址",
+                    "description": "API的完整URL地址（OpenAI兼容格式）"
+                }),
+                "api_key": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "label": "API密钥",
+                    "description": "API认证密钥"
+                }),
             }
         }
     
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("response", "raw_response")
     FUNCTION = "call_llm_api"
-    CATEGORY = "XnanTool/API/LLM"
+    CATEGORY = "❤️❤️❤️XnanTool/API/通用API"
     
-    def call_llm_api(self, api_url, api_key, model, system_prompt, user_prompt, 
-                 temperature=0.7, top_p=1.0, max_tokens=1024, 
-                 presence_penalty=0.0, frequency_penalty=0.0, extra_params="", seed=0):
+    def call_llm_api(self, system_prompt, prompt, model,
+                 temperature=0.7, top_p=1.0, max_tokens=1024,
+                 presence_penalty=0.0, frequency_penalty=0.0, extra_params="", seed=0,
+                 api_url="https://api.openai.com/v1/chat/completions", api_key=""):
         """
         调用大语言模型API
         
@@ -129,7 +130,7 @@ class GenericAPILLMNode:
             api_key: API密钥
             model: 模型名称
             system_prompt: 系统提示词
-            user_prompt: 用户提示词
+            prompt: 提示词
             temperature: 温度参数
             top_p: Top P参数
             max_tokens: 最大输出长度
@@ -149,8 +150,8 @@ class GenericAPILLMNode:
             if not api_key:
                 return ("错误：API密钥不能为空", "")
             
-            if not user_prompt or not user_prompt.strip():
-                return ("错误：用户提示词不能为空", "")
+            if not prompt or not prompt.strip():
+                return ("错误：提示词不能为空", "")
             
             # 自动补全URL路径（如果用户只输入了基础URL）
             api_url = api_url.strip()
@@ -176,7 +177,7 @@ class GenericAPILLMNode:
             
             messages.append({
                 "role": "user",
-                "content": user_prompt.strip()
+                "content": prompt.strip()
             })
             
             # 构建请求体
@@ -301,8 +302,10 @@ NODE_CLASS_MAPPINGS = {
     "GenericAPILLMNode": GenericAPILLMNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "GenericAPILLMNode": "通用LLM API调用"
+    "GenericAPILLMNode": "通用API-文本生成"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

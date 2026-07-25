@@ -37,7 +37,7 @@ class LoopGeneratorOutputSplitterNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING")
     RETURN_NAMES = ("端口1", "端口2", "端口3")
     FUNCTION = "split_output"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def split_output(self, input_string, separator, line_index):
         """
@@ -75,14 +75,15 @@ class LoopGeneratorOutputSplitterNode:
         return (port1, port2, port3)
 
 
-# Node class mappings
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "LoopGeneratorOutputSplitterNode": LoopGeneratorOutputSplitterNode
 }
 
-# Node display name mappings
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoopGeneratorOutputSplitterNode": "循环生成器输出转接"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

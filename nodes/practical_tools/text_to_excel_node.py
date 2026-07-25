@@ -38,7 +38,7 @@ class TextToExcelNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("save_result",)
     OUTPUT_NODE = True
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     FUNCTION = "text_to_excel"
 
@@ -115,10 +115,15 @@ class TextToExcelNode:
             return (f"转换失败: {str(e)}",)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "TextToExcelNode": TextToExcelNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TextToExcelNode": "文本转Excel"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

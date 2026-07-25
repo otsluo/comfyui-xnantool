@@ -34,7 +34,7 @@ class ToggleAnyOutputNode:
     RETURN_TYPES = ("*", "*")
     RETURN_NAMES = ("output_a", "output_b")
     FUNCTION = "toggle_output"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "切换任意值（输出）节点，根据布尔值将单个输入值路由到两个输出端口中的一个"
 
     def toggle_output(self, toggle, input_value=None):
@@ -56,14 +56,15 @@ class ToggleAnyOutputNode:
             return (input_value, None)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ToggleAnyOutputNode": ToggleAnyOutputNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ToggleAnyOutputNode": "切换任意值（输出）"
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

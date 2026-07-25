@@ -1,44 +1,33 @@
 # YOLO和SAM节点模块初始化文件
+# 自动合并所有子模块的节点映射
 
-# 导入YOLO相关节点
-from .yolo_detection_node import YoloDetectionNode
-from .yolo_detect_and_crop_node import YoloDetectAndCropNode
-from .yolo_detection_crop_node import YoloDetectionCropNode
-from .yolo_detection_multi_output_crop_node import YoloDetectionMultiOutputCropNode
-from .yolo_modelloader_nodes import YoloModelLoader, YoloModelLoaderV2, YoloModelLoaderCustomPath
-from .yolo_sam_background_removal_node import YoloSamBackgroundRemovalNode
+import os
+import importlib
 
-# 导入SAM相关节点
-from .sam_modelloader_nodes import SamModelLoader, SamModelLoaderV2, SamModelLoaderCustomPath
+# 获取当前目录路径
+current_dir = os.path.dirname(__file__)
 
-# 定义节点映射
-NODE_CLASS_MAPPINGS = {
-    "YoloDetectionNode": YoloDetectionNode,
-    "YoloDetectAndCropNode": YoloDetectAndCropNode,
-    "YoloDetectionCropNode": YoloDetectionCropNode,
-    "YoloDetectionMultiOutputCropNode": YoloDetectionMultiOutputCropNode,
-    "YoloModelLoader": YoloModelLoader,
-    "YoloModelLoaderV2": YoloModelLoaderV2,
-    "YoloModelLoaderCustomPath": YoloModelLoaderCustomPath,
-    "YoloSamBackgroundRemovalNode": YoloSamBackgroundRemovalNode,
-    "SamModelLoader": SamModelLoader,
-    "SamModelLoaderV2": SamModelLoaderV2,
-    "SamModelLoaderCustomPath": SamModelLoaderCustomPath,
-}
+# 初始化合并字典
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
 
-# 定义节点显示名称映射
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "YoloDetectionNode": "YOLO检测节点",
-    "YoloDetectAndCropNode": "YOLO检测与裁剪一体化",
-    "YoloDetectionCropNode": "YOLO检测裁切节点",
-    "YoloDetectionMultiOutputCropNode": "YOLO检测多输出裁切节点",
-    "YoloModelLoader": "YOLO模型加载器 (v8预设)",
-    "YoloModelLoaderV2": "YOLO模型加载器V2(本地模型)",
-    "YoloModelLoaderCustomPath": "YOLO模型加载器(自定义路径)",
-    "YoloSamBackgroundRemovalNode": "YOLO+SAM背景去除",
-    "SamModelLoader": "SAM模型加载器（预设）",
-    "SamModelLoaderV2": "SAM模型加载器V2 (本地模型)",
-    "SamModelLoaderCustomPath": "SAM模型加载器(自定义路径)",
-}
+# 遍历当前目录下所有Python文件（排除__init__.py）
+for filename in os.listdir(current_dir):
+    if filename.endswith('.py') and filename != '__init__.py':
+        module_name = filename[:-3]  # 移除.py后缀
+        
+        try:
+            # 动态导入模块
+            module = importlib.import_module(f'.{module_name}', package=__name__)
+            
+            # 合并节点映射
+            if hasattr(module, 'NODE_CLASS_MAPPINGS'):
+                NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
+            
+            if hasattr(module, 'NODE_DISPLAY_NAME_MAPPINGS'):
+                NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
+        except Exception as e:
+            print(f'警告: 加载模块 {module_name} 失败 - {e}')
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

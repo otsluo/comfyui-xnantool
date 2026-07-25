@@ -152,7 +152,7 @@ class modelscopeLoraTextToImageNode:
     RETURN_TYPES = ("IMAGE", "STRING")
     RETURN_NAMES = ("images", "text_to_image_models")
     FUNCTION = "generate_with_lora"
-    CATEGORY = "XnanTool/魔搭api"
+    CATEGORY = "❤️❤️❤️XnanTool/API/魔搭api"
     
     def generate_with_lora(self, prompt, negative_prompt, base_model, lora_model, lora_weight, width, height, seed, steps, guidance, batch_size, api_token="", generate_control="fixed"):
         
@@ -312,13 +312,15 @@ class modelscopeLoraTextToImageNode:
                 error_tensor = error_tensor.repeat(batch_size, 1, 1, 1)
             return (error_tensor, text_to_image_models_str)
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "modelscopeLoraTextToImageNode": modelscopeLoraTextToImageNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "modelscopeLoraTextToImageNode": "魔搭API-文生图"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -33,18 +33,21 @@ class BailianVLNode:
                     "label": "图片",
                     "description": "输入的图片"
                 }),
-                "model": (["qwen3.6-plus", "qwen3.6-plus-2026-04-02",
-                          "qwen3.6-flash", "qwen3.6-flash-2026-04-16",
-                          "qwen3.6-35b-a3b", "qwen3.6-27b",
-                          "qwen3.5-plus", 
-                          "qwen3.5-flash",
-                          "qwen3.5-35b-a3b", "qwen3.5-27b", "qwen3.5-122b-a10b", "qwen3.5-397b-a17b",
-                          "qwen3-vl-plus",
-                          "qwen3-vl-flash",
-                          "qwen3-vl-30b-a3b-thinking"], {
-                    "default": "qwen3-vl-plus",
+                "model": (["自定义", "qwen3.7-max", "qwen3.7-plus", "qwen3.7-max-preview",
+                          "qwen3.7-max-2026-06-08", "qwen3.7-max-2026-05-20", "qwen3.7-max-2026-05-17",
+                          "qwen3.7-plus-2026-05-26",
+                          "qwen3.5-ocr",
+                          "deepseek-v4-pro", "deepseek-v4-flash",
+                          "kimi-k2.7-code", "glm-5.2"], {
+                    "default": "qwen3.7-plus",
                     "label": "模型",
-                    "description": "选择要使用的VL模型"
+                    "description": "选择要使用的模型，选择'自定义'可手动输入模型名称"
+                }),
+                "custom_model": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "label": "自定义模型",
+                    "description": "当模型选择'自定义'时，在此输入模型名称"
                 }),
             },
             "optional": {
@@ -92,9 +95,9 @@ class BailianVLNode:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("response", "full_response")
     FUNCTION = "call_vl"
-    CATEGORY = "XnanTool/API/阿里百炼"
+    CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
-    def call_vl(self, prompt, image, model, api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, seed=0):
+    def call_vl(self, prompt, image, model, custom_model="", api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, seed=0):
         """
         调用阿里云百炼VL模型
         
@@ -136,6 +139,15 @@ class BailianVLNode:
             # 设置API Key
             dashscope.api_key = api_key
             
+            # 处理自定义模型
+            if model == "自定义":
+                if not custom_model or not custom_model.strip():
+                    return ("错误：选择'自定义'模型时，必须填写自定义模型名称",)
+                actual_model = custom_model.strip()
+            else:
+                # 提取实际模型名称（去掉中文说明部分）
+                actual_model = model.split('（')[0] if '（' in model else model
+            
             # 将图片转换为base64
             try:
                 image_base64 = self.image_to_base64(image)
@@ -155,7 +167,7 @@ class BailianVLNode:
             
             # 构建调用参数
             params = {
-                "model": model,
+                "model": actual_model,
                 "messages": messages,
                 "result_format": "message",
                 "temperature": float(temperature),
@@ -305,6 +317,7 @@ NODE_CLASS_MAPPINGS = {
     "BailianVLNode": BailianVLNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BailianVLNode": "百炼VL-视觉理解",
 }

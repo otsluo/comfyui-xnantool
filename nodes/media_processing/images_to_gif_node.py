@@ -103,7 +103,7 @@ class ImagesToGifNodeV1:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_path",)
     FUNCTION = "convert_images_to_gif"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     def tensor_to_numpy(self, tensor):
         """将tensor格式转换为numpy数组 (B,H,W,C) -> (H,W,C) RGB"""
@@ -286,16 +286,16 @@ class ImagesToGifNodeV1:
             raise e
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ImagesToGifNodeV1": ImagesToGifNodeV1
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImagesToGifNodeV1": "图片转GIF-V1"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
+

@@ -71,7 +71,7 @@ class ImageCompositorNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("合成图片",)
     FUNCTION = "composite_images"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     OUTPUT_NODE = False
     
     def composite_images(self, background_image, layer_image, layer_x, layer_y, layer_scale, layer_opacity, blend_mode, layer_mask=None):
@@ -265,11 +265,16 @@ class ImageCompositorNode:
 
 
 # 节点映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ImageCompositorNode": ImageCompositorNode,
 }
 
 # 节点显示名称映射
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageCompositorNode": "图像合成（图层）",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

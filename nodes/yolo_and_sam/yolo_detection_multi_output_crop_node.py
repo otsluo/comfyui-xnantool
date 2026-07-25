@@ -46,7 +46,7 @@ class YoloDetectionMultiOutputCropNode:
     RETURN_NAMES = ("cropped_image_1", "cropped_image_2", "cropped_image_3", "cropped_image_4", "cropped_image_5", 
                    "mask_1", "mask_2", "mask_3", "mask_4", "mask_5", "crop_count", "info")
     FUNCTION = "crop_detections"
-    CATEGORY = "XnanTool/yolo和sam/yolo"
+    CATEGORY = "❤️❤️❤️XnanTool/yolo和sam/yolo"
     
     def crop_detections(self, image, detection_results, padding, square_crop):
         """
@@ -188,8 +188,10 @@ NODE_CLASS_MAPPINGS = {
     "YoloDetectionMultiOutputCropNode": YoloDetectionMultiOutputCropNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "YoloDetectionMultiOutputCropNode": "YOLO检测多输出裁切节点"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

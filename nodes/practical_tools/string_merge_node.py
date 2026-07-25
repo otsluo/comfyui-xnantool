@@ -23,7 +23,7 @@ class StringMergeNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("merged_string",)
     FUNCTION = "merge_strings"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     def merge_strings(self, string1, string2, string3, string4, string5, separator=""):
         """
@@ -54,6 +54,10 @@ NODE_CLASS_MAPPINGS = {
     "StringMergeNode": StringMergeNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "StringMergeNode": "字符串合并"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

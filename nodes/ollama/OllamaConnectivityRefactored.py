@@ -32,7 +32,7 @@ class OllamaConnectivityRefactored:
     RETURN_TYPES = ("OLLAMA_CONNECTIVITY",)
     RETURN_NAMES = ("connection",)
     FUNCTION = "connect"
-    CATEGORY = "XnanTool/Ollama"
+    CATEGORY = "❤️❤️❤️XnanTool/兼容插件/Ollama"
     DESCRIPTION = "重构版 Ollama 服务器连接，支持超时设置、保持连接和随机种子配置。"
 
     def connect(self, url, model, timeout, keep_alive, keep_alive_unit, seed):
@@ -57,10 +57,12 @@ class OllamaConnectivityRefactored:
         return (data,)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "OllamaConnectivityRefactored": OllamaConnectivityRefactored,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "OllamaConnectivityRefactored": "Ollama连接-重构版",
 }

@@ -156,7 +156,7 @@ class RandomPromptGeneratorGroupNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("prompt",)
     FUNCTION = "generate_random_prompt"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
 
     def generate_random_prompt(self, manual_prompt, enable_person, person_count, enable_scene, scene_count, 
                               enable_style, style_count, enable_lighting, lighting_count,
@@ -289,7 +289,7 @@ class RandomPromptGeneratorNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("prompt",)
     FUNCTION = "generate_random_prompts"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
 
     def generate_random_prompts(self, input_prompts, output_count, separator, seed):
         """
@@ -339,12 +339,13 @@ NODE_CLASS_MAPPINGS = {
     "RandomPromptGeneratorNode": RandomPromptGeneratorNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "RandomPromptGeneratorGroupNode": "随机提示词生成器组",
     "RandomPromptGeneratorNode": "随机提示词生成器"
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS"

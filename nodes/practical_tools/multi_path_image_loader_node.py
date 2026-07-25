@@ -29,7 +29,7 @@ class MultiPathImageLoaderNode:
     RETURN_NAMES = ("图片列表", "文件名列表", "成功路径列表", "成功数量", "跳过路径列表")
     OUTPUT_IS_LIST = (True, True, False, False, False)
     FUNCTION = "load_all_images"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "从多行图片路径中加载所有图片并一次性输出为列表"
     
     def load_all_images(self, image_paths, usage_notes=None):
@@ -83,12 +83,15 @@ class MultiPathImageLoaderNode:
             return ([empty_tensor], [], error_msg, 0, "")
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "MultiPathImageLoaderNode": MultiPathImageLoaderNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "MultiPathImageLoaderNode": "多行路径图片列表输出",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

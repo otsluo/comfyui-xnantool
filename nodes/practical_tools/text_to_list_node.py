@@ -37,7 +37,7 @@ class TextToListNode:
     RETURN_NAMES = ("列表",)
     FUNCTION = "text_to_list"
     OUTPUT_IS_LIST = (True,)
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def text_to_list(self, text, delimiter, strip_whitespace=True, remove_empty=True):
         # 如果文本为空，默认按换行符处理
@@ -71,12 +71,15 @@ class TextToListNode:
         return text
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "TextToListNode": TextToListNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "TextToListNode": "文本到列表",
+    "TextToListNode": "文本到列表（字符串转列表高级版）",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

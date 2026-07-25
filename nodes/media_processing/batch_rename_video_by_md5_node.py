@@ -58,7 +58,7 @@ class BatchRenameVideoByMD5Node:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("info",)
     FUNCTION = "batch_rename_video_md5"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     DESCRIPTION = "批量重命名视频文件，使用视频内容的MD5哈希值作为新文件名，确保文件唯一性并避免重复"
     
     def calculate_md5(self, file_path):
@@ -230,6 +230,10 @@ NODE_CLASS_MAPPINGS = {
     "BatchRenameVideoByMD5Node": BatchRenameVideoByMD5Node,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchRenameVideoByMD5Node": "批量重命名视频(MD5)",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

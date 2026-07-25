@@ -44,7 +44,7 @@ class LoopGeneratorNode:
     RETURN_TYPES = ("STRING", "INT")
     RETURN_NAMES = ("结果", "总数")
     FUNCTION = "generate_combinations"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def generate_combinations(self, layer1_items, layer2_items, layer3_items, separator, line_separator):
         """
@@ -100,14 +100,15 @@ class LoopGeneratorNode:
         return (result_str, len(results))
 
 
-# Node class mappings
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "LoopGeneratorNode": LoopGeneratorNode
 }
 
-# Node display name mappings
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoopGeneratorNode": "循环生成器"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

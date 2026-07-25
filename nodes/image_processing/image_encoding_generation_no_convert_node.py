@@ -29,7 +29,7 @@ class ImageEncodingGenerationNoConvertNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("uuid", "md5", "sha1", "sha256", "sha512", "image_info")
     FUNCTION = "generate_uuid_no_convert"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
 
     def generate_uuid_no_convert(self, image_path):
         """
@@ -129,8 +129,10 @@ NODE_CLASS_MAPPINGS = {
     "ImageEncodingGenerationNoConvertNode": ImageEncodingGenerationNoConvertNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageEncodingGenerationNoConvertNode": "图片编码生成-不转化"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

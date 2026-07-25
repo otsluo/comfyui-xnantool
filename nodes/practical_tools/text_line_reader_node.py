@@ -51,7 +51,7 @@ class TextLineReaderNode:
     RETURN_TYPES = ("STRING", "INT", "BOOL", "INT")
     RETURN_NAMES = ("当前行", "行号", "是否最后一行", "总行数")
     FUNCTION = "read_line"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "文本逐行读取，每次运行输出一行，文本输出完毕后输出'运行完毕'"
     
     def read_line(self, text, seed=0, random_order="否", restart="否"):
@@ -147,13 +147,15 @@ class TextLineReaderNode:
             return (error_msg, 0, True, 0)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "TextLineReaderNode": TextLineReaderNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TextLineReaderNode": "文本逐行读取",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

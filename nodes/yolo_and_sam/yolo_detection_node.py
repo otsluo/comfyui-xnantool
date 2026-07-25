@@ -49,7 +49,7 @@ class YoloDetectionNode:
     RETURN_TYPES = ("IMAGE", "JSON", "INT", "STRING")
     RETURN_NAMES = ("annotated_image", "detection_results", "detected_objects_count", "info")
     FUNCTION = "detect"
-    CATEGORY = "XnanTool/yolo和sam/yolo"
+    CATEGORY = "❤️❤️❤️XnanTool/yolo和sam/yolo"
     
     def detect(self, yolo_model, image, classes, confidence_threshold, show_annotations):
         """
@@ -341,8 +341,10 @@ NODE_CLASS_MAPPINGS = {
     "YoloDetectionNode": YoloDetectionNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "YoloDetectionNode": "YOLO检测节点"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

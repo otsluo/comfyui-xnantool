@@ -24,7 +24,7 @@ class PreviewVideoNode:
     RETURN_TYPES = ()
     OUTPUT_NODE = True
     FUNCTION = "preview_video"
-    CATEGORY = "XnanTool/视频剪辑"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     def preview_video(self, video, filename_prefix="ComfyUI", max_width=0):
         try:
@@ -54,8 +54,18 @@ class PreviewVideoNode:
             1080
         )
         
+        # 使用 tmp 子目录存放预览文件
+        tmp_output_folder = os.path.join(full_output_folder, "tmp")
+        os.makedirs(tmp_output_folder, exist_ok=True)
+        
         file = f"{filename}_{counter:05}_.mp4"
-        full_output_path = os.path.join(full_output_folder, file)
+        full_output_path = os.path.join(tmp_output_folder, file)
+        
+        # 更新 subfolder 路径，让前端能正确访问
+        if subfolder:
+            subfolder = os.path.join(subfolder, "tmp")
+        else:
+            subfolder = "tmp"
         
         with av.open(video_path) as src_container:
             video_stream = None
@@ -110,10 +120,15 @@ class PreviewVideoNode:
         return {"ui": {"images": [result], "animated": (True,)}}
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "PreviewVideoNode": PreviewVideoNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "PreviewVideoNode": "预览视频"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -61,7 +61,7 @@ class DoubaoSeedanceVideoGenerationNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING")
     RETURN_NAMES = ("video_url", "task_id", "status_info")
     FUNCTION = "generate_video"
-    CATEGORY = "XnanTool/API/火山引擎"
+    CATEGORY = "❤️❤️❤️XnanTool/API/火山引擎"
     
     def generate_video(self, prompt, model_id, api_key, enable_image_to_video, seed=0, image_url=None):
         """
@@ -136,16 +136,18 @@ class DoubaoSeedanceVideoGenerationNode:
 
 
 # 导出节点映射和显示名称映射
-NODE_CLASS_MAPPINGS = {
-    "DoubaoSeedanceVideoGenerationNode": DoubaoSeedanceVideoGenerationNode,
-}
+# # 注册节点
+# NODE_CLASS_MAPPINGS = {
+#     "DoubaoSeedanceVideoGenerationNode": DoubaoSeedanceVideoGenerationNode,
+# }
 
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "DoubaoSeedanceVideoGenerationNode": "豆包Seedance视频生成",
-}
+# # 定义显示名称
+# NODE_DISPLAY_NAME_MAPPINGS = {
+#     "DoubaoSeedanceVideoGenerationNode": "豆包Seedance视频生成",
+# }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# # 导出映射（必须）
+# __all__ = [
+#     "NODE_CLASS_MAPPINGS",
+#     "NODE_DISPLAY_NAME_MAPPINGS"
+# ]

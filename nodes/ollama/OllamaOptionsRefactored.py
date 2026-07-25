@@ -226,7 +226,7 @@ class OllamaOptionsRefactored:
     RETURN_TYPES = ("OLLAMA_OPTIONS",)
     RETURN_NAMES = ("options",)
     FUNCTION = "ollama_options"
-    CATEGORY = "XnanTool/Ollama"
+    CATEGORY = "❤️❤️❤️XnanTool/兼容插件/Ollama"
     DESCRIPTION = "重构版的 Ollama 推理配置选项。提供更多高级参数控制模型生成行为。"
 
     def ollama_options(self, **kwargs):
@@ -248,11 +248,12 @@ class OllamaOptionsRefactored:
         return (kwargs,)
 
 
-# 节点映射配置
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "OllamaOptionsRefactored": OllamaOptionsRefactored,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "OllamaOptionsRefactored": "Ollama选项-重构版",
 }

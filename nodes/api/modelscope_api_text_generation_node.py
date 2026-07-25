@@ -112,7 +112,7 @@ class ModelscopeApiTextGenerationNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("生成文本",)
     FUNCTION = "generate_text"
-    CATEGORY = "XnanTool/魔搭api"
+    CATEGORY = "❤️❤️❤️XnanTool/API/魔搭api"
     
     def generate_text(self, system_prompt, prompt, model_name, max_tokens, temperature, top_p, seed, api_token):
         if not OPENAI_AVAILABLE:
@@ -192,13 +192,15 @@ class ModelscopeApiTextGenerationNode:
             print(f"❌ {error_msg}")
             return (error_msg,)
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ModelscopeApiTextGenerationNode": ModelscopeApiTextGenerationNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ModelscopeApiTextGenerationNode": "魔搭API-文本生成",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

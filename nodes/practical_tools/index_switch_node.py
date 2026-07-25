@@ -37,7 +37,7 @@ class IndexSwitchNode:
     RETURN_TYPES = ("*",)  # 动态类型输出
     RETURN_NAMES = ("selected_value",)
     FUNCTION = "switch_by_index"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     @classmethod
     def IS_CHANGED(cls, index, value_0, value_1, value_2, value_3, value_4):
@@ -71,6 +71,10 @@ NODE_CLASS_MAPPINGS = {
     "IndexSwitchNode": IndexSwitchNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "IndexSwitchNode": "编号切换"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -20,14 +20,11 @@ class LoadImageNode:
     
     @classmethod
     def INPUT_TYPES(cls):
-        # 获取image_video_prompt_presets_node文件夹路径
-        presets_dir = os.path.join(os.path.dirname(__file__), "image_video_prompt_presets_node")
-        # 确保目录存在
-        if not os.path.exists(presets_dir):
-            os.makedirs(presets_dir)
-            
+        # 获取ComfyUI默认输入文件夹路径
+        input_dir = folder_paths.get_input_directory()
+        
         # 获取该目录下的所有文件
-        files = [f for f in os.listdir(presets_dir) if os.path.isfile(os.path.join(presets_dir, f))]
+        files = [f for f in os.listdir(input_dir) if os.path.isfile(os.path.join(input_dir, f))]
         # 过滤图像文件
         image_files = folder_paths.filter_files_content_types(files, ["image"])
         
@@ -35,23 +32,23 @@ class LoadImageNode:
             "required": {
                 "image_file": (sorted(image_files), {
                     "label": "图像文件",
-                    "description": "选择要加载的图像文件（来自image_video_prompt_presets_node文件夹）",
-                    "image_upload": True  # 添加图像上传支持
+                    "description": "选择要加载的图像文件（来自ComfyUI默认输入文件夹）",
+                    "image_upload": True
                 })
             }
         }
     
-    RETURN_TYPES = ("IMAGE", "STRING")
-    RETURN_NAMES = ("image", "image_path")
+    RETURN_TYPES = ("IMAGE", "MASK", "STRING", "STRING")
+    RETURN_NAMES = ("image", "mask", "image_name", "image_path")
     FUNCTION = "load_image"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     
     @classmethod
     def IS_CHANGED(cls, image_file):
-        # 获取image_video_prompt_presets_node文件夹路径
-        presets_dir = os.path.join(os.path.dirname(__file__), "image_video_prompt_presets_node")
+        # 获取ComfyUI默认输入文件夹路径
+        input_dir = folder_paths.get_input_directory()
         # 构建完整的图像文件路径
-        image_path = os.path.join(presets_dir, image_file)
+        image_path = os.path.join(input_dir, image_file)
         # 如果图像文件存在，返回其修改时间，否则返回0
         if os.path.exists(image_path):
             return os.path.getmtime(image_path)
@@ -59,10 +56,10 @@ class LoadImageNode:
 
     @classmethod
     def VALIDATE_INPUTS(cls, image_file):
-        # 获取image_video_prompt_presets_node文件夹路径
-        presets_dir = os.path.join(os.path.dirname(__file__), "image_video_prompt_presets_node")
+        # 获取ComfyUI默认输入文件夹路径
+        input_dir = folder_paths.get_input_directory()
         # 构建完整的图像文件路径
-        image_path = os.path.join(presets_dir, image_file)
+        image_path = os.path.join(input_dir, image_file)
         if not os.path.exists(image_path):
             return "Invalid image file: {}".format(image_file)
         return True
@@ -75,13 +72,13 @@ class LoadImageNode:
             image_file (str): 图像文件路径
             
         Returns:
-            tuple: 包含图像张量和文件路径的元组
+            tuple: 包含图像张量、遮罩、文件路径和文件名的元组
         """
         try:
-            # 获取image_video_prompt_presets_node文件夹路径
-            presets_dir = os.path.join(os.path.dirname(__file__), "image_video_prompt_presets_node")
+            # 获取ComfyUI默认输入文件夹路径
+            input_dir = folder_paths.get_input_directory()
             # 构建完整的图像文件路径
-            image_path = os.path.join(presets_dir, image_file)
+            image_path = os.path.join(input_dir, image_file)
             
             # 检查图像文件是否存在
             if not os.path.exists(image_path):
@@ -100,11 +97,17 @@ class LoadImageNode:
             # 转换为PyTorch张量 (H, W, C) -> (1, H, W, C)
             image_tensor = torch.from_numpy(image_np)[None,]
             
+            # 创建全白遮罩（表示全部可见）
+            mask = torch.ones((image_tensor.shape[1], image_tensor.shape[2]), dtype=torch.float32)
+            
+            # 获取文件名（不含扩展名）
+            image_name = os.path.splitext(image_file)[0]
+            
             logger.info(f"图像已加载: {image_path}")
             logger.info(f"图像尺寸: {image.size}")
             logger.info(f"图像模式: {image.mode}")
             
-            return (image_tensor, image_path)
+            return (image_tensor, mask, image_name, image_path)
             
         except Exception as e:
             logger.error(f"加载图像过程中发生错误: {str(e)}")
@@ -115,12 +118,10 @@ NODE_CLASS_MAPPINGS = {
     "LoadImageNode": LoadImageNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "LoadImageNode": "加载图像-【Beta】"
+    "LoadImageNode": "加载图像"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

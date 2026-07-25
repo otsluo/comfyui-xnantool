@@ -31,7 +31,7 @@ class ListFoldersNode:
     RETURN_TYPES = ("STRING", "STRING",)
     RETURN_NAMES = ("folder_list", "count",)
     FUNCTION = "list_folders"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     def list_folders(self, input_directory, recursive, separator):
         """
@@ -99,6 +99,10 @@ NODE_CLASS_MAPPINGS = {
     "ListFoldersNode": ListFoldersNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ListFoldersNode": "列出文件夹"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

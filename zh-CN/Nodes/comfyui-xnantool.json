@@ -23,6 +23,7 @@
       "system_prompt": "系统提示词",
       "prompt": "用户提示词",
       "model": "模型",
+      "custom_model": "自定义模型",
       "api_key": "API密钥",
       "temperature": "温度",
       "top_p": "Top P",
@@ -34,12 +35,13 @@
     "widgets": {
       "system_prompt": "系统提示词，用于设定模型的角色和行为规范（可选）",
       "prompt": "输入给大模型的用户提示词（可选）",
-      "model": "选择要使用的模型",
+      "model": "选择要使用的模型，选择'自定义'可手动输入模型名称",
+      "custom_model": "当模型选择'自定义'时，在此输入模型名称",
       "api_key": "API Key",
       "temperature": "控制输出的随机性，值越大越随机",
       "top_p": "累积概率阈值，控制生成的多样性",
       "max_tokens": "最大输出Token数量",
-      "enable_thinking": "仅适用于 deepseek-r1 系列模型",
+      "enable_thinking": "开启思考模式可获得更长推理链",
       "seed": "随机种子",
       "endpoint": "API Endpoint"
     },
@@ -47,6 +49,21 @@
       "response": "响应文本"
     },
     "widget_values": {
+      "model": {
+        "自定义": "自定义",
+        "qwen3.7-max": "qwen3.7-max",
+        "qwen3.7-plus": "qwen3.7-plus",
+        "qwen3.7-max-preview": "qwen3.7-max-preview",
+        "qwen3.7-max-2026-06-08": "qwen3.7-max-2026-06-08",
+        "qwen3.7-max-2026-05-20": "qwen3.7-max-2026-05-20",
+        "qwen3.7-max-2026-05-17": "qwen3.7-max-2026-05-17",
+        "qwen3.7-plus-2026-05-26": "qwen3.7-plus-2026-05-26",
+        "qwen3.5-ocr": "qwen3.5-ocr",
+        "deepseek-v4-pro": "deepseek-v4-pro",
+        "deepseek-v4-flash": "deepseek-v4-flash",
+        "kimi-k2.7-code": "kimi-k2.7-code",
+        "glm-5.2": "glm-5.2"
+      },
       "enable_thinking": {
         "true": "true（开启）",
         "false": "false（关闭）"
@@ -90,6 +107,7 @@
       "prompt": "提示词",
       "image": "图片",
       "model": "模型",
+      "custom_model": "自定义模型",
       "api_key": "API密钥",
       "temperature": "温度",
       "top_p": "Top P",
@@ -99,7 +117,8 @@
     "widgets": {
       "prompt": "输入给大模型的提示词（可包含图片描述）",
       "image": "输入的图片",
-      "model": "选择要使用的VL模型",
+      "model": "选择要使用的模型，选择'自定义'可手动输入模型名称",
+      "custom_model": "当模型选择'自定义'时，在此输入模型名称",
       "api_key": "阿里云百炼API Key（从控制台获取）",
       "temperature": "控制输出的随机性，值越大越随机",
       "top_p": "累积概率阈值，控制生成的多样性",
@@ -109,6 +128,23 @@
     "outputs": {
       "response": "响应文本",
       "full_response": "完整响应JSON"
+    },
+    "widget_values": {
+      "model": {
+        "自定义": "自定义",
+        "qwen3.7-max": "qwen3.7-max",
+        "qwen3.7-plus": "qwen3.7-plus",
+        "qwen3.7-max-preview": "qwen3.7-max-preview",
+        "qwen3.7-max-2026-06-08": "qwen3.7-max-2026-06-08",
+        "qwen3.7-max-2026-05-20": "qwen3.7-max-2026-05-20",
+        "qwen3.7-max-2026-05-17": "qwen3.7-max-2026-05-17",
+        "qwen3.7-plus-2026-05-26": "qwen3.7-plus-2026-05-26",
+        "qwen3.5-ocr": "qwen3.5-ocr",
+        "deepseek-v4-pro": "deepseek-v4-pro",
+        "deepseek-v4-flash": "deepseek-v4-flash",
+        "kimi-k2.7-code": "kimi-k2.7-code",
+        "glm-5.2": "glm-5.2"
+      }
     }
   },
   "BailianWanNode": {
@@ -202,7 +238,7 @@
       "custom_video_folder_path": "自定义视频文件夹路径",
       "frame_extraction_method": "提取方式",
       "frame_number": "帧号",
-      "timestamp": "时间戳",
+      "timestamp": "时间戳（秒）",
       "output_format": "输出格式",
       "image_quality": "图片质量",
       "output_filename_prefix": "输出文件名前缀",
@@ -227,17 +263,69 @@
     },
     "widget_values": {
       "folder_selection_mode": {
-        "select_from_input_dir": "select_from_input_dir（从输入目录选择）",
-        "custom_path": "custom_path（自定义路径）"
+        "从输入目录选择": "从输入目录选择",
+        "自定义路径": "自定义路径"
       },
       "frame_extraction_method": {
-        "frame_number": "frame_number（按帧号）",
-        "timestamp": "timestamp（按时间戳）"
+        "按帧号": "按帧号",
+        "按时间戳": "按时间戳"
       },
       "output_format": {
-        "png": "png（PNG格式）",
-        "jpg": "jpg（JPG格式）",
-        "bmp": "bmp（BMP格式）"
+        "png": "PNG格式",
+        "jpg": "JPG格式",
+        "bmp": "BMP格式"
+      }
+    }
+  },
+  "BatchFolderImageCompressorNode": {
+    "title": "批量文件夹图片压缩",
+    "description": "批量文件夹图片压缩节点，支持批量压缩文件夹中的图片，调整质量和格式",
+    "inputs": {
+      "image_directory": "输入图像文件夹",
+      "output_directory": "输出保存路径",
+      "output_format": "输出格式",
+      "quality": "压缩质量",
+      "max_width": "最大宽度",
+      "max_height": "最大高度",
+      "keep_structure": "保留原始结构",
+      "process_subfolders": "压缩子目录",
+      "conflict_mode": "文件冲突处理",
+      "suffix_text": "自定义后缀文本"
+    },
+    "widgets": {
+      "image_directory": "输入图像文件夹路径",
+      "output_directory": "输出图像保存路径（留空则保存到输入目录）",
+      "output_format": "选择输出图片的格式",
+      "quality": "压缩质量（1-100），数值越大质量越高，文件越大",
+      "max_width": "最大宽度（0表示不限制）",
+      "max_height": "最大高度（0表示不限制）",
+      "keep_structure": "是：保留子目录结构；否：所有文件输出到同一目录",
+      "process_subfolders": "是：递归处理所有子目录；否：仅处理当前目录",
+      "conflict_mode": "当输出文件已存在时的处理方式",
+      "suffix_text": "在文件名后添加的自定义文本（例如：_compressed），仅在文本后缀模式生效"
+    },
+    "outputs": {
+      "result_info": "处理结果信息"
+    },
+    "widget_values": {
+      "keep_structure": {
+        "是": "保留子目录结构",
+        "否": "所有文件输出到同一目录"
+      },
+      "process_subfolders": {
+        "是": "递归处理所有子目录",
+        "否": "仅处理当前目录"
+      },
+      "output_format": {
+        "JPEG": "JPEG格式",
+        "PNG": "PNG格式",
+        "WebP": "WebP格式"
+      },
+      "conflict_mode": {
+        "覆盖": "覆盖已存在的文件",
+        "跳过": "跳过已存在的文件",
+        "数字后缀": "添加数字后缀（如：_01, _02）",
+        "文本后缀": "添加自定义文本后缀"
       }
     }
   },
@@ -374,6 +462,7 @@
     "inputs": {
       "mode": "加载模式",
       "image_path": "图片路径",
+      "sort_method": "排序方式",
       "index": "索引",
       "max_images": "最大图片数量",
       "seed": "随机种子"
@@ -381,6 +470,7 @@
     "widgets": {
       "mode": "选择加载模式：加载全部图片、按索引加载单张或随机输出",
       "image_path": "图片目录路径或单张图片路径",
+      "sort_method": "选择图片排序方式",
       "index": "当模式为'加载单张'时，指定要加载的图片索引（从 0 开始）",
       "max_images": "当模式为'加载全部'或'随机输出'时，限制最多加载的图片数量，设置为 0 表示加载全部图片",
       "seed": "当模式为'随机输出'时，随机种子用于控制随机性（0 为随机）"
@@ -533,21 +623,21 @@
     }
   },
   "DimensionMultiplierNode": {
-    "title": "尺寸倍增器",
-    "description": "尺寸倍增器节点，用于将输入的宽度和高度按倍数调整",
+    "title": "尺寸倍数",
+    "description": "尺寸倍数节点，根据倍数调整输入的宽度和高度",
     "inputs": {
       "width": "宽度",
       "height": "高度",
       "multiplier": "倍数"
     },
     "widgets": {
-      "width": "输入宽度",
-      "height": "输入高度",
-      "multiplier": "调整倍数（如2表示2的倍数）"
+      "width": "输入的宽度值（可选，默认512）",
+      "height": "输入的高度值（可选，默认512）",
+      "multiplier": "尺寸调整倍数（0.01-100.0）"
     },
     "outputs": {
-      "output_width": "输出宽度",
-      "output_height": "输出高度"
+      "width": "输出宽度",
+      "height": "输出高度"
     }
   },
   "DoubaoSeedanceVideoGenerationNode": {
@@ -670,13 +760,13 @@
     },
     "widget_values": {
       "frame_extraction_method": {
-        "frame_number": "frame_number（按帧号）",
-        "timestamp": "timestamp（按时间戳）"
+        "按帧号": "按帧号",
+        "按时间戳": "按时间戳"
       },
       "output_format": {
-        "png": "png（PNG格式）",
-        "jpg": "jpg（JPG格式）",
-        "bmp": "bmp（BMP格式）"
+        "png": "PNG格式",
+        "jpg": "JPG格式",
+        "bmp": "BMP格式"
       }
     }
   },
@@ -684,11 +774,11 @@
     "title": "通用LLM API调用",
     "description": "支持调用任何OpenAI兼容的大语言模型API服务",
     "inputs": {
+      "system_prompt": "系统提示词",
+      "prompt": "提示词",
+      "model": "模型名称",
       "api_url": "API地址",
       "api_key": "API密钥",
-      "model": "模型名称",
-      "system_prompt": "系统提示词",
-      "user_prompt": "用户提示词",
       "temperature": "温度",
       "top_p": "Top P",
       "max_tokens": "最大输出长度",
@@ -698,11 +788,11 @@
       "seed": "随机种子"
     },
     "widgets": {
+      "system_prompt": "系统提示词，用于设定模型的角色和行为规范",
+      "prompt": "输入给模型的提示词",
+      "model": "要调用的模型名称",
       "api_url": "API的完整URL地址（OpenAI兼容格式）",
       "api_key": "API认证密钥",
-      "model": "要调用的模型名称",
-      "system_prompt": "系统提示词，用于设定模型的角色和行为规范",
-      "user_prompt": "输入给模型的用户提示词",
       "temperature": "控制输出的随机性，值越大越随机（0-2）",
       "top_p": "累积概率阈值，控制生成的多样性（0-1）",
       "max_tokens": "最大输出Token数量",
@@ -866,8 +956,8 @@
     }
   },
   "ImageVideoPromptSelector": {
-    "title": "图片视频提示词选择器",
-    "description": "图片视频提示词预设选择节点，提供图片和视频提示词预设选择功能",
+    "title": "图片视频提示词预设",
+    "description": "图片视频提示词预设选择节点，提供图片和视频提示词预设选择功能，选择预设后自动预览对应图片",
     "inputs": {
       "prompt_preset": "提示词预设"
     },
@@ -875,8 +965,8 @@
       "prompt_preset": "选择预设的图片或视频提示词"
     },
     "outputs": {
-      "prompt": "提示词",
-      "negative_prompt": "负面提示词"
+      "image_prompt": "图片提示词",
+      "video_prompt": "视频提示词"
     }
   },
   "Imageencodinggeneration": {
@@ -1090,6 +1180,78 @@
       }
     }
   },
+  "ImagesToSequenceFramesNode": {
+    "title": "图片合成序列帧",
+    "description": "图片合成序列帧节点 - 将多张图片合成为图像帧序列，支持10个独立的图片输入端口，支持不同尺寸图片的统一处理",
+    "inputs": {
+      "size_mode": "尺寸模式",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "image_1": "图片1",
+      "image_2": "图片2",
+      "image_3": "图片3",
+      "image_4": "图片4",
+      "image_5": "图片5",
+      "image_6": "图片6",
+      "image_7": "图片7",
+      "image_8": "图片8",
+      "image_9": "图片9",
+      "image_10": "图片10"
+    },
+    "widgets": {
+      "size_mode": "当图片尺寸不一致时的处理方式",
+      "custom_width": "自定义尺寸模式下的宽度（1-8192）",
+      "custom_height": "自定义尺寸模式下的高度（1-8192）"
+    },
+    "outputs": {
+      "SequenceFrames": "序列帧"
+    },
+    "widget_values": {
+      "size_mode": {
+        "第一张尺寸": "使用第一张图片的尺寸",
+        "自定义尺寸": "使用自定义的宽度和高度",
+        "最大宽度和高度": "使用所有图片中的最大宽度和最大高度",
+        "最大宽度": "使用所有图片中的最大宽度，按宽度比例缩放高度",
+        "最大高度": "使用所有图片中的最大高度，按高度比例缩放宽度"
+      }
+    }
+  },
+  "SequenceFramesConcatNode": {
+    "title": "序列帧拼接",
+    "description": "序列帧拼接节点 - 将多个序列帧拼接为一个更长的序列帧，支持10个独立的序列帧输入端口，支持不同尺寸序列帧的统一处理",
+    "inputs": {
+      "size_mode": "尺寸模式",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "sequence_1": "序列帧1",
+      "sequence_2": "序列帧2",
+      "sequence_3": "序列帧3",
+      "sequence_4": "序列帧4",
+      "sequence_5": "序列帧5",
+      "sequence_6": "序列帧6",
+      "sequence_7": "序列帧7",
+      "sequence_8": "序列帧8",
+      "sequence_9": "序列帧9",
+      "sequence_10": "序列帧10"
+    },
+    "widgets": {
+      "size_mode": "当序列帧尺寸不一致时的处理方式",
+      "custom_width": "自定义尺寸模式下的宽度（1-8192）",
+      "custom_height": "自定义尺寸模式下的高度（1-8192）"
+    },
+    "outputs": {
+      "序列帧": "拼接后的序列帧"
+    },
+    "widget_values": {
+      "size_mode": {
+        "第一组尺寸": "使用第一组序列帧的尺寸",
+        "自定义尺寸": "使用自定义的宽度和高度",
+        "最大宽度和高度": "使用所有序列帧中的最大宽度和最大高度",
+        "最大宽度": "使用所有序列帧中的最大宽度，按第一组序列帧的宽高比计算高度",
+        "最大高度": "使用所有序列帧中的最大高度，按第一组序列帧的宽高比计算宽度"
+      }
+    }
+  },
   "IndexSwitchNode": {
     "title": "编号切换",
     "description": "根据索引值从多个输入中选择一个输出",
@@ -1245,15 +1407,17 @@
   },
   "LoadImageNode": {
     "title": "加载图像",
-    "description": "加载图像文件并转换为ComfyUI可用的格式",
+    "description": "加载图像文件并转换为ComfyUI可用的格式，支持从ComfyUI默认输入文件夹选择图像",
     "inputs": {
       "image_file": "图像文件"
     },
     "widgets": {
-      "image_file": "选择要加载的图像文件（来自image_video_prompt_presets_node文件夹）"
+      "image_file": "选择要加载的图像文件（来自ComfyUI默认输入文件夹）"
     },
     "outputs": {
       "image": "图像",
+      "mask": "遮罩",
+      "image_name": "图片名称",
       "image_path": "图像路径"
     }
   },
@@ -1277,12 +1441,15 @@
     "title": "加载视频路径",
     "description": "加载视频路径节点，加载视频文件路径和数据",
     "inputs": {
-      "video_path": "视频文件路径"
+      "video_path": "视频文件路径",
+      "video": "视频对象"
     },
     "widgets": {
-      "video_path": "视频文件的完整路径或相对路径"
+      "video_path": "视频文件的完整路径或相对路径",
+      "max_frames": "限制加载的最大帧数，防止内存溢出（0表示不限制）"
     },
     "outputs": {
+      "video": "视频对象",
       "video_frames": "视频帧",
       "video_path": "视频路径",
       "audio": "音频数据"
@@ -1357,29 +1524,28 @@
     }
   },
   "ModelscopeApiImageCaptionNode": {
-    "title": "魔搭API图像描述",
-    "description": "魔搭API图像描述节点，用于通过Modelscope API生成图像描述文本",
+    "title": "魔搭API-图片反推",
+    "description": "通过魔搭API调用视觉语言模型，从图片生成描述文本",
     "inputs": {
-      "image": "输入图像",
       "prompt": "提示词",
+      "image": "图片",
       "model_name": "模型名称",
       "max_tokens": "最大令牌数",
       "temperature": "温度系数",
-      "top_p": "Top P",
-      "seed": "随机种子"
+      "seed": "随机种子",
+      "api_token": "API令牌"
     },
     "widgets": {
-      "image": "需要生成描述的图像",
-      "prompt": "用于图像描述的提示词",
-      "model_name": "选择或输入模型名称",
-      "max_tokens": "生成描述的最大长度",
-      "temperature": "控制生成描述的随机性（0.1-2.0）",
-      "top_p": "控制生成描述的多样性（0.1-1.0）",
-      "seed": "随机种子（-1表示随机）"
+      "prompt": "用于图片描述的提示词，可指定描述角度和细节",
+      "image": "需要生成描述的图片",
+      "model_name": "选择要使用的视觉语言模型",
+      "max_tokens": "生成描述的最大长度（100-4000）",
+      "temperature": "控制生成描述的随机性，值越大越随机（0.1-2.0）",
+      "seed": "随机种子（-1表示随机，大于0为固定种子）",
+      "api_token": "魔搭API令牌（用于身份验证）"
     },
     "outputs": {
-      "caption": "生成的图像描述",
-      "status": "状态信息"
+      "图片描述": "生成的图片描述文本"
     }
   },
   "ModelscopeApiLoraManager": {
@@ -1447,8 +1613,8 @@
     }
   },
   "ModelscopeApiTextGenerationNode": {
-    "title": "魔搭API文本生成",
-    "description": "魔搭API文本生成节点，用于通过Modelscope API生成文本内容",
+    "title": "魔搭API-文本生成",
+    "description": "通过魔搭API调用大语言模型生成文本内容",
     "inputs": {
       "system_prompt": "系统提示词",
       "prompt": "提示词",
@@ -1456,46 +1622,46 @@
       "max_tokens": "最大令牌数",
       "temperature": "温度系数",
       "top_p": "Top P",
-      "seed": "随机种子"
+      "seed": "随机种子",
+      "api_token": "API令牌"
     },
     "widgets": {
-      "system_prompt": "系统级别的提示词，用于设定AI的行为",
-      "prompt": "用于文本生成的提示词",
-      "model_name": "选择或输入模型名称",
-      "max_tokens": "生成文本的最大长度",
-      "temperature": "控制生成文本的随机性（0.1-2.0）",
-      "top_p": "控制生成文本的多样性（0.1-1.0）",
-      "seed": "随机种子（-1表示随机）"
+      "system_prompt": "系统级别的提示词，用于设定AI的角色和行为规范（可选）",
+      "prompt": "用于文本生成的用户提示词",
+      "model_name": "选择要使用的文本生成模型",
+      "max_tokens": "生成文本的最大长度（100-4000）",
+      "temperature": "控制生成文本的随机性，值越大越随机（0.1-2.0）",
+      "top_p": "累积概率阈值，控制生成文本的多样性（0.1-1.0）",
+      "seed": "随机种子（-1表示随机，大于0为固定种子）",
+      "api_token": "魔搭API Token（用于身份验证）"
     },
     "outputs": {
-      "text": "生成的文本",
-      "status": "状态信息"
+      "生成文本": "生成的文本内容"
     }
   },
   "ModelscopeApiVideoCaptionNode": {
-    "title": "魔搭API视频描述",
-    "description": "魔搭API视频描述节点，用于通过Modelscope API生成视频描述文本",
+    "title": "魔搭API-视频反推",
+    "description": "通过魔搭API调用视觉语言模型，从视频帧生成描述文本",
     "inputs": {
-      "video_path": "视频路径",
       "prompt": "提示词",
+      "video_frames": "视频帧",
       "model_name": "模型名称",
       "max_tokens": "最大令牌数",
       "temperature": "温度系数",
-      "top_p": "Top P",
-      "seed": "随机种子"
+      "seed": "随机种子",
+      "api_token": "API令牌"
     },
     "widgets": {
-      "video_path": "视频文件的完整路径",
-      "prompt": "用于视频描述的提示词",
-      "model_name": "选择或输入模型名称",
-      "max_tokens": "生成描述的最大长度",
-      "temperature": "控制生成描述的随机性（0.1-2.0）",
-      "top_p": "控制生成描述的多样性（0.1-1.0）",
-      "seed": "随机种子（-1表示随机）"
+      "prompt": "用于视频描述的提示词，可指定描述场景和动作",
+      "video_frames": "需要生成描述的视频帧序列",
+      "model_name": "选择要使用的视觉语言模型",
+      "max_tokens": "生成描述的最大长度（100-4000）",
+      "temperature": "控制生成描述的随机性，值越大越随机（0.1-2.0）",
+      "seed": "随机种子（-1表示随机，大于0为固定种子）",
+      "api_token": "魔搭API令牌（用于身份验证）"
     },
     "outputs": {
-      "caption": "生成的视频描述",
-      "status": "状态信息"
+      "视频描述": "生成的视频描述文本"
     }
   },
   "MultiTextNode": {
@@ -1590,34 +1756,86 @@
   },
   "RandomPromptGeneratorGroupNode": {
     "title": "随机提示词生成器组",
-    "description": "随机提示词生成器组节点，用于批量生成随机提示词",
+    "description": "随机提示词生成器组节点，支持多个分类的预设提示词，可随机选择指定数量的提示词",
     "inputs": {
-      "count": "生成数量",
-      "seed": "随机种子",
-      "prompt_templates": "提示词模板"
+      "manual_prompt": "手动输入提示词",
+      "enable_person": "启用人物分类",
+      "person_count": "人物提示词数量",
+      "enable_scene": "启用场景分类",
+      "scene_count": "场景提示词数量",
+      "enable_style": "启用风格分类",
+      "style_count": "风格提示词数量",
+      "enable_lighting": "启用光影分类",
+      "lighting_count": "光影提示词数量",
+      "enable_color": "启用色彩分类",
+      "color_count": "色彩提示词数量",
+      "enable_detail": "启用细节分类",
+      "detail_count": "细节提示词数量",
+      "seed": "随机种子"
     },
     "widgets": {
-      "count": "要生成的提示词数量",
-      "seed": "随机种子值",
-      "prompt_templates": "提示词模板列表，每行一个模板"
+      "manual_prompt": "手动输入的提示词，将添加到生成的随机提示词前面",
+      "enable_person": "是否启用人物分类提示词",
+      "person_count": "人物分类中随机选择的提示词数量（0-10）",
+      "enable_scene": "是否启用场景分类提示词",
+      "scene_count": "场景分类中随机选择的提示词数量（0-10）",
+      "enable_style": "是否启用风格分类提示词",
+      "style_count": "风格分类中随机选择的提示词数量（0-10）",
+      "enable_lighting": "是否启用光影分类提示词",
+      "lighting_count": "光影分类中随机选择的提示词数量（0-10）",
+      "enable_color": "是否启用色彩分类提示词",
+      "color_count": "色彩分类中随机选择的提示词数量（0-10）",
+      "enable_detail": "是否启用细节分类提示词",
+      "detail_count": "细节分类中随机选择的提示词数量（0-10）",
+      "seed": "随机种子，相同种子会产生相同结果"
     },
     "outputs": {
-      "prompts": "生成的提示词列表"
+      "prompt": "生成的随机提示词"
+    },
+    "widget_values": {
+      "enable_person": {
+        "true": "启用",
+        "false": "禁用"
+      },
+      "enable_scene": {
+        "true": "启用",
+        "false": "禁用"
+      },
+      "enable_style": {
+        "true": "启用",
+        "false": "禁用"
+      },
+      "enable_lighting": {
+        "true": "启用",
+        "false": "禁用"
+      },
+      "enable_color": {
+        "true": "启用",
+        "false": "禁用"
+      },
+      "enable_detail": {
+        "true": "启用",
+        "false": "禁用"
+      }
     }
   },
   "RandomPromptGeneratorNode": {
     "title": "随机提示词生成器",
-    "description": "随机提示词生成器节点，用于生成单个随机提示词",
+    "description": "随机提示词生成器节点，在手动输入的提示词中随机输出指定个数的提示词",
     "inputs": {
-      "prompt_templates": "提示词模板",
+      "input_prompts": "输入提示词",
+      "output_count": "输出个数",
+      "separator": "分隔符",
       "seed": "随机种子"
     },
     "widgets": {
-      "prompt_templates": "提示词模板列表，每行一个模板",
-      "seed": "随机种子值"
+      "input_prompts": "手动输入的提示词，用逗号分隔",
+      "output_count": "需要随机输出的提示词个数（1-50）",
+      "separator": "输入提示词的分隔符，默认为逗号",
+      "seed": "随机种子，相同种子会产生相同结果"
     },
     "outputs": {
-      "prompt": "生成的随机提示词"
+      "prompt": "随机选择的提示词"
     }
   },
   "ReadWorkflowFromImageNode": {
@@ -1829,7 +2047,7 @@
     }
   },
   "SensitiveWordFilterNode": {
-    "title": "违禁词过滤",
+    "title": "违禁词过滤-文本过滤器",
     "description": "过滤和替换文本中的违禁词，支持自定义违禁词列表、替换策略和日志输出",
     "inputs": {
       "input_text": "输入文本",
@@ -2254,30 +2472,70 @@
       "merged_string": "合并后的字符串"
     }
   },
+  "ListSliceNode": {
+    "title": "列表切片",
+    "description": "对列表进行切片操作，支持起始索引和结束索引设置，支持负数索引",
+    "inputs": {
+      "input_list": "列表",
+      "start": "起始索引",
+      "end": "结束索引"
+    },
+    "widgets": {
+      "input_list": "输入的列表",
+      "start": "切片起始索引（支持负数，-1表示最后一个元素）",
+      "end": "切片结束索引（不包含，-1表示到末尾）"
+    },
+    "outputs": {
+      "切片结果": "切片后的列表"
+    }
+  },
+  "TransferNode": {
+    "title": "传递",
+    "description": "传递节点，透传输入数据",
+    "inputs": {
+      "any_input": "输入",
+      "seed": "种子"
+    },
+    "widgets": {
+      "any_input": "输入任意类型的数据，透传到输出端口",
+      "seed": "种子值（可选，用于手动控制）"
+    },
+    "outputs": {
+      "输出": "透传的输入数据"
+    }
+  },
   "StringToAnyNode": {
     "title": "字符串到任意类型",
     "description": "字符串到任意类型转换节点，将字符串转换为指定的任意类型",
     "inputs": {
-      "input_string": "输入字符串"
+      "string": "字符串"
     },
     "widgets": {
-      "input_string": "要转换的字符串"
+      "string": "要转换的字符串"
     },
     "outputs": {
-      "any_output": "转换后的任意类型输出"
+      "any": "任意类型"
     }
   },
   "TextInputNode": {
-    "title": "文本输入",
-    "description": "文本输入节点，允许用户输入文本，支持多行文本输入",
+    "title": "文本",
+    "description": "文本输入节点，允许用户输入多行文本",
     "inputs": {
-      "text": "文本"
+      "text": "文本",
+      "enabled": "启用"
     },
     "widgets": {
-      "text": "输入文本内容"
+      "text": "输入文本内容",
+      "enabled": "关闭后输出空内容"
     },
     "outputs": {
       "text": "输出的文本"
+    },
+    "widget_values": {
+      "disabled": {
+        "false": "关闭（正常输出）",
+        "true": "开启（输出空内容）"
+      }
     }
   },
   "TextLineReaderNode": {
@@ -3120,6 +3378,377 @@
       "成功路径列表": "成功加载的完整路径列表",
       "成功数量": "成功加载的图片数量",
       "跳过路径列表": "无法加载的路径及错误信息"
+    }
+  },
+  "VersionCheckNode": {
+    "title": "版本检查",
+    "description": "检查插件是否有可用更新，显示当前版本和最新版本信息",
+    "inputs": {
+      "check_update": "检查更新",
+      "trigger": "触发器"
+    },
+    "widgets": {
+      "check_update": "打开开关以检查GitHub上的最新版本",
+      "trigger": "输入任意值触发重新检查"
+    },
+    "outputs": {
+      "版本信息": "当前版本和最新版本的对比信息",
+      "更新日志": "最新版本的更新日志",
+      "有可用更新": "布尔值，表示是否有新版本可用"
+    },
+    "widget_values": {
+      "check_update": {
+        "false": "关闭（不检查）",
+        "true": "开启（检查更新）"
+      }
+    }
+  },
+  "VersionUpdateNode": {
+    "title": "执行更新",
+    "description": "通过git pull更新插件到最新版本",
+    "inputs": {
+      "confirm_update": "确认更新"
+    },
+    "widgets": {
+      "confirm_update": "打开开关以确认并执行更新操作"
+    },
+    "outputs": {
+      "更新结果": "更新操作的结果信息"
+    },
+    "widget_values": {
+      "confirm_update": {
+        "false": "关闭（不执行）",
+        "true": "开启（执行更新）"
+      }
+    }
+  },
+  "VideoToFramesNode": {
+    "title": "视频转序列帧",
+    "description": "将视频拆分为图片序列",
+    "inputs": {
+      "video_path": "视频文件路径",
+      "video": "视频对象"
+    },
+    "widgets": {
+      "video_path": "视频文件的完整路径或相对路径",
+      "output_path": "输出目录路径，留空使用默认路径",
+      "filename_prefix": "输出文件名的前缀",
+      "image_format": "图片格式",
+      "quality": "图片质量（仅对jpg/webp有效）",
+      "num_padding_digits": "帧号数字的填充位数",
+      "target_fps": "目标帧率（0表示使用原始帧率）",
+      "max_frames": "最大输出帧数（0表示不限制）"
+    },
+    "outputs": {
+      "输出信息": "提取结果摘要",
+      "frames": "帧数据张量"
+    }
+  },
+  "ListToStringNode": {
+    "title": "列表转字符串",
+    "description": "将列表转换为字符串，每行一个元素",
+    "inputs": {
+      "list": "列表"
+    },
+    "outputs": {
+      "text": "文本"
+    }
+  },
+  "StringToListNode": {
+    "title": "字符串转列表",
+    "description": "将字符串转换为列表，按行分割",
+    "inputs": {
+      "string": "字符串"
+    },
+    "outputs": {
+      "list": "列表"
+    }
+  },
+  "StringReplaceNode": {
+    "title": "字符串替换",
+    "description": "替换文本中的指定内容",
+    "inputs": {
+      "text": "文本",
+      "find": "查找内容",
+      "replace": "替换为",
+      "enabled": "启用"
+    },
+    "widgets": {
+      "text": "原始文本",
+      "find": "要查找的内容",
+      "replace": "替换为的内容",
+      "enabled": "是否启用替换"
+    },
+    "outputs": {
+      "text": "替换后的文本"
+    },
+    "widget_values": {
+      "enabled": {
+        "true": "启用",
+        "false": "禁用"
+      }
+    }
+  },
+  "WorkflowEncryptorNode": {
+    "title": "工作流加密器",
+    "description": "用于加密和解密ComfyUI工作流，使用AES-GCM模式保证数据安全",
+    "inputs": {
+      "operation": "操作",
+      "master_key": "主密钥",
+      "workflow_json": "工作流JSON"
+    },
+    "widgets": {
+      "operation": "选择操作：加密或解密",
+      "master_key": "用于加密/解密的主密钥",
+      "workflow_json": "要加密或已加密的工作流JSON"
+    },
+    "outputs": {
+      "encrypted_decrypted_workflow": "加密/解密后的工作流",
+      "status_message": "状态消息"
+    },
+    "widget_values": {
+      "operation": {
+        "encrypt": "encrypt（加密）",
+        "decrypt": "decrypt（解密）"
+      }
+    }
+  },
+  "AgnesTextGenerationNode": {
+    "title": "Agnes AI 文本生成",
+    "description": "使用 Agnes AI API 生成文本",
+    "inputs": {
+      "system_prompt": "系统提示词",
+      "prompt": "用户提示词",
+      "model": "模型",
+      "temperature": "温度",
+      "max_tokens": "最大输出长度",
+      "top_p": "Top P",
+      "seed": "随机种子",
+      "api_key": "API Key"
+    },
+    "widgets": {
+      "system_prompt": "系统提示词，用于设定模型的角色和行为规范",
+      "prompt": "用户提示词",
+      "model": "选择要使用的模型",
+      "temperature": "控制输出的随机性，值越大越随机",
+      "max_tokens": "最大输出 Token 数量",
+      "top_p": "累积概率阈值，控制生成的多样性",
+      "seed": "随机种子（0 为随机）",
+      "api_key": "Agnes AI API Key"
+    },
+    "outputs": {
+      "response": "响应文本"
+    },
+    "widget_values": {
+      "model": {
+        "agnes-1.5-flash": "agnes-1.5-flash",
+        "agnes-2.0-flash": "agnes-2.0-flash",
+        "agnes-2.5-flash": "agnes-2.5-flash",
+        "agnes-2.5-pro-alpha": "agnes-2.5-pro-alpha"
+      }
+    }
+  },
+  "AgnesTextToImageNode": {
+    "title": "Agnes AI 文生图",
+    "description": "使用 Agnes AI API 生成图像",
+    "inputs": {
+      "prompt": "提示词",
+      "model": "模型",
+      "ratio": "宽高比",
+      "size": "尺寸",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "seed": "随机种子",
+      "api_key": "API Key"
+    },
+    "widgets": {
+      "prompt": "图像生成的文本提示词",
+      "model": "选择要使用的图像模型",
+      "ratio": "图像宽高比",
+      "size": "基础尺寸档位",
+      "custom_width": "自定义图像宽度（仅当尺寸选择'自定义'时生效）",
+      "custom_height": "自定义图像高度（仅当尺寸选择'自定义'时生效）",
+      "seed": "随机种子（0 为随机）",
+      "api_key": "Agnes AI API Key"
+    },
+    "outputs": {
+      "images": "图像",
+      "status_info": "状态信息"
+    },
+    "widget_values": {
+      "model": {
+        "agnes-image-2.0-flash": "agnes-image-2.0-flash",
+        "agnes-image-2.1-flash": "agnes-image-2.1-flash"
+      },
+      "size": {
+        "自定义": "自定义",
+        "1K": "1K",
+        "2K": "2K",
+        "4K": "4K"
+      },
+      "ratio": {
+        "auto": "自动",
+        "1:1": "1:1（方形）",
+        "2:3": "2:3（竖版）",
+        "3:4": "3:4（竖版）",
+        "4:5": "4:5（竖版）",
+        "9:16": "9:16（竖版）",
+        "9:21": "9:21（竖版）",
+        "3:2": "3:2（横版）",
+        "4:3": "4:3（横版）",
+        "5:4": "5:4（横版）",
+        "16:9": "16:9（横版）",
+        "21:9": "21:9（横版）"
+      }
+    }
+  },
+  "AgnesVideoGenerationNode": {
+    "title": "Agnes AI 视频生成",
+    "description": "使用 Agnes AI API 生成视频",
+    "inputs": {
+      "prompt": "提示词",
+      "negative_prompt": "负面提示词",
+      "mode": "生成模式",
+      "width": "宽度",
+      "height": "高度",
+      "duration": "时长(秒)",
+      "frame_rate": "帧率",
+      "poll_interval": "轮询间隔(秒)",
+      "max_wait_time": "最大等待时间(秒)",
+      "seed": "随机种子",
+      "reference_image": "参考图像",
+      "reference_image_2": "参考图像2",
+      "num_inference_steps": "推理步数",
+      "api_key": "API Key"
+    },
+    "widgets": {
+      "prompt": "视频生成的文本提示词",
+      "negative_prompt": "描述不希望出现的内容（可选）",
+      "mode": "视频生成模式",
+      "size": "视频尺寸",
+      "ratio": "视频宽高比",
+      "duration": "视频时长（秒）",
+      "frame_rate": "视频帧率（FPS）",
+      "poll_interval": "查询任务状态的间隔时间",
+      "max_wait_time": "最大等待时间，超时则放弃",
+      "seed": "随机种子（0 为随机）",
+      "reference_image": "图生视频/多图视频/关键帧动画的参考图像",
+      "reference_image_2": "多图视频或关键帧动画的第二张参考图像",
+      "num_inference_steps": "推理步数（可选）",
+      "api_key": "Agnes AI API Key"
+    },
+    "outputs": {
+      "video": "视频",
+      "video_url": "视频URL",
+      "task_info": "任务信息"
+    },
+    "widget_values": {
+      "mode": {
+        "text-to-video": "文生视频",
+        "image-to-video": "图生视频",
+        "multi-image-video": "多图视频",
+        "keyframe-animation": "关键帧动画"
+      },
+      "size": {
+        "480p": "480p",
+        "720p": "720p",
+        "1080p": "1080p"
+      },
+      "ratio": {
+        "auto": "自动",
+        "16:9": "16:9（横版视频）",
+        "9:16": "9:16（竖版短视频）",
+        "1:1": "1:1（方形视频）",
+        "4:3": "4:3（传统横版）",
+        "3:4": "3:4（竖版演示）"
+      }
+    }
+  },
+  "AgnesImageToImageNode": {
+    "title": "Agnes AI 图生图",
+    "description": "使用 Agnes AI API 进行图像到图像的生成",
+    "inputs": {
+      "prompt": "提示词",
+      "negative_prompt": "负面提示词",
+      "model": "模型",
+      "size": "尺寸",
+      "ratio": "宽高比",
+      "seed": "随机种子",
+      "reference_image": "参考图像",
+      "reference_image_2": "参考图像2",
+      "reference_image_3": "参考图像3",
+      "reference_image_4": "参考图像4",
+      "api_key": "Agnes API Key"
+    },
+    "widgets": {
+      "prompt": "图像生成的文本提示词（有图片输入时可为空）",
+      "negative_prompt": "描述不希望出现的内容（可选）",
+      "model": "选择要使用的图像模型",
+      "size": "生成图像的尺寸（1K=1024px, 2K=2048px, 4K=4096px）",
+      "ratio": "生成图像的宽高比（auto 时根据输入图像自动计算）",
+      "seed": "随机种子（0 为随机）",
+      "reference_image": "作为参考的输入图像（支持IMAGE类型）",
+      "reference_image_2": "第二张参考图像（可选）",
+      "reference_image_3": "第三张参考图像（可选）",
+      "reference_image_4": "第四张参考图像（可选）",
+      "api_key": "Agnes AI API Key"
+    },
+    "outputs": {
+      "images": "图像",
+      "status_info": "状态信息"
+    },
+    "widget_values": {
+      "model": {
+        "agnes-image-2.0-flash": "agnes-image-2.0-flash",
+        "agnes-image-2.1-flash": "agnes-image-2.1-flash"
+      },
+      "size": {
+        "1K": "1K（1024px）",
+        "2K": "2K（2048px）",
+        "4K": "4K（4096px）"
+      },
+      "ratio": {
+        "auto": "auto（自动）",
+        "1:1": "1:1（正方形）",
+        "2:3": "2:3（竖屏）",
+        "3:4": "3:4（竖屏）",
+        "4:5": "4:5（竖屏）",
+        "9:16": "9:16（竖屏）",
+        "9:21": "9:21（竖屏）",
+        "3:2": "3:2（横屏）",
+        "4:3": "4:3（横屏）",
+        "5:4": "5:4（横屏）",
+        "16:9": "16:9（横屏）",
+        "21:9": "21:9（横屏）"
+      }
+    }
+  },
+  "AgnesImageCaptionNode": {
+    "title": "Agnes AI 图像反推",
+    "description": "使用 Agnes AI 视觉模型分析图像并生成描述",
+    "inputs": {
+      "image": "图像",
+      "prompt": "提示词",
+      "model": "模型",
+      "seed": "随机种子",
+      "api_key": "API Key"
+    },
+    "widgets": {
+      "image": "要分析的图像",
+      "prompt": "用于图片描述的提示词",
+      "model": "选择要使用的视觉模型",
+      "seed": "随机种子（0为随机）",
+      "api_key": "Agnes AI API Key"
+    },
+    "outputs": {
+      "description": "图像描述"
+    },
+    "widget_values": {
+      "model": {
+        "agnes-2.0-flash": "agnes-2.0-flash",
+        "agnes-2.5-flash": "agnes-2.5-flash",
+        "agnes-2.5-pro-alpha": "agnes-2.5-pro-alpha"
+      }
     }
   }
 }

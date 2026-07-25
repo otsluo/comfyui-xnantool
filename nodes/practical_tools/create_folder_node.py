@@ -41,7 +41,7 @@ class CreateFolderNode:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("status", "info")
     FUNCTION = "create_folders"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def create_folders(self, base_path, folder_names, exist_ok, usage_notes=None):
         """
@@ -153,6 +153,10 @@ NODE_CLASS_MAPPINGS = {
     "CreateFolderNode": CreateFolderNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "CreateFolderNode": "创建文件夹",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

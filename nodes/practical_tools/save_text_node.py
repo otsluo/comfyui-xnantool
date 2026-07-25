@@ -35,7 +35,7 @@ class SaveTextNode:
                 "text": ("STRING", {"multiline": True, "default": ""}),
                 "file_path": ("STRING", {"default": "", "placeholder": "输入文件路径"}),
                 "filename": ("STRING", {"default": "ComfyUI"}),
-                "extension": (["txt", "csv", "md", "srt"], {"default": "txt"}),
+                "extension": (["txt", "csv", "md", "srt", "json"], {"default": "txt"}),
                 "exist_mode": (["覆盖", "直接追加", "换行追加", "跳过"], {"default": "换行追加"}),
             },
             "optional": {
@@ -46,7 +46,7 @@ class SaveTextNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("保存信息",)
     OUTPUT_NODE = True
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     FUNCTION = "save_text"
 
@@ -231,10 +231,15 @@ class SaveTextNode:
         return path
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "SaveTextNode": SaveTextNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "SaveTextNode": "保存文本"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

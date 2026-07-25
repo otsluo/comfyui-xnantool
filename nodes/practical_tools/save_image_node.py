@@ -30,13 +30,16 @@ class SaveImageNode:
                 "quality": ("INT", {"default": 100, "min": 1, "max": 100, "step": 1}),
                 "save_workflow": ("BOOLEAN", {"default": False}),
             },
+            "hidden": {
+                "prompt": "PROMPT",
+                "extra_pnginfo": "EXTRA_PNGINFO",
+            },
         }
 
     RETURN_TYPES = ("IMAGE", "STRING")
-    RETURN_NAMES = ("images", "保存信息")
     OUTPUT_NODE = True
     FUNCTION = "save_images"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     def save_images(self, images, file_path, filename_prefix="ComfyUI", folder_separator="_", num_padding_digits=3, extension="png", quality=100, prompt=None, extra_pnginfo=None, save_workflow=False):
         """
@@ -225,10 +228,15 @@ class SaveImageNode:
         return path
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "SaveImageNode": SaveImageNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "SaveImageNode": "保存图片"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -51,7 +51,7 @@ class YoloDetectAndCropNode:
     RETURN_TYPES = ("IMAGE", "JSON", "INT", "JSON", "INT", "STRING")
     RETURN_NAMES = ("cropped_image", "detection_results", "detected_objects_count", "crop_info", "crop_regions_count", "info")
     FUNCTION = "detect_and_crop"
-    CATEGORY = "XnanTool/yolo和sam/yolo"
+    CATEGORY = "❤️❤️❤️XnanTool/yolo和sam/yolo"
     
     def detect_and_crop(self, yolo_model, image, classes, confidence_threshold, padding):
         """
@@ -351,8 +351,10 @@ NODE_CLASS_MAPPINGS = {
     "YoloDetectAndCropNode": YoloDetectAndCropNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "YoloDetectAndCropNode": "YOLO检测与裁剪一体化"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

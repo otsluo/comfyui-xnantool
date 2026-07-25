@@ -97,7 +97,7 @@ class BailianQwenNode:
     RETURN_TYPES = ("IMAGE", "STRING")
     RETURN_NAMES = ("images", "image_urls")
     FUNCTION = "generate_image"
-    CATEGORY = "XnanTool/API/阿里百炼"
+    CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
     def generate_image(self, prompt, model, api_key=None, negative_prompt="", image_width=1024, image_height=1024, steps=30, scale=7.5, seed=0):
         """
@@ -239,6 +239,7 @@ NODE_CLASS_MAPPINGS = {
     "BailianQwenNode": BailianQwenNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BailianQwenNode": "百炼Qwen-图片生成",
 }

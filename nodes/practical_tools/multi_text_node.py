@@ -51,7 +51,7 @@ class MultiTextNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("text_1", "text_2", "text_3", "text_4", "text_5")
     FUNCTION = "process_texts"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "提供5个独立的文本输入和输出，每个输入直接传递到对应的输出"
     
     def process_texts(self, text_1, text_2, text_3, text_4, text_5):
@@ -63,13 +63,15 @@ class MultiTextNode:
         return (text_1, text_2, text_3, text_4, text_5)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "MultiTextNode": MultiTextNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "MultiTextNode": "多文本",
+    "MultiTextNode": "多文本输入输出",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -56,7 +56,7 @@ class AspectRatioPresetSelector:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("aspect_ratio",)
     FUNCTION = "get_aspect_ratio"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
     
     def get_aspect_ratio(self, aspect_ratio_preset):
         """解析选中的比例预设，返回比例值"""
@@ -64,15 +64,17 @@ class AspectRatioPresetSelector:
         return (aspect_ratio_preset,)
 
 # 导出节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "AspectRatioPresetSelector": AspectRatioPresetSelector,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "AspectRatioPresetSelector": "比例预设",
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS"

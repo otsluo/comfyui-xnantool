@@ -12,27 +12,27 @@ class TextInputNode:
         return {
             "required": {
                 "text": ("STRING", {"default": "", "multiline": True}),
-                "disabled": ("BOOLEAN", {"default": False}),
+                "enabled": ("BOOLEAN", {"default": True}),
             }
         }
 
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("text",)
     FUNCTION = "get_text"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
-    def get_text(self, text, disabled):
+    def get_text(self, text, enabled):
         """
         返回输入的文本
         
         Args:
             text: 输入的文本
-            disabled: 是否禁用
+            enabled: 是否启用
             
         Returns:
             tuple: 包含输入文本的元组
         """
-        if disabled:
+        if not enabled:
             return ("",)
         return (text,)
 
@@ -41,6 +41,10 @@ NODE_CLASS_MAPPINGS = {
     "TextInputNode": TextInputNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "TextInputNode": "文本"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -43,7 +43,7 @@ class ResolutionPresetSelector:
     RETURN_TYPES = ("STRING", "INT")
     RETURN_NAMES = ("resolution", "resolution_value")
     FUNCTION = "get_resolution"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
     
     def get_resolution(self, resolution_preset):
         """解析选中的分辨率预设，返回用户选择的选项名称和对应的数值"""
@@ -53,15 +53,17 @@ class ResolutionPresetSelector:
         return (resolution_preset, value)
 
 # 导出节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ResolutionPresetSelector": ResolutionPresetSelector,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ResolutionPresetSelector": "分辨率预设",
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS"

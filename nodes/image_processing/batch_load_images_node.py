@@ -27,6 +27,10 @@ class BatchLoadImagesNode:
                     "multiline": False,
                     "tooltip": "图片目录路径或单张图片路径"
                 }),
+                "sort_method": (["1111111文件名升序", "2文件名降序", "修改时间升序", "修改时间降序"], {
+                    "default": "文件名升序",
+                    "tooltip": "选择图片排序方式"
+                }),
             },
             "optional": {
                 "index": ("INT", {
@@ -57,7 +61,7 @@ class BatchLoadImagesNode:
     RETURN_NAMES = ("images", "filenames", "filenames_without_extension", "count")
     OUTPUT_IS_LIST = (True, True, True, False)
     FUNCTION = "load_images"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     DESCRIPTION = """
 批量加载图片节点：
 - 支持两种模式：加载全部图片或加载单张图片
@@ -67,7 +71,7 @@ class BatchLoadImagesNode:
 - 返回图片张量列表、文件名列表和图片数量
 """
 
-    def load_images(self, mode, image_path, index=0, max_images=100, seed=0):
+    def load_images(self, mode, image_path, sort_method, index=0, max_images=100, seed=0):
         if not image_path:
             raise ValueError("图片路径不能为空")
             
@@ -76,13 +80,25 @@ class BatchLoadImagesNode:
             raise ValueError(f"指定的路径不存在：{image_path}")
         
         if mode == "加载全部":
-            return self.load_all_images(image_path, max_images)
+            return self.load_all_images(image_path, max_images, sort_method)
         elif mode == "加载单张":
-            return self.load_single_image(image_path, index)
+            return self.load_single_image(image_path, index, sort_method)
         else:  # 随机输出
-            return self.load_random_images(image_path, max_images, seed)
+            return self.load_random_images(image_path, max_images, seed, sort_method)
 
-    def load_all_images(self, image_path, max_images):
+    def _sort_files(self, image_path, image_files, sort_method):
+        """根据排序方法对文件列表进行排序"""
+        if sort_method == "文件名升序":
+            image_files.sort()
+        elif sort_method == "文件名降序":
+            image_files.sort(reverse=True)
+        elif sort_method == "修改时间升序":
+            image_files.sort(key=lambda f: os.path.getmtime(os.path.join(image_path, f)))
+        elif sort_method == "修改时间降序":
+            image_files.sort(key=lambda f: os.path.getmtime(os.path.join(image_path, f)), reverse=True)
+        return image_files
+
+    def load_all_images(self, image_path, max_images, sort_method):
         """加载目录中的所有图片"""
         if not os.path.isdir(image_path):
             raise ValueError("加载全部模式需要指定一个目录路径")
@@ -96,8 +112,8 @@ class BatchLoadImagesNode:
             if file.lower().endswith(supported_formats):
                 image_files.append(file)
                 
-        # 按文件名排序
-        image_files.sort()
+        # 按指定方式排序
+        image_files = self._sort_files(image_path, image_files, sort_method)
         
         # 限制最大图片数量，当max_images为0时加载全部图片
         if max_images > 0 and len(image_files) > max_images:
@@ -141,7 +157,7 @@ class BatchLoadImagesNode:
         filenames_without_extension = [os.path.splitext(file)[0] for file in filenames]
         return (images, filenames, filenames_without_extension, len(images))
 
-    def load_random_images(self, image_path, max_images, seed):
+    def load_random_images(self, image_path, max_images, seed, sort_method):
         """随机加载指定数量的图片"""
         if not os.path.isdir(image_path):
             raise ValueError("随机输出模式需要指定一个目录路径")
@@ -157,6 +173,9 @@ class BatchLoadImagesNode:
                 
         if not image_files:
             raise ValueError(f"在目录 {image_path} 中未找到支持的图片文件")
+        
+        # 按指定方式排序
+        image_files = self._sort_files(image_path, image_files, sort_method)
         
         # 设置随机种子
         random.seed(seed)
@@ -202,7 +221,7 @@ class BatchLoadImagesNode:
         filenames_without_extension = [os.path.splitext(file)[0] for file in filenames]
         return (images, filenames, filenames_without_extension, len(images))
 
-    def load_single_image(self, image_path, index):
+    def load_single_image(self, image_path, index, sort_method):
         """根据索引加载单张图片"""
         if os.path.isfile(image_path):
             # 如果路径指向具体文件
@@ -216,13 +235,14 @@ class BatchLoadImagesNode:
             # 支持的图片格式
             supported_formats = ('.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.webp')
             
-            # 获取所有图片文件并排序
+            # 获取所有图片文件
             image_files = []
             for file in os.listdir(image_path):
                 if file.lower().endswith(supported_formats):
                     image_files.append(file)
-                    
-            image_files.sort()
+            
+            # 按指定方式排序
+            image_files = self._sort_files(image_path, image_files, sort_method)
             
             if not image_files:
                 raise ValueError(f"在目录 {image_path} 中未找到支持的图片文件")
@@ -259,8 +279,10 @@ NODE_CLASS_MAPPINGS = {
     "BatchLoadImagesNode": BatchLoadImagesNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchLoadImagesNode": "批量加载图片"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -139,7 +139,7 @@ class LoadVideoNode:
     RETURN_TYPES = ("VIDEO", "AUDIO", "STRING")
     RETURN_NAMES = ("video", "audio", "filename")
     FUNCTION = "load_video"
-    CATEGORY = "XnanTool/视频剪辑"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     def load_video(self, video_file):
         video_path = os.path.join(folder_paths.get_input_directory(), video_file)
@@ -162,10 +162,15 @@ class LoadVideoNode:
         return (video_stream, audio_stream, video_file)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "LoadVideoNode": LoadVideoNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadVideoNode": "加载视频"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

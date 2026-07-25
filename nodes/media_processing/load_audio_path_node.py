@@ -28,7 +28,7 @@ class LoadAudioPathNode:
     RETURN_TYPES = ("AUDIO", "STRING")
     RETURN_NAMES = ("audio", "audio_path")
     FUNCTION = "load_audio"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     def load_audio(self, audio_path):
         """
@@ -82,6 +82,10 @@ NODE_CLASS_MAPPINGS = {
     "LoadAudioPathNode": LoadAudioPathNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadAudioPathNode": "加载音频路径",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

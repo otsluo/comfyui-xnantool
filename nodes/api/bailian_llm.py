@@ -39,23 +39,21 @@ class BailianLLMNode:
                     "label": "用户提示词",
                     "description": "输入给大模型的用户提示词（可选）"
                 }),
-                "model": (["qwen3.6-max-preview", "qwen3.6-plus", "qwen3.6-flash", "qwen3.6-plus-2026-04-02",
-                          "qwen3-max",
-                          "qwen-max", "qwen-max-latest",
-                          "qwen3.5-plus",
-                          "qwen-plus", "qwen-plus-latest",
-                          "qwen-flash", "qwen-flash-latest",
-                          "qwen3-plus",
-                          "qwen3-flash",
-                          "qwen3.5-122b-a10b", "qwen3.5-27b", "qwen3.5-35b-a3b", "qwen3.5-flash", "qwen3.5-flash-2026-02-23",
-                          "qwen3.6-35b-a3b",
-                          "gui-plus-2026-02-26",
+                "model": (["自定义", "qwen3.7-max", "qwen3.7-plus", "qwen3.7-max-preview",
+                          "qwen3.7-max-2026-06-08", "qwen3.7-max-2026-05-20", "qwen3.7-max-2026-05-17",
+                          "qwen3.7-plus-2026-05-26",
+                          "qwen3.5-ocr",
                           "deepseek-v4-pro", "deepseek-v4-flash",
-                          "deepseek-v3.2", "deepseek-v3.2-exp", "deepseek-v3.1", "deepseek-v3",
-                          "kimi-k2.6", "glm-5.1", "MiniMax-M2.7", "MiniMax-M2.5"], {
-                    "default": "qwen3.6-plus",
+                          "kimi-k2.7-code", "glm-5.2"], {
+                    "default": "qwen3.7-plus",
                     "label": "模型",
-                    "description": "选择要使用的模型"
+                    "description": "选择要使用的模型，选择'自定义'可手动输入模型名称"
+                }),
+                "custom_model": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "label": "自定义模型",
+                    "description": "当模型选择'自定义'时，在此输入模型名称"
                 }),
                 "api_key": ("STRING", {
                     "default": "",
@@ -112,9 +110,9 @@ class BailianLLMNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("response",)
     FUNCTION = "call_llm"
-    CATEGORY = "XnanTool/API/阿里百炼"
+    CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
-    def call_llm(self, system_prompt, prompt, model, api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, enable_thinking="false", seed=0, endpoint=None):
+    def call_llm(self, system_prompt, prompt, model, custom_model="", api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, enable_thinking="false", seed=0, endpoint=None):
         """
         调用阿里云百炼LLM
         
@@ -155,18 +153,24 @@ class BailianLLMNode:
             # 设置API Key
             dashscope.api_key = api_key
             
-            # 提取实际模型名称（去掉中文说明部分）
-            actual_model = model.split('（')[0] if '（' in model else model
+            # 处理自定义模型
+            if model == "自定义":
+                if not custom_model or not custom_model.strip():
+                    return ("错误：选择'自定义'模型时，必须填写自定义模型名称",)
+                actual_model = custom_model.strip()
+            else:
+                # 提取实际模型名称（去掉中文说明部分）
+                actual_model = model.split('（')[0] if '（' in model else model
             
             # 根据模型选择调用方式
-            # qwen3.5-122b-a10b 等新模型需要使用 compatible-mode endpoint
+            # 所有模型都使用 compatible-mode endpoint
             new_models = [
-                "qwen3.6-max-preview", "qwen3.6-plus", "qwen3.6-flash", "qwen3.6-plus-2026-04-02", "qwen3.6-35b-a3b",
-                "qwen3.5-122b-a10b", "qwen3.5-397b-a17b", "qwen3.5-27b", "qwen3.5-35b-a3b",
-                "qwen3.5-plus", "qwen3.5-flash", "qwen3.5-flash-2026-02-23",
-                "qwen3-max", "qwen3-flash",
+                "qwen3.7-max", "qwen3.7-plus", "qwen3.7-max-preview",
+                "qwen3.7-max-2026-06-08", "qwen3.7-max-2026-05-20", "qwen3.7-max-2026-05-17",
+                "qwen3.7-plus-2026-05-26",
+                "qwen3.5-ocr",
                 "deepseek-v4-pro", "deepseek-v4-flash",
-                "kimi-k2.6", "glm-5.1", "MiniMax-M2.7", "MiniMax-M2.5"
+                "kimi-k2.7-code", "glm-5.2"
             ]
             
             if actual_model in new_models:
@@ -174,19 +178,21 @@ class BailianLLMNode:
                 dashscope.base_http_api_url = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
                 logger.info(f"使用 compatible-mode endpoint: https://dashscope.aliyuncs.com/compatible-mode/v1")
                 
-                # 构建调用参数（使用 input 格式，兼容 new models）
-                # 对于 compatible-mode，使用 input 格式，将 system 和 user 消息合并
+                # 构建消息列表
+                messages = []
                 if system_prompt:
-                    input_text = f"{system_prompt.strip()}\n\n{prompt.strip()}"
-                else:
-                    input_text = prompt.strip()
+                    messages.append({"role": "system", "content": system_prompt.strip()})
+                messages.append({"role": "user", "content": prompt.strip()})
                 
                 params = {
                     "model": actual_model,
-                    "input": input_text
+                    "messages": messages,
+                    "temperature": float(temperature),
+                    "top_p": float(top_p),
+                    "max_tokens": int(max_tokens),
                 }
                 
-                # 如果开启思考模式，通过 extra_body 传递（仅适用于支持的模型）
+                # 如果开启思考模式，通过 extra_body 传递
                 if enable_thinking == "true":
                     params["extra_body"] = {"enable_thinking": True}
                 
@@ -196,8 +202,8 @@ class BailianLLMNode:
                         api_key=api_key,
                         base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
                     )
-                    response = client.responses.create(**params)
-                    response_text = response.output_text
+                    response = client.chat.completions.create(**params)
+                    response_text = response.choices[0].message.content
                     logger.info(f"百炼LLM调用成功")
                     return (response_text,)
                 except ImportError:
@@ -310,6 +316,7 @@ NODE_CLASS_MAPPINGS = {
     "BailianLLMNode": BailianLLMNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BailianLLMNode": "百炼LLM-文本生成",
 }

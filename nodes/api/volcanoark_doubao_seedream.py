@@ -82,7 +82,7 @@ class DoubaoSeedreamTextToImageGenerationNode:
     RETURN_TYPES = ("IMAGE", "STRING")
     RETURN_NAMES = ("images", "status_info")
     FUNCTION = "generate_image"
-    CATEGORY = "XnanTool/API/火山引擎"
+    CATEGORY = "❤️❤️❤️XnanTool/API/火山引擎"
     
     def generate_image(self, prompt, model_id, api_key, aspect_ratio, resolution, mode, max_images, seed, watermark):
         """
@@ -356,7 +356,7 @@ class DoubaoSeedreamImageToImageGenerationNode:
     RETURN_TYPES = ("IMAGE", "STRING")
     RETURN_NAMES = ("images", "status_info")
     FUNCTION = "generate_image_to_image"
-    CATEGORY = "XnanTool/API/火山引擎"
+    CATEGORY = "❤️❤️❤️XnanTool/API/火山引擎"
     
     def generate_image_to_image(self, prompt, model_id, api_key, aspect_ratio, resolution, mode, max_images, seed, watermark, image1=None, image2=None, image3=None):
         """
@@ -593,17 +593,19 @@ class DoubaoSeedreamImageToImageGenerationNode:
 
 
 # 导出节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "DoubaoSeedreamTextToImageGenerationNode": DoubaoSeedreamTextToImageGenerationNode,
     "DoubaoSeedreamImageToImageGenerationNode": DoubaoSeedreamImageToImageGenerationNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "DoubaoSeedreamTextToImageGenerationNode": "豆包Seedream文生图",
     "DoubaoSeedreamImageToImageGenerationNode": "豆包Seedream图生图",
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS"

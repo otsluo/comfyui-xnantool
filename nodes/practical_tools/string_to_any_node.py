@@ -10,34 +10,38 @@ class StringToAnyNode:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "input_string": ("STRING", {"multiline": True, "default": ""}),
+                "string": ("STRING", {"multiline": True, "default": ""}),
             }
         }
 
     RETURN_TYPES = ("*",)  # 任意类型输出
-    RETURN_NAMES = ("any_output",)
+    RETURN_NAMES = ("any",)
     FUNCTION = "convert_string_to_any"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
-    def convert_string_to_any(self, input_string):
+    def convert_string_to_any(self, string):
         """
         将输入的字符串转换为任意类型
         
         Args:
-            input_string (str): 输入的字符串
+            string (str): 输入的字符串
             
         Returns:
             tuple: 包含转换后结果的元组
         """
         # 直接返回输入的字符串，作为任意类型输出
         # 在ComfyUI中，"*" 类型可以接受任何类型的数据
-        return (input_string,)
+        return (string,)
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {
     "StringToAnyNode": StringToAnyNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "StringToAnyNode": "字符串到任意类型"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

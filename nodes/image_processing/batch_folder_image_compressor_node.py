@@ -83,7 +83,7 @@ class BatchFolderImageCompressorNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("result_info",)
     FUNCTION = "compress_images"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     
     def compress_images(self, image_directory, output_directory, output_format, quality, max_width, max_height, keep_structure, process_subfolders, conflict_mode, suffix_text):
         """
@@ -266,14 +266,15 @@ class BatchFolderImageCompressorNode:
         return (result,)
 
 
-# Node class mappings
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "BatchFolderImageCompressorNode": BatchFolderImageCompressorNode
 }
 
-# Node display name mappings
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchFolderImageCompressorNode": "批量文件夹图片压缩"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

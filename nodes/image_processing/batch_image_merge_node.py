@@ -32,7 +32,7 @@ class BatchImageMergeNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("merged_image",)
     FUNCTION = "merge_batch_images"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     
     def tensor_to_pil(self, img_tensor):
         """
@@ -146,12 +146,15 @@ class BatchImageMergeNode:
         return (merged_tensor,)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "BatchImageMergeNode": BatchImageMergeNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchImageMergeNode": "批量图片合并"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

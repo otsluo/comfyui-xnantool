@@ -84,7 +84,7 @@ class CounterNode:
     RETURN_TYPES = ("INT", "STRING")
     RETURN_NAMES = ("计数值", "信息")
     FUNCTION = "count"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def count(self, counter_id, reset, increment, max_value, restart_on_max, abort_on_max, seed, start_value, trigger=None, usage_notes=None):
         """
@@ -169,14 +169,15 @@ class CounterNode:
             del cls._counters[counter_id]
 
 
-# Node class mappings
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "CounterNode": CounterNode
 }
 
-# Node display name mappings
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "CounterNode": "计数器"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

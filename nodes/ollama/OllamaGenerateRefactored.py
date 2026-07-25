@@ -182,7 +182,7 @@ class OllamaGenerateRefactored:
         "history",
     )
     FUNCTION = "ollama_generate_refactored"
-    CATEGORY = "XnanTool/Ollama"
+    CATEGORY = "❤️❤️❤️XnanTool/兼容插件/Ollama"
     DESCRIPTION = "重构版的Ollama文本生成节点。支持视觉任务、多轮对话和高级推理选项。具有连接验证、重连功能和异步处理支持。"
 
     async def validate_connection_async(self, url: str, model: str, timeout: int = 30) -> bool:
@@ -664,11 +664,12 @@ timeout: {timeout}
                 raise Exception(error_msg)
 
 
-# Node mappings
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "OllamaGenerateRefactored": OllamaGenerateRefactored,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "OllamaGenerateRefactored": "Ollama生成-重构版",
 }

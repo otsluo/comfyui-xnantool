@@ -124,7 +124,7 @@ class CoverTextGeneratorNode:
     RETURN_TYPES = ("IMAGE", "MASK")
     RETURN_NAMES = ("image", "mask")
     FUNCTION = "generate_cover_image"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     OUTPUT_NODE = False
     
     @classmethod
@@ -216,8 +216,10 @@ class CoverTextGeneratorNode:
         # 加载字体
         font = self._load_font(font_name, font_file, font_size)
         
-        # 处理多行文字
+        # 处理多行文字，并自动换行
         lines = text.split('\n')
+        # 对每一行进行自动换行处理
+        lines = self._wrap_text(lines, width, font, position)
         
         # 计算文字位置
         x, y = self._calculate_position(lines, width, height, position, alignment, font, offset_x, offset_y)
@@ -345,6 +347,64 @@ class CoverTextGeneratorNode:
                 draw.text((x, y), text, fill=glow_color, font=font, stroke_width=i, stroke_fill=glow_color)
             draw.text((x, y), text, fill=text_rgb, font=font)
     
+    def _wrap_text(self, lines, width, font, position):
+        """
+        自动换行处理，确保文字不超过图片宽度
+        
+        Args:
+            lines: 原始行列表
+            width: 图片宽度
+            font: 字体对象
+            position: 文字位置
+            
+        Returns:
+            list: 换行后的行列表
+        """
+        # 计算可用宽度（考虑边距）
+        if "左" in position:
+            max_width = width - 40  # 左边距20 + 右边距20
+        elif "右" in position:
+            max_width = width - 40
+        else:  # 居中
+            max_width = width - 40
+        
+        wrapped_lines = []
+        draw = ImageDraw.Draw(Image.new('RGBA', (1, 1), (0, 0, 0, 0)))
+        
+        for line in lines:
+            if not line.strip():
+                wrapped_lines.append(line)
+                continue
+            
+            # 测量整行宽度
+            bbox = draw.textbbox((0, 0), line, font=font)
+            line_width = bbox[2] - bbox[0]
+            
+            if line_width <= max_width:
+                # 不需要换行
+                wrapped_lines.append(line)
+            else:
+                # 需要换行，逐字累加直到超过宽度
+                current_line = ""
+                for char in line:
+                    test_line = current_line + char
+                    bbox = draw.textbbox((0, 0), test_line, font=font)
+                    test_width = bbox[2] - bbox[0]
+                    
+                    if test_width <= max_width:
+                        current_line = test_line
+                    else:
+                        # 当前行已满，保存并重新开始
+                        if current_line:
+                            wrapped_lines.append(current_line)
+                        current_line = char
+                
+                # 添加最后一行
+                if current_line:
+                    wrapped_lines.append(current_line)
+        
+        return wrapped_lines
+    
     def _get_line_height(self, font):
         """获取行高"""
         temp_image = Image.new('RGBA', (1, 1), (0, 0, 0, 0))
@@ -426,11 +486,15 @@ class CoverTextGeneratorNode:
         return mask_tensor
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "CoverTextGeneratorNode": CoverTextGeneratorNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "CoverTextGeneratorNode": "封面文字生成器",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -54,7 +54,7 @@ class BatchImageScalerNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("result_info",)
     FUNCTION = "scale_images"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
 
     def scale_images(self, image_directory, scale_factor, resize_mode, target_width, target_height, resampling_filter, save_directory):
         # 检查输入目录是否存在
@@ -127,12 +127,15 @@ class BatchImageScalerNode:
         # 返回处理结果信息
         return (f"成功处理 {processed_count}/{len(image_files)} 个图像文件。保存路径: {save_directory}",)
 
-# Node class mappings
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "BatchImageScalerNode": BatchImageScalerNode
 }
 
-# Node display name mappings
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchImageScalerNode": "批量图像缩放"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

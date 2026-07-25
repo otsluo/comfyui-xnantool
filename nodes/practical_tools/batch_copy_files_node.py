@@ -44,7 +44,7 @@ class BatchCopyFilesNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("result_info",)
     FUNCTION = "copy_files"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     def copy_files(self, source_directory, destination_directory, file_extensions, overwrite_existing, preserve_structure):
         """
@@ -165,6 +165,10 @@ NODE_CLASS_MAPPINGS = {
     "BatchCopyFilesNode": BatchCopyFilesNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchCopyFilesNode": "批量复制文件"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

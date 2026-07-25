@@ -46,7 +46,7 @@ class MoveFilesNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("移动信息",)
     FUNCTION = "move_files"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "将文件从源文件夹移动到目标文件夹，支持文件过滤和目录结构保留"
 
     def move_files(self, source_directory, destination_directory, file_extensions="*", overwrite_existing="false", preserve_structure="true"):
@@ -139,10 +139,15 @@ class MoveFilesNode:
             return (f"❌ 移动文件过程中发生错误: {str(e)}",)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "MoveFilesNode": MoveFilesNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "MoveFilesNode": "移动文件"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

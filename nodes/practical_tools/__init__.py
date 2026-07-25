@@ -1,134 +1,33 @@
 # 实用工具节点模块初始化文件
+# 自动合并所有子模块的节点映射
 
-# 导入实用工具相关节点
-from .toggle_value_node import ToggleValueNode
-from .toggle_any_node import ToggleAnyNode
-from .toggle_any_output_node import ToggleAnyOutputNode
-from .toggle_string_output_node import ToggleStringOutputNode
-from .random_execution_node import RandomExecutionNode
+import os
+import importlib
 
-from .batch_copy_files_node import BatchCopyFilesNode
-from .string_merge_node import StringMergeNode
-from .text_input_node import TextInputNode
-from .string_to_any_node import StringToAnyNode
-from .markdown_to_excel_node import MarkdownToExcelNode
-from .save_image_node import SaveImageNode
-from .save_text_node import SaveTextNode
-from .text_to_excel_node import TextToExcelNode
-from .get_current_time_node import GetCurrentTimeNode
-from .save_video_node import SaveVideoNode
-from .text_to_list_node import TextToListNode
-from .package_manager_node import PackageManagerNode
+# 获取当前目录路径
+current_dir = os.path.dirname(__file__)
 
+# 初始化合并字典
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
 
-# 新增导入的节点
-# from .image_encrypt_basic_node import ImageEncryptNode
-# from .image_encrypt_advanced_node import ImageEncryptNodeAdvanced
-from .list_folders_node import ListFoldersNode
-from .list_files_node import ListFilesNode
-from .create_folder_node import CreateFolderNode
-from .loop_generator_node import LoopGeneratorNode
-from .loop_generator_output_splitter_node import LoopGeneratorOutputSplitterNode
-from .counter_node import CounterNode
-from .text_line_reader_node import TextLineReaderNode
-from .text_multi_line_reader_node import TextMultiLineReaderNode
-from .json_formatter_node import JSONFormatterNode
-from .json_parser_node import JSONParserNode
-from .multi_text_node import MultiTextNode
-from .index_switch_node import IndexSwitchNode
-from .sensitive_word_filter_node import SensitiveWordFilterNode
-from .cover_text_generator_node import CoverTextGeneratorNode
-from .image_compositor_node import ImageCompositorNode
-from .load_video_node import LoadVideoNode
-from .preview_video_node import PreviewVideoNode
-from .move_files_node import MoveFilesNode
-from .batch_image_loader_node import BatchImageLoaderNode
-from .multi_path_image_loader_node import MultiPathImageLoaderNode
+# 遍历当前目录下所有Python文件（排除__init__.py）
+for filename in os.listdir(current_dir):
+    if filename.endswith('.py') and filename != '__init__.py':
+        module_name = filename[:-3]  # 移除.py后缀
+        
+        try:
+            # 动态导入模块
+            module = importlib.import_module(f'.{module_name}', package=__name__)
+            
+            # 合并节点映射
+            if hasattr(module, 'NODE_CLASS_MAPPINGS'):
+                NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
+            
+            if hasattr(module, 'NODE_DISPLAY_NAME_MAPPINGS'):
+                NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
+        except Exception as e:
+            print(f'警告: 加载模块 {module_name} 失败 - {e}')
 
-
-
-# 节点类映射
-NODE_CLASS_MAPPINGS = {
-    "ToggleValueNode": ToggleValueNode,
-    "ToggleAnyNode": ToggleAnyNode,
-    "ToggleAnyOutputNode": ToggleAnyOutputNode,
-    "ToggleStringOutputNode": ToggleStringOutputNode,
-    "StringMergeNode": StringMergeNode,
-    "RandomExecutionNode": RandomExecutionNode,
-    "BatchCopyFilesNode": BatchCopyFilesNode,
-    "TextInputNode": TextInputNode,
-    "StringToAnyNode": StringToAnyNode,
-    "MarkdownToExcelNode": MarkdownToExcelNode,
-    "SaveImageNode": SaveImageNode,
-    "SaveTextNode": SaveTextNode,
-    "TextToExcelNode": TextToExcelNode,
-    "GetCurrentTimeNode": GetCurrentTimeNode,
-    "SaveVideoNode": SaveVideoNode,
-    "TextToListNode": TextToListNode,
-    "PackageManagerNode": PackageManagerNode,
-    # "ImageEncryptNode": ImageEncryptNode,
-    # "ImageEncryptNodeAdvanced": ImageEncryptNodeAdvanced,
-    "ListFoldersNode": ListFoldersNode,
-    "ListFilesNode": ListFilesNode,
-    "CreateFolderNode": CreateFolderNode,
-    "LoopGeneratorNode": LoopGeneratorNode,
-    "LoopGeneratorOutputSplitterNode": LoopGeneratorOutputSplitterNode,
-    "CounterNode": CounterNode,
-    "TextLineReaderNode": TextLineReaderNode,
-    "TextMultiLineReaderNode": TextMultiLineReaderNode,
-    "JSONFormatterNode": JSONFormatterNode,
-    "JSONParserNode": JSONParserNode,
-    "MultiTextNode": MultiTextNode,
-    "IndexSwitchNode": IndexSwitchNode,
-    "SensitiveWordFilterNode": SensitiveWordFilterNode,
-    "CoverTextGeneratorNode": CoverTextGeneratorNode,
-    "ImageCompositorNode": ImageCompositorNode,
-    "LoadVideoNode": LoadVideoNode,
-    "PreviewVideoNode": PreviewVideoNode,
-    "MoveFilesNode": MoveFilesNode,
-    "BatchImageLoaderNode": BatchImageLoaderNode,
-    "MultiPathImageLoaderNode": MultiPathImageLoaderNode,
-}
-
-# 节点显示名称映射
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "ToggleValueNode": "切换值",
-    "ToggleAnyNode": "切换任意值",
-    "ToggleAnyOutputNode": "切换任意值（输出）",
-    "ToggleStringOutputNode": "切换字符串（输出）",
-    "StringMergeNode": "字符串合并",
-    "RandomExecutionNode": "随机执行",
-    "BatchCopyFilesNode": "批量复制文件",
-    "TextInputNode": "文本",
-    "StringToAnyNode": "字符串到任意类型",
-    "MarkdownToExcelNode": "MD转Excel",
-    "SaveImageNode": "保存图片",
-    "SaveTextNode": "保存文本",
-    "TextToExcelNode": "文本转Excel",
-    "GetCurrentTimeNode": "获取当前时间",
-    "SaveVideoNode": "保存视频",
-    "TextToListNode": "文本到列表",
-    "PackageManagerNode": "依赖包管理",
-    # "ImageEncryptNode": "图片加密基础",
-    # "ImageEncryptNodeAdvanced": "图片加密高级",
-    "ListFoldersNode": "列出文件夹",
-    "ListFilesNode": "列出文件",
-    "CreateFolderNode": "批量创建文件夹（支持多级）",
-    "LoopGeneratorNode": "循环生成器",
-    "LoopGeneratorOutputSplitterNode": "循环生成器输出转接",
-    "CounterNode": "计数器",
-    "TextLineReaderNode": "文本逐行读取",
-    "TextMultiLineReaderNode": "文本多行读取",
-    "JSONFormatterNode": "JSON格式化",
-    "JSONParserNode": "JSON解析",
-    "SensitiveWordFilterNode": "违禁词过滤",
-    "CoverTextGeneratorNode": "封面文字生成器",
-    "ImageCompositorNode": "图像合成（图层）",
-    "LoadVideoNode": "加载视频",
-    "PreviewVideoNode": "预览视频",
-    "MoveFilesNode": "移动文件",
-    "BatchImageLoaderNode": "多行路径图片批次输出",
-    "MultiPathImageLoaderNode": "多行路径图片列表输出",
-}
-
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

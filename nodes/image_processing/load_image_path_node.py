@@ -33,7 +33,7 @@ class LoadImagePathNode:
     RETURN_TYPES = ("IMAGE", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("image", "image_path", "image_name", "image_name_with_ext")
     FUNCTION = "load_image_from_path"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     
     @classmethod
     def IS_CHANGED(cls, image_path):
@@ -96,12 +96,10 @@ NODE_CLASS_MAPPINGS = {
     "LoadImagePathNode": LoadImagePathNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LoadImagePathNode": "加载图片路径",
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

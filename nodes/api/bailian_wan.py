@@ -115,7 +115,7 @@ class BailianWanNode:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("video_url", "task_id")
     FUNCTION = "generate_video"
-    CATEGORY = "XnanTool/API/阿里百炼"
+    CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
     def generate_video(self, prompt, model, api_key=None, image=None, end_image=None, 
                       video="", audio="", video_duration=5, resolution="1080P", seed=0):
@@ -349,7 +349,7 @@ class BailianWanQueryNode:
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("task_status", "video_url", "error_msg", "task_id", "all_info")
     FUNCTION = "query_task"
-    CATEGORY = "XnanTool/API/阿里百炼"
+    CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
     def query_task(self, task_id, api_key=None):
         """
@@ -462,6 +462,7 @@ NODE_CLASS_MAPPINGS = {
     "BailianWanQueryNode": BailianWanQueryNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BailianWanNode": "百炼Wan-视频生成",
     "BailianWanQueryNode": "百炼Wan-查询任务-测试图参",

@@ -28,8 +28,8 @@ class BatchExtractFrameFromVideoNode:
         
         return {
             "required": {
-                "folder_selection_mode": (["select_from_input_dir", "custom_path"], {
-                    "default": "select_from_input_dir",
+                "folder_selection_mode": (["从输入目录选择", "自定义路径"], {
+                    "default": "从输入目录选择",
                     "label": "文件夹选择模式",
                     "description": "选择文件夹的方式：从输入目录选择或自定义路径"
                 }),
@@ -43,8 +43,8 @@ class BatchExtractFrameFromVideoNode:
                     "placeholder": "输入自定义视频文件夹的完整路径",
                     "label": "自定义视频文件夹路径"
                 }),
-                "frame_extraction_method": (["frame_number", "timestamp"], {
-                    "default": "frame_number",
+                "frame_extraction_method": (["按帧号", "按时间戳"], {
+                    "default": "按帧号",
                     "label": "提取方式",
                     "description": "选择帧提取的方式：按帧号或按时间戳"
                 }),
@@ -99,7 +99,7 @@ class BatchExtractFrameFromVideoNode:
     RETURN_TYPES = ("STRING", "INT", "STRING")
     RETURN_NAMES = ("image_paths", "frame_indices", "status_message")
     FUNCTION = "batch_extract_frames"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     @classmethod
     def IS_CHANGED(cls, folder_selection_mode, video_folder, custom_video_folder_path, frame_extraction_method, frame_number, timestamp, output_format, image_quality, output_filename_prefix="", output_folder=""):
@@ -109,11 +109,11 @@ class BatchExtractFrameFromVideoNode:
     @classmethod
     def VALIDATE_INPUTS(cls, folder_selection_mode, video_folder, custom_video_folder_path, frame_extraction_method, frame_number, timestamp, output_format, image_quality, output_filename_prefix="", output_folder=""):
         # 根据选择模式确定文件夹路径
-        if folder_selection_mode == "custom_path":
+        if folder_selection_mode == "自定义路径":
             if not custom_video_folder_path:
                 return "请提供自定义视频文件夹的完整路径"
             folder_path = custom_video_folder_path
-        else:  # select_from_input_dir
+        else:  # 从输入目录选择
             if not video_folder or video_folder == "选择视频文件夹":
                 return "请选择一个有效的视频文件夹"
             
@@ -167,13 +167,13 @@ class BatchExtractFrameFromVideoNode:
         """
         try:
             # 根据选择模式确定文件夹路径
-            if folder_selection_mode == "custom_path":
+            if folder_selection_mode == "自定义路径":
                 if not custom_video_folder_path:
                     error_msg = "错误：未提供自定义视频文件夹路径"
                     logger.error(error_msg)
                     return ([], [], error_msg)
                 folder_path = custom_video_folder_path
-            else:  # select_from_input_dir
+            else:  # 从输入目录选择
                 if not video_folder or video_folder == "选择视频文件夹":
                     error_msg = "错误：未选择视频文件夹"
                     logger.error(error_msg)
@@ -235,7 +235,7 @@ class BatchExtractFrameFromVideoNode:
                     logger.info(f"视频信息 - 总帧数: {total_frames}, FPS: {fps}, 分辨率: {width}x{height}")
                     
                     # 确定要提取的帧索引
-                    if frame_extraction_method == "frame_number":
+                    if frame_extraction_method == "按帧号":
                         target_frame_index = frame_number - 1  # 转换为0基索引
                         if target_frame_index >= total_frames:
                             error_msg = f"错误：指定的帧号({frame_number})超出了视频总帧数({total_frames})"
@@ -244,7 +244,7 @@ class BatchExtractFrameFromVideoNode:
                             status_messages.append(f"[{i+1}] {error_msg}")
                             fail_count += 1
                             continue
-                    else:  # timestamp
+                    else:  # 按时间戳
                         target_frame_index = int(timestamp * fps)
                         if target_frame_index >= total_frames:
                             error_msg = f"错误：指定的时间点({timestamp}秒)超出了视频总时长({total_frames/fps:.2f}秒)"
@@ -350,12 +350,10 @@ NODE_CLASS_MAPPINGS = {
     "BatchExtractFrameFromVideoNode": BatchExtractFrameFromVideoNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchExtractFrameFromVideoNode": "批量视频帧提取"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

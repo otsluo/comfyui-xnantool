@@ -43,7 +43,7 @@ class SaveVideoNode:
     RETURN_NAMES = ("保存信息",)
     OUTPUT_NODE = True
     FUNCTION = "save_video"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def save_video(self, filename_prefix="视频", fps="自动", video_format="mp4", codec="自动", preset="fast", crf="自动", audio_sample_rate="自动", audio_bitrate="自动", images=None, video=None, audio=None, output_path=""):
         """将图像序列保存为视频文件"""
@@ -495,10 +495,16 @@ class SaveVideoNode:
                 has_audio = "是" if audio_stream else "否"
                 audio_info = ""
                 if audio_stream:
-                    audio_info = f", 采样率={audio_stream.rate}Hz, 声道={audio_stream.channels}"
+                    audio_bitrate_display = ""
+                    if audio_stream.bit_rate:
+                        audio_bitrate_display = f", 比特率={audio_stream.bit_rate // 1000}k"
+                    audio_info = f", 采样率={audio_stream.rate}Hz, 声道={audio_stream.channels}{audio_bitrate_display}"
                 
                 file_size = os.path.getsize(file_path) / (1024 * 1024)
                 filename = os.path.basename(file_path)
+                
+                # 获取编码参数
+                crf_display = f"{crf_value}" if crf != "自动" else "自动(23)"
                 
                 info_text = (
                     f"✅ {message}\n\n"
@@ -508,7 +514,10 @@ class SaveVideoNode:
                     f"🖼️ 帧数: {frame_count}\n"
                     f"⏱️ 时长: {duration:.2f} 秒\n"
                     f"🔊 音频: {has_audio}{audio_info}\n"
-                    f"💾 大小: {file_size:.2f} MB"
+                    f"💾 大小: {file_size:.2f} MB\n"
+                    f"🎬 编码: {codec}\n"
+                    f"📊 CRF质量: {crf_display}\n"
+                    f"⚡ 编码预设: {preset}"
                 )
             else:
                 info_text = f"✅ {message}\n\n⚠️ 视频中无视频流"
@@ -593,10 +602,15 @@ class SaveVideoNode:
         
         return path
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "SaveVideoNode": SaveVideoNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "SaveVideoNode": "保存视频"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

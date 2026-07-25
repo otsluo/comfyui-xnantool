@@ -53,7 +53,7 @@ class BatchImageFormatConverterNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_paths",)
     FUNCTION = "convert_images"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
 
     def get_supported_formats(self):
         """获取支持的图片格式"""
@@ -189,12 +189,10 @@ NODE_CLASS_MAPPINGS = {
     "BatchImageFormatConverterNode": BatchImageFormatConverterNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchImageFormatConverterNode": "批量图像格式转换器"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

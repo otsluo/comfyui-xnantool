@@ -39,7 +39,7 @@ class VideoToMp4Node:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("output_path", "info")
     FUNCTION = "convert_video_to_mp4"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
 
     def convert_video_to_mp4(self, video_path, start_time, duration, fps, quality, crf_value, preset, codec, audio_bitrate, audio_sample_rate, copy_audio, output_resolution, custom_width, custom_height, output_path, output_filename):
         """
@@ -230,6 +230,10 @@ NODE_CLASS_MAPPINGS = {
     "VideoToMp4Node": VideoToMp4Node,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "VideoToMp4Node": "视频转MP4节点",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

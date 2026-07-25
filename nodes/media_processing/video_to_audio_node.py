@@ -52,7 +52,7 @@ class VideoToAudioNode:
     RETURN_TYPES = ("STRING", "STRING", "AUDIO")
     RETURN_NAMES = ("audio_file_path", "status_message", "audio")
     FUNCTION = "extract_audio"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     OUTPUT_NODE = True
     
     @classmethod
@@ -238,13 +238,15 @@ class VideoToAudioNode:
             print(f"🎵 音频提取出错: {str(e)}")
             return False
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "VideoToAudioNode": VideoToAudioNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "VideoToAudioNode": "视频转音频"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -48,7 +48,7 @@ class DimensionMultiplierNode:
     RETURN_TYPES = ("INT", "INT")
     RETURN_NAMES = ("width", "height")
     FUNCTION = "multiply_dimensions"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
     
     def multiply_dimensions(self, multiplier, width=None, height=None):
         """根据倍数调整尺寸"""
@@ -64,15 +64,17 @@ class DimensionMultiplierNode:
         return (output_width, output_height)
 
 # 导出节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "DimensionMultiplierNode": DimensionMultiplierNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "DimensionMultiplierNode": "尺寸倍数",
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS"

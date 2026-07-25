@@ -96,7 +96,7 @@ class ImagesToVideoNode:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("output_path", "info")
     FUNCTION = "convert_image_to_video"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     def convert_image_to_video(self, duration, fps, output_resolution, custom_width, custom_height, output_filename, output_path, conflict_mode="数字后缀", pad_width=2, separator="_", image=None, image_frames=None, audio=None):
         """
@@ -501,6 +501,10 @@ NODE_CLASS_MAPPINGS = {
     "ImagesToVideoNode": ImagesToVideoNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImagesToVideoNode": "图片转视频",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

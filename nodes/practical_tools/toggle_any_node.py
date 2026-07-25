@@ -19,7 +19,7 @@ class ToggleAnyNode:
     RETURN_TYPES = ("*",)  # 动态类型输出
     RETURN_NAMES = ("any_output",)
     FUNCTION = "toggle_any"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     @classmethod
     def VALIDATE_INPUTS(cls, input_types):
@@ -61,6 +61,10 @@ NODE_CLASS_MAPPINGS = {
     "ToggleAnyNode": ToggleAnyNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ToggleAnyNode": "切换任意值"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

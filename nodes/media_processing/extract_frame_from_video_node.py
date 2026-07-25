@@ -33,8 +33,8 @@ class ExtractFrameFromVideoNode:
                     "description": "选择要提取帧的视频文件",
                     "video_upload": True  # 添加视频上传支持
                 }),
-                "frame_extraction_method": (["frame_number", "timestamp"], {
-                    "default": "frame_number",
+                "frame_extraction_method": (["按帧号", "按时间戳"], {
+                    "default": "按帧号",
                     "label": "提取方式",
                     "description": "选择帧提取的方式：按帧号或按时间戳"
                 }),
@@ -83,7 +83,7 @@ class ExtractFrameFromVideoNode:
     RETURN_TYPES = ("IMAGE", "STRING", "INT", "STRING")
     RETURN_NAMES = ("image", "image_path", "frame_index", "status_message")
     FUNCTION = "extract_frame"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     @classmethod
     def IS_CHANGED(cls, video_file, frame_extraction_method, frame_number, timestamp, output_format, image_quality, output_filename=""):
@@ -144,14 +144,14 @@ class ExtractFrameFromVideoNode:
             logger.info(f"视频信息 - 总帧数: {total_frames}, FPS: {fps}, 分辨率: {width}x{height}")
             
             # 确定要提取的帧索引
-            if frame_extraction_method == "frame_number":
+            if frame_extraction_method == "按帧号":
                 target_frame_index = frame_number - 1  # 转换为0基索引
                 if target_frame_index >= total_frames:
                     error_msg = f"错误：指定的帧号({frame_number})超出了视频总帧数({total_frames})"
                     logger.error(error_msg)
                     cap.release()
                     return (torch.zeros(1, 64, 64, 3), "", -1, error_msg)
-            else:  # timestamp
+            else:  # 按时间戳
                 target_frame_index = int(timestamp * fps)
                 if target_frame_index >= total_frames:
                     error_msg = f"错误：指定的时间点({timestamp}秒)超出了视频总时长({total_frames/fps:.2f}秒)"
@@ -227,12 +227,10 @@ NODE_CLASS_MAPPINGS = {
     "ExtractFrameFromVideoNode": ExtractFrameFromVideoNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ExtractFrameFromVideoNode": "视频帧提取"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

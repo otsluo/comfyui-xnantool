@@ -60,7 +60,7 @@ class SensitiveWordFilterNode:
     RETURN_TYPES = ("STRING", "STRING", "INT")
     RETURN_NAMES = ("filtered_text", "filter_report", "found_count")
     FUNCTION = "filter_sensitive_words"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
     def filter_sensitive_words(self, input_text, filter_mode, replacement_text, match_mode, case_sensitive,
                                custom_words="", regex_patterns=""):
@@ -176,11 +176,15 @@ class SensitiveWordFilterNode:
         return (filtered_text, report, count)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "SensitiveWordFilterNode": SensitiveWordFilterNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "SensitiveWordFilterNode": "违禁词过滤",
+    "SensitiveWordFilterNode": "违禁词过滤-文本过滤器",
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

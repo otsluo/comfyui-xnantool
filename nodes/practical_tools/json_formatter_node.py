@@ -37,7 +37,7 @@ class JSONFormatterNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("formatted_json",)
     FUNCTION = "format_json"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "将输入的JSON字符串格式化输出，支持不同的缩进级别"
     
     def format_json(self, json_input, indent=2):
@@ -70,13 +70,15 @@ class JSONFormatterNode:
             return (error_msg,)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "JSONFormatterNode": JSONFormatterNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "JSONFormatterNode": "JSON格式化",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

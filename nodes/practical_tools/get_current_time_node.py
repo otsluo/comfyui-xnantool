@@ -19,7 +19,7 @@ class GetCurrentTimeNode:
     RETURN_TYPES = ("STRING", "INT")
     RETURN_NAMES = ("time_string", "timestamp_int")
     FUNCTION = "get_current_time"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     def get_current_time(self, format_type, input_value=None):
         """
@@ -42,10 +42,15 @@ class GetCurrentTimeNode:
         return (time_string, timestamp_int)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "GetCurrentTimeNode": GetCurrentTimeNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "GetCurrentTimeNode": "获取当前时间"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

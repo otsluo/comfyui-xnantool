@@ -1,7 +1,7 @@
 import os
 import numpy as np
+import torch
 import torchaudio
-from .. import NODE_CLASS_MAPPINGS as PRIMITIVE_TOOLS_NODE_CLASS_MAPPINGS
 
 
 class SaveAudioNode:
@@ -24,7 +24,7 @@ class SaveAudioNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_path",)
     FUNCTION = "save_audio"
-    CATEGORY = "XnanTool/音频处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     def save_audio(self, audio, filename_prefix, output_dir, format, sample_rate):
         """
@@ -103,10 +103,15 @@ class SaveAudioNode:
             return ("",)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "SaveAudioNode": SaveAudioNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "SaveAudioNode": "保存音频"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -31,7 +31,7 @@ class ToggleStringOutputNode:
     RETURN_TYPES = ("STRING", "STRING")
     RETURN_NAMES = ("output_a", "output_b")
     FUNCTION = "toggle_string_output"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "切换字符串（输出）节点，根据布尔值将字符串输入路由到两个输出端口中的一个"
 
     def toggle_string_output(self, toggle, input_string=""):
@@ -53,10 +53,15 @@ class ToggleStringOutputNode:
             return (input_string, None)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ToggleStringOutputNode": ToggleStringOutputNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ToggleStringOutputNode": "切换字符串（输出）"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

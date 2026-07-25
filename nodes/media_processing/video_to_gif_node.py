@@ -89,7 +89,7 @@ class VideoToGifNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("output_path",)
     FUNCTION = "convert_video_to_gif"
-    CATEGORY = "XnanTool/媒体处理"
+    CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
     @classmethod
     def IS_CHANGED(cls, video_file, duration, fps, resize_factor, optimize, palette_size, quality, output_filename="视频转gif.gif"):
@@ -248,12 +248,10 @@ NODE_CLASS_MAPPINGS = {
     "VideoToGifNode": VideoToGifNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "VideoToGifNode": "视频转GIF"
 }
 
-# 确保模块被正确导入
-__all__ = [
-    "NODE_CLASS_MAPPINGS",
-    "NODE_DISPLAY_NAME_MAPPINGS"
-]
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

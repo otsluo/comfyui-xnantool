@@ -38,7 +38,8 @@
             "run_timeout": "运行超时时间",
             "concurrency_limit": "并发限制",
             "is_webapp_task": "是否为AI应用任务",
-            "use_rtx4090_48g": "使用RTX4090 48G实例"
+            "use_rtx4090_48g": "使用RTX4090 48G实例",
+            "seed": "随机种子"
         },
         "outputs": {
             "images": "图像",
@@ -67,7 +68,7 @@
     },
     "RH_VideoUploader": {
         "title": "RH 视频上传器",
-        "description": "将视频文件上传到RunningHub API，并返回生成的文件名/ID",
+        "description": "将视频文件上传到RunningHub API，并返回生成的文件名/ID、原始视频文件名和视频时长",
         "inputs": {
             "apiConfig": "API配置"
         },
@@ -75,7 +76,9 @@
             "video": "视频"
         },
         "outputs": {
-            "filename": "文件名"
+            "filename": "文件名",
+            "video_filename": "视频文件名",
+            "video_duration": "视频时长"
         }
     },
     "RH_AudioUploader": {
@@ -93,14 +96,16 @@
     },
     "RH_VideoUploaderPath": {
         "title": "RH 视频路径上传器",
-        "description": "通过文件路径将视频上传到RunningHub API，并返回生成的文件名/ID",
+        "description": "通过文件路径将视频上传到RunningHub API，并返回生成的文件名/ID、原始视频文件名和视频时长",
         "inputs": {
             "apiConfig": "API配置",
             "video_path": "视频路径"
         },
         "widgets": {},
         "outputs": {
-            "filename": "文件名"
+            "filename": "服务器文件名",
+            "video_filename": "原始视频文件名",
+            "video_duration": "视频时长(秒)"
         }
     },
     "RH_Utils": {

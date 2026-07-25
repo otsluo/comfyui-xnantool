@@ -1,66 +1,33 @@
 # 图像处理节点模块初始化文件
+# 自动合并所有子模块的节点映射
 
-# 导入图像处理相关节点
-from .load_image_node import LoadImageNode
-from .load_image_path_node import LoadImagePathNode
-from .batch_load_images_node import BatchLoadImagesNode
-from .image_format_converter_node import ImageFormatConverterNode
-from .batch_image_format_converter_node import BatchImageFormatConverterNode
-from .Image_encoding_generation_node import Imageencodinggeneration
-from .image_encoding_generation_no_convert_node import ImageEncodingGenerationNoConvertNode
-from .batch_image_resizer_with_conversion_node import BatchImageResizerWithConversionNode
-from .square_converter_node import SquareConverter
-from .rectangle_converter_node import RectangleConverter
-from .create_image_node import CreateImageNode
-from .batch_rename_images_by_md5_node import BatchRenameImagesByMD5Node
-from .batch_image_scaler_node import BatchImageScalerNode
-from .image_merge_node import ImageMergeNode
-from .image_grid_split_node import ImageGridSplitNode
-from .batch_folder_image_compressor_node import BatchFolderImageCompressorNode
-from .batch_image_merge_node import BatchImageMergeNode
+import os
+import importlib
 
+# 获取当前目录路径
+current_dir = os.path.dirname(__file__)
 
+# 初始化合并字典
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
 
-# 定义节点映射
-NODE_CLASS_MAPPINGS = {
-    "LoadImageNode": LoadImageNode,
-    "LoadImagePathNode": LoadImagePathNode,
-    "BatchLoadImagesNode": BatchLoadImagesNode,
-    "ImageFormatConverterNode": ImageFormatConverterNode,
-    "BatchImageFormatConverterNode": BatchImageFormatConverterNode,
-    "Imageencodinggeneration": Imageencodinggeneration,
-    "ImageEncodingGenerationNoConvertNode": ImageEncodingGenerationNoConvertNode,
-    "BatchImageResizerWithConversionNode": BatchImageResizerWithConversionNode,
-    "SquareConverter": SquareConverter,
-    "RectangleConverter": RectangleConverter,
-    "CreateImageNode": CreateImageNode,
-    "BatchRenameImagesByMD5Node": BatchRenameImagesByMD5Node,
-    "BatchImageScalerNode": BatchImageScalerNode,
-    "ImageMergeNode": ImageMergeNode,
-    "ImageGridSplitNode": ImageGridSplitNode,
-    "BatchFolderImageCompressorNode": BatchFolderImageCompressorNode,
-    "BatchImageMergeNode": BatchImageMergeNode,
-}
+# 遍历当前目录下所有Python文件（排除__init__.py）
+for filename in os.listdir(current_dir):
+    if filename.endswith('.py') and filename != '__init__.py':
+        module_name = filename[:-3]  # 移除.py后缀
+        
+        try:
+            # 动态导入模块
+            module = importlib.import_module(f'.{module_name}', package=__name__)
+            
+            # 合并节点映射
+            if hasattr(module, 'NODE_CLASS_MAPPINGS'):
+                NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
+            
+            if hasattr(module, 'NODE_DISPLAY_NAME_MAPPINGS'):
+                NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
+        except Exception as e:
+            print(f'警告: 加载模块 {module_name} 失败 - {e}')
 
-# 定义节点显示名称映射
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "LoadImageNode": "加载图像-【Beta】",
-    "LoadImagePathNode": "加载图片路径",
-    "BatchLoadImagesNode": "批量加载图片",
-    "ImageFormatConverterNode": "图像格式转换器",
-    "BatchImageFormatConverterNode": "批量图像格式转换器",
-    "Imageencodinggeneration": "图片编码生成",
-    "ImageEncodingGenerationNoConvertNode": "图片编码生成-不转化",
-    "BatchImageResizerWithConversionNode": "批量图像缩放（带格式转换）",
-    "SquareConverter": "正方形转换器",
-    "RectangleConverter": "长方形转换器",
-    "CreateImageNode": "创建图像",
-    "BatchRenameImagesByMD5Node": "批量重命名图片（MD5）",
-    "BatchImageScalerNode": "批量图像缩放",
-    "ImageMergeNode": "图片合并",
-    "ImageGridSplitNode": "图像拆分网格",
-    "BatchFolderImageCompressorNode": "批量文件夹图片压缩",
-    "BatchImageMergeNode": "批量图片合并",
-}
-
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

@@ -58,7 +58,7 @@ class BatchImageLoaderNode:
     RETURN_TYPES = ("IMAGE", "STRING", "INT", "BOOL")
     RETURN_NAMES = ("图片", "路径列表", "当前批次", "是否完成")
     FUNCTION = "load_batch_images"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "从多行图片路径中逐批次加载并输出图片"
     
     def load_batch_images(self, image_paths, batch_size=1, seed=0, shuffle="否", restart="否", usage_notes=None):
@@ -207,12 +207,15 @@ class BatchImageLoaderNode:
         return (batch_tensor, loaded_paths)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "BatchImageLoaderNode": BatchImageLoaderNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BatchImageLoaderNode": "多行路径图片批次输出",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

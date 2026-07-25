@@ -1,5 +1,4 @@
 # 基础通用依赖
-
 torch
 torchvision  # 添加torchvision，YOLO需要它进行图像处理
 numpy

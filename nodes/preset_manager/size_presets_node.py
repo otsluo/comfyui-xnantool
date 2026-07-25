@@ -29,10 +29,16 @@ DEFAULT_SIZE_PRESETS = [
     ["4:3-超清横屏：1600x1200", "1600x1200"],
     
     # 16:9 比例 (横屏)
-    ["16:9-宽屏：1664x928", "1664x928"],
+    ["16:9-横屏：1024x576", "1024x576"],
+    ["16:9-高清横屏：1344x768", "1344x768"],
+    ["16:9-Qwen横屏：1664x928", "1664x928"],
+    ["16:9-超清横屏：2048x1152", "2048x1152"],
     
     # 9:16 比例 (竖屏)
-    ["9:16-竖屏：928x1664", "928x1664"],
+    ["9:16-竖屏：576x1024", "576x1024"],
+    ["9:16-高清竖屏：768x1344", "768x1344"],
+    ["9:16-Qwen竖屏：928x1664", "928x1664"],
+    ["9:16-超清竖屏：1152x2048", "1152x2048"],
 ]
 
 # 尺寸配置相关函数
@@ -101,7 +107,7 @@ class SizeSelector:
     RETURN_TYPES = ("INT", "INT")
     RETURN_NAMES = ("width", "height")
     FUNCTION = "get_size"
-    CATEGORY = "XnanTool/预设"
+    CATEGORY = "❤️❤️❤️XnanTool/预设"
     
     def get_size(self, size_preset, use_custom_size, custom_width=1024, custom_height=1024):
         """解析选中的尺寸预设，返回宽度和高度"""
@@ -127,15 +133,17 @@ class SizeSelector:
             return (512, 512)
 
 # 导出节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "SizeSelector": SizeSelector,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "SizeSelector": "尺寸预设",
 }
 
-# 确保模块被正确导入
+# 导出映射（必须）
 __all__ = [
     "NODE_CLASS_MAPPINGS",
     "NODE_DISPLAY_NAME_MAPPINGS"

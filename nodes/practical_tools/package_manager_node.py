@@ -38,7 +38,7 @@ class PackageManagerNode:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("结果",)
     FUNCTION = "manage_package"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "管理Python依赖包：查看已安装、查看包详情、安装、卸载、更新（支持换源安装）"
     
     def manage_package(self, action, package_name, mirror_url="https://mirrors.aliyun.com/pypi/simple"):
@@ -232,12 +232,15 @@ class PackageManagerNode:
         return True
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "PackageManagerNode": PackageManagerNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "PackageManagerNode": "依赖包管理",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

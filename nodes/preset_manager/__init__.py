@@ -1,41 +1,33 @@
 # 预设管理节点模块初始化文件
+# 自动合并所有子模块的节点映射
 
-# 导入预设管理相关节点
-from .size_presets_node import SizeSelector
-from .image_video_prompt_presets_node import ImageVideoPromptSelector, ImageVideoPromptManager, PresetImageUploadNode
-from .random_prompt_generator_group_node import RandomPromptGeneratorGroupNode, RandomPromptGeneratorNode
-from .resolution_presets_node import ResolutionPresetSelector
-from .aspect_ratio_presets_node import AspectRatioPresetSelector
-from .dimension_multiplier_node import DimensionMultiplierNode
-from .video_size_preset_node import VideoSizePresetNode
+import os
+import importlib
 
+# 获取当前目录路径
+current_dir = os.path.dirname(__file__)
 
-# 定义节点映射
-NODE_CLASS_MAPPINGS = {
-    "SizeSelector": SizeSelector,
-    "ImageVideoPromptSelector": ImageVideoPromptSelector,
-    "ImageVideoPromptManager": ImageVideoPromptManager,
-    "PresetImageUploadNode": PresetImageUploadNode,
-    "RandomPromptGeneratorGroupNode": RandomPromptGeneratorGroupNode,
-    "RandomPromptGeneratorNode": RandomPromptGeneratorNode,
-    "ResolutionPresetSelector": ResolutionPresetSelector,
-    "AspectRatioPresetSelector": AspectRatioPresetSelector,
-    "DimensionMultiplierNode": DimensionMultiplierNode,
-    "VideoSizePresetNode": VideoSizePresetNode,
-}
+# 初始化合并字典
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
 
-# 定义节点显示名称映射
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "SizeSelector": "尺寸预设",
-    "ImageVideoPromptSelector": "图片视频提示词预设",
-    "ImageVideoPromptManager": "图片视频提示词预设管理器",
-    "PresetImageUploadNode": "预设图像上传节点",
-    "RandomPromptGeneratorGroupNode": "随机提示词生成器组",
-    "RandomPromptGeneratorNode": "随机提示词生成器",
-    "ResolutionPresetSelector": "分辨率预设",
-    "AspectRatioPresetSelector": "比例预设",
-    "DimensionMultiplierNode": "尺寸倍数",
-    "VideoSizePresetNode": "视频尺寸预设",
-}
+# 遍历当前目录下所有Python文件（排除__init__.py）
+for filename in os.listdir(current_dir):
+    if filename.endswith('.py') and filename != '__init__.py':
+        module_name = filename[:-3]  # 移除.py后缀
+        
+        try:
+            # 动态导入模块
+            module = importlib.import_module(f'.{module_name}', package=__name__)
+            
+            # 合并节点映射
+            if hasattr(module, 'NODE_CLASS_MAPPINGS'):
+                NODE_CLASS_MAPPINGS.update(module.NODE_CLASS_MAPPINGS)
+            
+            if hasattr(module, 'NODE_DISPLAY_NAME_MAPPINGS'):
+                NODE_DISPLAY_NAME_MAPPINGS.update(module.NODE_DISPLAY_NAME_MAPPINGS)
+        except Exception as e:
+            print(f'警告: 加载模块 {module_name} 失败 - {e}')
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

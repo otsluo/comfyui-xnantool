@@ -33,7 +33,7 @@ class ImageGridSplitNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image_grid",)
     FUNCTION = "split_image_grid"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     
     def split_image_grid(self, images, grid_rows, grid_cols):
         """
@@ -88,10 +88,15 @@ class ImageGridSplitNode:
             return (torch.zeros((1, 512, 512, 3), dtype=torch.float32),)
 
 
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "ImageGridSplitNode": ImageGridSplitNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageGridSplitNode": "图像拆分网格"
 }
+
+# 导出映射（必须）
+__all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

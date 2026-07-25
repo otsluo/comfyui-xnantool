@@ -21,7 +21,7 @@ class Imageencodinggeneration:
     RETURN_TYPES = ("STRING", "STRING", "STRING", "STRING", "STRING", "STRING")
     RETURN_NAMES = ("uuid", "md5", "sha1", "sha256", "sha512", "image_info")
     FUNCTION = "generate_uuid"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
 
     def generate_uuid(self, image):
         """
@@ -123,8 +123,10 @@ NODE_CLASS_MAPPINGS = {
     "Imageencodinggeneration": Imageencodinggeneration
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "Imageencodinggeneration": "图片编码生成"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

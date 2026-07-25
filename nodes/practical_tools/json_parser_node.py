@@ -36,7 +36,7 @@ class JSONParserNode:
     RETURN_TYPES = ("STRING", "STRING", "INT", "FLOAT", "BOOLEAN")
     RETURN_NAMES = ("result", "string", "int", "float", "boolean")
     FUNCTION = "parse_json"
-    CATEGORY = "XnanTool/实用工具"
+    CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "将JSON字符串解析为可用数据，支持提取指定字段"
     
     def parse_json(self, json_string, extract_field=""):
@@ -118,13 +118,15 @@ class JSONParserNode:
         return (result, string_value, int_value, float_value, bool_value)
 
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "JSONParserNode": JSONParserNode,
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "JSONParserNode": "JSON解析",
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']

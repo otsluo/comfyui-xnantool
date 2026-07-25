@@ -36,7 +36,7 @@ class CreateImageNode:
     RETURN_TYPES = ("IMAGE",)
     RETURN_NAMES = ("image",)
     FUNCTION = "create_image"
-    CATEGORY = "XnanTool/图像处理"
+    CATEGORY = "❤️❤️❤️XnanTool/图像处理"
     OUTPUT_NODE = False
     
     def create_image(self, width, height, color):
@@ -68,13 +68,15 @@ class CreateImageNode:
         
         return (image_tensor,)
 
-# 节点映射和显示名称映射
+# 注册节点
 NODE_CLASS_MAPPINGS = {
     "CreateImageNode": CreateImageNode
 }
 
+# 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
     "CreateImageNode": "创建图像"
 }
 
+# 导出映射（必须）
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
