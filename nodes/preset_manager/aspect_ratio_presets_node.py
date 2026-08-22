@@ -6,6 +6,9 @@ DEFAULT_ASPECT_RATIO_PRESETS = [
     # 自动
     "auto",
     
+    # 空值
+    "empty",
+    
     # 正方形
     "1:1",
     

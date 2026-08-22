@@ -15,11 +15,14 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
-# 支持的图片反推模型列表
+# 支持的图片反推模型列表（仅供参考，可直接输入任意魔搭模型ID）
 SUPPORTED_CAPTION_MODELS = [
-    ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL 235B A22B Instruct"),
-    ("Qwen/Qwen3-VL-8B-Instruct", "Qwen3-VL 8B Instruct"),
-    ("Qwen/Qwen3-VL-2B-Instruct", "Qwen3-VL 2B Instruct"),
+    ("Qwen/Qwen3.5-35B-A3B", "Qwen3.5-35B-A3B"),
+    ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL-235B-A22B-Instruct"),
+    ("Qwen/Qwen3-VL-8B-Instruct", "Qwen3-VL-8B-Instruct"),
+    ("Qwen/Qwen3-VL-2B-Instruct", "Qwen3-VL-2B-Instruct"),
+    ("Qwen/Qwen2.5-VL-72B-Instruct", "Qwen2.5-VL-72B-Instruct"),
+    ("Qwen/Qwen2.5-VL-7B-Instruct", "Qwen2.5-VL-7B-Instruct"),
 ]
 
 def load_api_token():
@@ -125,14 +128,14 @@ class ModelscopeApiImageCaptionNode:
             }
         }
     
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("图片描述",)
+    RETURN_TYPES = ("STRING", "STRING")
+    RETURN_NAMES = ("图片描述", "支持的模型列表")
     FUNCTION = "generate_caption"
     CATEGORY = "❤️❤️❤️XnanTool/API/魔搭api"
     
     def generate_caption(self, prompt, image, model_name, max_tokens, temperature, seed, api_token):
         if not OPENAI_AVAILABLE:
-            return ("请先安装openai库: pip install openai",)
+            return ("请先安装openai库: pip install openai", "")
         
         # 解析单个API Token
         token = self.parse_api_token(api_token)
@@ -146,6 +149,14 @@ class ModelscopeApiImageCaptionNode:
                 print("✅ API Token已自动保存")
             else:
                 print("⚠️ API Token保存失败，但不影响当前使用")
+        
+        # 准备支持的模型列表字符串
+        supported_models_str = "\n".join([f"{name} ({model_id})" for model_id, name in SUPPORTED_CAPTION_MODELS])
+        
+        # 检查模型是否在支持列表中
+        model_warning = ""
+        if model_name not in [model[0] for model in SUPPORTED_CAPTION_MODELS]:
+            model_warning = f"⚠️ 注意：{model_name} 该模型不在魔搭免费推理API的支持范围内，无法使用\n\n"
         
         try:
             print(f"🔍 开始生成图像描述...")
@@ -198,19 +209,19 @@ class ModelscopeApiImageCaptionNode:
                 description = response.choices[0].message.content
                 print(f"✅ API调用成功!")
                 print(f"📄 结果预览: {description[:100]}...")
-                return (description,)
+                return (model_warning + description, supported_models_str)
                 
             except Exception as e:
                 error_msg = f"API调用失败: {str(e)}"
                 print(f"❌ {error_msg}")
                 if 'response' in locals():
                     print(f"🔍 响应详情: {response}")
-                return (error_msg,)
+                return (model_warning + error_msg, supported_models_str)
             
         except Exception as e:
             error_msg = f"图像描述生成失败: {str(e)}"
             print(f"❌ {error_msg}")
-            return (error_msg,)
+            return (model_warning + error_msg, supported_models_str)
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {
@@ -219,7 +230,7 @@ NODE_CLASS_MAPPINGS = {
 
 # 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ModelscopeApiImageCaptionNode": "魔搭API-图片反推",
+    "ModelscopeApiImageCaptionNode": "魔搭API-图像反推",
 }
 
 # 导出映射（必须）

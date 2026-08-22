@@ -39,13 +39,18 @@ class BailianLLMNode:
                     "label": "用户提示词",
                     "description": "输入给大模型的用户提示词（可选）"
                 }),
-                "model": (["自定义", "qwen3.7-max", "qwen3.7-plus", "qwen3.7-max-preview",
-                          "qwen3.7-max-2026-06-08", "qwen3.7-max-2026-05-20", "qwen3.7-max-2026-05-17",
-                          "qwen3.7-plus-2026-05-26",
+                "model": (["自定义",
                           "qwen3.5-ocr",
-                          "deepseek-v4-pro", "deepseek-v4-flash",
-                          "kimi-k2.7-code", "glm-5.2"], {
-                    "default": "qwen3.7-plus",
+                          "glm-5.2",
+                          "qwen3.7-flash",
+                          "qwen3.7-flash-2026-07-15",
+                          "deepseek-v4-flash-0731",
+                          "qwen3.8-max",
+                          "qwen3.8-2.4t-a95b",
+                          "deepseek-v4-pro-0813",
+                          "kimi-k3",
+                          "qwen3.8-27b"], {
+                    "default": "qwen3.8-max",
                     "label": "模型",
                     "description": "选择要使用的模型，选择'自定义'可手动输入模型名称"
                 }),
@@ -165,12 +170,14 @@ class BailianLLMNode:
             # 根据模型选择调用方式
             # 所有模型都使用 compatible-mode endpoint
             new_models = [
-                "qwen3.7-max", "qwen3.7-plus", "qwen3.7-max-preview",
-                "qwen3.7-max-2026-06-08", "qwen3.7-max-2026-05-20", "qwen3.7-max-2026-05-17",
-                "qwen3.7-plus-2026-05-26",
                 "qwen3.5-ocr",
-                "deepseek-v4-pro", "deepseek-v4-flash",
-                "kimi-k2.7-code", "glm-5.2"
+                "glm-5.2",
+                "qwen3.7-flash", "qwen3.7-flash-2026-07-15",
+                "deepseek-v4-flash-0731",
+                "qwen3.8-max", "qwen3.8-2.4t-a95b",
+                "deepseek-v4-pro-0813",
+                "kimi-k3",
+                "qwen3.8-27b"
             ]
             
             if actual_model in new_models:

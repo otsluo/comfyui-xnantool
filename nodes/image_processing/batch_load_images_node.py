@@ -27,7 +27,7 @@ class BatchLoadImagesNode:
                     "multiline": False,
                     "tooltip": "图片目录路径或单张图片路径"
                 }),
-                "sort_method": (["1111111文件名升序", "2文件名降序", "修改时间升序", "修改时间降序"], {
+                "sort_method": (["文件名升序", "文件名降序", "修改时间升序", "修改时间降序"], {
                     "default": "文件名升序",
                     "tooltip": "选择图片排序方式"
                 }),

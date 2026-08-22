@@ -136,7 +136,7 @@ class SaveTextNode:
                 elif exist_mode == "跳过":
                     # 跳过，不保存
                     save_info = f"⚠️ 跳过保存，文件已存在: {file_path_full}"
-                    return (save_info,)
+                    return {"result": (save_info,), "ui": {"text": save_info}}
             else:
                 # 文件不存在，直接保存
                 # 处理文本前缀
@@ -153,11 +153,11 @@ class SaveTextNode:
                 f"📝 模式: {exist_mode}"
             )
             logger.info(f"文本保存成功：{file_path_full}")
-            return (save_info,)
+            return {"result": (save_info,), "ui": {"text": save_info}}
         except Exception as e:
             error_msg = f"❌ 保存文本时发生错误\n\n错误类型：{type(e).__name__}\n错误详情：{str(e)}\n\n请检查：\n1. 文件路径是否正确\n2. 是否有足够的权限\n3. 磁盘空间是否充足"
             logger.error(error_msg)
-            return (error_msg,)
+            return {"result": (error_msg,), "ui": {"text": error_msg}}
     
     def _parse_path_variables(self, path):
         """解析路径中的日期变量"""

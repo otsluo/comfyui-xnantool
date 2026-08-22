@@ -45,6 +45,11 @@ class RandomExecutionNode:
                 "input_3": ("*", {"label": "输入3"}),
                 "input_4": ("*", {"label": "输入4"}),
                 "input_5": ("*", {"label": "输入5"}),
+                "input_6": ("*", {"label": "输入6"}),
+                "input_7": ("*", {"label": "输入7"}),
+                "input_8": ("*", {"label": "输入8"}),
+                "input_9": ("*", {"label": "输入9"}),
+                "input_10": ("*", {"label": "输入10"}),
             }
         }
 
@@ -53,7 +58,7 @@ class RandomExecutionNode:
     FUNCTION = "execute"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
-    def execute(self, mode, seed, position, input_1=None, input_2=None, input_3=None, input_4=None, input_5=None):
+    def execute(self, mode, seed, position, input_1=None, input_2=None, input_3=None, input_4=None, input_5=None, input_6=None, input_7=None, input_8=None, input_9=None, input_10=None):
         """
         根据指定模式在提供的输入值中选择一个输出
         
@@ -64,13 +69,13 @@ class RandomExecutionNode:
                 - sequential: 自动顺序循环选择输入进行输出（执行到底后会重新从头开始执行，不依赖position参数）
             seed: 随机种子，用于随机模式和sequential模式的状态检测
             position: 位置编号，仅用于fixed模式（从1开始计数，循环执行）
-            input_1~input_5: 可选的输入值
+            input_1~input_10: 可选的输入值
             
         Returns:
             tuple: 包含所选值的不同类型表示和选中索引
         """
         # 收集所有非空输入，保持顺序
-        inputs = [input_1, input_2, input_3, input_4, input_5]
+        inputs = [input_1, input_2, input_3, input_4, input_5, input_6, input_7, input_8, input_9, input_10]
         valid_inputs = [inp for inp in inputs if inp is not None]
         
         # 如果没有有效输入，返回默认值

@@ -10,9 +10,16 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
-# 支持的文本生成模型列表
+# 支持的文本生成模型列表（仅供参考，可直接输入任意魔搭模型ID）
 SUPPORTED_TEXT_GENERATION_MODELS = [
-    ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL 235B A22B Instruct"),
+    ("Qwen/Qwen3.5-35B-A3B", "Qwen3.5-35B-A3B"),
+    ("Qwen/Qwen3.5-27B", "Qwen3.5-27B"),
+    ("Qwen/Qwen3-VL-235B-A22B-Instruct", "Qwen3-VL-235B-A22B-Instruct"),
+    ("Qwen/Qwen2.5-72B-Instruct", "Qwen2.5-72B-Instruct"),
+    ("Qwen/Qwen2.5-32B-Instruct", "Qwen2.5-32B-Instruct"),
+    ("Qwen/Qwen2.5-14B-Instruct", "Qwen2.5-14B-Instruct"),
+    ("Qwen/Qwen2.5-7B-Instruct", "Qwen2.5-7B-Instruct"),
+    ("deepseek-ai/DeepSeek-R1", "DeepSeek-R1"),
 ]
 
 def load_api_token():
@@ -65,10 +72,9 @@ class ModelscopeApiTextGenerationNode:
                     "multiline": True
                 }),
                 "model_name": ("STRING", {
-                    "default": "Qwen/Qwen3-VL-235B-A22B-Instruct",
-                    "options": [model[0] for model in SUPPORTED_TEXT_GENERATION_MODELS],
-                    "labels": {model[0]: model[1] for model in SUPPORTED_TEXT_GENERATION_MODELS},
-                    "label": "模型名称"
+                    "default": "Qwen/Qwen3.5-35B-A3B",
+                    "label": "模型名称",
+                    "description": "输入魔搭模型ID，如 Qwen/Qwen3.5-35B-A3B"
                 }),
                 "max_tokens": ("INT", {
                     "default": 1000,
@@ -109,14 +115,14 @@ class ModelscopeApiTextGenerationNode:
             }
         }
     
-    RETURN_TYPES = ("STRING",)
-    RETURN_NAMES = ("生成文本",)
+    RETURN_TYPES = ("STRING", "STRING")
+    RETURN_NAMES = ("生成文本", "支持的模型列表")
     FUNCTION = "generate_text"
     CATEGORY = "❤️❤️❤️XnanTool/API/魔搭api"
     
     def generate_text(self, system_prompt, prompt, model_name, max_tokens, temperature, top_p, seed, api_token):
         if not OPENAI_AVAILABLE:
-            return ("请先安装openai库: pip install openai",)
+            return ("请先安装openai库: pip install openai", "")
         
         # 解析单个API Token
         token = self.parse_api_token(api_token)
@@ -130,6 +136,14 @@ class ModelscopeApiTextGenerationNode:
                 print("✅ API Token已自动保存")
             else:
                 print("⚠️ API Token保存失败，但不影响当前使用")
+        
+        # 准备支持的模型列表字符串
+        supported_models_str = "\n".join([f"{name} ({model_id})" for model_id, name in SUPPORTED_TEXT_GENERATION_MODELS])
+        
+        # 检查模型是否在支持列表中
+        model_warning = ""
+        if model_name not in [model[0] for model in SUPPORTED_TEXT_GENERATION_MODELS]:
+            model_warning = f"⚠️ 注意：{model_name} 该模型不在魔搭免费推理API的支持范围内，无法使用\n\n"
         
         try:
             print(f"📝 开始生成文本...")
@@ -178,19 +192,19 @@ class ModelscopeApiTextGenerationNode:
                 generated_text = response.choices[0].message.content
                 print(f"✅ API调用成功!")
                 print(f"📄 结果预览: {generated_text[:100]}...")
-                return (generated_text,)
+                return (model_warning + generated_text, supported_models_str)
                 
             except Exception as e:
                 error_msg = f"API调用失败: {str(e)}"
                 print(f"❌ {error_msg}")
                 if 'response' in locals():
                     print(f"🔍 响应详情: {response}")
-                return (error_msg,)
+                return (model_warning + error_msg, supported_models_str)
             
         except Exception as e:
             error_msg = f"文本生成失败: {str(e)}"
             print(f"❌ {error_msg}")
-            return (error_msg,)
+            return (model_warning + error_msg, supported_models_str)
 
 # 注册节点
 NODE_CLASS_MAPPINGS = {

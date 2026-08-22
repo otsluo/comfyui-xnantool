@@ -154,105 +154,76 @@ class BailianVLNode:
             except Exception as e:
                 return (f"错误：图片转换失败: {str(e)}",)
             
-            # 构建消息
-            messages = [
-                {
-                    "role": "user",
-                    "content": [
-                        {"image": f"data:image/jpeg;base64,{image_base64}"},
-                        {"text": prompt.strip()}
-                    ]
-                }
-            ]
-            
-            # 构建调用参数
-            params = {
-                "model": actual_model,
-                "messages": messages,
-                "result_format": "message",
-                "temperature": float(temperature),
-                "top_p": float(top_p),
-                "max_tokens": int(max_tokens),
-                "seed": int(seed) if seed > 0 else None
-            }
-            
-            # 移除None值
-            params = {k: v for k, v in params.items() if v is not None}
-            
-            # 调用VL模型
-            response = dashscope.MultiModalConversation.call(**params)
-            
-            # 调试信息
-            logger.debug(f"响应对象类型: {type(response)}")
-            logger.debug(f"响应对象内容: {response}")
-            logger.debug(f"响应对象属性: {dir(response)}")
-            
-            # 检查响应状态
-            if response.status_code != HTTPStatus.OK:
-                error_msg = f"请求失败:\n状态码: {response.status_code}\n消息: {response.message}\n请求ID: {response.request_id}"
-                logger.error(error_msg)
-                return (error_msg,)
-            
-            # 调试输出内容
-            logger.debug(f"response.output类型: {type(response.output)}")
-            logger.debug(f"response.output: {response.output}")
-            
-            if hasattr(response.output, 'choices') and response.output.choices:
-                logger.debug(f"response.output.choices[0]类型: {type(response.output.choices[0])}")
-                logger.debug(f"response.output.choices[0]: {response.output.choices[0]}")
+            # 使用 OpenAI 兼容模式调用
+            try:
+                from openai import OpenAI
                 
-                if hasattr(response.output.choices[0], 'message'):
-                    logger.debug(f"response.output.choices[0].message类型: {type(response.output.choices[0].message)}")
-                    logger.debug(f"response.output.choices[0].message: {response.output.choices[0].message}")
-                    
-                    if hasattr(response.output.choices[0].message, 'content'):
-                        logger.debug(f"response.output.choices[0].message.content类型: {type(response.output.choices[0].message.content)}")
-                        logger.debug(f"response.output.choices[0].message.content: {response.output.choices[0].message.content}")
-            
-            # 返回响应
-            response_text = response.output.choices[0].message.content
-            
-            # 如果content是列表，取第一个元素
-            if isinstance(response_text, list):
-                if len(response_text) > 0:
-                    response_text = response_text[0]
-                else:
-                    return ("错误：响应内容为空",)
-            
-            # 如果content是字典，提取text字段
-            if isinstance(response_text, dict):
-                if "text" in response_text:
-                    response_text = response_text["text"]
-                else:
-                    response_text = str(response_text)
-            
-            # 转换为字符串
-            if not isinstance(response_text, str):
-                response_text = str(response_text)
-            
-            # 获取完整响应（JSON格式）
-            import json
-            full_response = json.dumps({
-                "output": {
+                client = OpenAI(
+                    api_key=api_key,
+                    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                )
+                
+                # 构建消息
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "image_url",
+                                "image_url": {"url": f"data:image/jpeg;base64,{image_base64}"}
+                            },
+                            {
+                                "type": "text",
+                                "text": prompt.strip()
+                            }
+                        ]
+                    }
+                ]
+                
+                # 构建调用参数
+                params = {
+                    "model": actual_model,
+                    "messages": messages,
+                    "temperature": float(temperature),
+                    "top_p": float(top_p),
+                    "max_tokens": int(max_tokens),
+                }
+                if seed > 0:
+                    params["seed"] = int(seed)
+                
+                # 调用模型
+                response = client.chat.completions.create(**params)
+                
+                # 提取响应文本
+                response_text = response.choices[0].message.content
+                
+                # 构建完整响应
+                import json
+                full_response = json.dumps({
+                    "id": response.id,
+                    "model": response.model,
                     "choices": [{
-                        "finish_reason": getattr(response.output.choices[0], 'finish_reason', 'N/A'),
+                        "index": response.choices[0].index,
                         "message": {
-                            "role": getattr(response.output.choices[0].message, 'role', 'N/A'),
-                            "content": str(response.output.choices[0].message.content)
-                        }
-                    }]
-                },
-                "usage": {
-                    "output_tokens": getattr(response.usage, 'output_tokens', 'N/A') if hasattr(response, 'usage') else 'N/A',
-                    "input_tokens": getattr(response.usage, 'input_tokens', 'N/A') if hasattr(response, 'usage') else 'N/A',
-                    "image_tokens": getattr(response.usage, 'image_tokens', 'N/A') if hasattr(response, 'usage') else 'N/A'
-                },
-                "request_id": getattr(response, 'request_id', 'N/A') if hasattr(response, 'request_id') else 'N/A'
-            }, ensure_ascii=False, indent=2)
-            
-            logger.info(f"百炼VL调用成功")
-            
-            return (response_text, full_response)
+                            "role": response.choices[0].message.role,
+                            "content": response.choices[0].message.content
+                        },
+                        "finish_reason": response.choices[0].finish_reason
+                    }],
+                    "usage": {
+                        "prompt_tokens": response.usage.prompt_tokens,
+                        "completion_tokens": response.usage.completion_tokens,
+                        "total_tokens": response.usage.total_tokens
+                    }
+                }, ensure_ascii=False, indent=2)
+                
+                logger.info(f"百炼VL调用成功")
+                
+                return (response_text, full_response)
+                
+            except ImportError:
+                # 如果没有 openai 库，回退到 dashscope SDK
+                pass
             
         except Exception as e:
             error_msg = f"调用百炼VL时发生错误: {str(e)}"
@@ -319,5 +290,5 @@ NODE_CLASS_MAPPINGS = {
 
 # 定义显示名称
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BailianVLNode": "百炼VL-视觉理解",
+    "BailianVLNode": "百炼VL-图像反推",
 }

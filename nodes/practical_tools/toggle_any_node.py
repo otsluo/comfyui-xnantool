@@ -23,14 +23,7 @@ class ToggleAnyNode:
 
     @classmethod
     def VALIDATE_INPUTS(cls, input_types):
-        # 获取输入类型
-        type_a = input_types["value_a"]
-        type_b = input_types["value_b"]
-        
-        # 验证两个输入类型是否相同
-        if type_a != type_b:
-            return f"输入类型不匹配: value_a 是 {type_a}, value_b 是 {type_b}"
-            
+        # 允许任意类型输入，不强制要求类型匹配
         return True
 
     @classmethod

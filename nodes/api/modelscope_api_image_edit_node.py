@@ -39,11 +39,11 @@ def tensor_to_base64_url(image_tensor):
         print(f"图像转换失败: {e}")
         raise Exception(f"图像格式转换失败: {str(e)}")
 
-# 支持的图像编辑模型列表
+# 支持的图像编辑模型列表（仅供参考，可直接输入任意魔搭模型ID）
 SUPPORTED_IMAGE_EDIT_MODELS = [
     ("Qwen/Qwen-Image-Edit", "Qwen-Image-Edit"),
-    ("Qwen/Qwen-Image-Edit-2509", "Qwen-Image-Edit-2509"),
     ("Qwen/Qwen-Image-Edit-2511", "Qwen-Image-Edit-2511"),
+    ("Qwen/Qwen-Image-Edit-2509", "Qwen-Image-Edit-2509"),
     ("runwayml/stable-diffusion-inpainting", "SD Inpainting"),
 ]
 

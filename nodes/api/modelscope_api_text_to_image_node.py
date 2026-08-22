@@ -39,22 +39,23 @@ def tensor_to_base64_url(image_tensor):
         print(f"图像转换失败: {e}")
         raise Exception(f"图像格式转换失败: {str(e)}")
 
-# 支持的文生图模型列表
+# 支持的文生图模型列表（仅供参考，可直接输入任意魔搭模型ID）
 SUPPORTED_TEXT_TO_IMAGE_MODELS = [
-    ("black-forest-labs/FLUX.1-schnell", "FLUX.1-schnell"),
+    ("Qwen/Qwen-Image", "Qwen-Image"),
+    ("Qwen/Qwen-Image-2512", "Qwen-Image-2512"),
     ("black-forest-labs/FLUX.1-dev", "FLUX.1-dev"),
+    ("black-forest-labs/FLUX.1-schnell", "FLUX.1-schnell"),
     ("black-forest-labs/FLUX.1-Krea-dev", "FLUX.1-Krea-dev"),
     ("black-forest-labs/FLUX.1-Kontext", "FLUX.1-Kontext"),
-    ("black-forest-labs/FLUX.2-klein-9B", "FLUX.2-klein-9B"),
     ("black-forest-labs/FLUX.2-dev", "FLUX.2-dev"),
-    ("Qwen/Qwen-Image", "Qwen-Image"),
-    ("Tencent-Hunyuan/HunyuanImage-2.1", "HunyuanImage-2.1"),
+    ("black-forest-labs/FLUX.2-klein-9B", "FLUX.2-klein-9B"),
     ("Tencent-Hunyuan/HunyuanImage-3.0", "HunyuanImage-3.0"),
-    ("Qwen/Qwen-Image-2512", "Qwen-Image-2512"),
+    ("Tencent-Hunyuan/HunyuanImage-2.1", "HunyuanImage-2.1"),
+    ("Tongyi-MAI/Z-Image-Turbo", "Z-Image-Turbo"),
+    ("MAILAND/majicflus_v1", "majicflus_v1"),
     ("stabilityai/stable-diffusion-xl-base-1.0", "SDXL 1.0"),
     ("stabilityai/stable-diffusion-xl-refiner-1.0", "SDXL Refiner"),
     ("stabilityai/stable-diffusion-3-medium-diffusers", "SD3 Medium"),
-    ("Tongyi-MAI/Z-Image-Turbo", "Z-Image-Turbo"),
     ("segmind/Segmind-Vega", "Segmind-Vega"),
 ]
 
