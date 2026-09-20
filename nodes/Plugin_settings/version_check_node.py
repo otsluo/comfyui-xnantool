@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 版本检查与更新节点
-功能：检查插件更新，支持一键更新
+功能：查看更新日志，支持一键更新
 """
 
 import logging
@@ -10,24 +10,24 @@ import logging
 logger = logging.getLogger(__name__)
 
 class VersionCheckNode:
-    """版本检查节点"""
+    """版本检查节点 - 查看更新日志"""
     
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "check_update": ("BOOLEAN", {"default": False, "label": "检查更新"}),
+                "check_update": ("BOOLEAN", {"default": False, "label": "查看更新日志"}),
             }
         }
 
-    RETURN_TYPES = ("STRING", "STRING", "BOOLEAN")
-    RETURN_NAMES = ("版本信息", "更新日志", "有可用更新")
+    RETURN_TYPES = ("STRING",)
+    RETURN_NAMES = ("更新日志",)
     FUNCTION = "check_version"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     OUTPUT_NODE = True
 
     def check_version(self, check_update):
-        """检查版本更新"""
+        """查看更新日志"""
         try:
             from .auto_update import get_updater
             
@@ -36,50 +36,33 @@ class VersionCheckNode:
             
             if not check_update:
                 return (
-                    f"当前版本: {current_version}\n\n点击'检查更新'开关以检查最新版本",
-                    "",
-                    False
+                    f"当前版本: {current_version}\n\n点击'查看更新日志'开关以查看最新更新",
                 )
             
-            # 检查更新
-            update_info = updater.check_for_updates()
+            # 获取最新commit信息作为更新日志
+            update_info = updater.get_latest_update_log()
             
             if update_info["error"]:
                 return (
                     f"当前版本: {current_version}\n\n❌ {update_info['error']}",
-                    "",
-                    False
                 )
             
-            latest_version = update_info["latest_version"]
-            has_update = update_info["has_update"]
+            # 显示更新日志
+            commit_message = update_info.get("message", "暂无更新信息")
+            commit_sha = update_info.get("sha", "")
             
-            if has_update:
-                update_body = update_info["update_info"].get("body", "暂无更新日志")
-                published_at = update_info["update_info"].get("published_at", "")
-                
-                version_info = (
-                    f"📦 当前版本: {current_version}\n"
-                    f"🆕 最新版本: {latest_version}\n"
-                    f"📅 更新日期: {published_at}\n\n"
-                    f"✅ 发现新版本！\n"
-                    f"请使用 '执行更新' 节点进行更新"
-                )
-                
-                return (version_info, update_body, True)
-            else:
-                version_info = (
-                    f"📦 当前版本: {current_version}\n"
-                    f"🆕 最新版本: {latest_version}\n\n"
-                    f"✅ 已是最新版本，无需更新"
-                )
-                
-                return (version_info, "", False)
+            log_info = (
+                f"📦 当前版本号: {current_version}\n"
+                f"🆕 最新提交版本: commit-{commit_sha}\n\n"
+                f"📝 更新内容:\n{commit_message}"
+            )
+            
+            return (log_info,)
                 
         except Exception as e:
-            error_msg = f"❌ 检查更新失败: {str(e)}"
+            error_msg = f"❌ 获取更新日志失败: {str(e)}"
             logger.error(error_msg)
-            return (error_msg, "", False)
+            return (error_msg,)
 
 
 class VersionUpdateNode:

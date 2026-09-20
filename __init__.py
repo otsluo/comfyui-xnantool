@@ -1,5 +1,5 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.8.1"
+__version__ = "0.8.2"
 
 # 导入所有节点模块
 # ==================== YOLO和SAM节点模块 ====================
@@ -30,9 +30,15 @@ from .nodes.practical_tools import NODE_DISPLAY_NAME_MAPPINGS as PRACTICAL_TOOLS
 from .nodes.api import NODE_CLASS_MAPPINGS as API_NODE_CLASS_MAPPINGS
 from .nodes.api import NODE_DISPLAY_NAME_MAPPINGS as API_NODE_DISPLAY_NAME_MAPPINGS
 
-# ==================== Pro节点模块 ====================
-from .nodes.pro import NODE_CLASS_MAPPINGS as PRO_NODE_CLASS_MAPPINGS
-from .nodes.pro import NODE_DISPLAY_NAME_MAPPINGS as PRO_NODE_DISPLAY_NAME_MAPPINGS
+# ==================== Pro节点模块（可选） ====================
+try:
+    from .nodes.pro import NODE_CLASS_MAPPINGS as PRO_NODE_CLASS_MAPPINGS
+    from .nodes.pro import NODE_DISPLAY_NAME_MAPPINGS as PRO_NODE_DISPLAY_NAME_MAPPINGS
+    PRO_MODULE_AVAILABLE = True
+except ImportError:
+    PRO_MODULE_AVAILABLE = False
+    PRO_NODE_CLASS_MAPPINGS = {}
+    PRO_NODE_DISPLAY_NAME_MAPPINGS = {}
 
 # ==================== 插件设置节点模块 ====================
 from .nodes.Plugin_settings import NODE_CLASS_MAPPINGS as PLUGIN_SETTINGS_NODE_CLASS_MAPPINGS

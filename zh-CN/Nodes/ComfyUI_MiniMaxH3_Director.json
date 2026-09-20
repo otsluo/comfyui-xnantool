@@ -1,0 +1,260 @@
+{
+    "MiniMaxH3Director": {
+        "title": "MiniMax H3 导演台",
+        "description": "MiniMax H3 时间轴导演台：内置时间轴 UI，按段执行官方 MiniMax H3 音视频生成管线。支持 t2v / i2v / fl2v / r2v / v2v / rv2v，可外接分组包与精修节点。默认 0.4MP 16:9（864×480）、5 秒 / 124 帧 @ 24fps。",
+        "inputs": {
+            "model": "模型（H3 UNET）",
+            "video_vae": "视频 VAE",
+            "audio_vae": "音频 VAE",
+            "clip": "CLIP 文本编码器",
+            "i2v_groups": "图生视频分组",
+            "r2v_groups": "参考生视频分组",
+            "refine": "精修配置",
+            "sigmas": "噪声表（SIGMAS）"
+        },
+        "widgets": {
+            "task_type": "任务类型",
+            "global_prompt": "全局提示词",
+            "bd_grp_sample": "分组：采样设置",
+            "cfg": "CFG 引导系数",
+            "seed": "随机种子",
+            "frame_rate": "帧率（FPS）",
+            "width": "宽度",
+            "height": "高度",
+            "ref_max_size": "参考图最大尺寸",
+            "total_frames": "总帧数",
+            "timeline_data": "时间轴数据",
+            "bd_grp_advanced": "分组：高级采样",
+            "steps": "采样步数",
+            "sampler": "采样器",
+            "scheduler": "调度器",
+            "shift_video": "视频 Sigma 偏移",
+            "shift_audio": "音频 Sigma 偏移",
+            "bd_grp_perf": "分组：性能",
+            "clear_vram_between_segments": "段间清理显存",
+            "export_source_images": "导出原片图像"
+        },
+        "outputs": {
+            "images": "图像",
+            "audio": "音频",
+            "fps": "帧率",
+            "frame_count": "帧数",
+            "source_images": "原片图像",
+            "report": "运行报告",
+            "images_pre_refine": "精修前图像"
+        }
+    },
+    "ComfyMiniMaxH3Director": {
+        "title": "MiniMax H3 导演台",
+        "description": "MiniMax H3 时间轴导演台（旧版类型 ID，兼容早期工作流）。",
+        "inputs": {
+            "model": "模型（H3 UNET）",
+            "video_vae": "视频 VAE",
+            "audio_vae": "音频 VAE",
+            "clip": "CLIP 文本编码器",
+            "i2v_groups": "图生视频分组",
+            "r2v_groups": "参考生视频分组",
+            "refine": "精修配置",
+            "sigmas": "噪声表（SIGMAS）"
+        },
+        "widgets": {
+            "task_type": "任务类型",
+            "global_prompt": "全局提示词",
+            "bd_grp_sample": "分组：采样设置",
+            "cfg": "CFG 引导系数",
+            "seed": "随机种子",
+            "frame_rate": "帧率（FPS）",
+            "width": "宽度",
+            "height": "高度",
+            "ref_max_size": "参考图最大尺寸",
+            "total_frames": "总帧数",
+            "timeline_data": "时间轴数据",
+            "bd_grp_advanced": "分组：高级采样",
+            "steps": "采样步数",
+            "sampler": "采样器",
+            "scheduler": "调度器",
+            "shift_video": "视频 Sigma 偏移",
+            "shift_audio": "音频 Sigma 偏移",
+            "bd_grp_perf": "分组：性能",
+            "clear_vram_between_segments": "段间清理显存",
+            "export_source_images": "导出原片图像"
+        },
+        "outputs": {
+            "images": "图像",
+            "audio": "音频",
+            "fps": "帧率",
+            "frame_count": "帧数",
+            "source_images": "原片图像",
+            "report": "运行报告",
+            "images_pre_refine": "精修前图像"
+        }
+    },
+    "MiniMaxH3DirectorRefine": {
+        "title": "MiniMax H3 导演台精修",
+        "description": "打包精修 / 放大配置，接入导演台的 refine 端口。refine = 同分辨率二次采样精修；upscale = 先放大到目标画布再二采；latent_upscale = 仅放大 H3 latent 不再二采。二采噪声表来自 BasicScheduler / ManualSigmas。",
+        "inputs": {
+            "refine_model": "二采模型（MODEL）",
+            "sigmas": "二采噪声表（SIGMAS）",
+            "upscale_model": "放大模型（UPSCALE_MODEL）"
+        },
+        "widgets": {
+            "mode": "精修模式",
+            "upscale_method": "放大方式",
+            "latent_upscale_model": "Latent 放大权重",
+            "sampler": "二采采样器",
+            "passes": "精修次数",
+            "seed_mode": "种子模式",
+            "aspect_ratio": "宽高比",
+            "megapixels": "百万像素",
+            "width": "宽度",
+            "height": "高度",
+            "skip_fl2v": "跳过首尾帧镜头",
+            "confirm_first_pass": "先确认一采再二采"
+        },
+        "outputs": {
+            "refine": "精修配置",
+            "width": "目标宽度",
+            "height": "目标高度"
+        }
+    },
+    "MiniMaxH3DirectorConditioning": {
+        "title": "MiniMax H3 导演台条件编码",
+        "description": "官方 MiniMax H3 条件编码的轻量封装，输出正向条件与音视频 latent。传入参考图时自动走 r2v 路径。",
+        "inputs": {
+            "clip": "CLIP 文本编码器",
+            "vae": "视频 VAE",
+            "audio_vae": "音频 VAE",
+            "first_frame": "首帧图像",
+            "last_frame": "尾帧图像",
+            "reference_image_0": "参考图 1",
+            "reference_image_1": "参考图 2",
+            "reference_image_2": "参考图 3",
+            "reference_image_3": "参考图 4",
+            "reference_image_4": "参考图 5",
+            "reference_image_5": "参考图 6",
+            "reference_image_6": "参考图 7",
+            "reference_image_7": "参考图 8",
+            "reference_image_8": "参考图 9"
+        },
+        "widgets": {
+            "prompt": "提示词",
+            "width": "宽度",
+            "height": "高度",
+            "length": "长度（帧数）",
+            "ref_image_size": "参考图尺寸模式"
+        },
+        "outputs": {
+            "positive": "正向条件",
+            "latent": "Latent"
+        }
+    },
+    "MiniMaxH3DirectorPlannerConditioning": {
+        "title": "MiniMax H3 导演台规划条件编码",
+        "description": "官方 MiniMax H3 条件编码，并额外输出 task_mode 字符串供规划界面使用。",
+        "inputs": {
+            "clip": "CLIP 文本编码器",
+            "vae": "视频 VAE",
+            "audio_vae": "音频 VAE",
+            "first_frame": "首帧图像",
+            "last_frame": "尾帧图像",
+            "reference_image_0": "参考图 1",
+            "reference_image_1": "参考图 2",
+            "reference_image_2": "参考图 3",
+            "reference_image_3": "参考图 4",
+            "reference_image_4": "参考图 5",
+            "reference_image_5": "参考图 6",
+            "reference_image_6": "参考图 7",
+            "reference_image_7": "参考图 8",
+            "reference_image_8": "参考图 9"
+        },
+        "widgets": {
+            "prompt": "提示词",
+            "width": "宽度",
+            "height": "高度",
+            "length": "长度（帧数）",
+            "ref_image_size": "参考图尺寸模式"
+        },
+        "outputs": {
+            "positive": "正向条件",
+            "latent": "Latent",
+            "task_mode": "任务模式"
+        }
+    },
+    "MiniMaxH3DirectorGroupImageToVideo": {
+        "title": "MiniMax H3 导演台分组（图生视频）",
+        "description": "打包一个图生视频分组（t2v / i2v / fl2v）供导演台使用。不接帧 = t2v；仅首帧 = i2v；仅尾帧或首尾帧 = fl2v。输出尺寸由导演台节点控制。",
+        "inputs": {
+            "first_frame": "首帧图像",
+            "last_frame": "尾帧图像"
+        },
+        "widgets": {
+            "prompt": "提示词",
+            "duration_sec": "时长（秒）"
+        },
+        "outputs": {
+            "group": "分组"
+        }
+    },
+    "MiniMaxH3DirectorGroupReferenceToVideo": {
+        "title": "MiniMax H3 导演台分组（参考生视频）",
+        "description": "打包一个参考生视频（r2v）分组供导演台使用。自动扩展槽位支持参考图（≤9）、参考视频（≤3）、视频配音（≤3）、独立音频（≤3），与官方 MiniMax H3 Reference to Video 一致。提示词中使用 <Picture N> / <Video K> / <Audio J> 标签。",
+        "inputs": {
+            "ref_images": "参考图",
+            "ref_videos": "参考视频",
+            "ref_video_audios": "参考视频配音",
+            "ref_audios": "参考音频",
+            "ref_image_0": "参考图 1",
+            "ref_image_1": "参考图 2",
+            "ref_image_2": "参考图 3",
+            "ref_image_3": "参考图 4",
+            "ref_image_4": "参考图 5",
+            "ref_image_5": "参考图 6",
+            "ref_image_6": "参考图 7",
+            "ref_image_7": "参考图 8",
+            "ref_image_8": "参考图 9",
+            "ref_video_0": "参考视频 1",
+            "ref_video_1": "参考视频 2",
+            "ref_video_2": "参考视频 3",
+            "ref_video_audio_0": "参考视频配音 1",
+            "ref_video_audio_1": "参考视频配音 2",
+            "ref_video_audio_2": "参考视频配音 3",
+            "ref_audio_0": "参考音频 1",
+            "ref_audio_1": "参考音频 2",
+            "ref_audio_2": "参考音频 3"
+        },
+        "widgets": {
+            "prompt": "提示词",
+            "duration_sec": "时长（秒）"
+        },
+        "outputs": {
+            "group": "分组"
+        }
+    },
+    "MiniMaxH3DirectorGroupsCombine": {
+        "title": "MiniMax H3 导演台分组合并",
+        "description": "将多个导演台分组输出合并为一个列表供导演台使用。接入空槽会自动扩展（Autogrow），空槽会被跳过，顺序按连接索引排列。",
+        "inputs": {
+            "groups": "分组列表",
+            "group_0": "分组 1",
+            "group_1": "分组 2",
+            "group_2": "分组 3",
+            "group_3": "分组 4",
+            "group_4": "分组 5",
+            "group_5": "分组 6",
+            "group_6": "分组 7",
+            "group_7": "分组 8",
+            "group_8": "分组 9",
+            "group_9": "分组 10",
+            "group_10": "分组 11",
+            "group_11": "分组 12",
+            "group_12": "分组 13",
+            "group_13": "分组 14",
+            "group_14": "分组 15",
+            "group_15": "分组 16"
+        },
+        "widgets": {},
+        "outputs": {
+            "groups": "合并后的分组列表"
+        }
+    }
+}

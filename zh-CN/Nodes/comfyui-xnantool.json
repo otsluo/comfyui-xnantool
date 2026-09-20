@@ -1,4 +1,39 @@
 {
+  "PromptSkillNode": {
+    "title": "提示词技能库",
+    "description": "从 skills 子目录读取技能文件（SKILL.md + 引用文件）",
+    "inputs": {},
+    "widgets": {
+      "skill": "选择技能",
+      "include_references": "是否包含引用文件"
+    },
+    "outputs": {
+      "技能内容": "技能内容（SKILL.md + 引用文件）"
+    }
+  },
+  "RolePromptNode": {
+    "title": "角色提示词",
+    "description": "从 role 文件夹加载角色提示词文件",
+    "inputs": {},
+    "widgets": {
+      "role": "选择角色"
+    },
+    "outputs": {
+      "提示词": "角色提示词内容"
+    }
+  },
+  "SkillDownloaderNode": {
+    "title": "下载技能",
+    "description": "从 GitHub 下载技能目录到 skills 目录",
+    "inputs": {},
+    "widgets": {
+      "github_url": "GitHub URL（技能目录地址）",
+      "download": "确认下载开关"
+    },
+    "outputs": {
+      "下载结果": "下载结果信息"
+    }
+  },
   "AspectRatioPresetSelector": {
     "title": "宽高比预设选择器",
     "description": "宽高比预设选择节点，提供常用宽高比预设选择功能",
@@ -196,6 +231,23 @@
       "error_msg": "错误信息",
       "task_id": "任务ID",
       "all_info": "完整信息JSON"
+    }
+  },
+  "BooleanJudgeNode": {
+    "title": "布尔判断",
+    "description": "根据布尔值判断并输出对应的值",
+    "inputs": {
+      "boolean_value": "布尔值",
+      "true_value": "真值",
+      "false_value": "假值"
+    },
+    "widgets": {
+      "boolean_value": "输入的布尔值，用于判断",
+      "true_value": "当布尔值为True时输出的值",
+      "false_value": "当布尔值为False时输出的值"
+    },
+    "outputs": {
+      "输出": "根据布尔值选择的输出值"
     }
   },
   "BatchCopyFilesNode": {
@@ -1697,11 +1749,13 @@
     "inputs": {
       "action": "操作类型",
       "package_name": "包名称",
+      "extra_args": "额外参数",
       "mirror_url": "镜像源URL"
     },
     "widgets": {
       "action": "选择要执行的操作（查看已安装、查看包详情、安装包、卸载包、更新包）",
-      "package_name": "要操作的包名称（查看已安装时可留空）",
+      "package_name": "要操作的包名称或本地whl文件路径（查看已安装时可留空）",
+      "extra_args": "额外的pip参数，如 --no-cache-dir --force-reinstall 等",
       "mirror_url": "留空使用默认源，填写则使用指定镜像源"
     },
     "outputs": {
@@ -1989,7 +2043,7 @@
       "num_padding_digits": "填充数字位数",
       "extension": "文件格式",
       "quality": "图片质量",
-      "save_workflow": "保存信息"
+      "save_workflow": "信息"
     },
     "widgets": {
       "images": "要保存的图像",
@@ -3401,6 +3455,78 @@
         "否": "继续读取",
         "是": "重新开始"
       }
+    }
+  },
+  "BatchTaskNode": {
+    "title": "批量任务",
+    "description": "读取 Excel/CSV 表格文件，解析批量任务",
+    "inputs": {
+      "config_file": "表格文件路径",
+      "column1": "列1",
+      "column2": "列2",
+      "column3": "列3",
+      "column4": "列4",
+      "column5": "列5",
+      "column6": "列6",
+      "column7": "列7",
+      "column8": "列8",
+      "column9": "列9",
+      "column10": "列10",
+      "column11": "列11",
+      "column12": "列12",
+      "column13": "列13",
+      "column14": "列14",
+      "column15": "列15",
+      "row_index": "行号"
+    },
+    "widgets": {
+      "config_file": "Excel(.xlsx/.xls)或CSV文件路径",
+      "column1": "第1列的列名",
+      "column2": "第2列的列名",
+      "column3": "第3列的列名",
+      "column4": "第4列的列名",
+      "column5": "第5列的列名",
+      "column6": "第6列的列名",
+      "column7": "第7列的列名",
+      "column8": "第8列的列名",
+      "column9": "第9列的列名",
+      "column10": "第10列的列名",
+      "column11": "第11列的列名",
+      "column12": "第12列的列名",
+      "column13": "第13列的列名",
+      "column14": "第14列的列名",
+      "column15": "第15列的列名",
+      "row_index": "要读取的行号（0表示全部，1开始为具体行号，不含表头）"
+    },
+    "outputs": {
+      "任务JSON": "解析后的任务JSON数据"
+    }
+  },
+  "BatchTaskParserNode": {
+    "title": "批量任务解析",
+    "description": "解析批量任务节点输出的JSON，自动提取单条任务的所有字段值",
+    "inputs": {
+      "task_json": "任务JSON"
+    },
+    "widgets": {
+      "task_json": "批量任务节点输出的任务JSON"
+    },
+    "outputs": {
+      "值1": "任务字段值1",
+      "值2": "任务字段值2",
+      "值3": "任务字段值3",
+      "值4": "任务字段值4",
+      "值5": "任务字段值5",
+      "值6": "任务字段值6",
+      "值7": "任务字段值7",
+      "值8": "任务字段值8",
+      "值9": "任务字段值9",
+      "值10": "任务字段值10",
+      "值11": "任务字段值11",
+      "值12": "任务字段值12",
+      "值13": "任务字段值13",
+      "值14": "任务字段值14",
+      "值15": "任务字段值15"
     }
   },
   "MultiPathImageLoaderNode": {

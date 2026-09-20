@@ -1,0 +1,25 @@
+{
+    "RTXVideoSuperResolution": {
+        "title": "RTX 视频超分辨率",
+        "description": "使用 NVIDIA RTX 视频超分辨率（VSR）技术对图像/视频帧进行放大，支持按倍数缩放或指定目标尺寸，并提供低/中/高/极致四档质量",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "resize_type": "缩放方式",
+            "scale by multiplier": "按倍数缩放",
+            "target dimensions": "目标尺寸",
+            "scale": "缩放倍数",
+            "width": "宽度",
+            "height": "高度",
+            "quality": "质量等级",
+            "LOW": "低",
+            "MEDIUM": "中",
+            "HIGH": "高",
+            "ULTRA": "极致"
+        },
+        "outputs": {
+            "upscaled_images": "放大后的图像"
+        }
+    }
+}

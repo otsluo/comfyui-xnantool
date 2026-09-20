@@ -168,6 +168,72 @@ class AutoUpdater:
         
         return result
     
+    def get_latest_update_log(self):
+        """
+        获取最新更新日志（从最近1个commit）
+        
+        Returns:
+            dict: {
+                "date": str, 最新commit日期
+                "message": str, 更新内容
+                "sha": str, 最新commit SHA
+                "error": str, 错误信息（如果有）
+            }
+        """
+        result = {
+            "date": "",
+            "message": "",
+            "sha": "",
+            "error": None
+        }
+        
+        try:
+            import urllib.request
+            import ssl
+            
+            # 创建SSL上下文
+            context = ssl.create_default_context()
+            context.check_hostname = False
+            context.verify_mode = ssl.CERT_NONE
+            
+            # 获取最近1个commit
+            api_url = f"https://api.github.com/repos/{self.github_repo}/commits?per_page=1"
+            logger.info(f"尝试获取更新日志: {api_url}")
+            
+            req = urllib.request.Request(api_url)
+            req.add_header('Accept', 'application/vnd.github.v3+json')
+            req.add_header('User-Agent', 'ComfyUI-XnanTool-Updater')
+            
+            with urllib.request.urlopen(req, context=context, timeout=15) as response:
+                data = json.loads(response.read().decode('utf-8'))
+                logger.info(f"获取到 {len(data)} 个commit")
+                
+                if data and len(data) > 0:
+                    # 最新commit信息
+                    latest_commit = data[0]
+                    result["sha"] = latest_commit.get("sha", "")[:7]
+                    result["date"] = latest_commit.get("commit", {}).get("author", {}).get("date", "")
+                    result["message"] = latest_commit.get("commit", {}).get("message", "暂无更新信息")
+                    logger.info(f"成功获取更新日志")
+                else:
+                    result["error"] = "未获取到commit数据"
+                    logger.warning("GitHub API返回空的commit数据")
+                    
+        except urllib.error.HTTPError as e:
+            error_msg = f"HTTP错误 {e.code}: {e.reason}"
+            result["error"] = f"获取更新日志失败: {error_msg}"
+            logger.error(f"HTTPError: {error_msg}")
+        except urllib.error.URLError as e:
+            error_msg = f"URL错误: {e.reason}"
+            result["error"] = f"获取更新日志失败: {error_msg}"
+            logger.error(f"URLError: {error_msg}")
+        except Exception as e:
+            error_msg = f"{type(e).__name__}: {str(e)}"
+            result["error"] = f"获取更新日志失败: {error_msg}"
+            logger.error(f"Exception: {error_msg}", exc_info=True)
+        
+        return result
+    
     def update_plugin(self):
         """
         更新插件（使用git pull）
@@ -239,55 +305,6 @@ class AutoUpdater:
         
         return result
     
-    def _compare_versions(self, version1, version2):
-        """
-        比较两个版本号
-        
-        Args:
-            version1: 版本号1
-            version2: 版本号2
-            
-        Returns:
-            int: -1表示version1 < version2, 0表示相等, 1表示version1 > version2
-        """
-        try:
-            # 处理commit版本
-            if version2.startswith("commit-"):
-                # 如果当前版本不是commit版本，认为不需要更新
-                if not version1.startswith("commit-"):
-                    return 0
-                # 都是commit版本，认为需要更新（无法比较）
-                return -1
-            
-            # 移除版本号前缀
-            v1 = version1.lstrip("v")
-            v2 = version2.lstrip("v")
-            
-            # 分割版本号
-            parts1 = [int(x) for x in v1.split(".")]
-            parts2 = [int(x) for x in v2.split(".")]
-            
-            # 补齐长度
-            max_len = max(len(parts1), len(parts2))
-            parts1.extend([0] * (max_len - len(parts1)))
-            parts2.extend([0] * (max_len - len(parts2)))
-            
-            # 逐段比较
-            for p1, p2 in zip(parts1, parts2):
-                if p1 < p2:
-                    return -1
-                elif p1 > p2:
-                    return 1
-            
-            return 0
-        except:
-            # 如果解析失败，使用字符串比较
-            if version1 < version2:
-                return -1
-            elif version1 > version2:
-                return 1
-            return 0
-    
     def _get_current_branch(self):
         """获取当前git分支"""
         result = self._run_git_command(["git", "branch", "--show-current"])
@@ -352,7 +369,7 @@ def get_updater():
     """获取全局更新器实例"""
     global _updater
     if _updater is None:
-        plugin_dir = Path(__file__).parent.parent
+        plugin_dir = Path(__file__).parent.parent.parent
         _updater = AutoUpdater(
             plugin_dir=plugin_dir,
             github_repo="otsluo/comfyui-xnantool"

@@ -132,6 +132,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - 图片视频提示词预设
 - 随机提示词生成器
 - 随机提示词生成器组
+- 提示词技能库
 
 ### 🖼️ 图像处理类节点
 
@@ -205,6 +206,7 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - 切换字符串（输出）
 - 编号切换
 - 随机执行
+- 布尔判断
 
 **字符串/文本**
 - 字符串合并
@@ -248,6 +250,10 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 - 保存图片
 - 保存视频
 
+**批量任务**
+- 批量任务
+- 批量任务解析
+
 **其他工具**
 - 获取当前时间
 - 预览视频
@@ -269,23 +275,14 @@ git clone https://gitcode.com/weixin_45738527/comfyui-xnantool.git
 
 ## 📝 版本信息
 - **当前版本**: 0.8.1
-- **更新日期**: 2026年8月22日
+- **更新日期**: 2026年9月20日
 - **更新日志**:
 
-feat: 批量新增优化节点功能与配置
-
-- 新增empty空值预设选项
-- 移除ToggleAnyNode类型校验限制
-- 修正图片排序选项命名
-- 更新魔搭模型支持列表与注释
-- 重构SaveTextNode返回格式适配UI
-- 扩展RandomExecutionNode输入至10个
-- 更新百炼LLM模型列表与默认值
-- 重构百炼VL调用逻辑兼容OpenAI格式
-- 更新节点中文文档与显示名称
-- 新增文本处理节点，支持取数字、取字母、转大小写、取中文、去标点、去换行、去空行、去空格、去格式、统计字数、统计字符、反转文本等多种处理模式
-- 更新百炼LLM节点模型列表，新增 qwen3.8-max、qwen3.8-2.4t-a95b、qwen3.8-27b、kimi-k3、deepseek-v4-pro-0813、deepseek-v4-flash-0731、qwen3.7-flash、qwen3.7-flash-2026-07-15 等模型，移除过期模型
-
+feat: 新增批量任务节点，优化依赖包管理
+- 新增提示词技能库节点，支持加载本地技能目录与下载GitHub技能
+- 新增布尔判断、批量任务解析、批量任务、包管理增强节点
+- 为文本输入节点添加缓存检测，避免重复执行
+- 依赖包管理节点新增额外参数输入，支持安装本地 whl 文件
 
 
 ## 📞 联系方式

@@ -24,7 +24,13 @@ class PackageManagerNode:
                     "default": "",
                     "multiline": False,
                     "label": "包名称",
-                    "description": "要操作的包名称（查看已安装时可留空）"
+                    "description": "要操作的包名称或本地whl文件路径（查看已安装时可留空）"
+                }),
+                "extra_args": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "label": "额外参数",
+                    "description": "额外的pip参数，如 --no-cache-dir --force-reinstall 等"
                 }),
                 "mirror_url": ("STRING", {
                     "default": "https://mirrors.aliyun.com/pypi/simple",
@@ -41,19 +47,19 @@ class PackageManagerNode:
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     DESCRIPTION = "管理Python依赖包：查看已安装、查看包详情、安装、卸载、更新（支持换源安装）"
     
-    def manage_package(self, action, package_name, mirror_url="https://mirrors.aliyun.com/pypi/simple"):
-        logger.info(f"执行操作: {action}, 包名称: {package_name}")
+    def manage_package(self, action, package_name, extra_args="", mirror_url="https://mirrors.aliyun.com/pypi/simple"):
+        logger.info(f"执行操作: {action}, 包名称: {package_name}, 额外参数: {extra_args}")
         try:
             if action == "查看已安装":
                 return self.list_installed_packages()
             elif action == "查看包详情":
                 return self.show_package_info(package_name)
             elif action == "安装包":
-                return self.install_package(package_name, mirror_url)
+                return self.install_package(package_name, extra_args, mirror_url)
             elif action == "卸载包":
-                return self.uninstall_package(package_name)
+                return self.uninstall_package(package_name, extra_args)
             elif action == "更新包":
-                return self.update_package(package_name, mirror_url)
+                return self.update_package(package_name, extra_args, mirror_url)
         except Exception as e:
             error_msg = f"操作失败: {str(e)}"
             logger.error(error_msg)
@@ -107,7 +113,7 @@ class PackageManagerNode:
             logger.error(error_msg)
             return (error_msg,)
     
-    def install_package(self, package_name, mirror_url="https://mirrors.aliyun.com/pypi/simple"):
+    def install_package(self, package_name, extra_args="", mirror_url="https://mirrors.aliyun.com/pypi/simple"):
         """安装包"""
         if not package_name:
             error_msg = "错误：请输入包名称"
@@ -118,6 +124,12 @@ class PackageManagerNode:
         
         try:
             cmd = [sys.executable, "-m", "pip", "install", package_name]
+            
+            # 添加额外参数
+            if extra_args and extra_args.strip():
+                extra_args_list = extra_args.strip().split()
+                cmd.extend(extra_args_list)
+                logger.info(f"添加额外参数: {extra_args_list}")
             
             if mirror_url:
                 cmd.extend(["-i", mirror_url])
@@ -147,7 +159,7 @@ class PackageManagerNode:
             logger.error(error_msg)
             return (error_msg,)
     
-    def uninstall_package(self, package_name):
+    def uninstall_package(self, package_name, extra_args=""):
         """卸载包"""
         if not package_name:
             error_msg = "错误：请输入包名称"
@@ -157,8 +169,16 @@ class PackageManagerNode:
         logger.info(f"开始卸载包: {package_name}")
         
         try:
+            cmd = [sys.executable, "-m", "pip", "uninstall", "-y", package_name]
+            
+            # 添加额外参数
+            if extra_args and extra_args.strip():
+                extra_args_list = extra_args.strip().split()
+                cmd.extend(extra_args_list)
+                logger.info(f"添加额外参数: {extra_args_list}")
+            
             result = subprocess.run(
-                [sys.executable, "-m", "pip", "uninstall", "-y", package_name],
+                cmd,
                 capture_output=True,
                 text=True,
                 timeout=300
@@ -181,7 +201,7 @@ class PackageManagerNode:
             logger.error(error_msg)
             return (error_msg,)
     
-    def update_package(self, package_name, mirror_url="https://mirrors.aliyun.com/pypi/simple"):
+    def update_package(self, package_name, extra_args="", mirror_url="https://mirrors.aliyun.com/pypi/simple"):
         """更新包"""
         if not package_name:
             error_msg = "错误：请输入包名称"
@@ -192,6 +212,12 @@ class PackageManagerNode:
         
         try:
             cmd = [sys.executable, "-m", "pip", "install", "--upgrade", package_name]
+            
+            # 添加额外参数
+            if extra_args and extra_args.strip():
+                extra_args_list = extra_args.strip().split()
+                cmd.extend(extra_args_list)
+                logger.info(f"添加额外参数: {extra_args_list}")
             
             if mirror_url:
                 cmd.extend(["-i", mirror_url])
@@ -222,11 +248,11 @@ class PackageManagerNode:
             return (error_msg,)
     
     @classmethod
-    def IS_CHANGED(cls, action, package_name, mirror_url="https://mirrors.aliyun.com/pypi/simple", **kwargs):
+    def IS_CHANGED(cls, action, package_name, extra_args="", mirror_url="https://mirrors.aliyun.com/pypi/simple", **kwargs):
         return float("NaN")
     
     @classmethod
-    def VALIDATE_INPUTS(cls, action, package_name, mirror_url="https://mirrors.aliyun.com/pypi/simple", **kwargs):
+    def VALIDATE_INPUTS(cls, action, package_name, extra_args="", mirror_url="https://mirrors.aliyun.com/pypi/simple", **kwargs):
         if action in ["查看包详情", "安装包", "卸载包", "更新包"] and not package_name.strip():
             return "请输入包名称"
         return True

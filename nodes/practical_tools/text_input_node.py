@@ -21,6 +21,16 @@ class TextInputNode:
     FUNCTION = "get_text"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
+    @classmethod
+    def IS_CHANGED(cls, text, enabled):
+        """
+        检测节点输入是否发生变化
+        如果输入没有变化，节点不会重新执行
+        """
+        # 返回文本和启用状态的哈希值
+        # 当值相同时，ComfyUI 会跳过节点执行
+        return hash((text, enabled))
+
     def get_text(self, text, enabled):
         """
         返回输入的文本
