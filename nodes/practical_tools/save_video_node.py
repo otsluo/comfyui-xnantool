@@ -504,7 +504,37 @@ class SaveVideoNode:
                 filename = os.path.basename(file_path)
                 
                 # 获取编码参数
-                crf_display = f"{crf_value}" if crf != "自动" else "自动(23)"
+                crf_display = f"自动-{crf_value}" if crf == "自动" else str(crf_value)
+                
+                # 预设信息映射
+                preset_info = {
+                    "ultrafast": "编码速度：极快，文件大小：最大，适用场景：快速测试、实时预览",
+                    "superfast": "编码速度：很快，文件大小：较大，适用场景：草稿预览",
+                    "veryfast": "编码速度：快，文件大小：中等偏大，适用场景：日常快速生成",
+                    "faster": "编码速度：较快，文件大小：中等，适用场景：平衡选择",
+                    "fast": "编码速度：中等，文件大小：中等，适用场景：推荐默认",
+                    "medium": "编码速度：较慢，文件大小：较小，适用场景：标准压缩",
+                    "slow": "编码速度：慢，文件大小：小，适用场景：高质量成品",
+                    "slower": "编码速度：很慢，文件大小：更小，适用场景：极致压缩",
+                    "veryslow": "编码速度：极慢，文件大小：最小，适用场景：存档、发布",
+                }
+                preset_desc = preset_info.get(preset, "")
+                
+                # CRF信息映射
+                if crf_value == 0:
+                    crf_desc = "质量等级：无损，文件大小：极大，适用场景：存档、后期处理中间文件"
+                elif 15 <= crf_value <= 18:
+                    crf_desc = "质量等级：视觉无损，文件大小：大，适用场景：高质量作品、商业用途"
+                elif 20 <= crf_value <= 23:
+                    crf_desc = "质量等级：高质量，文件大小：中等，适用场景：推荐默认值，日常使用"
+                elif 25 <= crf_value <= 28:
+                    crf_desc = "质量等级：中等质量，文件大小：较小，适用场景：网络分享、预览"
+                elif 30 <= crf_value <= 35:
+                    crf_desc = "质量等级：低质量，文件大小：小，适用场景：快速测试、草稿"
+                elif 40 <= crf_value <= 51:
+                    crf_desc = "质量等级：极低质量，文件大小：极小，适用场景：不推荐使用"
+                else:
+                    crf_desc = ""
                 
                 info_text = (
                     f"✅ {message}\n\n"
@@ -516,8 +546,8 @@ class SaveVideoNode:
                     f"🔊 音频: {has_audio}{audio_info}\n"
                     f"💾 大小: {file_size:.2f} MB\n"
                     f"🎬 编码: {codec}\n"
-                    f"📊 CRF质量: {crf_display}\n"
-                    f"⚡ 编码预设: {preset}"
+                    f"📊 CRF质量: {crf_display}（{crf_desc}）\n"
+                    f"⚡ 编码预设: {preset}（{preset_desc}）"
                 )
             else:
                 info_text = f"✅ {message}\n\n⚠️ 视频中无视频流"

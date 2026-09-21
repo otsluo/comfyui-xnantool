@@ -103,11 +103,16 @@ class BailianLLMNode:
                     "label": "随机种子",
                     "description": "随机种子（0为随机）"
                 }),
-                "endpoint": ("STRING", {
+                "workspace_id": ("STRING", {
                     "default": "",
                     "multiline": False,
-                    "label": "Endpoint URL",
-                    "description": "阿里云百炼API Endpoint（留空使用默认值，SDK无需配置）"
+                    "label": "业务空间ID",
+                    "description": "阿里云百炼业务空间ID（WorkspaceId），必填，用于构建API域名"
+                }),
+                "region": (["华北2（北京）", "新加坡", "美国（弗吉尼亚）", "德国（法兰克福）", "日本（东京）", "中国香港"], {
+                    "default": "华北2（北京）",
+                    "label": "地域",
+                    "description": "选择API接入地域，就近选择可降低延迟"
                 }),
             }
         }
@@ -117,7 +122,7 @@ class BailianLLMNode:
     FUNCTION = "call_llm"
     CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
-    def call_llm(self, system_prompt, prompt, model, custom_model="", api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, enable_thinking="false", seed=0, endpoint=None):
+    def call_llm(self, system_prompt, prompt, model, custom_model="", api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, enable_thinking="false", seed=0, workspace_id=None, region="华北2（北京）"):
         """
         调用阿里云百炼LLM
         
@@ -131,7 +136,8 @@ class BailianLLMNode:
             max_tokens: 最大输出长度
             enable_thinking: 是否开启思考模式
             seed: 随机种子
-            endpoint: API Endpoint URL（已废弃，SDK自动使用默认值）
+            workspace_id: 业务空间ID，用于构建新的API域名
+            region: API接入地域
             
         Returns:
             tuple: (响应文本,)
@@ -181,9 +187,26 @@ class BailianLLMNode:
             ]
             
             if actual_model in new_models:
-                # 使用 compatible-mode endpoint（OpenAI 兼容格式）
-                dashscope.base_http_api_url = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
-                logger.info(f"使用 compatible-mode endpoint: https://dashscope.aliyuncs.com/compatible-mode/v1")
+                # 检查 workspace_id 是否填写
+                if not workspace_id or not workspace_id.strip():
+                    return ("错误：必须填写业务空间ID（WorkspaceId）",)
+                
+                # 地域映射
+                region_map = {
+                    "华北2（北京）": "cn-beijing",
+                    "新加坡": "ap-southeast-1",
+                    "美国（弗吉尼亚）": "us-east-1",
+                    "德国（法兰克福）": "eu-central-1",
+                    "日本（东京）": "ap-northeast-1",
+                    "中国香港": "cn-hongkong"
+                }
+                region_code = region_map.get(region, "cn-beijing")
+                
+                # 构建 API 域名：https://{WorkspaceId}.{region}.maas.aliyuncs.com/compatible-mode/v1
+                base_url = f'https://{workspace_id.strip()}.{region_code}.maas.aliyuncs.com/compatible-mode/v1'
+                
+                dashscope.base_http_api_url = base_url
+                logger.info(f"使用 compatible-mode endpoint: {base_url}")
                 
                 # 构建消息列表
                 messages = []
@@ -207,7 +230,7 @@ class BailianLLMNode:
                     from openai import OpenAI
                     client = OpenAI(
                         api_key=api_key,
-                        base_url="https://dashscope.aliyuncs.com/compatible-mode/v1"
+                        base_url=base_url
                     )
                     response = client.chat.completions.create(**params)
                     response_text = response.choices[0].message.content

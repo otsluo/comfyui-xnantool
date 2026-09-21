@@ -109,6 +109,17 @@ class BailianWanNode:
                     "label": "随机种子",
                     "description": "随机种子（0为随机）"
                 }),
+                "workspace_id": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "label": "业务空间ID",
+                    "description": "阿里云百炼业务空间ID（WorkspaceId），必填，用于构建API域名"
+                }),
+                "region": (["华北2（北京）", "新加坡", "美国（弗吉尼亚）", "德国（法兰克福）", "日本（东京）", "中国香港"], {
+                    "default": "华北2（北京）",
+                    "label": "地域",
+                    "description": "选择API接入地域，就近选择可降低延迟"
+                }),
             }
         }
     
@@ -118,7 +129,8 @@ class BailianWanNode:
     CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
     def generate_video(self, prompt, model, api_key=None, image=None, end_image=None, 
-                      video="", audio="", video_duration=5, resolution="1080P", seed=0):
+                      video="", audio="", video_duration=5, resolution="1080P", seed=0,
+                      workspace_id=None, region="华北2（北京）"):
         """
         调用阿里云百炼视频生成模型
         
@@ -157,6 +169,27 @@ class BailianWanNode:
             
             # 设置API Key
             dashscope.api_key = api_key
+            
+            # 检查 workspace_id 是否填写
+            if not workspace_id or not workspace_id.strip():
+                return ("错误：必须填写业务空间ID（WorkspaceId）", "")
+            
+            # 地域映射
+            region_map = {
+                "华北2（北京）": "cn-beijing",
+                "新加坡": "ap-southeast-1",
+                "美国（弗吉尼亚）": "us-east-1",
+                "德国（法兰克福）": "eu-central-1",
+                "日本（东京）": "ap-northeast-1",
+                "中国香港": "cn-hongkong"
+            }
+            region_code = region_map.get(region, "cn-beijing")
+            
+            # 构建 API 域名：https://{WorkspaceId}.{region}.maas.aliyuncs.com/api/v1
+            base_url = f'https://{workspace_id.strip()}.{region_code}.maas.aliyuncs.com/api/v1'
+            
+            # 设置 endpoint URL
+            dashscope.base_http_api_url = base_url
             
             # 构建调用参数
             params = {

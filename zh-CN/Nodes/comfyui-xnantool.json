@@ -65,7 +65,8 @@
       "max_tokens": "最大输出长度",
       "enable_thinking": "思考模式",
       "seed": "随机种子",
-      "endpoint": "Endpoint URL"
+      "workspace_id": "业务空间ID",
+      "region": "地域"
     },
     "widgets": {
       "system_prompt": "系统提示词，用于设定模型的角色和行为规范（可选）",
@@ -78,7 +79,8 @@
       "max_tokens": "最大输出Token数量",
       "enable_thinking": "开启思考模式可获得更长推理链",
       "seed": "随机种子",
-      "endpoint": "API Endpoint"
+      "workspace_id": "阿里云百炼业务空间ID，必填，用于构建API域名",
+      "region": "选择API接入地域，就近选择可降低延迟"
     },
     "outputs": {
       "response": "响应文本"
@@ -117,7 +119,9 @@
       "image_height": "图片高度",
       "steps": "采样步数",
       "scale": "提示词相关性",
-      "seed": "随机种子"
+      "seed": "随机种子",
+      "workspace_id": "业务空间ID",
+      "region": "地域"
     },
     "widgets": {
       "prompt": "生成图片的提示词",
@@ -128,7 +132,9 @@
       "image_height": "生成图片的高度（像素）",
       "steps": "生成图片的采样步数",
       "scale": "提示词对生成图片的影响程度",
-      "seed": "随机种子（0为随机，大于0为固定种子）"
+      "seed": "随机种子（0为随机）",
+      "workspace_id": "阿里云百炼业务空间ID，必填，用于构建API域名",
+      "region": "选择API接入地域，就近选择可降低延迟"
     },
     "outputs": {
       "images": "图片",
@@ -144,6 +150,8 @@
       "model": "模型",
       "custom_model": "自定义模型",
       "api_key": "API密钥",
+      "workspace_id": "业务空间ID",
+      "region": "地域",
       "temperature": "温度",
       "top_p": "Top P",
       "max_tokens": "最大输出长度",
@@ -155,6 +163,8 @@
       "model": "选择要使用的模型，选择'自定义'可手动输入模型名称",
       "custom_model": "当模型选择'自定义'时，在此输入模型名称",
       "api_key": "阿里云百炼API Key（从控制台获取）",
+      "workspace_id": "阿里云百炼业务空间ID，必填，用于构建API域名",
+      "region": "选择API接入地域，就近选择可降低延迟",
       "temperature": "控制输出的随机性，值越大越随机",
       "top_p": "累积概率阈值，控制生成的多样性",
       "max_tokens": "最大输出Token数量",
@@ -195,7 +205,9 @@
       "audio": "音频URL",
       "video_duration": "视频时长",
       "resolution": "分辨率",
-      "seed": "随机种子"
+      "seed": "随机种子",
+      "workspace_id": "业务空间ID",
+      "region": "地域"
     },
     "widgets": {
       "prompt": "生成视频的提示词",
@@ -207,7 +219,9 @@
       "audio": "有声视频的音频URL（可选）",
       "video_duration": "生成视频的时长（秒），范围2-15秒",
       "resolution": "生成视频的分辨率",
-      "seed": "随机种子（0为随机，大于0为固定种子）"
+      "seed": "随机种子（0为随机）",
+      "workspace_id": "阿里云百炼业务空间ID，必填，用于构建API域名",
+      "region": "选择API接入地域，就近选择可降低延迟"
     },
     "outputs": {
       "video_url": "视频URL",
@@ -3527,6 +3541,27 @@
       "值13": "任务字段值13",
       "值14": "任务字段值14",
       "值15": "任务字段值15"
+    }
+  },
+  "VideoConcatNode": {
+    "title": "视频拼接",
+    "description": "将两个视频拼接为一个视频",
+    "inputs": {
+      "video1": "视频1",
+      "video2": "视频2"
+    },
+    "widgets": {
+      "resolution_mode": "分辨率处理",
+      "custom_width": "自定义宽度",
+      "custom_height": "自定义高度",
+      "fps_mode": "帧率处理",
+      "custom_fps": "自定义帧率",
+      "reencode": "编码模式",
+      "encode_quality": "编码质量"
+    },
+    "outputs": {
+      "video": "拼接后的视频",
+      "info": "拼接信息"
     }
   },
   "MultiPathImageLoaderNode": {

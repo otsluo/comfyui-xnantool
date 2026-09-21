@@ -33,13 +33,18 @@ class BailianVLNode:
                     "label": "图片",
                     "description": "输入的图片"
                 }),
-                "model": (["自定义", "qwen3.7-max", "qwen3.7-plus", "qwen3.7-max-preview",
-                          "qwen3.7-max-2026-06-08", "qwen3.7-max-2026-05-20", "qwen3.7-max-2026-05-17",
-                          "qwen3.7-plus-2026-05-26",
+                "model": (["自定义",
                           "qwen3.5-ocr",
-                          "deepseek-v4-pro", "deepseek-v4-flash",
-                          "kimi-k2.7-code", "glm-5.2"], {
-                    "default": "qwen3.7-plus",
+                          "glm-5.2",
+                          "qwen3.7-flash",
+                          "qwen3.7-flash-2026-07-15",
+                          "deepseek-v4-flash-0731",
+                          "qwen3.8-max",
+                          "qwen3.8-2.4t-a95b",
+                          "deepseek-v4-pro-0813",
+                          "kimi-k3",
+                          "qwen3.8-27b"], {
+                    "default": "qwen3.8-max",
                     "label": "模型",
                     "description": "选择要使用的模型，选择'自定义'可手动输入模型名称"
                 }),
@@ -89,6 +94,17 @@ class BailianVLNode:
                     "label": "随机种子",
                     "description": "随机种子（0为随机）"
                 }),
+                "workspace_id": ("STRING", {
+                    "default": "",
+                    "multiline": False,
+                    "label": "业务空间ID",
+                    "description": "阿里云百炼业务空间ID（WorkspaceId），必填，用于构建API域名"
+                }),
+                "region": (["华北2（北京）", "新加坡", "美国（弗吉尼亚）", "德国（法兰克福）", "日本（东京）", "中国香港"], {
+                    "default": "华北2（北京）",
+                    "label": "地域",
+                    "description": "选择API接入地域，就近选择可降低延迟"
+                }),
             }
         }
     
@@ -97,7 +113,7 @@ class BailianVLNode:
     FUNCTION = "call_vl"
     CATEGORY = "❤️❤️❤️XnanTool/API/阿里百炼"
     
-    def call_vl(self, prompt, image, model, custom_model="", api_key=None, temperature=0.7, top_p=0.95, max_tokens=1024, seed=0):
+    def call_vl(self, prompt, image, model, custom_model="", api_key=None, workspace_id=None, region="华北2（北京）", temperature=0.7, top_p=0.95, max_tokens=1024, seed=0):
         """
         调用阿里云百炼VL模型
         
@@ -106,6 +122,7 @@ class BailianVLNode:
             image: 输入图片
             model: 模型名称
             api_key: API Key
+            workspace_id: 业务空间ID
             temperature: 温度参数
             top_p: Top P参数
             max_tokens: 最大输出长度
@@ -156,11 +173,29 @@ class BailianVLNode:
             
             # 使用 OpenAI 兼容模式调用
             try:
+                # 检查 workspace_id 是否填写
+                if not workspace_id or not workspace_id.strip():
+                    return ("错误：必须填写业务空间ID（WorkspaceId）",)
+                
+                # 地域映射
+                region_map = {
+                    "华北2（北京）": "cn-beijing",
+                    "新加坡": "ap-southeast-1",
+                    "美国（弗吉尼亚）": "us-east-1",
+                    "德国（法兰克福）": "eu-central-1",
+                    "日本（东京）": "ap-northeast-1",
+                    "中国香港": "cn-hongkong"
+                }
+                region_code = region_map.get(region, "cn-beijing")
+                
+                # 构建 API 域名：https://{WorkspaceId}.{region}.maas.aliyuncs.com/compatible-mode/v1
+                base_url = f'https://{workspace_id.strip()}.{region_code}.maas.aliyuncs.com/compatible-mode/v1'
+                
                 from openai import OpenAI
                 
                 client = OpenAI(
                     api_key=api_key,
-                    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+                    base_url=base_url,
                 )
                 
                 # 构建消息
