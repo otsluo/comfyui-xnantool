@@ -159,7 +159,9 @@ class LoadVideoNode:
         video_stream = VideoStream(video_path)
         audio_stream = AudioStream(video_path, has_audio=has_audio)
         
-        return (video_stream, audio_stream, video_file)
+        # 去掉文件后缀
+        filename_without_ext = os.path.splitext(video_file)[0]
+        return (video_stream, audio_stream, filename_without_ext)
 
 
 # 注册节点

@@ -164,8 +164,8 @@ class LoadVideoPathNode:
             }
         }
     
-    RETURN_TYPES = ("VIDEO", "IMAGE", "STRING", "AUDIO")
-    RETURN_NAMES = ("video", "video_frames", "video_path", "audio")
+    RETURN_TYPES = ("VIDEO", "IMAGE", "STRING", "AUDIO", "STRING")
+    RETURN_NAMES = ("video", "video_frames", "video_path", "audio", "filename")
     FUNCTION = "load_video"
     CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
@@ -182,12 +182,12 @@ class LoadVideoPathNode:
         """
         try:
             if not video_path or not video_path.strip():
-                return (None, None, "", None)
-            
+                return (None, None, "", None, "")
+
             # 检查文件是否存在
             if not os.path.exists(video_path):
                 print(f"[LoadVideoPathNode] 错误：视频文件不存在: {video_path}")
-                return (None, None, "", None)
+                return (None, None, "", None, "")
             
             # 创建视频对象
             video_obj = VideoStream(video_path)
@@ -200,8 +200,11 @@ class LoadVideoPathNode:
             
             # 创建音频对象
             audio_data = AudioStream(video_path, has_audio=has_audio)
-            
-            return (video_obj, video_frames, video_path, audio_data)
+
+            # 获取文件名（不带后缀）
+            filename = os.path.splitext(os.path.basename(video_path))[0]
+
+            return (video_obj, video_frames, video_path, audio_data, filename)
             
         except Exception as e:
             print(f"[LoadVideoPathNode] 加载视频时发生错误: {str(e)}")

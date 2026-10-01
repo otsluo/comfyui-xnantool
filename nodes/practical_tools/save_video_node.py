@@ -24,7 +24,7 @@ class SaveVideoNode:
             "required": {
                 "output_path": ("STRING", {"default": "video", "multiline": False, "placeholder": "留空使用默认输出路径"}),
                 "filename_prefix": ("STRING", {"default": "视频"}),
-                "fps": (["自动", 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 24, 25, 30, 48, 50, 60], {"default": "自动"}),
+                "fps": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 120.0, "step": 0.1, "label": "帧率", "description": "帧率（0表示自动）"}),
                 "video_format": (["mp4", "avi", "mov", "mkv"], {"default": "mp4"}),
                 "codec": (["自动", "libx264", "libx265", "mpeg4", "vp9"], {"default": "自动"}),
                 "preset": (["ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow"], {"default": "fast"}),
@@ -45,7 +45,7 @@ class SaveVideoNode:
     FUNCTION = "save_video"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
     
-    def save_video(self, filename_prefix="视频", fps="自动", video_format="mp4", codec="自动", preset="fast", crf="自动", audio_sample_rate="自动", audio_bitrate="自动", images=None, video=None, audio=None, output_path=""):
+    def save_video(self, filename_prefix="视频", fps=0, video_format="mp4", codec="自动", preset="fast", crf="自动", audio_sample_rate="自动", audio_bitrate="自动", images=None, video=None, audio=None, output_path=""):
         """将图像序列保存为视频文件"""
         import sys
         
@@ -123,7 +123,7 @@ class SaveVideoNode:
                     print(f"🎬 视频信息: {total_frames}帧, {video_fps}fps, {width}x{height}")
                     
                     # 自动帧率：使用视频原始帧率
-                    if fps == "自动":
+                    if fps == 0:
                         fps = video_fps
                         print(f"🎬 使用视频原始帧率: {fps} fps")
                     
@@ -150,7 +150,7 @@ class SaveVideoNode:
             return {"result": ("",), "ui": {"text": "错误: 没有可用的图像数据"}}
         
         # 自动帧率
-        if fps == "自动":
+        if fps == 0:
             fps = max(1, min(len(image_list), 30))
             print(f"🎬 自动帧率: {fps} fps")
         

@@ -40,10 +40,13 @@ class StringMergeNode:
         Returns:
             tuple: 包含合并后字符串的元组
         """
+        # 解析分隔符中的转义字符
+        separator = separator.encode().decode('unicode_escape') if separator else ""
+
         # 收集所有非空字符串
         strings = [string1, string2, string3, string4, string5]
         non_empty_strings = [s for s in strings if s]
-        
+
         # 使用分隔符合并字符串
         merged_string = separator.join(non_empty_strings)
         

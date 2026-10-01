@@ -1,7 +1,7 @@
 {
     "MiniMaxH3Director": {
         "title": "MiniMax H3 导演台",
-        "description": "MiniMax H3 时间轴导演台：内置时间轴 UI，按段执行官方 MiniMax H3 音视频生成管线。支持 t2v / i2v / fl2v / r2v / v2v / rv2v，可外接分组包与精修节点。默认 0.4MP 16:9（864×480）、5 秒 / 124 帧 @ 24fps。",
+        "description": "MiniMax H3 时间轴导演台：内置时间轴 UI，按段执行官方 MiniMax H3 音视频生成管线。支持 t2v / i2v / fl2v / r2v / v2v / rv2v，可外接分组包、语义桥、SelfLift、精修与脸修节点。默认 0.4MP 16:9（864×480）、5 秒 / 124 帧 @ 24fps。",
         "inputs": {
             "model": "模型（H3 UNET）",
             "video_vae": "视频 VAE",
@@ -9,7 +9,10 @@
             "clip": "CLIP 文本编码器",
             "i2v_groups": "图生视频分组",
             "r2v_groups": "参考生视频分组",
+            "semantic_bridge": "语义桥配置",
+            "selflift": "SelfLift 配置",
             "refine": "精修配置",
+            "face_refine": "脸修配置",
             "sigmas": "噪声表（SIGMAS）"
         },
         "widgets": {
@@ -32,7 +35,11 @@
             "shift_audio": "音频 Sigma 偏移",
             "bd_grp_perf": "分组：性能",
             "clear_vram_between_segments": "段间清理显存",
-            "export_source_images": "导出原片图像"
+            "clear_vram_before_refine": "二采前清理显存",
+            "clear_vram_before_face_refine": "脸修前清理显存",
+            "cache_frames_codec": "缓存帧编码",
+            "export_source_images": "导出原片图像",
+            "export_pre_face_refine": "输出修脸前"
         },
         "outputs": {
             "images": "图像",
@@ -41,7 +48,8 @@
             "frame_count": "帧数",
             "source_images": "原片图像",
             "report": "运行报告",
-            "images_pre_refine": "精修前图像"
+            "images_pre_refine": "精修前图像",
+            "images_pre_face_refine": "脸修前图像"
         }
     },
     "ComfyMiniMaxH3Director": {
@@ -54,7 +62,10 @@
             "clip": "CLIP 文本编码器",
             "i2v_groups": "图生视频分组",
             "r2v_groups": "参考生视频分组",
+            "semantic_bridge": "语义桥配置",
+            "selflift": "SelfLift 配置",
             "refine": "精修配置",
+            "face_refine": "脸修配置",
             "sigmas": "噪声表（SIGMAS）"
         },
         "widgets": {
@@ -77,7 +88,11 @@
             "shift_audio": "音频 Sigma 偏移",
             "bd_grp_perf": "分组：性能",
             "clear_vram_between_segments": "段间清理显存",
-            "export_source_images": "导出原片图像"
+            "clear_vram_before_refine": "二采前清理显存",
+            "clear_vram_before_face_refine": "脸修前清理显存",
+            "cache_frames_codec": "缓存帧编码",
+            "export_source_images": "导出原片图像",
+            "export_pre_face_refine": "输出修脸前"
         },
         "outputs": {
             "images": "图像",
@@ -86,7 +101,8 @@
             "frame_count": "帧数",
             "source_images": "原片图像",
             "report": "运行报告",
-            "images_pre_refine": "精修前图像"
+            "images_pre_refine": "精修前图像",
+            "images_pre_face_refine": "脸修前图像"
         }
     },
     "MiniMaxH3DirectorRefine": {
@@ -109,12 +125,92 @@
             "width": "宽度",
             "height": "高度",
             "skip_fl2v": "跳过首尾帧镜头",
-            "confirm_first_pass": "先确认一采再二采"
+            "confirm_first_pass": "先确认一采再二采",
+            "enable_latent_chunking": "Latent 时间分块",
+            "enable_tiling": "二采空间分块",
+            "tile_count": "分块数量",
+            "tile_overlap": "分块重叠",
+            "seed": "独立种子"
         },
         "outputs": {
             "refine": "精修配置",
             "width": "目标宽度",
             "height": "目标高度"
+        }
+    },
+    "MiniMaxH3DirectorSelfLift": {
+        "title": "MiniMax H3 导演台 SelfLift",
+        "description": "打包 SelfLift（渐进式一采）配置，接入导演台的 selflift 端口（位于精修之上）。接线后每段一采变为：低清前缀 + 3D 提升 + 高清收尾；不接则维持单阶段采样。段间连续性保留原生低清尾 + 高清钉帧。仅支持 Euler 采样器，不包含 TST。",
+        "inputs": {
+            "model_hires": "高清阶段模型（MODEL）"
+        },
+        "widgets": {
+            "bd_grp_selflift_sample": "分组：渐进采样",
+            "split_mode": "阶段切分方式",
+            "highres_steps": "高清收尾步数",
+            "transition_step": "过渡步（低清前缀步数）",
+            "lowres_scale": "低清画布倍率",
+            "sampler_mode": "采样器模式",
+            "native_low_carry": "原生低清尾传递",
+            "bd_grp_selflift_lift": "分组：提升 / 3D",
+            "latent_upscale_model": "3D Latent 放大权重",
+            "latent_upsample": "升采样插值方式",
+            "rho": "像素锚混合系数",
+            "w_min": "像素锚最小权重",
+            "w_max": "像素锚最大权重",
+            "enable_latent_chunking": "3D 提升时间分块",
+            "bd_grp_selflift_tile": "分组：高清分块",
+            "enable_tiling": "高清空间分块",
+            "tile_count": "分块数量",
+            "tile_overlap": "分块重叠"
+        },
+        "outputs": {
+            "selflift": "SelfLift 配置"
+        }
+    },
+    "MiniMaxH3DirectorSemanticBridge": {
+        "title": "MiniMax H3 导演台语义桥",
+        "description": "打包语义桥配置，接入导演台的 semantic_bridge 端口（位于 SelfLift 之上）。接线后用已发布的 student MLP 重写每段的官方条件 token（RMS 归一化 → 5120→512→512→5120 → 模长对齐 → 残差混合）。原版蒸馏于 FL2VA；r2v / v2v / rv2v 为强制兼容，谨慎使用。不接则完全不变。",
+        "inputs": {},
+        "widgets": {
+            "adapter": "适配器权重",
+            "alpha": "残差混合强度",
+            "magnitude_match": "模长对齐"
+        },
+        "outputs": {
+            "semantic_bridge": "语义桥配置"
+        }
+    },
+    "MiniMaxH3DirectorFaceRefine": {
+        "title": "MiniMax H3 导演台脸修",
+        "description": "打包脸修配置，接入导演台的 face_refine 端口。接线后导演台在最终解码帧上（若也接了精修则在精修之后）跟踪人脸，用 MiniMax H3 对裁剪区域重新采样，并仅将脸部贴回。需要 ultralytics 与人脸 YOLO 权重。",
+        "inputs": {
+            "sigmas": "噪声表（SIGMAS）"
+        },
+        "widgets": {
+            "bd_grp_face_detect": "分组：脸部检测设置",
+            "detector": "人脸检测权重",
+            "confidence": "检测置信度",
+            "crop_factor": "裁剪倍率",
+            "canvas_width": "画布宽度",
+            "canvas_height": "画布高度",
+            "canvas_mode": "画布模式",
+            "select": "锁定对象",
+            "bd_grp_face_sample": "分组：采样设置",
+            "denoise": "重采降噪强度",
+            "steps": "采样步数",
+            "sampler": "采样器",
+            "scheduler": "调度器",
+            "seed_mode": "种子模式",
+            "bd_grp_face_paste": "分组：贴回设置",
+            "paste_region": "贴回区域",
+            "mask_dilation": "遮罩膨胀",
+            "feather": "羽化半径",
+            "colour_match": "颜色匹配",
+            "blend": "混合强度"
+        },
+        "outputs": {
+            "face_refine": "脸修配置"
         }
     },
     "MiniMaxH3DirectorConditioning": {

@@ -11,6 +11,8 @@ class IndexSwitchNode:
         return {
             "required": {
                 "index": ("INT", {"default": 0, "min": 0, "max": 19, "step": 1}),
+            },
+            "optional": {
                 "value_0": ("*",),
                 "value_1": ("*",),
                 "value_2": ("*",),
@@ -40,17 +42,18 @@ class IndexSwitchNode:
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
     @classmethod
-    def IS_CHANGED(cls, index, value_0, value_1, value_2, value_3, value_4):
+    def IS_CHANGED(cls, index, **kwargs):
         # 返回输入值的哈希，用于检测变化
-        return hash((index, value_0, value_1, value_2, value_3, value_4))
+        values = tuple(kwargs.get(f"value_{i}") for i in range(20))
+        return hash((index, values))
 
-    def switch_by_index(self, index, value_0, value_1, value_2, value_3, value_4, value_5, value_6, value_7, value_8, value_9, value_10, value_11, value_12, value_13, value_14, value_15, value_16, value_17, value_18, value_19):
+    def switch_by_index(self, index, value_0=None, value_1=None, value_2=None, value_3=None, value_4=None, value_5=None, value_6=None, value_7=None, value_8=None, value_9=None, value_10=None, value_11=None, value_12=None, value_13=None, value_14=None, value_15=None, value_16=None, value_17=None, value_18=None, value_19=None):
         """
         根据索引值从多个输入中选择一个输出
 
         Args:
             index: 索引值（0-19）
-            value_0 到 value_19: 各索引对应的值
+            value_0 到 value_19: 各索引对应的值（可选，未连接时为None）
 
         Returns:
             tuple: 包含选定值的元组

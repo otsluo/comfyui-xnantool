@@ -1518,7 +1518,8 @@
       "video": "视频对象",
       "video_frames": "视频帧",
       "video_path": "视频路径",
-      "audio": "音频数据"
+      "audio": "音频数据",
+      "filename": "文件名（不含后缀）"
     }
   },
   "LoopGeneratorNode": {
@@ -2378,7 +2379,7 @@
     "outputs": {
       "video": "视频流",
       "audio": "音频流",
-      "filename": "视频文件名"
+      "filename": "视频文件名（不含后缀）"
     }
   },
   "PreviewVideoNode": {
@@ -2595,6 +2596,22 @@
     },
     "outputs": {
       "切片结果": "切片后的列表"
+    }
+  },
+  "GetFileListNode": {
+    "title": "获取文件名列表",
+    "description": "获取指定目录下的文件名列表，支持扩展名过滤和递归子文件夹",
+    "inputs": {
+      "directory_path": "目录路径"
+    },
+    "widgets": {
+      "directory_path": "要获取文件列表的目录路径",
+      "file_extension": "文件扩展名过滤（如 .png, .jpg，留空表示所有文件）",
+      "recursive": "是否递归获取子文件夹中的文件"
+    },
+    "outputs": {
+      "文件列表": "文件名列表",
+      "文件信息": "文件统计信息"
     }
   },
   "TransferNode": {
