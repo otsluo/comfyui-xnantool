@@ -83,56 +83,52 @@ class SaveImageNode:
             
             # 保存图片
             try:
+                # 格式名称映射
+                format_map = {
+                    "jpg": "JPEG",
+                    "jpeg": "JPEG",
+                    "png": "PNG",
+                    "gif": "GIF",
+                    "webp": "WEBP",
+                    "bmp": "BMP"
+                }
+                pil_format = format_map.get(extension.lower(), extension.upper())
+
                 if extension.lower() in ["jpg", "jpeg"]:
-                    img = img.convert("RGB")  # JPEG不支持透明通道
-                    if save_workflow:
-                        # 保留工作流信息
-                        exif_data = self._get_workflow_exif_data(prompt, extra_pnginfo)
-                        if exif_data:
-                            img.save(file_path_full, format=extension.upper(), quality=quality, exif=exif_data)
+                    # JPEG不支持透明通道，需要特殊处理
+                    if img.mode in ('RGBA', 'LA'):
+                        # 创建白色背景
+                        background = Image.new('RGB', img.size, (255, 255, 255))
+                        # 将透明区域合成到白色背景
+                        if img.mode == 'RGBA':
+                            background.paste(img, mask=img.split()[2])  # 使用alpha通道作为mask
                         else:
-                            img.save(file_path_full, format=extension.upper(), quality=quality)
-                    else:
-                        # 不保留工作流信息
-                        img.save(file_path_full, format=extension.upper(), quality=quality)
-                elif extension.lower() == "webp":
-                    if save_workflow:
-                        # 保留工作流信息
-                        exif_data = self._get_workflow_exif_data(prompt, extra_pnginfo)
-                        if exif_data:
-                            img.save(file_path_full, format=extension.upper(), quality=quality, exif=exif_data)
-                        else:
-                            img.save(file_path_full, format=extension.upper(), quality=quality)
-                    else:
-                        # 不保留工作流信息
-                        img.save(file_path_full, format=extension.upper(), quality=quality)
+                            background.paste(img, mask=img.split()[0])  # LA模式使用亮度作为mask
+                        img = background
+                    elif img.mode != 'RGB':
+                        img = img.convert('RGB')
+                    img.save(file_path_full, format=pil_format, quality=quality)
                 elif extension.lower() == "png":
+                    # 仅PNG格式支持保存工作流信息
                     if save_workflow:
-                        # 保留工作流信息
                         pnginfo_data = self._get_workflow_exif_data(prompt, extra_pnginfo)
                         if pnginfo_data:
-                            img.save(file_path_full, format=extension.upper(), pnginfo=pnginfo_data)
+                            img.save(file_path_full, format=pil_format, pnginfo=pnginfo_data)
                         else:
-                            img.save(file_path_full, format=extension.upper())
+                            img.save(file_path_full, format=pil_format)
                     else:
-                        # 不保留工作流信息
-                        img.save(file_path_full, format=extension.upper())
+                        img.save(file_path_full, format=pil_format)
                 else:
-                    if save_workflow:
-                        # 保留工作流信息
-                        pnginfo_data = self._get_workflow_exif_data(prompt, extra_pnginfo)
-                        if pnginfo_data:
-                            img.save(file_path_full, format=extension.upper(), pnginfo=pnginfo_data)
-                        else:
-                            img.save(file_path_full, format=extension.upper())
+                    # 其他格式（webp/gif/bmp等）不保存工作流信息
+                    if extension.lower() in ["webp"]:
+                        img.save(file_path_full, format=pil_format, quality=quality)
                     else:
-                        # 不保留工作流信息
-                        img.save(file_path_full, format=extension.upper())
+                        img.save(file_path_full, format=pil_format)
                 
                 saved_files.append(file_path_full)
                     
             except Exception as e:
-                return {"ui": {"status": f"保存失败: {str(e)}"}, "result": (f"保存失败: {str(e)}",)}
+                return {"ui": {"status": f"保存失败: {str(e)}"}, "result": (images, f"保存失败: {str(e)}")}
 
         file_list = "\n".join([f"✅ 图片已保存: {f}" for f in saved_files])
         save_info = f"✅ 成功保存 {len(images)} 张图片\n\n{file_list}\n\n📄 格式: {extension.upper()}\n📊 质量: {quality}"

@@ -17,7 +17,7 @@ class TextProcessorNode:
                     "label": "文本",
                     "description": "要处理的文本"
                 }),
-                "mode": (["不改变", "取数字", "取字母", "转大写", "转小写", "取中文", "去标点", "去换行", "去空行", "去空格", "去格式", "统计字数", "统计字符", "反转文本"], {
+                "mode": (["不改变", "取数字", "取字母", "转大写", "转小写", "取中文", "去标点", "去换行", "去空行", "去空格", "去双引号", "去前后双引号", "去格式", "统计字数", "统计字符", "反转文本"], {
                     "default": "不改变",
                     "label": "处理模式",
                     "description": "选择文本处理方式"
@@ -81,6 +81,14 @@ class TextProcessorNode:
         elif mode == "去空格":
             # 只去除普通空格字符
             result = text.replace(' ', '')
+
+        elif mode == "去双引号":
+            # 去除全部双引号（包括中英文双引号）
+            result = text.replace('"', '').replace('"', '').replace('"', '')
+
+        elif mode == "去前后双引号":
+            # 只去除文本首尾的双引号
+            result = text.strip('"').strip('"').strip('"')
 
         elif mode == "去格式":
             # 去除特殊字符、格式符号、换行和空格

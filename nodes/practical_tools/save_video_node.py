@@ -88,7 +88,7 @@ class SaveVideoNode:
         elif video is not None:
             # 使用视频输入
             print(f"🎬 视频输入类型: {type(video)}")
-            
+
             # 获取视频文件路径
             video_path = None
             if hasattr(video, 'get_stream_source'):
@@ -99,7 +99,7 @@ class SaveVideoNode:
                         print(f"🎬 通过 get_stream_source 获取路径: {video_path}")
                 except Exception as e:
                     print(f"🎬 get_stream_source 失败: {e}")
-            
+
             if not video_path and hasattr(video, '_VideoFromFile__file'):
                 file_obj = getattr(video, '_VideoFromFile__file')
                 if hasattr(file_obj, 'name'):
@@ -107,11 +107,11 @@ class SaveVideoNode:
                 elif isinstance(file_obj, str):
                     video_path = file_obj
                 print(f"🎬 通过 __file 获取路径: {video_path}")
-            
+
             if video_path and os.path.exists(video_path):
                 original_video_path = video_path
                 print(f"🎬 视频路径: {video_path}")
-                
+
                 # 使用 av 库读取视频
                 with av.open(video_path) as container:
                     video_stream = container.streams.video[0]
@@ -119,14 +119,14 @@ class SaveVideoNode:
                     height = video_stream.height
                     video_fps = float(video_stream.base_rate)
                     total_frames = video_stream.frames
-                    
+
                     print(f"🎬 视频信息: {total_frames}帧, {video_fps}fps, {width}x{height}")
-                    
+
                     # 自动帧率：使用视频原始帧率
                     if fps == 0:
                         fps = video_fps
                         print(f"🎬 使用视频原始帧率: {fps} fps")
-                    
+
                     # 读取所有帧
                     image_list = []
                     for frame in container.decode(video=0):
@@ -135,13 +135,44 @@ class SaveVideoNode:
                         # 转换为 tensor
                         frame_tensor = torch.from_numpy(img_rgb.astype(np.float32) / 255.0).unsqueeze(0)
                         image_list.append(frame_tensor)
-                    
+
                     print(f"🎬 成功读取 {len(image_list)} 帧")
-                    
+
             elif video_path:
                 return {"result": ("",), "ui": {"text": f"错误: 视频文件不存在: {video_path}"}}
+            elif isinstance(video, torch.Tensor):
+                # 视频以张量形式传入（云平台常见）
+                print(f"🎬 视频张量形状: {video.shape}")
+                image_list = []
+                if video.ndim == 4:
+                    # [B, H, W, C] 或 [T, H, W, C]
+                    for i in range(video.shape[0]):
+                        frame_tensor = video[i].unsqueeze(0)
+                        image_list.append(frame_tensor)
+                    height, width = video.shape[1], video.shape[2]
+                elif video.ndim == 3:
+                    # 单帧 [H, W, C]
+                    image_list.append(video.unsqueeze(0))
+                    height, width = video.shape[0], video.shape[1]
+                else:
+                    return {"result": ("",), "ui": {"text": f"错误: 不支持的视频张量维度: {video.ndim}"}}
+                print(f"🎬 从张量读取 {len(image_list)} 帧, 尺寸: {width}x{height}")
+            elif isinstance(video, list):
+                # 视频以列表形式传入
+                print(f"🎬 视频列表长度: {len(video)}")
+                image_list = []
+                for frame in video:
+                    if isinstance(frame, torch.Tensor):
+                        if frame.ndim == 3:
+                            image_list.append(frame.unsqueeze(0))
+                        else:
+                            image_list.append(frame)
+                if len(image_list) > 0:
+                    first = image_list[0]
+                    height, width = first.shape[1], first.shape[2] if first.ndim >= 3 else (None, None)
+                print(f"🎬 从列表读取 {len(image_list)} 帧")
             else:
-                return {"result": ("",), "ui": {"text": "错误: 无法从视频输入中获取文件路径"}}
+                return {"result": ("",), "ui": {"text": "错误: 无法从视频输入中获取文件路径或帧数据"}}
         else:
             return {"result": ("",), "ui": {"text": "错误: 请至少提供图像序列或视频输入"}}
         

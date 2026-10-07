@@ -873,8 +873,8 @@
     }
   },
   "GetCurrentTimeNode": {
-    "title": "获取当前时间",
-    "description": "获取当前时间节点，获取当前时间戳，输出字符串和整数格式",
+    "title": "获取时间",
+    "description": "获取当前时间节点，输出指定格式的时间字符串",
     "inputs": {
       "format_type": "格式类型",
       "input_value": "输入值"
@@ -883,15 +883,19 @@
       "format_type": "时间输出格式"
     },
     "outputs": {
-      "time_string": "时间字符串",
-      "timestamp_int": "时间戳整数"
+      "time_string": "时间字符串"
     },
     "widget_values": {
       "format_type": {
-        "timestamp": "timestamp（时间戳）",
-        "datetime": "datetime（日期时间）",
-        "date": "date（日期）",
-        "time": "time（时间）"
+        "时间戳": "时间戳",
+        "日期时间": "日期时间",
+        "日期": "日期",
+        "年月": "年月",
+        "月日": "月日",
+        "年": "年",
+        "月": "月",
+        "日": "日",
+        "时间": "时间"
       }
     }
   },
@@ -1405,6 +1409,20 @@
       "int": "整数",
       "float": "浮点数",
       "boolean": "布尔值"
+    }
+  },
+  "LoadTextFileNode": {
+    "title": "加载文本文件",
+    "description": "从指定路径加载文本文件内容，支持多种编码格式",
+    "inputs": {
+      "file_path": "文件路径"
+    },
+    "widgets": {
+      "file_path": "要加载的文本文件的完整路径",
+      "encoding": "文件编码格式"
+    },
+    "outputs": {
+      "文本内容": "文件中的文本内容"
     }
   },
   "ListFilesNode": {
@@ -2598,22 +2616,6 @@
       "切片结果": "切片后的列表"
     }
   },
-  "GetFileListNode": {
-    "title": "获取文件名列表",
-    "description": "获取指定目录下的文件名列表，支持扩展名过滤和递归子文件夹",
-    "inputs": {
-      "directory_path": "目录路径"
-    },
-    "widgets": {
-      "directory_path": "要获取文件列表的目录路径",
-      "file_extension": "文件扩展名过滤（如 .png, .jpg，留空表示所有文件）",
-      "recursive": "是否递归获取子文件夹中的文件"
-    },
-    "outputs": {
-      "文件列表": "文件名列表",
-      "文件信息": "文件统计信息"
-    }
-  },
   "TransferNode": {
     "title": "传递",
     "description": "传递节点，透传输入数据",
@@ -3684,23 +3686,35 @@
   },
   "StringReplaceNode": {
     "title": "字符串替换",
-    "description": "替换文本中的指定内容",
+    "description": "替换文本中的指定内容，支持多种替换模式",
     "inputs": {
       "text": "文本",
       "find": "查找内容",
       "replace": "替换为",
+      "mode": "替换模式",
+      "count": "替换数量",
       "enabled": "启用"
     },
     "widgets": {
       "text": "原始文本",
       "find": "要查找的内容",
       "replace": "替换为的内容",
+      "mode": "替换模式",
+      "count": "替换数量（仅在前N个/后N个/指定数量模式下生效）",
       "enabled": "是否启用替换"
     },
     "outputs": {
       "text": "替换后的文本"
     },
     "widget_values": {
+      "mode": {
+        "全部替换": "全部替换",
+        "替换第一个": "替换第一个",
+        "替换最后一个": "替换最后一个",
+        "替换前N个": "替换前N个",
+        "替换后N个": "替换后N个",
+        "替换指定数量": "替换指定数量"
+      },
       "enabled": {
         "true": "启用",
         "false": "禁用"
@@ -3728,6 +3742,30 @@
       "operation": {
         "encrypt": "encrypt（加密）",
         "decrypt": "decrypt（解密）"
+      }
+    }
+  },
+  "TextEncryptNode": {
+    "title": "文本加密",
+    "description": "使用AES-GCM模式加密和解密文本",
+    "inputs": {
+      "operation": "操作",
+      "key": "密钥",
+      "text": "文本"
+    },
+    "widgets": {
+      "operation": "选择操作：加密或解密",
+      "key": "加密/解密密钥",
+      "text": "要加密的明文或要解密的密文"
+    },
+    "outputs": {
+      "result": "结果",
+      "status": "状态"
+    },
+    "widget_values": {
+      "operation": {
+        "加密": "加密",
+        "解密": "解密"
       }
     }
   },
