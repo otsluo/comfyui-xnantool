@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import tempfile
 import av
+from fractions import Fraction
 
 
 class AudioStream:
@@ -81,13 +82,16 @@ class AudioStream:
 
 
 class VideoStream:
-    """视频流对象 - 封装视频文件路径和元数据"""
+    """视频流对象 - 封装视频文件路径和元数据，兼容官方节点接口"""
     def __init__(self, path):
         self.path = path
         self.filename = os.path.basename(path)
         self._width = None
         self._height = None
         self._has_audio = False
+        self._duration = None
+        self._frame_count = None
+        self._frame_rate = None
         self._read_metadata()
     
     def _read_metadata(self):
@@ -98,13 +102,32 @@ class VideoStream:
                     if stream.type == 'video':
                         self._width = stream.width
                         self._height = stream.height
+                        # 获取帧率
+                        if stream.average_rate:
+                            self._frame_rate = Fraction(stream.average_rate)
+                        else:
+                            self._frame_rate = Fraction(30)
+                        # 获取帧数
+                        if stream.frames and stream.frames > 0:
+                            self._frame_count = stream.frames
+                        # 计算视频时长（秒）
+                        if stream.duration and stream.time_base:
+                            self._duration = float(stream.duration * stream.time_base)
+                        elif container.duration:
+                            self._duration = float(container.duration) / av.time_base
+                        else:
+                            self._duration = 0.0
                     elif stream.type == 'audio':
                         self._has_audio = True
         except:
             self._width = 1920
             self._height = 1080
+            self._duration = 0.0
+            self._frame_rate = Fraction(30)
+            self._frame_count = 0
     
     def get_stream_source(self):
+        """返回视频文件路径"""
         return self.path
     
     def get_dimensions(self):
@@ -116,6 +139,26 @@ class VideoStream:
     
     def get_height(self):
         return self._height
+    
+    def get_duration(self):
+        """获取视频时长（秒）"""
+        return self._duration
+    
+    def get_frame_count(self):
+        """获取视频帧数"""
+        return self._frame_count
+    
+    def get_frame_rate(self):
+        """获取视频帧率"""
+        return self._frame_rate
+    
+    def get_bit_depth(self):
+        """获取位深"""
+        return 8
+    
+    def get_color_space(self):
+        """获取色彩空间"""
+        return "sRGB"
     
     def has_audio(self):
         """检查是否包含音频"""
@@ -133,6 +176,76 @@ class VideoStream:
         
         shutil.copy2(self.path, output_path)
         print(f"💾 视频已保存: {output_path}")
+    
+    def get_components(self):
+        """
+        获取视频组件 - 兼容官方"获取视频元素"节点
+        返回包含视频帧、音频等信息的对象
+        """
+        try:
+            # 读取视频帧
+            cap = cv2.VideoCapture(self.path)
+            if not cap.isOpened():
+                raise ValueError(f"无法打开视频文件: {self.path}")
+            
+            frames = []
+            while True:
+                ret, frame = cap.read()
+                if not ret:
+                    break
+                
+                # 转换为 RGB 格式（OpenCV 使用 BGR）
+                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                
+                # 转换为 numpy 数组并归一化到 [0, 1]
+                frame_np = frame_rgb.astype(np.float32) / 255.0
+                
+                # 转换为 torch 张量
+                frame_tensor = torch.from_numpy(frame_np)
+                frames.append(frame_tensor)
+            
+            cap.release()
+            
+            if not frames:
+                raise ValueError(f"视频中没有帧: {self.path}")
+            
+            # 堆叠所有帧为 [B, H, W, C]
+            video_tensor = torch.stack(frames)
+            
+            # 构建返回对象
+            class VideoComponentsResult:
+                def __init__(self, images, frame_rate, audio=None, metadata=None, alpha=None):
+                    self.images = images
+                    self.frame_rate = frame_rate
+                    self.audio = audio
+                    self.metadata = metadata or {}
+                    self.alpha = alpha
+            
+            # 尝试加载音频
+            audio_data = None
+            if self._has_audio:
+                try:
+                    audio_stream = AudioStream(self.path, has_audio=True)
+                    audio_data = {
+                        'waveform': audio_stream._load_waveform(),
+                        'sample_rate': audio_stream.get_sample_rate()
+                    }
+                except:
+                    pass
+            
+            return VideoComponentsResult(
+                images=video_tensor,
+                frame_rate=self._frame_rate,
+                audio=audio_data,
+                metadata={},
+                alpha=None
+            )
+            
+        except Exception as e:
+            print(f"[VideoStream] 获取视频组件时发生错误: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            raise
 
 
 class LoadVideoPathNode:
@@ -164,8 +277,8 @@ class LoadVideoPathNode:
             }
         }
     
-    RETURN_TYPES = ("VIDEO", "IMAGE", "STRING", "AUDIO", "STRING")
-    RETURN_NAMES = ("video", "video_frames", "video_path", "audio", "filename")
+    RETURN_TYPES = ("VIDEO", "IMAGE", "STRING", "AUDIO", "STRING", "FLOAT")
+    RETURN_NAMES = ("video", "video_frames", "video_path", "audio", "filename", "duration")
     FUNCTION = "load_video"
     CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
@@ -178,22 +291,22 @@ class LoadVideoPathNode:
             max_frames: 最大帧数限制
             
         Returns:
-            tuple: (视频对象, 视频帧, 视频路径, 音频)
+            tuple: (视频对象, 视频帧, 视频路径, 音频, 文件名, 时长)
         """
         try:
             if not video_path or not video_path.strip():
-                return (None, None, "", None, "")
+                return (None, None, "", None, "", 0.0)
 
             # 检查文件是否存在
             if not os.path.exists(video_path):
                 print(f"[LoadVideoPathNode] 错误：视频文件不存在: {video_path}")
-                return (None, None, "", None, "")
+                return (None, None, "", None, "", 0.0)
             
-            # 创建视频对象
+            # 使用自定义的视频流对象
             video_obj = VideoStream(video_path)
             
             # 检查是否有音频
-            has_audio = video_obj.has_audio()
+            has_audio = self._check_has_audio(video_path)
             
             # 读取视频帧（限制最大帧数，防止内存溢出）
             video_frames = self.read_video_frames(video_path, max_frames=max_frames)
@@ -203,14 +316,36 @@ class LoadVideoPathNode:
 
             # 获取文件名（不带后缀）
             filename = os.path.splitext(os.path.basename(video_path))[0]
+            
+            # 获取视频时长
+            duration = video_obj.get_duration()
 
-            return (video_obj, video_frames, video_path, audio_data, filename)
+            return (video_obj, video_frames, video_path, audio_data, filename, duration)
             
         except Exception as e:
             print(f"[LoadVideoPathNode] 加载视频时发生错误: {str(e)}")
             import traceback
             traceback.print_exc()
-            return (None, "")
+            return (None, None, "", None, "", 0.0)
+    
+    def _check_has_audio(self, video_path):
+        """
+        检查视频是否包含音频
+        
+        Args:
+            video_path: 视频文件路径
+            
+        Returns:
+            bool: 是否包含音频
+        """
+        try:
+            with av.open(video_path) as container:
+                for stream in container.streams:
+                    if stream.type == 'audio':
+                        return True
+        except:
+            pass
+        return False
     
     def read_video_frames(self, video_path, max_frames=1000):
         """

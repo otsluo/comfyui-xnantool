@@ -1,0 +1,75 @@
+{
+    "RTXVideoSuperResolution": {
+        "title": "RTX 视频超分辨率",
+        "description": "使用 NVIDIA 视频特效（VFX）SDK 对图像进行超分辨率放大、降噪或去模糊，支持按倍数缩放或指定目标尺寸",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "resize_type": "缩放方式",
+            "scale by multiplier": "按倍数缩放",
+            "target dimensions": "目标尺寸",
+            "scale": "缩放倍数",
+            "width": "宽度",
+            "height": "高度",
+            "quality": "质量等级",
+            "LOW": "低",
+            "MEDIUM": "中",
+            "HIGH": "高",
+            "ULTRA": "极致",
+            "strength": "强度",
+            "image_encoding": "图像编码",
+            "8-bit RGB": "8 位 RGB",
+            "10-bit RGB (RGB10A2)": "10 位 RGB（RGB10A2）"
+        },
+        "outputs": {
+            "upscaled_images": "放大后的图像"
+        }
+    },
+    "RTXTrueHDR": {
+        "title": "RTX 视频 HDR",
+        "description": "使用 NVIDIA RTX Video HDR 将 SDR 图像转换为 HLG 或 PQ HDR 图像数据",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "contrast": "对比度",
+            "saturation": "饱和度",
+            "middle_gray": "中间灰度",
+            "luminance": "峰值亮度",
+            "debanding": "去色带",
+            "output_colorspace": "输出色彩空间",
+            "HDR": "HDR（HLG）",
+            "HDR PQ": "HDR PQ"
+        },
+        "outputs": {
+            "hdr_images": "HDR 图像"
+        }
+    },
+    "RTXVideoFrameGeneration": {
+        "title": "RTX 视频插帧",
+        "description": "使用 NVIDIA 视频特效（VFX）SDK 生成中间视频帧，实现帧率倍增或慢动作效果",
+        "inputs": {
+            "images": "图像"
+        },
+        "widgets": {
+            "generation_type": "生成方式",
+            "frame rate multiplier": "帧率倍数",
+            "specific timestep": "指定时间步",
+            "multiplier": "倍数",
+            "timestep": "时间步",
+            "mode": "质量模式",
+            "LOW": "低",
+            "MEDIUM": "中",
+            "HIGH": "高",
+            "automatic_shot_change_detection": "自动镜头切换检测",
+            "shot_change": "镜头切换",
+            "image_encoding": "图像编码",
+            "8-bit RGB": "8 位 RGB",
+            "10-bit RGB (RGB10A2)": "10 位 RGB（RGB10A2）"
+        },
+        "outputs": {
+            "interpolated_images": "插帧后的图像"
+        }
+    }
+}

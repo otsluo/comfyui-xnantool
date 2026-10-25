@@ -40,8 +40,9 @@ class StringMergeNode:
         Returns:
             tuple: 包含合并后字符串的元组
         """
-        # 解析分隔符中的转义字符
-        separator = separator.encode().decode('unicode_escape') if separator else ""
+        # 处理分隔符中的转义字符（如 \n, \t）
+        if separator:
+            separator = separator.replace("\\n", "\n").replace("\\t", "\t")
 
         # 收集所有非空字符串
         strings = [string1, string2, string3, string4, string5]

@@ -429,7 +429,8 @@
       "operation": "合并方式",
       "resize_to_same_size": "调整到相同尺寸",
       "columns": "网格列数",
-      "images": "图片帧"
+      "images": "图片帧",
+      "image_list": "图片列表"
     },
     "widgets": {
       "operation": "合并方式（水平、垂直、网格）",
@@ -812,7 +813,7 @@
     "widgets": {
       "video_file": "选择要提取帧的视频文件",
       "frame_extraction_method": "选择帧提取的方式：按帧号或按时间戳",
-      "frame_number": "要提取的帧号（从1开始）",
+      "frame_number": "要提取的帧号（从1开始，-1表示最后一帧）",
       "timestamp": "要提取帧的时间点（秒）",
       "output_format": "输出图片的格式",
       "image_quality": "输出图片的质量（仅对JPG格式有效）",
@@ -869,6 +870,64 @@
     },
     "outputs": {
       "response": "响应文本",
+      "raw_response": "原始响应JSON"
+    }
+  },
+  "GenericAPIMultimodalNode": {
+    "title": "通用API-多模态",
+    "description": "通用多模态API调用节点 - 支持文本、图片、视频、音频和上下文对话",
+    "inputs": {
+      "system_prompt": "系统提示词",
+      "prompt": "提示词",
+      "model": "模型名称",
+      "image1": "图片1",
+      "image2": "图片2",
+      "image3": "图片3",
+      "image4": "图片4",
+      "image5": "图片5",
+      "image6": "图片6",
+      "image7": "图片7",
+      "image8": "图片8",
+      "image9": "图片9",
+      "video": "视频",
+      "audio": "音频",
+      "conversation_history": "对话历史",
+      "api_url": "API地址",
+      "api_key": "API密钥",
+      "temperature": "温度",
+      "top_p": "Top P",
+      "max_tokens": "最大输出长度",
+      "presence_penalty": "存在惩罚",
+      "frequency_penalty": "频率惩罚",
+      "extra_params": "额外参数",
+      "max_conversation_rounds": "最大对话轮数",
+      "seed": "随机种子"
+    },
+    "widgets": {
+      "system_prompt": "系统提示词，用于设定模型的角色和行为规范",
+      "prompt": "输入给模型的文本提示词",
+      "model": "要调用的模型名称（如gpt-4o、gpt-4-vision-preview等）",
+      "image1": "输入的第1张图片（可选）",
+      "image2": "输入的第2张图片（可选）",
+      "image3": "输入的第3张图片（可选）",
+      "image4": "输入的第4张图片（可选）",
+      "video": "输入的视频（可选）",
+      "audio": "输入的音频（可选）",
+      "conversation_history": "之前的对话历史（JSON格式，用于上下文对话）",
+      "api_url": "API的完整URL地址（OpenAI兼容格式）",
+      "api_key": "API认证密钥",
+      "temperature": "控制输出的随机性，值越大越随机（0-2）",
+      "top_p": "累积概率阈值，控制生成的多样性（0-1）",
+      "max_tokens": "最大输出Token数量",
+      "presence_penalty": "控制模型重复使用相同内容的程度（-2到2）",
+      "frequency_penalty": "控制模型重复使用相同词汇的程度（-2到2）",
+      "extra_params": "额外的API参数（JSON格式），会合并到请求中",
+      "max_conversation_rounds": "自动保存的最大对话轮数（1轮=1次用户提问+1次AI回复）",
+      "seed": "随机种子（0为随机，大于0为固定种子）"
+    },
+    "outputs": {
+      "response": "响应文本",
+      "conversation_history": "对话历史（JSON格式）",
       "raw_response": "原始响应JSON"
     }
   },
@@ -1217,10 +1276,11 @@
       "separator": "分隔符",
       "image": "输入图像",
       "image_frames": "图像帧",
+      "image_list": "图片列表",
       "audio": "音频"
     },
     "widgets": {
-      "duration": "视频时长（秒）",
+      "duration": "视频时长",
       "fps": "视频帧率（1-60帧/秒）",
       "output_resolution": "输出视频的分辨率（选择custom可自定义宽高）",
       "custom_width": "自定义宽度（1-7680）",
@@ -1425,6 +1485,118 @@
       "文本内容": "文件中的文本内容"
     }
   },
+  "LoadZipNode": {
+    "title": "加载ZIP文件",
+    "description": "从ZIP压缩包中提取文件，支持图片、文本、视频、音频",
+    "inputs": {
+      "zip_file": "ZIP文件",
+      "zip_path": "ZIP文件路径"
+    },
+    "widgets": {
+      "zip_file": "选择要加载的ZIP文件（来自ComfyUI默认输入文件夹）",
+      "zip_path": "ZIP压缩包的完整路径（优先使用，留空则使用上方选择的文件）"
+    },
+    "outputs": {
+      "图片列表": "提取的图片（IMAGE类型列表）",
+      "文本列表": "提取的文本内容（STRING类型列表）",
+      "视频列表": "提取的视频（VIDEO类型列表）",
+      "音频列表": "提取的音频（AUDIO类型列表）",
+      "文件列表": "包含文件总数、各类文件数量及图片名称的详细信息"
+    }
+  },
+  "FilterLinesNode": {
+    "title": "过滤行",
+    "description": "从多行文本中提取符合条件的行，支持多种过滤模式",
+    "inputs": {
+      "text": "文本",
+      "keyword": "关键词",
+      "mode": "过滤模式",
+      "case_sensitive": "区分大小写",
+      "skip_count": "跳过行数",
+      "max_lines": "最大输出行数"
+    },
+    "widgets": {
+      "text": "要过滤的多行文本",
+      "keyword": "过滤关键词或正则表达式",
+      "mode": "选择过滤方式",
+      "case_sensitive": "是否区分大小写",
+      "skip_count": "跳过前N个匹配结果，从第N+1个开始输出",
+      "max_lines": "限制输出的行数，0表示不限制"
+    },
+    "outputs": {
+      "过滤结果": "过滤后的文本",
+      "匹配行数": "匹配的行数"
+    }
+  },
+  "CountTriggerNode": {
+    "title": "计数触发",
+    "description": "累积指定次数后才输出一次，支持设置起始值、增量和上限",
+    "inputs": {
+      "trigger_count": "触发计数",
+      "start_value": "起始值",
+      "increment": "增量",
+      "max_value": "上限",
+      "seed": "种子",
+      "trigger_signal": "触发"
+    },
+    "widgets": {
+      "trigger_count": "累积多少次触发后输出一次（核心功能）",
+      "start_value": "第一次触发时输出的值",
+      "increment": "每次触发后输出值增加的量",
+      "max_value": "输出值的上限，达到后不再增加，0表示不限制",
+      "seed": "用于控制节点重新执行，修改种子值会强制重新计算"
+    },
+    "outputs": {
+      "output": "输出值",
+      "当前计数": "当前计数值",
+      "状态": "触发状态信息"
+    }
+  },
+  "GetVideoFromListNode": {
+    "title": "从列表获取视频",
+    "description": "从视频列表中获取指定索引的视频",
+    "inputs": {
+      "video_list": "视频列表",
+      "index": "索引"
+    },
+    "widgets": {
+      "video_list": "视频列表（来自加载ZIP等节点）",
+      "index": "要获取的视频索引（从0开始）"
+    },
+    "outputs": {
+      "视频": "指定索引的视频"
+    }
+  },
+  "GetImageFromListNode": {
+    "title": "从图片列表获取图像",
+    "description": "从图像列表中获取指定索引的图像",
+    "inputs": {
+      "image_list": "图像列表",
+      "index": "索引"
+    },
+    "widgets": {
+      "image_list": "图像列表",
+      "index": "要获取的图像索引（从0开始）"
+    },
+    "outputs": {
+      "图像": "指定索引的图像"
+    }
+  },
+  "GetImageFromFramesNode": {
+    "title": "从图片帧序列获取图像",
+    "description": "从图像帧序列（批次）中获取指定索引的图像",
+    "inputs": {
+      "image_frames": "图像帧序列",
+      "index": "索引"
+    },
+    "widgets": {
+      "image_frames": "图像帧序列",
+      "index": "要获取的图像索引（从0开始）"
+    },
+    "outputs": {
+      "图像": "指定索引的图像"
+    }
+  },
   "ListFilesNode": {
     "title": "列出文件",
     "description": "列出文件节点，读取输入文件夹并输出该文件夹下的所有文件名称列表，支持过滤选项和递归搜索",
@@ -1537,7 +1709,8 @@
       "video_frames": "视频帧",
       "video_path": "视频路径",
       "audio": "音频数据",
-      "filename": "文件名（不含后缀）"
+      "filename": "文件名（不含后缀）",
+      "duration": "视频时长"
     }
   },
   "LoopGeneratorNode": {
@@ -2397,7 +2570,32 @@
     "outputs": {
       "video": "视频流",
       "audio": "音频流",
-      "filename": "视频文件名（不含后缀）"
+      "filename": "视频文件名（不含后缀）",
+      "duration": "视频时长"
+    }
+  },
+  "GetVideoInfoNode": {
+    "title": "获取视频信息",
+    "description": "获取视频文件的详细元数据信息",
+    "inputs": {
+      "video_path": "视频文件路径",
+      "video": "视频对象（可选）",
+      "max_frames": "加载帧上限"
+    },
+    "widgets": {
+      "video_path": "视频文件的完整路径",
+      "max_frames": "提取首尾帧时最多读取的帧数，防止长视频导致内存溢出"
+    },
+    "outputs": {
+      "首帧": "视频第一帧图像",
+      "尾帧": "视频最后一帧图像",
+      "宽度": "视频宽度（像素）",
+      "高度": "视频高度（像素）",
+      "时长": "视频时长",
+      "帧率": "视频帧率（FPS）",
+      "总帧数": "视频总帧数",
+      "音频": "视频中的音频流",
+      "视频信息": "视频详细信息字符串"
     }
   },
   "PreviewVideoNode": {
@@ -2830,19 +3028,32 @@
     "description": "切换值节点，根据布尔值在两个值之间切换，支持多种数据类型输入（FLOAT, INT, STRING）",
     "inputs": {
       "input_value": "布尔值输入",
-      "value_a": "值A",
-      "value_b": "值B"
+      "false_value": "假值",
+      "true_value": "真值"
     },
     "widgets": {
-      "input_value": "选择输出哪个值：关闭时输出A，开启时输出B",
-      "value_a": "第一个可选值",
-      "value_b": "第二个可选值"
+      "input_value": "选择输出哪个值：关闭时输出假值，开启时输出真值",
+      "false_value": "布尔值为假时输出的值",
+      "true_value": "布尔值为真时输出的值"
     },
     "outputs": {
       "output": "原始类型输出",
       "string_output": "字符串输出",
       "int_output": "整数输出",
       "float_output": "浮点输出"
+    }
+  },
+  "IsEmptyNode": {
+    "title": "是否为空",
+    "description": "判断输入是否为空，支持多种数据类型输入（字符串、列表、字典、整数、浮点数等）",
+    "inputs": {
+      "input_value": "任意"
+    },
+    "widgets": {
+      "input_value": "要检查是否为空的输入值"
+    },
+    "outputs": {
+      "是否为空": "布尔值，表示输入是否为空"
     }
   },
   "VideoSizePresetNode": {
@@ -3883,7 +4094,7 @@
       "mode": "视频生成模式",
       "size": "视频尺寸",
       "ratio": "视频宽高比",
-      "duration": "视频时长（秒）",
+      "duration": "视频时长",
       "frame_rate": "视频帧率（FPS）",
       "poll_interval": "查询任务状态的间隔时间",
       "max_wait_time": "最大等待时间，超时则放弃",

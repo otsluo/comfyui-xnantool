@@ -40,12 +40,12 @@ class ExtractFrameFromVideoNode:
                 }),
                 "frame_number": ("INT", {
                     "default": 1,
-                    "min": 1,
+                    "min": -1,
                     "max": 100000,
                     "step": 1,
                     "display": "number",
                     "label": "帧号",
-                    "description": "要提取的帧号（从1开始）"
+                    "description": "要提取的帧号（从1开始，-1表示最后一帧）"
                 }),
                 "timestamp": ("FLOAT", {
                     "default": 0.0,
@@ -145,7 +145,11 @@ class ExtractFrameFromVideoNode:
             
             # 确定要提取的帧索引
             if frame_extraction_method == "按帧号":
-                target_frame_index = frame_number - 1  # 转换为0基索引
+                # -1表示提取最后一帧
+                if frame_number == -1:
+                    target_frame_index = total_frames - 1
+                else:
+                    target_frame_index = frame_number - 1  # 转换为0基索引
                 if target_frame_index >= total_frames:
                     error_msg = f"错误：指定的帧号({frame_number})超出了视频总帧数({total_frames})"
                     logger.error(error_msg)

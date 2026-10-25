@@ -89,6 +89,7 @@ class ImagesToVideoNode:
             "optional": {
                 "image": ("IMAGE",),
                 "image_frames": ("IMAGE",),
+                "image_list": ("IMAGE",),  # 图片列表输入
                 "audio": ("AUDIO",),
             }
         }
@@ -98,7 +99,7 @@ class ImagesToVideoNode:
     FUNCTION = "convert_image_to_video"
     CATEGORY = "❤️❤️❤️XnanTool/媒体处理"
     
-    def convert_image_to_video(self, duration, fps, output_resolution, custom_width, custom_height, output_filename, output_path, conflict_mode="数字后缀", pad_width=2, separator="_", image=None, image_frames=None, audio=None):
+    def convert_image_to_video(self, duration, fps, output_resolution, custom_width, custom_height, output_filename, output_path, conflict_mode="数字后缀", pad_width=2, separator="_", image=None, image_frames=None, image_list=None, audio=None):
         """
         将图片拉长成视频（支持单张图片或图片帧序列）
         
@@ -115,6 +116,7 @@ class ImagesToVideoNode:
             separator: 文件名和数字之间的分隔符
             image: 单张输入图片（可选，与image_frames二选一）
             image_frames: 图片帧序列（可选，与image二选一）
+            image_list: 图片列表输入（可选）
             audio: 音频输入（可选）
             
         Returns:
@@ -122,11 +124,22 @@ class ImagesToVideoNode:
         """
         try:
             # 检查是否提供了图片输入
-            if image is None and image_frames is None:
-                return ("", "错误：必须提供图片或图片帧序列")
+            if image is None and image_frames is None and image_list is None:
+                return ("", "错误：必须提供图片、图片帧序列或图片列表")
             
             # 确定使用哪种输入
-            if image is not None and image_frames is not None:
+            if image_list is not None:
+                print(f"[ImagesToVideoNode] 使用图片列表输入")
+                use_image = False
+                # 将图片列表转换为张量格式
+                if isinstance(image_list, list):
+                    # 如果是列表，堆叠为张量
+                    image_frames = torch.stack(image_list)
+                    print(f"[ImagesToVideoNode] 图片列表已转换为张量，形状: {image_frames.shape}")
+                else:
+                    # 如果已经是张量，直接使用
+                    image_frames = image_list
+            elif image is not None and image_frames is not None:
                 print(f"[ImagesToVideoNode] 同时提供了image和image_frames，优先使用image_frames")
                 use_image = False
             elif image is not None:

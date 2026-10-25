@@ -25,7 +25,8 @@
         "description": "从输入目录上传并加载视频文件",
         "inputs": {
             "meta_batch": "元批次管理器",
-            "vae": "VAE"
+            "vae": "VAE",
+            "format": "预设格式"
         },
         "widgets": {
             "video": "视频文件",
@@ -34,8 +35,7 @@
             "custom_height": "自定义高度",
             "frame_load_cap": "帧加载上限",
             "skip_first_frames": "跳过前几帧",
-            "select_every_nth": "每隔N帧选择",
-            "format": "预设格式"
+            "select_every_nth": "每隔N帧选择"
         },
         "outputs": {
             "IMAGE": "图像",
@@ -49,7 +49,8 @@
         "description": "通过文件路径加载视频文件",
         "inputs": {
             "meta_batch": "元批次管理器",
-            "vae": "VAE"
+            "vae": "VAE",
+            "format": "预设格式"
         },
         "widgets": {
             "video": "视频路径",
@@ -58,8 +59,7 @@
             "custom_height": "自定义高度",
             "frame_load_cap": "帧加载上限",
             "skip_first_frames": "跳过前几帧",
-            "select_every_nth": "每隔N帧选择",
-            "format": "预设格式"
+            "select_every_nth": "每隔N帧选择"
         },
         "outputs": {
             "IMAGE": "图像",
@@ -73,7 +73,8 @@
         "description": "使用FFmpeg从输入目录上传并加载视频文件，支持更多格式",
         "inputs": {
             "meta_batch": "元批次管理器",
-            "vae": "VAE"
+            "vae": "VAE",
+            "format": "预设格式"
         },
         "widgets": {
             "video": "视频文件",
@@ -81,8 +82,7 @@
             "custom_width": "自定义宽度",
             "custom_height": "自定义高度",
             "frame_load_cap": "帧加载上限",
-            "start_time": "开始时间",
-            "format": "预设格式"
+            "start_time": "开始时间"
         },
         "outputs": {
             "IMAGE": "图像",
@@ -96,7 +96,8 @@
         "description": "使用FFmpeg通过文件路径加载视频文件，支持更多格式和Alpha通道",
         "inputs": {
             "meta_batch": "元批次管理器",
-            "vae": "VAE"
+            "vae": "VAE",
+            "format": "预设格式"
         },
         "widgets": {
             "video": "视频路径",
@@ -104,8 +105,7 @@
             "custom_width": "自定义宽度",
             "custom_height": "自定义高度",
             "frame_load_cap": "帧加载上限",
-            "start_time": "开始时间",
-            "format": "预设格式"
+            "start_time": "开始时间"
         },
         "outputs": {
             "IMAGE": "图像",
@@ -134,46 +134,36 @@
         "title": "加载图像 (上传) 🎥🅥🅗🅢",
         "description": "从输入目录上传并加载图像序列",
         "inputs": {
-            "meta_batch": "元批次管理器",
-            "vae": "VAE"
+            "meta_batch": "元批次管理器"
         },
         "widgets": {
             "directory": "目录",
-            "force_rate": "强制帧率",
-            "custom_width": "自定义宽度",
-            "custom_height": "自定义高度",
-            "frame_load_cap": "帧加载上限",
-            "skip_first_frames": "跳过前几帧",
-            "select_every_nth": "每隔N帧选择",
-            "format": "预设格式"
+            "image_load_cap": "图像加载上限",
+            "skip_first_images": "跳过前几张图像",
+            "select_every_nth": "每隔N张选择"
         },
         "outputs": {
             "IMAGE": "图像",
-            "frame_count": "帧数",
-            "video_info": "视频信息"
+            "MASK": "蒙版",
+            "frame_count": "帧数"
         }
     },
     "VHS_LoadImagesPath": {
         "title": "加载图像 (路径) 🎥🅥🅗🅢",
         "description": "通过目录路径加载图像序列",
         "inputs": {
-            "meta_batch": "元批次管理器",
-            "vae": "VAE"
+            "meta_batch": "元批次管理器"
         },
         "widgets": {
             "directory": "目录路径",
-            "force_rate": "强制帧率",
-            "custom_width": "自定义宽度",
-            "custom_height": "自定义高度",
-            "frame_load_cap": "帧加载上限",
-            "skip_first_frames": "跳过前几帧",
-            "select_every_nth": "每隔N帧选择",
-            "format": "预设格式"
+            "image_load_cap": "图像加载上限",
+            "skip_first_images": "跳过前几张图像",
+            "select_every_nth": "每隔N张选择"
         },
         "outputs": {
             "IMAGE": "图像",
-            "frame_count": "帧数",
-            "video_info": "视频信息"
+            "MASK": "蒙版",
+            "frame_count": "帧数"
         }
     },
     "VHS_LoadAudio": {
@@ -229,7 +219,9 @@
             "filenames": "文件名列表"
         },
         "widgets": {
-            "options": "清理选项"
+            "options": "清理选项",
+            "Intermediate": "中间文件",
+            "Intermediate and Utility": "中间文件与工具文件"
         }
     },
     "VHS_BatchManager": {
@@ -304,90 +296,162 @@
     },
     "VHS_VAEEncodeBatched": {
         "title": "VAE编码批次 🎥🅥🅗🅢",
-        "description": "批量编码图像为潜空间",
+        "description": "分批编码图像为潜空间，降低显存峰值",
         "inputs": {
             "pixels": "像素",
             "vae": "VAE"
         },
         "widgets": {
-            "batch_size": "批次大小"
+            "per_batch": "每批数量"
         },
         "outputs": {
-            "latent": "潜空间"
+            "LATENT": "潜空间"
         }
     },
     "VHS_VAEDecodeBatched": {
         "title": "VAE解码批次 🎥🅥🅗🅢",
-        "description": "批量解码潜空间为图像",
+        "description": "分批解码潜空间为图像，降低显存峰值",
         "inputs": {
             "samples": "样本",
             "vae": "VAE"
         },
         "widgets": {
-            "batch_size": "批次大小"
+            "per_batch": "每批数量"
         },
         "outputs": {
-            "pixels": "像素"
+            "IMAGE": "图像"
         }
     },
     "VHS_SplitLatents": {
         "title": "分割潜空间 🎥🅥🅗🅢",
-        "description": "将潜空间批量分割为单个样本",
+        "description": "在指定索引处将潜空间批量分割为A/B两组",
         "inputs": {
             "latents": "潜空间"
         },
+        "widgets": {
+            "split_index": "分割索引"
+        },
         "outputs": {
-            "latent": "潜空间"
+            "LATENT_A": "潜空间 A",
+            "A_count": "A 数量",
+            "LATENT_B": "潜空间 B",
+            "B_count": "B 数量"
         }
     },
     "VHS_SplitImages": {
         "title": "分割图像 🎥🅥🅗🅢",
-        "description": "将图像批量分割为单个图像",
+        "description": "在指定索引处将图像批量分割为A/B两组",
         "inputs": {
             "images": "图像"
         },
+        "widgets": {
+            "split_index": "分割索引"
+        },
         "outputs": {
-            "image": "图像"
+            "IMAGE_A": "图像 A",
+            "A_count": "A 数量",
+            "IMAGE_B": "图像 B",
+            "B_count": "B 数量"
         }
     },
     "VHS_SplitMasks": {
         "title": "分割蒙版 🎥🅥🅗🅢",
-        "description": "将蒙版批量分割为单个蒙版",
+        "description": "在指定索引处将蒙版批量分割为A/B两组",
         "inputs": {
-            "masks": "蒙版"
+            "mask": "蒙版"
+        },
+        "widgets": {
+            "split_index": "分割索引"
         },
         "outputs": {
-            "mask": "蒙版"
+            "MASK_A": "蒙版 A",
+            "A_count": "A 数量",
+            "MASK_B": "蒙版 B",
+            "B_count": "B 数量"
         }
     },
     "VHS_MergeLatents": {
         "title": "合并潜空间 🎥🅥🅗🅢",
-        "description": "将多个潜空间合并为一个批量",
+        "description": "将两组潜空间合并为一个批量，尺寸不一致时自动缩放对齐",
         "inputs": {
-            "latent": "潜空间"
+            "latents_A": "潜空间 A",
+            "latents_B": "潜空间 B"
+        },
+        "widgets": {
+            "merge_strategy": "合并策略",
+            "match A": "匹配 A",
+            "match B": "匹配 B",
+            "match smaller": "匹配较小者",
+            "match larger": "匹配较大者",
+            "scale_method": "缩放方式",
+            "nearest-exact": "精确最近邻",
+            "bilinear": "双线性",
+            "area": "面积",
+            "bicubic": "双三次",
+            "bislerp": "双向线性插值",
+            "crop": "裁剪",
+            "disabled": "禁用",
+            "center": "居中"
         },
         "outputs": {
-            "latents": "潜空间"
+            "LATENT": "潜空间",
+            "count": "数量"
         }
     },
     "VHS_MergeImages": {
         "title": "合并图像 🎥🅥🅗🅢",
-        "description": "将多个图像合并为一个批量",
+        "description": "将两组图像合并为一个批量，尺寸不一致时自动缩放对齐",
         "inputs": {
-            "image": "图像"
+            "images_A": "图像 A",
+            "images_B": "图像 B"
+        },
+        "widgets": {
+            "merge_strategy": "合并策略",
+            "match A": "匹配 A",
+            "match B": "匹配 B",
+            "match smaller": "匹配较小者",
+            "match larger": "匹配较大者",
+            "scale_method": "缩放方式",
+            "nearest-exact": "精确最近邻",
+            "bilinear": "双线性",
+            "area": "面积",
+            "bicubic": "双三次",
+            "bislerp": "双向线性插值",
+            "crop": "裁剪",
+            "disabled": "禁用",
+            "center": "居中"
         },
         "outputs": {
-            "images": "图像"
+            "IMAGE": "图像",
+            "count": "数量"
         }
     },
     "VHS_MergeMasks": {
         "title": "合并蒙版 🎥🅥🅗🅢",
-        "description": "将多个蒙版合并为一个批量",
+        "description": "将两组蒙版合并为一个批量，尺寸不一致时自动缩放对齐",
         "inputs": {
-            "mask": "蒙版"
+            "mask_A": "蒙版 A",
+            "mask_B": "蒙版 B"
+        },
+        "widgets": {
+            "merge_strategy": "合并策略",
+            "match A": "匹配 A",
+            "match B": "匹配 B",
+            "match smaller": "匹配较小者",
+            "match larger": "匹配较大者",
+            "scale_method": "缩放方式",
+            "nearest-exact": "精确最近邻",
+            "bilinear": "双线性",
+            "area": "面积",
+            "bicubic": "双三次",
+            "bislerp": "双向线性插值",
+            "crop": "裁剪",
+            "disabled": "禁用",
+            "center": "居中"
         },
         "outputs": {
-            "masks": "蒙版"
+            "MASK": "蒙版",
+            "count": "数量"
         }
     },
     "VHS_GetLatentCount": {
@@ -414,7 +478,7 @@
         "title": "获取蒙版数量 🎥🅥🅗🅢",
         "description": "获取蒙版批量中的蒙版数量",
         "inputs": {
-            "masks": "蒙版"
+            "mask": "蒙版"
         },
         "outputs": {
             "count": "数量"
@@ -422,125 +486,134 @@
     },
     "VHS_DuplicateLatents": {
         "title": "重复潜空间 🎥🅥🅗🅢",
-        "description": "重复潜空间指定次数",
+        "description": "将潜空间批量重复指定倍数",
         "inputs": {
             "latents": "潜空间"
         },
         "widgets": {
-            "amount": "重复次数"
+            "multiply_by": "重复倍数"
         },
         "outputs": {
-            "latents": "潜空间"
+            "LATENT": "潜空间",
+            "count": "数量"
         }
     },
     "VHS_DuplicateImages": {
         "title": "重复图像 🎥🅥🅗🅢",
-        "description": "重复图像指定次数",
+        "description": "将图像批量重复指定倍数",
         "inputs": {
             "images": "图像"
         },
         "widgets": {
-            "amount": "重复次数"
+            "multiply_by": "重复倍数"
         },
         "outputs": {
-            "images": "图像"
+            "IMAGE": "图像",
+            "count": "数量"
         }
     },
     "VHS_DuplicateMasks": {
         "title": "重复蒙版 🎥🅥🅗🅢",
-        "description": "重复蒙版指定次数",
+        "description": "将蒙版批量重复指定倍数",
         "inputs": {
-            "masks": "蒙版"
+            "mask": "蒙版"
         },
         "widgets": {
-            "amount": "重复次数"
+            "multiply_by": "重复倍数"
         },
         "outputs": {
-            "masks": "蒙版"
+            "MASK": "蒙版",
+            "count": "数量"
         }
     },
     "VHS_SelectEveryNthLatent": {
         "title": "每隔N个选择潜空间 🎥🅥🅗🅢",
-        "description": "从潜空间批量中每隔N个选择一个",
+        "description": "从潜空间批量中跳过前N个后每隔N个选择一个",
         "inputs": {
             "latents": "潜空间"
         },
         "widgets": {
-            "n": "间隔数"
+            "select_every_nth": "每隔N个选择",
+            "skip_first_latents": "跳过前N个"
         },
         "outputs": {
-            "latents": "潜空间"
+            "LATENT": "潜空间",
+            "count": "数量"
         }
     },
     "VHS_SelectEveryNthImage": {
         "title": "每隔N个选择图像 🎥🅥🅗🅢",
-        "description": "从图像批量中每隔N个选择一个",
+        "description": "从图像批量中跳过前N个后每隔N个选择一个",
         "inputs": {
             "images": "图像"
         },
         "widgets": {
-            "n": "间隔数"
+            "select_every_nth": "每隔N个选择",
+            "skip_first_images": "跳过前N张"
         },
         "outputs": {
-            "images": "图像"
+            "IMAGE": "图像",
+            "count": "数量"
         }
     },
     "VHS_SelectEveryNthMask": {
         "title": "每隔N个选择蒙版 🎥🅥🅗🅢",
-        "description": "从蒙版批量中每隔N个选择一个",
+        "description": "从蒙版批量中跳过前N个后每隔N个选择一个",
         "inputs": {
-            "masks": "蒙版"
+            "mask": "蒙版"
         },
         "widgets": {
-            "n": "间隔数"
+            "select_every_nth": "每隔N个选择",
+            "skip_first_masks": "跳过前N个"
         },
         "outputs": {
-            "masks": "蒙版"
+            "MASK": "蒙版",
+            "count": "数量"
         }
     },
     "VHS_SelectLatents": {
         "title": "选择潜空间 🎥🅥🅗🅢",
-        "description": "从潜空间批量中选择指定索引范围",
+        "description": "按逗号分隔的索引从潜空间批量中选择，支持负索引、Python 风格区间（不含结束索引）与步长",
         "inputs": {
-            "latents": "潜空间"
+            "latent": "潜空间"
         },
         "widgets": {
-            "start": "起始索引",
-            "end": "结束索引",
-            "step": "步长"
+            "indexes": "索引",
+            "err_if_missing": "索引缺失时报错",
+            "err_if_empty": "结果为空时报错"
         },
         "outputs": {
-            "latents": "潜空间"
+            "LATENT": "潜空间"
         }
     },
     "VHS_SelectImages": {
         "title": "选择图像 🎥🅥🅗🅢",
-        "description": "从图像批量中选择指定索引范围",
+        "description": "按逗号分隔的索引从图像批量中选择，支持负索引、Python 风格区间（不含结束索引）与步长",
         "inputs": {
-            "images": "图像"
+            "image": "图像"
         },
         "widgets": {
-            "start": "起始索引",
-            "end": "结束索引",
-            "step": "步长"
+            "indexes": "索引",
+            "err_if_missing": "索引缺失时报错",
+            "err_if_empty": "结果为空时报错"
         },
         "outputs": {
-            "images": "图像"
+            "IMAGE": "图像"
         }
     },
     "VHS_SelectMasks": {
         "title": "选择蒙版 🎥🅥🅗🅢",
-        "description": "从蒙版批量中选择指定索引范围",
+        "description": "按逗号分隔的索引从蒙版批量中选择，支持负索引、Python 风格区间（不含结束索引）与步长",
         "inputs": {
-            "masks": "蒙版"
+            "mask": "蒙版"
         },
         "widgets": {
-            "start": "起始索引",
-            "end": "结束索引",
-            "step": "步长"
+            "indexes": "索引",
+            "err_if_missing": "索引缺失时报错",
+            "err_if_empty": "结果为空时报错"
         },
         "outputs": {
-            "masks": "蒙版"
+            "MASK": "蒙版"
         }
     },
     "VHS_Unbatch": {

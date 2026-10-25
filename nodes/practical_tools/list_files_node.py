@@ -21,7 +21,7 @@ class ListFilesNode:
                     "description": "是否递归搜索子文件夹"
                 }),
                 "separator": ("STRING", {
-                    "default": "\n",
+                    "default": "\\n",
                     "label": "分隔符",
                     "description": "多个文件名称之间的分隔符"
                 }),
@@ -29,6 +29,14 @@ class ListFilesNode:
                     "default": "",
                     "label": "文件扩展名过滤",
                     "description": "要过滤的文件扩展名（多个用逗号分隔，留空则列出所有文件）"
+                }),
+                "max_count": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 999999,
+                    "step": 1,
+                    "label": "数量上限",
+                    "description": "最多列出的文件数量，0表示不限制"
                 })
             }
         }
@@ -37,17 +45,24 @@ class ListFilesNode:
     RETURN_NAMES = ("file_list", "count",)
     FUNCTION = "list_files"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
+    
+    @classmethod
+    def IS_CHANGED(cls, **kwargs):
+        # 每次执行都返回新的时间戳，强制节点重新运行
+        import time
+        return time.time()
 
-    def list_files(self, input_directory, recursive, separator, file_extensions):
+    def list_files(self, input_directory, recursive, separator, file_extensions, max_count=0):
         """
         列出文件夹中的所有文件
-        
+
         Args:
             input_directory: 输入文件夹路径
             recursive: 是否递归搜索
             separator: 文件名称分隔符
             file_extensions: 文件扩展名过滤（逗号分隔）
-            
+            max_count: 最多列出的文件数量，0表示不限制
+
         Returns:
             tuple: (文件列表字符串, 文件数量)
         """
@@ -74,18 +89,30 @@ class ListFilesNode:
                 # 递归搜索所有子文件夹
                 for root, dirs, files in os.walk(input_directory):
                     for filename in files:
+                        # 检查是否达到上限
+                        if max_count > 0 and len(file_names) >= max_count:
+                            break
+
                         # 检查扩展名过滤
                         if extensions_filter:
                             _, ext = os.path.splitext(filename.lower())
                             if ext.lstrip('.') not in extensions_filter:
                                 continue
-                        
+
                         # 计算相对路径
                         relative_path = os.path.relpath(os.path.join(root, filename), input_directory)
                         file_names.append(relative_path)
+
+                    # 外层循环也检查上限
+                    if max_count > 0 and len(file_names) >= max_count:
+                        break
             else:
                 # 只搜索当前目录
                 for item in os.listdir(input_directory):
+                    # 检查是否达到上限
+                    if max_count > 0 and len(file_names) >= max_count:
+                        break
+
                     item_path = os.path.join(input_directory, item)
                     if os.path.isfile(item_path):
                         # 检查扩展名过滤
@@ -93,7 +120,7 @@ class ListFilesNode:
                             _, ext = os.path.splitext(item.lower())
                             if ext.lstrip('.') not in extensions_filter:
                                 continue
-                        
+
                         file_names.append(item)
             
             # 构造文件列表字符串

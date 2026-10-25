@@ -1,5 +1,8 @@
 # comfyui-xnantool 插件版本信息
-__version__ = "0.8.5"
+__version__ = "0.8.6"
+
+# Web扩展目录
+WEB_DIRECTORY = "./web/js"
 
 # 导入所有节点模块
 # ==================== YOLO和SAM节点模块 ====================

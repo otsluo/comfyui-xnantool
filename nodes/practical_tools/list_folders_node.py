@@ -21,9 +21,17 @@ class ListFoldersNode:
                     "description": "是否递归搜索子文件夹"
                 }),
                 "separator": ("STRING", {
-                    "default": "\n",
+                    "default": "\\n",
                     "label": "分隔符",
                     "description": "多个文件夹名称之间的分隔符"
+                }),
+                "max_count": ("INT", {
+                    "default": 0,
+                    "min": 0,
+                    "max": 999999,
+                    "step": 1,
+                    "label": "数量上限",
+                    "description": "最多列出的文件夹数量，0表示不限制"
                 })
             }
         }
@@ -32,16 +40,23 @@ class ListFoldersNode:
     RETURN_NAMES = ("folder_list", "count",)
     FUNCTION = "list_folders"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
+    
+    @classmethod
+    def IS_CHANGED(cls, **kwargs):
+        # 每次执行都返回新的时间戳，强制节点重新运行
+        import time
+        return time.time()
 
-    def list_folders(self, input_directory, recursive, separator):
+    def list_folders(self, input_directory, recursive, separator, max_count=0):
         """
         列出文件夹中的所有文件夹
-        
+
         Args:
             input_directory: 输入文件夹路径
             recursive: 是否递归搜索
             separator: 文件夹名称分隔符
-            
+            max_count: 最多列出的文件夹数量，0表示不限制
+
         Returns:
             tuple: (文件夹列表字符串, 文件夹数量)
         """
@@ -63,12 +78,24 @@ class ListFoldersNode:
                 # 递归搜索所有子文件夹
                 for root, dirs, files in os.walk(input_directory):
                     for dir_name in dirs:
+                        # 检查是否达到上限
+                        if max_count > 0 and len(folder_names) >= max_count:
+                            break
+
                         # 计算相对路径
                         relative_path = os.path.relpath(os.path.join(root, dir_name), input_directory)
                         folder_names.append(relative_path)
+
+                    # 外层循环也检查上限
+                    if max_count > 0 and len(folder_names) >= max_count:
+                        break
             else:
                 # 只搜索当前目录
                 for item in os.listdir(input_directory):
+                    # 检查是否达到上限
+                    if max_count > 0 and len(folder_names) >= max_count:
+                        break
+
                     item_path = os.path.join(input_directory, item)
                     if os.path.isdir(item_path):
                         folder_names.append(item)

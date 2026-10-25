@@ -26,6 +26,7 @@ class BatchImageMergeNode:
             },
             "optional": {
                 "images": ("IMAGE",),
+                "image_list": ("IMAGE",),  # 图片列表输入
             }
         }
     
@@ -71,12 +72,13 @@ class BatchImageMergeNode:
         
         return resized_images
     
-    def merge_batch_images(self, operation, resize_to_same_size, columns, images=None):
+    def merge_batch_images(self, operation, resize_to_same_size, columns, images=None, image_list=None):
         """
         合并批量图片
         """
         images_list = []
         
+        # 处理 images 输入（批次格式）
         if images is not None:
             if len(images.shape) == 3:
                 images = images.unsqueeze(0)
@@ -85,6 +87,21 @@ class BatchImageMergeNode:
                 img_tensor = images[i]
                 pil_img = self.tensor_to_pil(img_tensor)
                 images_list.append(pil_img)
+        
+        # 处理 image_list 输入（列表格式）
+        if image_list is not None:
+            if isinstance(image_list, list):
+                for img in image_list:
+                    if isinstance(img, torch.Tensor):
+                        pil_img = self.tensor_to_pil(img)
+                        images_list.append(pil_img)
+            elif isinstance(image_list, torch.Tensor):
+                if len(image_list.shape) == 3:
+                    image_list = image_list.unsqueeze(0)
+                for i in range(image_list.shape[0]):
+                    img_tensor = image_list[i]
+                    pil_img = self.tensor_to_pil(img_tensor)
+                    images_list.append(pil_img)
         
         if not images_list:
             blank_image = torch.zeros((1, 512, 512, 3), dtype=torch.float32)

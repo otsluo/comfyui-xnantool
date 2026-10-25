@@ -12,8 +12,8 @@ class ToggleValueNode:
         return {
             "required": {
                 "input_value": ("BOOLEAN", {"default": False}),
-                "value_a": ("*",),  # 通配符类型，可以接受任何类型的输入
-                "value_b": ("*",),  # 通配符类型，可以接受任何类型的输入
+                "false_value": ("*",),  # 布尔值为假时输出的值
+                "true_value": ("*",),  # 布尔值为真时输出的值
             }
         }
 
@@ -22,20 +22,20 @@ class ToggleValueNode:
     FUNCTION = "toggle_value"
     CATEGORY = "❤️❤️❤️XnanTool/实用工具"
 
-    def toggle_value(self, input_value, value_a, value_b):
+    def toggle_value(self, input_value, false_value, true_value):
         """
         根据输入布尔值在两个值之间切换
         
         Args:
             input_value: 布尔值，决定选择哪个输入值
-            value_a: 第一个可选值
-            value_b: 第二个可选值
+            false_value: 布尔值为假时输出的值
+            true_value: 布尔值为真时输出的值
             
         Returns:
             tuple: 包含不同类型的选定值
         """
         # 根据输入布尔值在两个值之间切换
-        selected_value = value_b if input_value else value_a
+        selected_value = true_value if input_value else false_value
         
         # 保持原始类型输出
         original_output = selected_value
